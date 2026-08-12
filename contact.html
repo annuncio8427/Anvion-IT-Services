@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ANVION - Contact</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#343539",
+                        "on-secondary-fixed-variant": "#474646",
+                        "inverse-surface": "#e3e2e7",
+                        "tertiary-container": "#000000",
+                        "on-secondary": "#313030",
+                        "on-primary-fixed-variant": "#474747",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0d0e12",
+                        "surface-container-low": "#1a1b1f",
+                        "primary-container": "#000000",
+                        "primary-fixed": "#e2e2e2",
+                        "tertiary": "#c6c6c8",
+                        "on-tertiary-container": "#747577",
+                        "on-primary-container": "#757575",
+                        "secondary-container": "#4a4949",
+                        "secondary": "#c8c6c5",
+                        "on-tertiary-fixed-variant": "#454749",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#bab8b7",
+                        "surface": "#121317",
+                        "tertiary-fixed-dim": "#c6c6c8",
+                        "inverse-primary": "#5e5e5e",
+                        "surface-bright": "#38393d",
+                        "primary": "#c6c6c6",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#2f3034",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-container-high": "#292a2e",
+                        "surface-tint": "#c6c6c6",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "outline": "#988e90",
+                        "on-primary": "#303030",
+                        "on-surface": "#e3e2e7",
+                        "on-tertiary": "#2f3132",
+                        "on-tertiary-fixed": "#1a1c1d",
+                        "secondary-fixed": "#e5e2e1",
+                        "background": "#121317",
+                        "surface-dim": "#121317",
+                        "on-surface-variant": "#cfc4c5",
+                        "on-background": "#e3e2e7",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "tertiary-fixed": "#e2e2e4",
+                        "surface-container": "#1e1f23",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "outline-variant": "#4c4546",
+                        "surface-variant": "#343539"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-xl": "80px",
+                        "gutter": "24px",
+                        "stack-sm": "12px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "stack-xs": "4px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "display-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-sm": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #000000; color: #e3e2e7; }
+        
+        /* Custom Input Styles */
+        .input-tech {
+            background-color: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e3e2e7;
+            transition: all 0.3s ease;
+        }
+        .input-tech:focus {
+            border-color: #00A3FF;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 163, 255, 0.2);
+        }
+        
+        /* Custom Button Styles */
+        .btn-primary {
+            background-color: #00A3FF;
+            color: #FFFFFF;
+            transition: filter 0.3s ease;
+        }
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid #FFFFFF;
+            color: #FFFFFF;
+            transition: filter 0.3s ease;
+        }
+        .btn-secondary:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Ambient background glow */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,163,255,0.05) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden selection:bg-[#00A3FF] selection:text-white relative min-h-screen flex flex-col">
+<!-- TopNavBar Container -->
+<header class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 w-full z-50 border-b border-white/10 docked full-width top-0 sticky">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface" href="index.html">ANVION</a>
+<!-- Navigation -->
+<nav class="hidden md:flex space-x-8">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="index.html">Home</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="services.html">Services</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="solution.html">Solutions</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="projects.html">Projects</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="about.html">About</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
+</nav>
+<!-- Actions -->
+<div class="hidden md:flex items-center space-x-4">
+<a class="btn-secondary px-6 py-2 rounded font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="contact.html">Contact</a>
+<a class="btn-primary px-6 py-2 rounded font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="start-project.html">Start a Project</a>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow relative z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-xl md:py-[120px]">
+<!-- Ambient Glow -->
+<div class="bg-glow top-0 right-0 transform translate-x-1/3 -translate-y-1/3"></div>
+<!-- Hero Section -->
+<div class="mb-stack-xl text-center md:text-left max-w-3xl">
+<h1 class="font-display-sm md:font-display-lg text-display-sm md:text-display-lg text-on-surface mb-stack-sm tracking-tighter">Let's Build Something <br class="hidden md:block"/><span class="text-[#00A3FF]">Great Together.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Strategic IT consulting and high-performance infrastructure design for enterprise scale.</p>
+</div>
+<!-- Bento Grid Layout for Contact -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Form Column -->
+<div class="lg:col-span-8 bg-[#121212] p-8 md:p-12 rounded border border-white/10 relative overflow-hidden group">
+<!-- Tech Accent Header -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-white/10"></div>
+<div class="absolute top-4 right-4 text-white/20">
+<span class="material-symbols-outlined text-sm">terminal</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 border-b border-white/10 pb-4">Initiate Request</h2>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Name -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Name <span class="text-[#00A3FF]">*</span></label>
+<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Work Email <span class="text-[#00A3FF]">*</span></label>
+<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="jane@company.com" required="" type="email"/>
+</div>
+<!-- Phone -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phone Number</label>
+<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+<!-- Company -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Company <span class="text-[#00A3FF]">*</span></label>
+<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Acme Corp" required="" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Service Interest -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Service Category</label>
+<select class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<option value="">Select Service...</option>
+<option value="cloud">Cloud Infrastructure</option>
+<option value="security">Cybersecurity</option>
+<option value="dev">Custom Software</option>
+<option value="consulting">IT Consulting</option>
+</select>
+</div>
+<!-- Budget -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Budget</label>
+<select class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<option value="">Select Budget...</option>
+<option value="small">&lt; $50k</option>
+<option value="medium">$50k - $250k</option>
+<option value="large">$250k+</option>
+</select>
+</div>
+</div>
+<!-- Project Description -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Project Scope &amp; Details</label>
+<textarea class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md h-32 resize-y" placeholder="Briefly describe your objectives..."></textarea>
+</div>
+<!-- Submit -->
+<div class="pt-4 flex items-center justify-between border-t border-white/10 mt-8 pt-6">
+<p class="text-on-surface-variant font-label-sm text-label-sm hidden md:block">All communications are secure and encrypted.</p>
+<button class="btn-primary w-full md:w-auto px-8 py-4 rounded font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2" type="submit">
+<span>Send Inquiry</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Info Column (Side Panel) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Encouraging Copy Card -->
+<div class="bg-[#121212] p-8 rounded border border-white/10 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#00A3FF]"></div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Why Partner With Us?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Our dedicated engineering teams work as an extension of your organization. We prioritize transparency, security, and scalable architecture from day one.</p>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-on-surface font-label-sm text-label-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[#00A3FF] text-sm">check_circle</span> 24/7 Priority Support
+                        </li>
+<li class="flex items-center gap-3 text-on-surface font-label-sm text-label-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[#00A3FF] text-sm">check_circle</span> Dedicated Project Manager
+                        </li>
+<li class="flex items-center gap-3 text-on-surface font-label-sm text-label-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[#00A3FF] text-sm">check_circle</span> Zero-Downtime Migration
+                        </li>
+</ul>
+</div>
+<!-- Contact Details Card -->
+<div class="bg-[#121212] p-8 rounded border border-white/10">
+<h3 class="font-label-lg text-label-lg text-on-surface uppercase tracking-widest mb-6 border-b border-white/10 pb-2">Direct Lines</h3>
+<div class="space-y-6">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Email</p>
+<a class="font-body-lg text-body-lg text-on-surface hover:text-[#00A3FF] transition-colors" href="mailto:hello@anvion.com">hello@anvion.com</a>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Phone (Global)</p>
+<a class="font-body-lg text-body-lg text-on-surface hover:text-[#00A3FF] transition-colors" href="tel:+91 9150270802">+91 9150270802</a>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Headquarters</p>
+<p class="font-body-md text-body-md text-on-surface">7-69D,managantruvillai<br/>karungal,Kanyakumari Dist<br/>Tamil Nadu, India - 629579</p>
+</div>
+</div>
+</div>
+<!-- Map Placeholder Image -->
+<div class="bg-[#121212] rounded border border-white/10 overflow-hidden h-48 relative">
+<img class="object-cover w-full h-full opacity-60 grayscale hover:grayscale-0 transition-all duration-500" data-alt="A highly detailed, futuristic digital map visualization of San Francisco. The map is styled in a high-contrast dark mode aesthetic with deep black oceans and stark, minimalistic grey landmasses. Key tech hubs are illuminated with glowing electric blue nodes and thin connecting structural lines, suggesting a high-tech corporate network. The overall mood is precise, analytical, and premium." data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGpMz2ob-kPJ7LbPk3XCELtODYvcvq2MGiBKA7_Cvn0lwFBiQ0QAouFg5JGHOeMRZSfzkNoUIiQN505eCOv8z6d_O7qtaeThe_1m8IHwZwlaoodknhMfwvp06rM8et1XZrbn167GhmdoljrahwgTjMXjgef2BWFTP_7Ooxx5Fa6fd0MXuzdGqto8r4jz9AM6R5sTLy21jXddIV2I8Ka6RIAFyO1WqH-a22cnh0wvJ03_xUYvbAtZ6G"/>
+<div class="absolute inset-0 border border-white/10 pointer-events-none"></div>
+</div>
+</div>
+</div>
+<!-- FAQ Section -->
+<div class="mt-stack-xl max-w-3xl mx-auto">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="border-b border-white/10 pb-4">
+<button class="w-full text-left flex justify-between items-center py-2 focus:outline-none group">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-[#00A3FF] transition-colors">What is your typical response time?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#00A3FF]">add</span>
+</button>
+<!-- Content hidden by default, js can toggle -->
+<div class="pt-2 hidden">
+<p class="font-body-md text-body-md text-on-surface-variant">We aim to respond to all initial inquiries within 4 business hours. For existing SLA clients, response times are defined in your specific agreement.</p>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="border-b border-white/10 pb-4">
+<button class="w-full text-left flex justify-between items-center py-2 focus:outline-none group">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-[#00A3FF] transition-colors">Do you offer on-site consulting?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#00A3FF]">add</span>
+</button>
+</div>
+<!-- FAQ Item 3 -->
+<div class="border-b border-white/10 pb-4">
+<button class="w-full text-left flex justify-between items-center py-2 focus:outline-none group">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-[#00A3FF] transition-colors">What scale of projects do you take on?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#00A3FF]">add</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Container -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-stack-xl border-t border-white/10 flat no shadows mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Column 1: Brand -->
+<div class="flex flex-col gap-4">
+<a class="font-headline-md text-headline-md font-bold text-on-surface" href="#">ANVION</a>
+<p class="font-body-md text-body-md text-on-surface-variant">Enterprise IT solutions designed for scale, security, and performance.</p>
+</div>
+<!-- Column 2: Links -->
+<div class="flex flex-col gap-3">
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-widest mb-2 opacity-50">Navigation</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="services.html">Services</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="solution.html">Solutions</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="projects.html">Projects</a>
+</div>
+<!-- Column 3: Links -->
+<div class="flex flex-col gap-3">
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-widest mb-2 opacity-50">Company</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="about.html">About</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="careers.html">Careers</a>
+<a class="font-body-md text-body-md text-primary font-bold hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="contact.html">Contact</a>
+</div>
+<!-- Column 4: Legal / Socials -->
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-widest mb-2 opacity-50">Legal</span>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="privacy-policy.html">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors hover:translate-x-1 transition-transform" href="terms-of-service.html">Terms of Service</a>
+<div class="flex gap-4 mt-4">
+<a class="text-on-surface-variant hover:text-[#00A3FF] transition-colors" href="#"><span class="material-symbols-outlined">language</span></a>
+<a class="text-on-surface-variant hover:text-[#00A3FF] transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+</div>
+<div class="w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mt-stack-lg pt-stack-sm border-t border-white/5">
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">© 2026 ANVION IT SERVICES. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Simple FAQ toggle script
+        document.querySelectorAll('.border-b button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('.material-symbols-outlined');
+                
+                if (content && content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    if(icon) icon.textContent = 'remove';
+                } else if(content) {
+                    content.classList.add('hidden');
+                    if(icon) icon.textContent = 'add';
+                }
+            });
+        });
+    </script>
+</body></html>

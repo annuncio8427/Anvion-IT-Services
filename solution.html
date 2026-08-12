@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ANVION - Solutions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#343539",
+                        "on-secondary-fixed-variant": "#474646",
+                        "inverse-surface": "#e3e2e7",
+                        "tertiary-container": "#000000",
+                        "on-secondary": "#313030",
+                        "on-primary-fixed-variant": "#474747",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0d0e12",
+                        "surface-container-low": "#1a1b1f",
+                        "primary-container": "#000000",
+                        "primary-fixed": "#e2e2e2",
+                        "tertiary": "#c6c6c8",
+                        "on-tertiary-container": "#747577",
+                        "on-primary-container": "#757575",
+                        "secondary-container": "#4a4949",
+                        "secondary": "#c8c6c5",
+                        "on-tertiary-fixed-variant": "#454749",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#bab8b7",
+                        "surface": "#121317",
+                        "tertiary-fixed-dim": "#c6c6c8",
+                        "inverse-primary": "#5e5e5e",
+                        "surface-bright": "#38393d",
+                        "primary": "#c6c6c6",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#2f3034",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-container-high": "#292a2e",
+                        "surface-tint": "#c6c6c6",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "outline": "#988e90",
+                        "on-primary": "#303030",
+                        "on-surface": "#e3e2e7",
+                        "on-tertiary": "#2f3132",
+                        "on-tertiary-fixed": "#1a1c1d",
+                        "secondary-fixed": "#e5e2e1",
+                        "background": "#121317",
+                        "surface-dim": "#121317",
+                        "on-surface-variant": "#cfc4c5",
+                        "on-background": "#e3e2e7",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "tertiary-fixed": "#e2e2e4",
+                        "surface-container": "#1e1f23",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "outline-variant": "#4c4546",
+                        "surface-variant": "#343539"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-xl": "80px",
+                        "gutter": "24px",
+                        "stack-sm": "12px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "stack-xs": "4px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "display-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-sm": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .tech-border {
+            position: relative;
+        }
+        .tech-border::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+        .bento-card {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #121212;
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        .active-ring {
+            box-shadow: 0 0 0 1px #3b82f6; /* Electric Blue Accent */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 docked full-width top-0 sticky border-b border-white/10 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">ANVION</div>
+<div class="hidden md:flex gap-gutter items-center font-label-lg text-label-lg">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="index.html">Home</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="services.html">Services</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="solution.html">Solutions</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="projects.html">Projects</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="about.html">About</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="careers.html">Careers</a>
+</div>
+<div class="flex gap-stack-sm items-center">
+<button class="font-label-lg text-label-lg border border-white/10 px-4 py-2 rounded-DEFAULT hover:border-white/30 transition-colors">Contact</button>
+<button class="font-label-lg text-label-lg bg-blue-500 text-white px-4 py-2 rounded-DEFAULT hover:bg-blue-600 transition-colors font-bold">Start a Project</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col w-full">
+<!-- Hero Section -->
+<section class="relative pt-stack-xl pb-stack-xl px-margin-desktop w-full max-w-container-max mx-auto border-b border-white/10">
+<div class="absolute inset-0 cyber-grid opacity-20 -z-10"></div>
+<div class="max-w-3xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-low border border-white/10 rounded-DEFAULT mb-stack-md">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">BUSINESS SOLUTIONS</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-stack-md">Architecting Digital Value.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl">
+                    We translate complex business challenges into scalable technical realities. Our tailored solutions are engineered for performance, precision, and measurable impact across industries.
+                </p>
+</div>
+</section>
+<!-- Bento Grid Solutions -->
+<section class="py-stack-xl px-margin-desktop w-full max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Featured Solution: Enterprise CRM -->
+<div class="md:col-span-8 bento-card p-stack-md rounded-DEFAULT flex flex-col justify-between min-h-[400px] relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-low to-background -z-10"></div>
+<div class="absolute top-0 right-0 p-stack-md opacity-20 group-hover:opacity-40 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">hub</span>
+</div>
+<div>
+<div class="tech-border pt-stack-sm mb-stack-md flex justify-between items-start">
+<h3 class="font-headline-lg text-headline-lg">Enterprise CRM Systems</h3>
+<span class="material-symbols-outlined">arrow_outward</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+                            Centralize customer data, automate sales pipelines, and drive retention with custom-built CRM architectures designed for your unique operational workflows.
+                        </p>
+</div>
+<div class="flex gap-2 mt-stack-lg">
+<span class="px-2 py-1 bg-surface-container-highest rounded-sm font-label-sm text-label-sm">Data Unification</span>
+<span class="px-2 py-1 bg-surface-container-highest rounded-sm font-label-sm text-label-sm">Sales Automation</span>
+</div>
+</div>
+<!-- Small Solution: E-Commerce -->
+<div class="md:col-span-4 bento-card p-stack-md rounded-DEFAULT flex flex-col justify-between min-h-[400px]">
+<div>
+<div class="tech-border pt-stack-sm mb-stack-md flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md">High-Volume E-Commerce</h3>
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Scalable transactional platforms built to handle traffic spikes, complex inventory, and global payment gateways with zero downtime.
+                        </p>
+</div>
+<div class="mt-stack-lg text-blue-500 font-label-sm text-label-sm flex items-center gap-1 uppercase tracking-widest">
+                        View Architecture <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Small Solution: EdTech -->
+<div class="md:col-span-4 bento-card p-stack-md rounded-DEFAULT flex flex-col justify-between min-h-[300px]">
+<div>
+<div class="tech-border pt-stack-sm mb-stack-md flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md">EdTech Platforms</h3>
+<span class="material-symbols-outlined">school</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Interactive learning management systems (LMS) with real-time video streaming, progress tracking, and robust content delivery networks.
+                        </p>
+</div>
+</div>
+<!-- Medium Solution: AI Apps -->
+<div class="md:col-span-8 bento-card p-stack-md rounded-DEFAULT flex flex-col md:flex-row gap-gutter justify-between items-center min-h-[300px]">
+<div class="flex-1">
+<div class="tech-border pt-stack-sm mb-stack-md">
+<h3 class="font-headline-lg text-headline-lg">Applied AI &amp; Machine Learning</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">
+                            Integrate predictive analytics, natural language processing, and automated decision-making engines directly into your existing infrastructure.
+                        </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-1 h-full bg-blue-500 block"></span>
+                                 Predictive Maintenance
+                             </li>
+<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-1 h-full bg-blue-500 block"></span>
+                                 Automated Support Bots
+                             </li>
+</ul>
+</div>
+<div class="w-full md:w-1/3 aspect-square bg-surface-container-low border border-white/10 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 cyber-grid opacity-50"></div>
+<span class="material-symbols-outlined text-[64px] text-blue-500 relative z-10">memory</span>
+</div>
+</div>
+<!-- List Solutions -->
+<div class="md:col-span-12 mt-stack-lg border-t border-white/10 pt-stack-lg">
+<h2 class="font-headline-md text-headline-md mb-stack-md">Specialized Domain Architectures</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-stack-md">
+<!-- HealthTech -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">ecg_heart</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">HealthTech Systems</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">HIPAA-compliant patient portals and telehealth infrastructure.</p>
+</div>
+</div>
+<!-- Logistics -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">local_shipping</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">Logistics &amp; Supply Chain</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Real-time tracking, route optimization, and inventory syncing.</p>
+</div>
+</div>
+<!-- IoT -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">sensors</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">IoT Integrations</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Secure data ingestion pipelines for connected hardware networks.</p>
+</div>
+</div>
+<!-- Business Sites -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">web</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">Corporate Web Presence</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">High-performance, secure, and headless CMS architectures.</p>
+</div>
+</div>
+<!-- Booking -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">calendar_month</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">Booking &amp; Scheduling</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Complex availability engines and resource management tools.</p>
+</div>
+</div>
+<!-- Management -->
+<div class="p-4 border-b border-white/10 flex items-start gap-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors">admin_panel_settings</span>
+<div>
+<h4 class="font-label-lg text-label-lg mb-1">Internal Management</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Custom ERPs and workflow automation dashboards.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-stack-xl border-t border-white/10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1 flex flex-col gap-stack-sm">
+<div class="font-headline-md text-headline-md font-bold text-on-surface mb-stack-sm">ANVION</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Architecting the future of enterprise IT.</p>
+</div>
+<div class="col-span-1 md:col-span-2 flex justify-center md:justify-start gap-stack-lg">
+<div class="flex flex-col gap-stack-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="services.html">Services</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="solution.html">Solutions</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="projects.html">Projects</a>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="about.html">About</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="careers.html">Careers</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="contact.html">Contact</a>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="privacy.html">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="terms.html">Terms of Service</a>
+</div>
+</div>
+<div class="col-span-1 md:col-span-1 flex items-end justify-start md:justify-end">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 ANVION IT SERVICES. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>
