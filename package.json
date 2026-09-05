@@ -1,0 +1,15 @@
+{
+  "name": "anvion-it-services",
+  "version": "1.0.0",
+  "description": "Anvion IT Services website",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Static build complete'",
+    "start": "node server.js",
+    "lint": "node --check server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
