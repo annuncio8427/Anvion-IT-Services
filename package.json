@@ -10,6 +10,15 @@
     "lint": "node --check server.js"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
+    "express": "^4.21.2",
+    "firebase": "11.4.0",
+    "firebase-admin": "13.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.3.0",
+    "pg": "^8.23.0"
   }
 }

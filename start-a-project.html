@@ -204,6 +204,10 @@
 <div>
 <h3 class="text-label-lg uppercase tracking-widest text-on-surface mb-4">03 / Requirements</h3>
 <label class="block"><span class="text-label-sm text-on-surface-variant">Tell us about your project *</span><textarea required name="description" rows="7" placeholder="What are you trying to build? What problem should it solve? What features do you need?" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue resize-y"></textarea></label>
+<div class="mt-4">
+<span class="text-label-sm text-on-surface-variant block mb-2">Project Brief / Specification Document (Optional - PDF, DOCX, ZIP, Max 10MB)</span>
+<input type="file" name="attachment" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.zip" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-label-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-label-sm file:font-semibold file:bg-brand-blue file:text-white hover:file:brightness-110 cursor-pointer outline-none">
+</div>
 </div>
 
 <div>
@@ -311,11 +315,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("projectForm");
   const success = document.getElementById("formSuccess");
   if (form && success) {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      success.classList.remove("hidden");
-      success.scrollIntoView({behavior:"smooth", block:"center"});
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Uploading and Submitting...</span><span class="material-symbols-outlined text-base animate-spin">sync</span>';
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch('/api/project-enquiries', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          success.classList.remove("hidden");
+          const title = success.querySelector('h3');
+          const msg = success.querySelector('p');
+          if (title) title.textContent = 'Project Request Transmitted Successfully';
+          if (msg) msg.textContent = data.message || 'Your project brief is stored in our database. An ANVION solutions architect will connect with you within 24-48 hours.';
+          success.scrollIntoView({behavior:"smooth", block:"center"});
+          form.reset();
+        } else {
+          alert('Submission failed: ' + (data.error || 'Please check your inputs and try again.'));
+        }
+      } catch (err) {
+        alert('Network error submitting your inquiry. Please try again or email us directly at contact@anvion.in');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     });
   }
 });

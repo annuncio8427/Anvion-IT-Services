@@ -449,6 +449,11 @@
           </label>
 
           <label class="block">
+            <span class="text-label-sm text-on-surface-variant">Resume / CV (PDF, DOCX, Max 10MB) *</span>
+            <input required type="file" name="resume" accept=".pdf,.doc,.docx" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-2.5 text-label-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-label-sm file:font-semibold file:bg-brand-blue file:text-white hover:file:brightness-110 cursor-pointer outline-none">
+          </label>
+
+          <label class="block">
             <span class="text-label-sm text-on-surface-variant">Why would you like to join ANVION? *</span>
             <textarea required name="message" rows="6" placeholder="Tell us about yourself, your skills and what you would like to build." class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue resize-y"></textarea>
           </label>
@@ -605,14 +610,41 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (form && success) {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
-      success.classList.remove("hidden");
-      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Uploading Resume & Submitting...</span><span class="material-symbols-outlined text-base animate-spin">sync</span>';
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch('/api/careers/apply', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (res.ok) {
+          success.classList.remove("hidden");
+          const title = success.querySelector('h3');
+          const msg = success.querySelector('p');
+          if (title) title.textContent = 'Application Received Successfully';
+          if (msg) msg.textContent = data.message || 'Your resume and details have been securely recorded. Our recruiting team will review your application.';
+          success.scrollIntoView({ behavior: "smooth", block: "center" });
+          form.reset();
+        } else {
+          alert('Application submission failed: ' + (data.error || 'Please check your inputs and try again.'));
+        }
+      } catch (err) {
+        alert('Network error submitting your application. Please try again or email careers@anvion.in');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     });
   }
 });

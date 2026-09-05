@@ -199,34 +199,34 @@
 <span class="material-symbols-outlined text-sm">terminal</span>
 </div>
 <h2 class="font-headline-md text-headline-md text-on-surface mb-8 border-b border-white/10 pb-4">Initiate Request</h2>
-<form class="space-y-6">
+<form id="contactForm" class="space-y-6">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Name -->
 <div class="space-y-2">
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Name <span class="text-[#00A3FF]">*</span></label>
-<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Jane Doe" required="" type="text"/>
+<input name="name" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Jane Doe" required="" type="text"/>
 </div>
 <!-- Email -->
 <div class="space-y-2">
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Work Email <span class="text-[#00A3FF]">*</span></label>
-<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="jane@company.com" required="" type="email"/>
+<input name="email" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="jane@company.com" required="" type="email"/>
 </div>
 <!-- Phone -->
 <div class="space-y-2">
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phone Number</label>
-<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="+1 (555) 000-0000" type="tel"/>
+<input name="phone" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="+1 (555) 000-0000" type="tel"/>
 </div>
 <!-- Company -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Company <span class="text-[#00A3FF]">*</span></label>
-<input class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Acme Corp" required="" type="text"/>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Company</label>
+<input name="company" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Acme Corp" type="text"/>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Service Interest -->
 <div class="space-y-2">
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Service Category</label>
-<select class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<select name="service" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
 <option value="">Select Service...</option>
 <option value="cloud">Cloud Infrastructure</option>
 <option value="security">Cybersecurity</option>
@@ -237,7 +237,7 @@
 <!-- Budget -->
 <div class="space-y-2">
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Budget</label>
-<select class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<select name="budget" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
 <option value="">Select Budget...</option>
 <option value="small">&lt; $50k</option>
 <option value="medium">$50k - $250k</option>
@@ -247,18 +247,60 @@
 </div>
 <!-- Project Description -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Project Scope &amp; Details</label>
-<textarea class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md h-32 resize-y" placeholder="Briefly describe your objectives..."></textarea>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Project Scope &amp; Details <span class="text-[#00A3FF]">*</span></label>
+<textarea required name="message" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md h-32 resize-y" placeholder="Briefly describe your objectives..."></textarea>
 </div>
+<!-- Submit Feedback Banner -->
+<div id="contactFeedback" class="hidden p-4 rounded border text-sm"></div>
 <!-- Submit -->
 <div class="pt-4 flex items-center justify-between border-t border-white/10 mt-8 pt-6">
 <p class="text-on-surface-variant font-label-sm text-label-sm hidden md:block">All communications are secure and encrypted.</p>
-<button class="btn-primary w-full md:w-auto px-8 py-4 rounded font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2" type="submit">
+<button id="contactSubmitBtn" class="btn-primary w-full md:w-auto px-8 py-4 rounded font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all" type="submit">
 <span>Send Inquiry</span>
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </button>
 </div>
 </form>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  const feedback = document.getElementById('contactFeedback');
+  const btn = document.getElementById('contactSubmitBtn');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.innerHTML = '<span>Transmitting...</span><span class="material-symbols-outlined text-sm animate-spin">sync</span>';
+    feedback.className = 'hidden';
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        feedback.className = 'p-4 rounded border border-[#00A3FF]/40 bg-[#00A3FF]/10 text-white flex items-center gap-3';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[#00A3FF]">check_circle</span><div><p class="font-bold">Request received successfully</p><p class="text-xs text-white/80 mt-1">' + (data.message || 'Our team will reach out shortly.') + '</p></div>';
+        form.reset();
+      } else {
+        throw new Error(data.error || 'Failed to transmit message');
+      }
+    } catch (err) {
+      feedback.className = 'p-4 rounded border border-red-500/40 bg-red-500/10 text-red-200 flex items-center gap-3';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-red-400">error</span><div><p class="font-bold">Transmission Error</p><p class="text-xs text-red-300 mt-1">' + err.message + '</p></div>';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Send Inquiry</span><span class="material-symbols-outlined text-sm">arrow_forward</span>';
+    }
+  });
+});
+</script>
 </div>
 <!-- Info Column (Side Panel) -->
 <div class="lg:col-span-4 flex flex-col gap-gutter">
