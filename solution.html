@@ -152,8 +152,11 @@
 <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="careers.html">Careers</a>
 </div>
 <div class="flex gap-stack-sm items-center">
-<button class="font-label-lg text-label-lg border border-white/10 px-4 py-2 rounded-DEFAULT hover:border-white/30 transition-colors">Contact</button>
-<button class="font-label-lg text-label-lg bg-blue-500 text-white px-4 py-2 rounded-DEFAULT hover:bg-blue-600 transition-colors font-bold">Start a Project</button>
+<a class="font-label-lg text-label-lg border border-white/10 px-4 py-2 rounded-DEFAULT hover:border-white/30 transition-colors" href="contact.html">Contact</a>
+<a class="font-label-lg text-label-lg bg-blue-500 text-white px-4 py-2 rounded-DEFAULT hover:bg-blue-600 transition-colors font-bold" href="start-a-project.html">Start a Project</a>
+<button class="md:hidden text-on-surface p-1">
+<span class="material-symbols-outlined">menu</span>
+</button>
 </div>
 </div>
 </nav>
@@ -334,4 +337,36 @@
 </div>
 </div>
 </footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.querySelector("nav button.md\\:hidden");
+  const navBar = document.querySelector("nav");
+
+  if (menuButton && navBar) {
+    menuButton.addEventListener("click", () => {
+      let mobilePanel = navBar.querySelector(".mobile-nav-panel");
+
+      if (!mobilePanel) {
+        mobilePanel = document.createElement("div");
+        mobilePanel.className = "mobile-nav-panel md:hidden absolute top-20 left-0 right-0 bg-surface border-b border-white/10 px-5 py-5";
+        mobilePanel.innerHTML = `
+          <div class="flex flex-col gap-4">
+            <a href="index.html" class="text-on-surface py-2">Home</a>
+            <a href="services.html" class="text-on-surface-variant hover:text-on-surface py-2">Services</a>
+            <a href="solution.html" class="text-primary font-semibold border-l-2 border-primary pl-3 py-2">Solutions</a>
+            <a href="projects.html" class="text-on-surface-variant hover:text-on-surface py-2">Projects</a>
+            <a href="portfolio.html" class="text-on-surface-variant hover:text-on-surface py-2">Portfolio</a>
+            <a href="about.html" class="text-on-surface-variant hover:text-on-surface py-2">About</a>
+            <a href="careers.html" class="text-on-surface-variant hover:text-on-surface py-2">Careers</a>
+            <a href="contact.html" class="text-on-surface-variant hover:text-on-surface py-2">Contact</a>
+            <a href="start-a-project.html" class="bg-blue-500 text-white text-center font-bold px-5 py-3 rounded mt-2">Start a Project</a>
+          </div>`;
+        navBar.appendChild(mobilePanel);
+      }
+
+      mobilePanel.classList.toggle("hidden");
+    });
+  }
+});
+</script>
 </body></html>
