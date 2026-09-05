@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Admin Portal - ANVION IT SERVICES</title>
+  <title>ANVION Admin Command Center - CMS & Systems Management</title>
+  <meta name="robots" content="noindex, nofollow"/>
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
   <script>
     tailwind.config = {
@@ -13,630 +14,2087 @@
       theme: {
         extend: {
           colors: {
-            brand: { blue: "#00A3FF" },
-            surface: "#121212",
-            "surface-container-low": "#0A0A0A",
-            "on-surface": "#FFFFFF",
-            "on-surface-variant": "#A1A1AA",
+            brand: { blue: "#007BFF", hover: "#0056b3", glow: "rgba(0,123,255,0.25)" },
+            surface: "#0F1015",
+            "surface-sidebar": "#090A0E",
+            "surface-card": "#14161E",
+            "surface-card-hover": "#1A1D27",
+            "surface-border": "rgba(255,255,255,0.08)",
+            "on-surface": "#EDEDF0",
+            "on-surface-variant": "#9496A1",
           },
           fontFamily: {
             sans: ["Inter", "sans-serif"],
-            display: ["Plus Jakarta Sans", "sans-serif"]
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
           }
         }
       }
     };
   </script>
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090A0E; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #007BFF; }
+  </style>
 </head>
-<body class="bg-black text-on-surface font-sans antialiased min-h-screen">
+<body class="bg-[#08090C] text-on-surface font-sans antialiased min-h-screen flex overflow-hidden selection:bg-brand-blue selection:text-white">
 
-  <!-- TOP HEADER -->
-  <header class="border-b border-white/10 bg-surface px-6 py-4 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <a href="/" class="flex items-center gap-2 text-brand-blue font-bold font-display text-lg tracking-wider">
-          <span class="material-symbols-outlined text-2xl">shield</span>
-          ANVION
-        </a>
-        <span class="text-xs px-2 py-0.5 rounded bg-white/10 text-on-surface-variant font-mono uppercase tracking-wider">Admin Command Center</span>
+  <!-- ========================================== -->
+  <!-- 0. ACCESS CONTROL / VERIFYING OVERLAY     -->
+  <!-- ========================================== -->
+  <div id="authGateOverlay" class="fixed inset-0 bg-[#08090C] z-[9999] flex flex-col items-center justify-center p-6 text-center">
+    <div class="w-16 h-16 rounded-2xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue mb-4 animate-pulse shadow-[0_0_30px_rgba(0,123,255,0.3)]">
+      <span class="material-symbols-outlined text-3xl">verified_user</span>
+    </div>
+    <h2 id="gateTitle" class="text-xl font-bold font-display text-white">Validating Security Credentials</h2>
+    <p id="gateMessage" class="text-xs text-on-surface-variant mt-2 max-w-sm">Verifying Firebase ID Token and authoritative Custom Claims...</p>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="fixed top-5 right-6 z-[1000] flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================== -->
+  <!-- 1. RESPONSIVE SIDEBAR (Desktop + Mobile)   -->
+  <!-- ========================================== -->
+  <aside id="sidebar" class="w-64 bg-surface-sidebar border-r border-surface-border flex flex-col fixed inset-y-0 left-0 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    
+    <!-- Brand Logo Area -->
+    <div class="h-16 px-6 border-b border-surface-border flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5 text-brand-blue font-bold font-display text-lg tracking-wider">
+        <span class="material-symbols-outlined text-2xl">shield</span>
+        <span class="text-white">ANVION</span>
+        <span class="text-[9px] px-1.5 py-0.5 rounded bg-brand-blue/10 text-brand-blue border border-brand-blue/30 font-mono">CMS</span>
+      </a>
+      <button id="closeSidebarBtn" class="lg:hidden text-on-surface-variant hover:text-white">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      
+      <!-- Overview -->
+      <button data-section="overview" class="nav-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all text-white bg-brand-blue shadow-[0_0_15px_rgba(0,123,255,0.3)]">
+        <span class="material-symbols-outlined text-lg">dashboard</span>
+        <span>Overview</span>
+      </button>
+
+      <!-- Section Label: Operations -->
+      <p class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/60">Operations</p>
+
+      <!-- Users -->
+      <button data-section="users" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">group</span>
+          <span>Users & RBAC</span>
+        </div>
+        <span id="badgeUsers" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/10 text-on-surface-variant">0</span>
+      </button>
+
+      <!-- Project Enquiries -->
+      <button data-section="enquiries" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">rocket_launch</span>
+          <span>Project Enquiries</span>
+        </div>
+        <span id="badgeEnquiries" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-400">0</span>
+      </button>
+
+      <!-- Contact Messages -->
+      <button data-section="messages" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">mail</span>
+          <span>Contact Messages</span>
+        </div>
+        <span id="badgeMessages" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400">0</span>
+      </button>
+
+      <!-- Careers & Applications -->
+      <button data-section="careers" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">work</span>
+          <span>Careers & Jobs</span>
+        </div>
+      </button>
+
+      <button data-section="applications" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">badge</span>
+          <span>Job Applications</span>
+        </div>
+        <span id="badgeApplications" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400">0</span>
+      </button>
+
+      <!-- Section Label: Content Management -->
+      <p class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/60">CMS Entities</p>
+
+      <!-- Projects -->
+      <button data-section="projects" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">folder_special</span>
+        <span>Projects & Case Studies</span>
+      </button>
+
+      <!-- Services -->
+      <button data-section="services" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">design_services</span>
+        <span>Services Catalog</span>
+      </button>
+
+      <!-- Solutions -->
+      <button data-section="solutions" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">lightbulb</span>
+        <span>Solutions</span>
+      </button>
+
+      <!-- Industries -->
+      <button data-section="industries" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">domain</span>
+        <span>Industries</span>
+      </button>
+
+      <!-- Technologies -->
+      <button data-section="technologies" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">terminal</span>
+        <span>Technologies</span>
+      </button>
+
+      <!-- Reviews -->
+      <button data-section="reviews" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">rate_review</span>
+        <span>Reviews / Testimonials</span>
+      </button>
+
+      <!-- Blog -->
+      <button data-section="blog" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">article</span>
+        <span>Blog & Articles</span>
+      </button>
+
+      <!-- FAQs -->
+      <button data-section="faqs" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">quiz</span>
+        <span>FAQs</span>
+      </button>
+
+      <!-- Website Content -->
+      <button data-section="content" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">web</span>
+        <span>Website Content</span>
+      </button>
+
+      <!-- Media Management -->
+      <button data-section="media" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">perm_media</span>
+        <span>Media Storage</span>
+      </button>
+
+      <!-- Section Label: Governance -->
+      <p class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/60">System</p>
+
+      <!-- Audit Logs -->
+      <button data-section="audit" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">receipt_long</span>
+        <span>Admin Audit Log</span>
+      </button>
+
+      <!-- Settings -->
+      <button data-section="settings" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">tune</span>
+        <span>Settings & Security</span>
+      </button>
+    </nav>
+
+    <!-- Footer Profile Badge -->
+    <div class="p-4 border-t border-surface-border flex items-center justify-between">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-8 h-8 rounded-lg bg-brand-blue/20 border border-brand-blue/30 flex items-center justify-center text-brand-blue font-bold text-xs">
+          A
+        </div>
+        <div class="min-w-0">
+          <p id="adminNameDisplay" class="text-xs font-semibold text-white truncate">Administrator</p>
+          <span class="text-[10px] font-mono text-emerald-400">ADMIN CLAIM</span>
+        </div>
+      </div>
+      <button id="adminLogoutBtn" title="Sign out" class="text-on-surface-variant hover:text-red-400 p-1.5 rounded-lg hover:bg-white/5 transition-all">
+        <span class="material-symbols-outlined text-lg">logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-black/70 z-30 hidden lg:hidden"></div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN VIEW CONTAINER                     -->
+  <!-- ========================================== -->
+  <div class="flex-1 flex flex-col lg:pl-64 h-screen overflow-hidden">
+
+    <!-- TOP BAR -->
+    <header class="h-16 border-b border-surface-border bg-surface/80 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-20">
+      
+      <!-- Left: Mobile Toggle & Page Title -->
+      <div class="flex items-center gap-4">
+        <button id="openSidebarBtn" class="lg:hidden text-on-surface-variant hover:text-white">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+        <div>
+          <h1 id="pageTitle" class="text-sm sm:text-base font-bold font-display text-white">System Overview</h1>
+          <span id="pageSubtitle" class="text-[11px] text-on-surface-variant hidden sm:inline">ANVION IT SERVICES Command Engine</span>
+        </div>
       </div>
 
-      <div id="authActions" class="flex items-center gap-4">
-        <a href="/" class="text-sm text-on-surface-variant hover:text-white transition-colors flex items-center gap-1">
-          <span class="material-symbols-outlined text-base">arrow_back</span>
-          Back to Website
+      <!-- Right: Search, Global Actions, Status -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Live Status Pill -->
+        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-mono text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Firebase Connected</span>
+        </div>
+
+        <a href="/" target="_blank" class="px-3 py-1.5 rounded-lg border border-surface-border text-xs text-on-surface-variant hover:text-white hover:bg-white/5 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+          <span class="hidden md:inline">Public Site</span>
         </a>
-        <div id="userBadge" class="hidden items-center gap-3 pl-3 border-l border-white/10">
-          <div class="text-right">
-            <p id="adminUserEmail" class="text-xs font-semibold text-white">admin@anvion.in</p>
-            <span class="text-[10px] uppercase text-brand-blue font-mono tracking-wider">Superadmin</span>
+      </div>
+    </header>
+
+    <!-- CONTENT SCROLL AREA -->
+    <main id="contentArea" class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
+      
+      <!-- ========================================== -->
+      <!-- SECTION: OVERVIEW                          -->
+      <!-- ========================================== -->
+      <section id="sec-overview" class="content-section space-y-8">
+        
+        <!-- Stat Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Enquiries -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-5 hover:border-brand-blue/30 transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-on-surface-variant">Project Enquiries</span>
+              <span class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 material-symbols-outlined text-lg">rocket_launch</span>
+            </div>
+            <p id="statEnquiries" class="text-2xl font-bold font-display text-white mt-3">0</p>
+            <span id="statNewEnquiries" class="text-[11px] font-mono text-blue-400 mt-1 block">0 new requests</span>
           </div>
-          <button id="logoutBtn" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-red-400 hover:border-red-400/30 transition-all">
-            Logout
+
+          <!-- Unread Messages -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-5 hover:border-brand-blue/30 transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-on-surface-variant">Contact Messages</span>
+              <span class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 material-symbols-outlined text-lg">mail</span>
+            </div>
+            <p id="statMessages" class="text-2xl font-bold font-display text-white mt-3">0</p>
+            <span id="statUnreadMessages" class="text-[11px] font-mono text-amber-400 mt-1 block">0 unread</span>
+          </div>
+
+          <!-- Total Users -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-5 hover:border-brand-blue/30 transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-on-surface-variant">Total Users</span>
+              <span class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 material-symbols-outlined text-lg">group</span>
+            </div>
+            <p id="statUsers" class="text-2xl font-bold font-display text-white mt-3">0</p>
+            <span class="text-[11px] font-mono text-emerald-400 mt-1 block">Zero-Trust Protected</span>
+          </div>
+
+          <!-- Job Applications -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-5 hover:border-brand-blue/30 transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-on-surface-variant">Job Applications</span>
+              <span class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 material-symbols-outlined text-lg">badge</span>
+            </div>
+            <p id="statApplications" class="text-2xl font-bold font-display text-white mt-3">0</p>
+            <span id="statNewApplications" class="text-[11px] font-mono text-purple-400 mt-1 block">0 reviewing</span>
+          </div>
+        </div>
+
+        <!-- Secondary Stat Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl border border-surface-border bg-surface-card">
+            <span class="text-xs text-on-surface-variant block">Published Projects</span>
+            <span id="statProjects" class="text-lg font-bold text-white mt-1 block">0</span>
+          </div>
+          <div class="p-4 rounded-xl border border-surface-border bg-surface-card">
+            <span class="text-xs text-on-surface-variant block">Genuine Reviews</span>
+            <span id="statReviews" class="text-lg font-bold text-white mt-1 block">0</span>
+          </div>
+          <div class="p-4 rounded-xl border border-surface-border bg-surface-card">
+            <span class="text-xs text-on-surface-variant block">Active Job Openings</span>
+            <span id="statJobs" class="text-lg font-bold text-white mt-1 block">0</span>
+          </div>
+          <div class="p-4 rounded-xl border border-surface-border bg-surface-card">
+            <span class="text-xs text-on-surface-variant block">Blog Publications</span>
+            <span id="statBlogPosts" class="text-lg font-bold text-white mt-1 block">0</span>
+          </div>
+        </div>
+
+        <!-- Activity Stream & Quick Inquiries -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Recent Enquiries -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white font-display flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-blue text-base">rocket_launch</span>
+                Latest Project Briefs
+              </h3>
+              <button onclick="switchSection('enquiries')" class="text-xs text-brand-blue hover:underline">View All</button>
+            </div>
+            <div id="recentEnquiriesList" class="space-y-3">
+              <p class="text-xs text-on-surface-variant py-4 text-center">Loading briefs...</p>
+            </div>
+          </div>
+
+          <!-- Recent Contact Messages -->
+          <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white font-display flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-blue text-base">mail</span>
+                Recent Messages
+              </h3>
+              <button onclick="switchSection('messages')" class="text-xs text-brand-blue hover:underline">View All</button>
+            </div>
+            <div id="recentMessagesList" class="space-y-3">
+              <p class="text-xs text-on-surface-variant py-4 text-center">Loading messages...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: USERS & RBAC                      -->
+      <!-- ========================================== -->
+      <section id="sec-users" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Registered Users & Role Management</h2>
+            <p class="text-xs text-on-surface-variant">Default role is strictly USER. Administrator roles require authoritative backend claim assignment.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="searchUsersInput" type="text" placeholder="Search by email or name..." class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">User</th>
+                <th class="p-4">Email</th>
+                <th class="p-4">Phone</th>
+                <th class="p-4">Role</th>
+                <th class="p-4">Created Date</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading registered users...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: PROJECT ENQUIRIES                 -->
+      <!-- ========================================== -->
+      <section id="sec-enquiries" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Project Enquiries & Quotations</h2>
+            <p class="text-xs text-on-surface-variant">Multi-step project briefs submitted by prospective commercial clients.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <select id="filterEnquiryStatus" class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue">
+              <option value="ALL">All Statuses</option>
+              <option value="NEW">NEW</option>
+              <option value="CONTACTED">CONTACTED</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="COMPLETED">COMPLETED</option>
+              <option value="CANCELLED">CANCELLED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Client</th>
+                <th class="p-4">Service / Type</th>
+                <th class="p-4">Budget & Timeline</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Received</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enquiriesTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading project enquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: CONTACT MESSAGES                  -->
+      <!-- ========================================== -->
+      <section id="sec-messages" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">General Contact Inquiries</h2>
+            <p class="text-xs text-on-surface-variant">Direct messages from the ANVION contact page.</p>
+          </div>
+          <select id="filterMessageStatus" class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue">
+            <option value="ALL">All Statuses</option>
+            <option value="UNREAD">UNREAD</option>
+            <option value="READ">READ</option>
+            <option value="REPLIED">REPLIED</option>
+            <option value="ARCHIVED">ARCHIVED</option>
+          </select>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Sender</th>
+                <th class="p-4">Contact Details</th>
+                <th class="p-4">Subject / Message</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Date</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="messagesTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading messages...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: PROJECTS CMS                      -->
+      <!-- ========================================== -->
+      <section id="sec-projects" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Project Case Studies & Portfolio</h2>
+            <p class="text-xs text-on-surface-variant">Manage commercial case studies. Marked clearly as REAL PROJECT, CONCEPT PROJECT, or DEMO PROJECT.</p>
+          </div>
+          <button id="openNewProjectBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add New Project</span>
           </button>
         </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Project Title</th>
+                <th class="p-4">Category</th>
+                <th class="p-4">Type</th>
+                <th class="p-4">Tech Stack</th>
+                <th class="p-4">Published</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading projects...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: SERVICES CATALOG                  -->
+      <!-- ========================================== -->
+      <section id="sec-services" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Engineering Services</h2>
+            <p class="text-xs text-on-surface-variant">Manage services displayed across the digital catalog.</p>
+          </div>
+          <button id="openNewServiceBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add Service</span>
+          </button>
+        </div>
+
+        <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="col-span-full p-8 text-center text-on-surface-variant text-xs">Loading services...</div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: SOLUTIONS                         -->
+      <!-- ========================================== -->
+      <section id="sec-solutions" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Enterprise Solutions</h2>
+            <p class="text-xs text-on-surface-variant">Manage industry solution frameworks.</p>
+          </div>
+          <button id="openNewSolutionBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add Solution</span>
+          </button>
+        </div>
+        <div id="solutionsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="col-span-full p-8 text-center text-on-surface-variant text-xs">Loading solutions...</div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: INDUSTRIES & TECH                 -->
+      <!-- ========================================== -->
+      <section id="sec-industries" class="content-section hidden space-y-6">
+        <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-4">
+          <h2 class="text-base font-bold font-display text-white">Target Industry Verticals</h2>
+          <p class="text-xs text-on-surface-variant">Configurable industry domains served by ANVION engineering teams.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+            <div class="p-4 rounded-lg bg-black/40 border border-surface-border text-xs"><span class="font-bold text-white block">Fintech & Banking</span><span class="text-[11px] text-on-surface-variant">Secure Ledger Systems</span></div>
+            <div class="p-4 rounded-lg bg-black/40 border border-surface-border text-xs"><span class="font-bold text-white block">Healthcare & MedTech</span><span class="text-[11px] text-on-surface-variant">HIPAA Compliant Clouds</span></div>
+            <div class="p-4 rounded-lg bg-black/40 border border-surface-border text-xs"><span class="font-bold text-white block">Logistics & Supply Chain</span><span class="text-[11px] text-on-surface-variant">Fleet Orchestration</span></div>
+            <div class="p-4 rounded-lg bg-black/40 border border-surface-border text-xs"><span class="font-bold text-white block">E-Commerce & Retail</span><span class="text-[11px] text-on-surface-variant">Headless Platforms</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec-technologies" class="content-section hidden space-y-6">
+        <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-4">
+          <h2 class="text-base font-bold font-display text-white">Supported Engineering Stacks</h2>
+          <p class="text-xs text-on-surface-variant">Core competencies displayed across project technical briefs.</p>
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">React / Next.js</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">TypeScript</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">Node.js Express</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">Firebase / Firestore</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">PostgreSQL / Cloud SQL</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">Flutter / React Native</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">Docker / Kubernetes</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-xs text-white font-mono">Google Cloud Run</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: REVIEWS / TESTIMONIALS            -->
+      <!-- ========================================== -->
+      <section id="sec-reviews" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Genuine Client Reviews</h2>
+            <p class="text-xs text-on-surface-variant">Only genuine reviews are published. Published reviews are visible on the website.</p>
+          </div>
+          <button id="openNewReviewBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add Review</span>
+          </button>
+        </div>
+
+        <div id="reviewsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="col-span-full p-8 text-center text-on-surface-variant text-xs">Loading testimonials...</div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: BLOG CMS                          -->
+      <!-- ========================================== -->
+      <section id="sec-blog" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Engineering Thought Leadership & Blog</h2>
+            <p class="text-xs text-on-surface-variant">Articles published here appear at /blog and /blog/[slug].</p>
+          </div>
+          <button id="openNewBlogBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Write New Article</span>
+          </button>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Title & Slug</th>
+                <th class="p-4">Author</th>
+                <th class="p-4">Category</th>
+                <th class="p-4">Published</th>
+                <th class="p-4">Date</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="blogTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading blog articles...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: CAREERS / JOBS                    -->
+      <!-- ========================================== -->
+      <section id="sec-careers" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Career Openings</h2>
+            <p class="text-xs text-on-surface-variant">Manage active recruitment requisitions displayed on the public careers portal.</p>
+          </div>
+          <button id="openNewJobBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Post New Job</span>
+          </button>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Role Title</th>
+                <th class="p-4">Department</th>
+                <th class="p-4">Location</th>
+                <th class="p-4">Experience</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="jobsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading career openings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: JOB APPLICATIONS                  -->
+      <!-- ========================================== -->
+      <section id="sec-applications" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Candidate Applications & Resumes</h2>
+            <p class="text-xs text-on-surface-variant">Confidential applicant data protected by Zero-Trust Firestore & Storage rules.</p>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Candidate</th>
+                <th class="p-4">Position</th>
+                <th class="p-4">Contact</th>
+                <th class="p-4">Resume</th>
+                <th class="p-4">Hiring Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="applicationsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading candidate applications...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: FAQS CMS                          -->
+      <!-- ========================================== -->
+      <section id="sec-faqs" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Frequently Asked Questions</h2>
+            <p class="text-xs text-on-surface-variant">Manage questions and answers for service and technical inquiries.</p>
+          </div>
+          <button id="openNewFaqBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add FAQ</span>
+          </button>
+        </div>
+
+        <div id="faqsList" class="space-y-3">
+          <div class="p-8 text-center text-on-surface-variant text-xs">Loading FAQs...</div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: WEBSITE CONTENT CMS               -->
+      <!-- ========================================== -->
+      <section id="sec-content" class="content-section hidden space-y-6">
+        <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-6">
+          <div class="border-b border-surface-border pb-4">
+            <h2 class="text-base font-bold font-display text-white">Global Website Content & Metadata</h2>
+            <p class="text-xs text-on-surface-variant">Modify primary copy without editing raw code. All inputs are sanitized.</p>
+          </div>
+
+          <form id="websiteContentForm" class="space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Hero Heading</label>
+                <input id="cfgHeroHeading" type="text" value="We Build Digital Solutions That Move Businesses Forward." class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Primary CTA Button Label</label>
+                <input id="cfgCtaText" type="text" value="Start a Project" class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue"/>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Hero Subtitle / Description</label>
+              <textarea id="cfgHeroDescription" rows="2" class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue">Architecting scalable websites, robust software, intuitive mobile apps, and secure cloud infrastructures for the modern enterprise.</textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div>
+                <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Inquiry Email</label>
+                <input id="cfgContactEmail" type="email" value="contact@anvion.in" class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Support Phone</label>
+                <input id="cfgContactPhone" type="text" value="+91 98765 43210" class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono uppercase text-on-surface-variant mb-1">Corporate Office</label>
+                <input id="cfgContactAddress" type="text" value="Bengaluru, Karnataka, India" class="w-full rounded-lg border border-surface-border bg-black/60 px-4 py-2.5 text-xs text-white outline-none focus:border-brand-blue"/>
+              </div>
+            </div>
+
+            <div>
+              <button type="submit" id="saveContentBtn" class="px-6 py-2.5 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all shadow-[0_0_15px_rgba(0,123,255,0.3)]">
+                Save Global Content
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: MEDIA STORAGE                     -->
+      <!-- ========================================== -->
+      <section id="sec-media" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Media Asset Management</h2>
+            <p class="text-xs text-on-surface-variant">Validated formats: JPEG, PNG, WebP (Max 10MB). Protected by Firebase Storage rules.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="file" id="mediaFileInput" accept="image/png,image/jpeg,image/webp" class="hidden"/>
+            <button onclick="document.getElementById('mediaFileInput').click()" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2">
+              <span class="material-symbols-outlined text-sm">upload</span>
+              <span>Upload New Media</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="mediaGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div class="col-span-full p-8 text-center text-on-surface-variant text-xs">Media library ready. Upload assets above.</div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: AUDIT LOGS                        -->
+      <!-- ========================================== -->
+      <section id="sec-audit" class="content-section hidden space-y-6">
+        <div>
+          <h2 class="text-lg font-bold font-display text-white">Administrative Security Audit Trail</h2>
+          <p class="text-xs text-on-surface-variant">Immutable ledger recording all administrative updates, project mutations, and privilege assignments.</p>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Timestamp</th>
+                <th class="p-4">Admin Identity</th>
+                <th class="p-4">Action</th>
+                <th class="p-4">Details</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="4" class="p-6 text-center text-on-surface-variant">Loading audit events...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: SETTINGS & SECURITY               -->
+      <!-- ========================================== -->
+      <section id="sec-settings" class="content-section hidden space-y-6">
+        <div class="bg-surface-card border border-surface-border rounded-xl p-6 space-y-6">
+          <div class="border-b border-surface-border pb-4">
+            <h2 class="text-base font-bold font-display text-white">Security & Environment Configuration</h2>
+            <p class="text-xs text-on-surface-variant">Authoritative Custom Claims, Firebase App Check, and role provisioning verification.</p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="p-4 rounded-xl border border-surface-border bg-black/40 flex items-center justify-between">
+              <div>
+                <p class="text-xs font-bold text-white">Firebase App Check</p>
+                <p class="text-[11px] text-on-surface-variant">Protects Firestore, Storage, and backend endpoints from bot abuse using reCAPTCHA v3.</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">Protected</span>
+            </div>
+
+            <div class="p-4 rounded-xl border border-surface-border bg-black/40 flex items-center justify-between">
+              <div>
+                <p class="text-xs font-bold text-white">Authoritative Role Enforcement</p>
+                <p class="text-[11px] text-on-surface-variant">Zero-Trust Custom Claims <code class="text-brand-blue font-mono">{ admin: true }</code> verified via Firebase Admin SDK.</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-mono">Active</span>
+            </div>
+
+            <!-- Admin Privilege Grant Box -->
+            <div class="p-5 rounded-xl border border-brand-blue/30 bg-brand-blue/5 space-y-3">
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-blue text-base">security</span>
+                Grant Authoritative Admin Role
+              </h4>
+              <p class="text-[11px] text-on-surface-variant">
+                Enter an existing user's registered email or UID to grant the authoritative <code class="text-brand-blue font-mono">{ admin: true }</code> Custom Claim.
+              </p>
+              <div class="flex flex-col sm:flex-row items-center gap-3">
+                <input id="grantAdminInput" type="text" placeholder="user@enterprise.com or UID" class="flex-1 rounded-lg border border-surface-border bg-black/70 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue font-mono w-full"/>
+                <button id="grantAdminBtn" class="px-4 py-2 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all w-full sm:w-auto shrink-0">
+                  Assign Admin Role
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. GENERIC MODALS & CONFIRMATION DIALOGS   -->
+  <!-- ========================================== -->
+
+  <!-- Modal: View Enquiry Detail -->
+  <div id="enquiryDetailModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold font-display text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-brand-blue">description</span>
+          <span>Project Enquiry Dossier</span>
+        </h3>
+        <button onclick="closeModal('enquiryDetailModal')" class="text-on-surface-variant hover:text-white">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div id="enquiryModalContent" class="space-y-4 text-xs"></div>
+      <div class="flex justify-end pt-3 border-t border-surface-border">
+        <button onclick="closeModal('enquiryDetailModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold">
+          Close Dossier
+        </button>
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- LOGIN PANEL -->
-  <section id="loginSection" class="px-6 py-20 max-w-md mx-auto">
-    <div class="bg-surface border border-white/10 rounded-xl p-8 shadow-2xl">
-      <div class="text-center mb-8">
-        <div class="w-12 h-12 rounded-full bg-brand-blue/10 flex items-center justify-center mx-auto mb-4">
-          <span class="material-symbols-outlined text-brand-blue text-2xl">lock</span>
-        </div>
-        <h1 class="text-xl font-bold font-display text-white">Authenticate Session</h1>
-        <p class="text-xs text-on-surface-variant mt-2">Sign in to manage inquiries, applications, and commercial content.</p>
-      </div>
-
-      <form id="adminLoginForm" class="space-y-5">
-        <div>
-          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Admin Email</label>
-          <input id="loginEmail" type="email" required value="admin@anvion.in" class="w-full rounded border border-white/10 bg-black px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-brand-blue"/>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Password</label>
-          <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full rounded border border-white/10 bg-black px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none focus:border-brand-blue"/>
-        </div>
-
-        <div id="loginError" class="hidden p-3 rounded border border-red-500/30 bg-red-500/10 text-red-300 text-xs"></div>
-
-        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-brand-blue text-white font-bold text-sm rounded hover:brightness-110 transition-all flex items-center justify-center gap-2">
-          <span>Sign In</span>
-          <span class="material-symbols-outlined text-base">login</span>
+  <!-- Modal: Project Create / Edit -->
+  <div id="projectModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-3xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-surface-border pb-3">
+        <h3 id="projectModalTitle" class="text-base font-bold font-display text-white">Create New Project</h3>
+        <button onclick="closeModal('projectModal')" class="text-on-surface-variant hover:text-white">
+          <span class="material-symbols-outlined">close</span>
         </button>
+      </div>
+      <form id="projectForm" class="space-y-4 text-xs">
+        <input type="hidden" id="projId"/>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Project Name *</label>
+            <input id="projTitle" type="text" required class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Category</label>
+            <select id="projCategory" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="software">Custom Software</option>
+              <option value="cloud">Cloud & DevOps</option>
+              <option value="mobile">Mobile Application</option>
+              <option value="cybersecurity">Cybersecurity</option>
+              <option value="web">Web Development</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Project Archetype *</label>
+            <select id="projType" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue font-semibold">
+              <option value="REAL PROJECT">REAL PROJECT</option>
+              <option value="CONCEPT PROJECT">CONCEPT PROJECT</option>
+              <option value="DEMO PROJECT">DEMO PROJECT</option>
+            </select>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Client Name (if permitted)</label>
+            <input id="projClient" type="text" placeholder="Internal or Client name" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Short Summary (for cards)</label>
+          <input id="projShortDesc" type="text" placeholder="Brief one-line summary" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Detailed Case Study Narrative</label>
+          <textarea id="projDesc" rows="4" placeholder="Challenge, solution architecture, and outcomes..." class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"></textarea>
+        </div>
+
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Technology Stack (comma separated)</label>
+          <input id="projTech" type="text" placeholder="React, Node.js, Firebase, Cloud Run" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Live URL (optional)</label>
+            <input id="projUrl" type="url" placeholder="https://..." class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Cover Image URL</label>
+            <input id="projImage" type="text" placeholder="/images/... or https://..." class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <input type="checkbox" id="projPublished" checked class="rounded border-surface-border bg-black/60 text-brand-blue focus:ring-brand-blue"/>
+          <label for="projPublished" class="text-white font-medium cursor-pointer">Published (Visible on public website)</label>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-surface-border">
+          <button type="button" onclick="closeModal('projectModal')" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg hover:text-white">Cancel</button>
+          <button type="submit" class="px-6 py-2 bg-brand-blue hover:bg-brand-hover text-white font-bold rounded-lg">Save Project</button>
+        </div>
       </form>
     </div>
-  </section>
+  </div>
 
-  <!-- MAIN ADMIN DASHBOARD -->
-  <main id="dashboardSection" class="hidden px-6 py-8 max-w-7xl mx-auto space-y-8">
-
-    <!-- KPI STATS -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="bg-surface border border-white/10 rounded-xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between">
-          <span class="text-xs uppercase tracking-wider text-on-surface-variant font-mono">Project Inquiries</span>
-          <span class="w-8 h-8 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center material-symbols-outlined text-base">business_center</span>
-        </div>
-        <p id="statEnquiries" class="text-3xl font-bold font-display text-white mt-3">0</p>
-        <p id="statNewEnquiries" class="text-xs text-brand-blue mt-1">0 pending review</p>
+  <!-- Modal: Generic Delete Confirmation -->
+  <div id="deleteConfirmModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center gap-3 text-red-400">
+        <span class="material-symbols-outlined text-2xl">warning</span>
+        <h3 class="text-base font-bold font-display text-white">Confirm Deletion</h3>
       </div>
-
-      <div class="bg-surface border border-white/10 rounded-xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between">
-          <span class="text-xs uppercase tracking-wider text-on-surface-variant font-mono">Contact Messages</span>
-          <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center material-symbols-outlined text-base">mail</span>
-        </div>
-        <p id="statMessages" class="text-3xl font-bold font-display text-white mt-3">0</p>
-        <p id="statUnreadMessages" class="text-xs text-emerald-400 mt-1">0 unread</p>
-      </div>
-
-      <div class="bg-surface border border-white/10 rounded-xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between">
-          <span class="text-xs uppercase tracking-wider text-on-surface-variant font-mono">Job Applications</span>
-          <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center material-symbols-outlined text-base">group</span>
-        </div>
-        <p id="statApplications" class="text-3xl font-bold font-display text-white mt-3">0</p>
-        <p id="statNewApplications" class="text-xs text-purple-400 mt-1">0 new candidates</p>
-      </div>
-
-      <div class="bg-surface border border-white/10 rounded-xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between">
-          <span class="text-xs uppercase tracking-wider text-on-surface-variant font-mono">Database Status</span>
-          <span class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center material-symbols-outlined text-base">database</span>
-        </div>
-        <p class="text-3xl font-bold font-display text-white mt-3">Active</p>
-        <p class="text-xs text-cyan-400 mt-1">Cloud SQL PostgreSQL</p>
+      <p id="deleteConfirmMessage" class="text-xs text-on-surface-variant leading-relaxed">
+        Are you sure you want to permanently delete this record? This action cannot be undone.
+      </p>
+      <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+        <button id="cancelDeleteBtn" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg text-xs hover:text-white">Cancel</button>
+        <button id="confirmDeleteBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs">Delete Record</button>
       </div>
     </div>
+  </div>
 
-    <!-- TABS -->
-    <div class="flex items-center gap-3 border-b border-white/10 pb-3">
-      <button class="tab-btn px-4 py-2 rounded font-semibold text-sm bg-brand-blue text-white" data-tab="enquiriesTab">Project Enquiries</button>
-      <button class="tab-btn px-4 py-2 rounded font-semibold text-sm text-on-surface-variant hover:text-white border border-transparent hover:border-white/10" data-tab="applicationsTab">Job Applications</button>
-      <button class="tab-btn px-4 py-2 rounded font-semibold text-sm text-on-surface-variant hover:text-white border border-transparent hover:border-white/10" data-tab="messagesTab">Contact Inquiries</button>
-      <button class="tab-btn px-4 py-2 rounded font-semibold text-sm text-on-surface-variant hover:text-white border border-transparent hover:border-white/10" data-tab="createProjectTab">+ New Project</button>
-    </div>
+  <!-- ========================================== -->
+  <!-- 4. CORE ADMIN CONTROLLER SCRIPT            -->
+  <!-- ========================================== -->
+  <script type="module">
+    import {
+      auth,
+      db,
+      doc,
+      getDoc,
+      getDocs,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      collection,
+      query,
+      where,
+      orderBy,
+      limit,
+      serverTimestamp,
+      logoutUser,
+      checkAdminAuthorization,
+      onAuthStateChanged,
+      uploadMediaFile
+    } from '/js/firebase-client.js';
 
-    <!-- TAB 1: PROJECT ENQUIRIES -->
-    <section id="enquiriesTab" class="tab-pane space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-bold font-display text-white">Submitted Project Inquiries</h2>
-        <button id="refreshEnquiriesBtn" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-sm">refresh</span> Refresh
-        </button>
-      </div>
+    // Global Admin State
+    let currentAdmin = null;
+    let cachedEnquiries = [];
+    let cachedMessages = [];
+    let cachedUsers = [];
+    let cachedProjects = [];
+    let cachedReviews = [];
+    let cachedJobs = [];
+    let cachedApplications = [];
+    let cachedBlogPosts = [];
+    let cachedMedia = [];
+    let pendingDeleteAction = null;
 
-      <div class="bg-surface border border-white/10 rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-black/60 text-xs text-on-surface-variant uppercase tracking-wider font-mono border-b border-white/10">
-              <tr>
-                <th class="px-5 py-3">Client / Company</th>
-                <th class="px-5 py-3">Scope & Type</th>
-                <th class="px-5 py-3">Budget / Timeline</th>
-                <th class="px-5 py-3">Attachment</th>
-                <th class="px-5 py-3">Status</th>
-                <th class="px-5 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="enquiriesTableBody" class="divide-y divide-white/5">
-              <tr>
-                <td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">Loading inquiries...</td>
-              </tr>
-            </tbody>
-          </table>
+    // Toast System
+    window.showToast = function(title, msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-2xl transition-all duration-300 transform translate-x-8 opacity-0 ${
+        type === 'error'
+          ? 'bg-red-950/95 border-red-500/40 text-red-200'
+          : 'bg-[#151720] border-emerald-500/40 text-emerald-200'
+      }`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-base ${type === 'error' ? 'text-red-400' : 'text-emerald-400'}">
+          ${type === 'error' ? 'error' : 'check_circle'}
+        </span>
+        <div class="flex-1 text-xs">
+          <p class="font-bold text-white">${title}</p>
+          <p class="mt-0.5 text-on-surface-variant">${msg}</p>
         </div>
-      </div>
-    </section>
+      `;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.remove('translate-x-8', 'opacity-0'));
+      setTimeout(() => {
+        toast.classList.add('translate-x-8', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    };
 
-    <!-- TAB 2: JOB APPLICATIONS -->
-    <section id="applicationsTab" class="tab-pane hidden space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-bold font-display text-white">Candidate Applications & Resumes</h2>
-        <button id="refreshApplicationsBtn" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-sm">refresh</span> Refresh
-        </button>
-      </div>
+    // Modal Helpers
+    window.openModal = function(id) {
+      document.getElementById(id).classList.remove('hidden');
+    };
+    window.closeModal = function(id) {
+      document.getElementById(id).classList.add('hidden');
+    };
 
-      <div class="bg-surface border border-white/10 rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-black/60 text-xs text-on-surface-variant uppercase tracking-wider font-mono border-b border-white/10">
-              <tr>
-                <th class="px-5 py-3">Candidate</th>
-                <th class="px-5 py-3">Position</th>
-                <th class="px-5 py-3">Links & Cover</th>
-                <th class="px-5 py-3">Resume Document</th>
-                <th class="px-5 py-3">Status</th>
-                <th class="px-5 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="applicationsTableBody" class="divide-y divide-white/5">
-              <tr>
-                <td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">Loading candidate applications...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    // Navigation Switcher
+    window.switchSection = function(sectionId) {
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
+      const target = document.getElementById(`sec-${sectionId}`);
+      if (target) {
+        target.classList.remove('hidden');
+      }
 
-    <!-- TAB 3: CONTACT MESSAGES -->
-    <section id="messagesTab" class="tab-pane hidden space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-bold font-display text-white">General Contact Inquiries</h2>
-        <button id="refreshMessagesBtn" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-sm">refresh</span> Refresh
-        </button>
-      </div>
-
-      <div class="bg-surface border border-white/10 rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-black/60 text-xs text-on-surface-variant uppercase tracking-wider font-mono border-b border-white/10">
-              <tr>
-                <th class="px-5 py-3">Contact</th>
-                <th class="px-5 py-3">Category</th>
-                <th class="px-5 py-3">Message</th>
-                <th class="px-5 py-3">Date</th>
-                <th class="px-5 py-3">Status</th>
-                <th class="px-5 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="messagesTableBody" class="divide-y divide-white/5">
-              <tr>
-                <td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">Loading messages...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 4: CREATE PROJECT -->
-    <section id="createProjectTab" class="tab-pane hidden max-w-3xl space-y-6">
-      <div class="bg-surface border border-white/10 rounded-xl p-8">
-        <h2 class="text-lg font-bold font-display text-white mb-2">Publish Project to Showcase</h2>
-        <p class="text-xs text-on-surface-variant mb-6">Add a client engagement or concept architecture to ANVION portfolio database.</p>
-
-        <form id="newProjectForm" class="space-y-5">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Title *</label>
-              <input required name="title" placeholder="e.g. Distributed Fintech Switch" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Category *</label>
-              <select name="category" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue">
-                <option value="software">Software</option>
-                <option value="mobile">Mobile App</option>
-                <option value="web">Web Application</option>
-                <option value="ai">AI & Automation</option>
-                <option value="iot">IoT & Embedded</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Project Classification</label>
-              <select name="isConcept" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue">
-                <option value="true">Concept Architecture / Lab</option>
-                <option value="false">Client Delivery</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Badge Text</label>
-              <input name="badgeLabel" placeholder="e.g. ANVION CONCEPT" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue"/>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Executive Summary *</label>
-            <textarea required name="summary" rows="3" placeholder="High-level solution overview" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Problem Statement</label>
-            <textarea name="problem" rows="2" placeholder="The operational or technical bottleneck solved" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-on-surface-variant uppercase mb-2">Delivered Solution</label>
-            <textarea name="solution" rows="2" placeholder="How ANVION implemented the architecture" class="w-full rounded border border-white/10 bg-black px-4 py-2.5 text-sm text-white outline-none focus:border-brand-blue"></textarea>
-          </div>
-
-          <button type="submit" class="px-6 py-3 bg-brand-blue text-white text-sm font-bold rounded hover:brightness-110 transition-all flex items-center gap-2">
-            <span>Commit to Database</span>
-            <span class="material-symbols-outlined text-base">cloud_upload</span>
-          </button>
-        </form>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- SCRIPT -->
-  <script>
-    let token = localStorage.getItem('anvion_admin_token');
-
-    // Tab switcher
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => {
-          b.className = 'tab-btn px-4 py-2 rounded font-semibold text-sm text-on-surface-variant hover:text-white border border-transparent hover:border-white/10';
-        });
-        btn.className = 'tab-btn px-4 py-2 rounded font-semibold text-sm bg-brand-blue text-white';
-
-        const tabId = btn.dataset.tab;
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
-        document.getElementById(tabId)?.classList.remove('hidden');
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.section === sectionId) {
+          btn.className = 'nav-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all text-white bg-brand-blue shadow-[0_0_15px_rgba(0,123,255,0.3)]';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all';
+        }
       });
+
+      // Update Top Page Title
+      const titleMap = {
+        overview: 'System Overview & Metrics',
+        users: 'User Directory & RBAC Security',
+        enquiries: 'Project Quotation Enquiries',
+        messages: 'Corporate Contact Inquiries',
+        projects: 'Commercial Case Studies & Projects',
+        services: 'Services Catalog',
+        solutions: 'Solutions Framework',
+        industries: 'Industry Verticals',
+        technologies: 'Technology Taxonomy',
+        reviews: 'Genuine Client Testimonials',
+        blog: 'Engineering Publications',
+        careers: 'Career Opportunities',
+        applications: 'Candidate Resumes & Applications',
+        faqs: 'Frequently Asked Questions',
+        content: 'Website Global Content',
+        media: 'Media Asset Management',
+        audit: 'Administrative Security Audit Log',
+        settings: 'System Governance & Security'
+      };
+      document.getElementById('pageTitle').textContent = titleMap[sectionId] || 'Command Center';
+
+      // Close mobile drawer if open
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.add('hidden');
+    };
+
+    // Attach Nav Clicks
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchSection(btn.dataset.section));
+    });
+
+    // Mobile Sidebar Toggles
+    document.getElementById('openSidebarBtn').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.remove('hidden');
+    });
+    document.getElementById('closeSidebarBtn').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.add('hidden');
+    });
+    document.getElementById('sidebarBackdrop').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.add('hidden');
+    });
+
+    // ==========================================
+    // ZERO-TRUST ADMIN AUTHENTICATION GUARD
+    // ==========================================
+    onAuthStateChanged(auth, async (user) => {
+      const gateOverlay = document.getElementById('authGateOverlay');
+      const gateTitle = document.getElementById('gateTitle');
+      const gateMessage = document.getElementById('gateMessage');
+
+      if (!user) {
+        // Not authenticated
+        gateTitle.textContent = 'Restricted Administration Portal';
+        gateMessage.textContent = 'Redirecting to secure login interface...';
+        setTimeout(() => {
+          window.location.href = '/admin/login';
+        }, 600);
+        return;
+      }
+
+      // Check Authoritative Admin Claim
+      try {
+        const isAdmin = await checkAdminAuthorization(user);
+
+        if (!isAdmin) {
+          // Access Denied! Normal user attempted /admin
+          gateTitle.textContent = 'Access Denied';
+          gateTitle.className = 'text-xl font-bold font-display text-red-500';
+          gateMessage.textContent = 'Your user account does not possess authorized administrator clearance. Redirecting to home...';
+          await auth.signOut();
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 2500);
+          return;
+        }
+
+        // Verified Administrator
+        currentAdmin = user;
+        document.getElementById('adminNameDisplay').textContent = user.displayName || user.email;
+        gateOverlay.classList.add('hidden');
+
+        // Load all data
+        loadAdminData();
+      } catch (err) {
+        gateTitle.textContent = 'Security Verification Error';
+        gateMessage.textContent = err.message || 'Failed to authenticate claim.';
+      }
     });
 
     // Logout
-    document.getElementById('logoutBtn')?.addEventListener('click', () => {
-      localStorage.removeItem('anvion_admin_token');
-      token = null;
-      showLogin();
-    });
+    document.getElementById('adminLogoutBtn').addEventListener('click', () => logoutUser());
 
-    function showLogin() {
-      document.getElementById('loginSection').classList.remove('hidden');
-      document.getElementById('dashboardSection').classList.add('hidden');
-      document.getElementById('userBadge').classList.add('hidden');
+    // ==========================================
+    // DATA LOADER & REAL-TIME REFRESH
+    // ==========================================
+    async function loadAdminData() {
+      await Promise.allSettled([
+        loadEnquiries(),
+        loadMessages(),
+        loadUsers(),
+        loadProjects(),
+        loadReviews(),
+        loadCareers(),
+        loadApplications(),
+        loadBlog(),
+        loadFAQs(),
+        loadMediaAssets(),
+        loadAuditLogs()
+      ]);
+      updateMetrics();
     }
 
-    function showDashboard() {
-      document.getElementById('loginSection').classList.add('hidden');
-      document.getElementById('dashboardSection').classList.remove('hidden');
-      document.getElementById('userBadge').classList.remove('hidden');
-      loadMetrics();
-      loadEnquiries();
-      loadApplications();
-      loadMessages();
+    function updateMetrics() {
+      // Metric totals
+      document.getElementById('statEnquiries').textContent = cachedEnquiries.length;
+      document.getElementById('badgeEnquiries').textContent = cachedEnquiries.length;
+      const newEnq = cachedEnquiries.filter(e => (e.status || '').toUpperCase() === 'NEW').length;
+      document.getElementById('statNewEnquiries').textContent = `${newEnq} new requests`;
+
+      document.getElementById('statMessages').textContent = cachedMessages.length;
+      document.getElementById('badgeMessages').textContent = cachedMessages.length;
+      const unreadMsg = cachedMessages.filter(m => (m.status || '').toUpperCase() === 'UNREAD').length;
+      document.getElementById('statUnreadMessages').textContent = `${unreadMsg} unread`;
+
+      document.getElementById('statUsers').textContent = cachedUsers.length;
+      document.getElementById('badgeUsers').textContent = cachedUsers.length;
+
+      document.getElementById('statApplications').textContent = cachedApplications.length;
+      document.getElementById('badgeApplications').textContent = cachedApplications.length;
+
+      document.getElementById('statProjects').textContent = cachedProjects.length;
+      document.getElementById('statReviews').textContent = cachedReviews.length;
+      document.getElementById('statJobs').textContent = cachedJobs.length;
+      document.getElementById('statBlogPosts').textContent = cachedBlogPosts.length;
     }
 
-    // Login Form
-    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      const errorDiv = document.getElementById('loginError');
-      errorDiv.classList.add('hidden');
-
-      try {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok && data.token) {
-          token = data.token;
-          localStorage.setItem('anvion_admin_token', token);
-          document.getElementById('adminUserEmail').textContent = data.admin.email;
-          showDashboard();
-        } else {
-          errorDiv.textContent = data.error || 'Invalid credentials';
-          errorDiv.classList.remove('hidden');
-        }
-      } catch (err) {
-        errorDiv.textContent = 'Server connection error';
-        errorDiv.classList.remove('hidden');
-      }
-    });
-
-    // Load Metrics
-    async function loadMetrics() {
-      if (!token) return;
-      try {
-        const res = await fetch('/api/admin/metrics', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.status === 401) { showLogin(); return; }
-        const data = await res.json();
-        document.getElementById('statEnquiries').textContent = data.totals.enquiries || 0;
-        document.getElementById('statNewEnquiries').textContent = `${data.totals.newEnquiries || 0} pending review`;
-        document.getElementById('statMessages').textContent = data.totals.messages || 0;
-        document.getElementById('statUnreadMessages').textContent = `${data.totals.unreadMessages || 0} unread`;
-        document.getElementById('statApplications').textContent = data.totals.applications || 0;
-        document.getElementById('statNewApplications').textContent = `${data.totals.newApplications || 0} new candidates`;
-      } catch (e) {
-        console.error('Failed to load metrics:', e);
-      }
-    }
-
-    // Load Enquiries
+    // 1. Load Enquiries
     async function loadEnquiries() {
-      if (!token) return;
+      try {
+        const snap = await getDocs(collection(db, 'projectEnquiries'));
+        cachedEnquiries = [];
+        snap.forEach(d => cachedEnquiries.push({ id: d.id, ...d.data() }));
+
+        // Fallback to API if firestore collection is fresh
+        if (cachedEnquiries.length === 0) {
+          const res = await fetch('/api/admin/enquiries', {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('anvion_admin_jwt') || ''}` }
+          });
+          if (res.ok) cachedEnquiries = await res.json();
+        }
+
+        renderEnquiriesTable(cachedEnquiries);
+        renderRecentEnquiries(cachedEnquiries.slice(0, 4));
+      } catch (err) {
+        console.warn('Could not fetch enquiries directly:', err);
+      }
+    }
+
+    function renderEnquiriesTable(items) {
       const tbody = document.getElementById('enquiriesTableBody');
-      try {
-        const res = await fetch('/api/admin/enquiries', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const list = await res.json();
-        if (!list || list.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">No project inquiries recorded yet.</td></tr>';
-          return;
-        }
-
-        tbody.innerHTML = list.map(item => `
-          <tr class="hover:bg-white/[0.02] transition-colors">
-            <td class="px-5 py-4">
-              <p class="font-bold text-white">${escapeHtml(item.name)}</p>
-              <p class="text-xs text-brand-blue">${escapeHtml(item.email)}</p>
-              <p class="text-xs text-on-surface-variant">${item.company ? escapeHtml(item.company) : 'Personal / Founder'}</p>
-            </td>
-            <td class="px-5 py-4 max-w-xs">
-              <span class="inline-block px-2 py-0.5 rounded bg-brand-blue/10 text-brand-blue text-[11px] font-mono mb-1">
-                ${Array.isArray(item.servicesNeeded) ? item.servicesNeeded.join(', ') : 'General'}
-              </span>
-              <p class="text-xs text-on-surface-variant line-clamp-2">${escapeHtml(item.projectDescription)}</p>
-            </td>
-            <td class="px-5 py-4 text-xs text-on-surface-variant">
-              <p><span class="text-white font-medium">Budget:</span> ${escapeHtml(item.budget || 'Flexible')}</p>
-              <p><span class="text-white font-medium">Timeline:</span> ${escapeHtml(item.timeline || 'TBD')}</p>
-            </td>
-            <td class="px-5 py-4 text-xs">
-              ${item.attachmentFilename ? `
-                <a href="/api/admin/download/${item.attachmentFilename}" class="inline-flex items-center gap-1 text-brand-blue hover:underline font-mono" download>
-                  <span class="material-symbols-outlined text-sm">attach_file</span>
-                  Download Brief
-                </a>
-              ` : '<span class="text-white/30 font-mono">None</span>'}
-            </td>
-            <td class="px-5 py-4">
-              <span class="px-2.5 py-1 rounded text-xs font-semibold ${item.status === 'new' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
-                ${item.status}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-right">
-              ${item.status === 'new' ? `
-                <button onclick="updateEnquiryStatus(${item.id}, 'contacted')" class="text-xs px-3 py-1.5 rounded bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white transition-all">
-                  Mark Contacted
-                </button>
-              ` : `
-                <button onclick="updateEnquiryStatus(${item.id}, 'completed')" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white transition-all">
-                  Close
-                </button>
-              `}
-            </td>
-          </tr>
-        `).join('');
-      } catch (e) {
-        tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-red-400">Failed to fetch inquiries.</td></tr>';
+      if (!items || items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No project briefs submitted yet.</td></tr>';
+        return;
       }
+      tbody.innerHTML = items.map(item => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4">
+            <p class="font-bold text-white">${item.name || 'Anonymous'}</p>
+            <p class="text-on-surface-variant font-mono text-[11px]">${item.email}</p>
+            ${item.company ? `<span class="text-[10px] text-brand-blue">${item.company}</span>` : ''}
+          </td>
+          <td class="p-4">
+            <span class="font-medium text-white">${item.service || item.projectType || 'Software'}</span>
+          </td>
+          <td class="p-4">
+            <p class="text-white">${item.budget || 'TBD'}</p>
+            <p class="text-on-surface-variant text-[11px]">${item.timeline || 'Flexible'}</p>
+          </td>
+          <td class="p-4">
+            <select onchange="updateEnquiryStatus('${item.id}', this.value)" class="rounded border border-surface-border bg-black/60 px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-brand-blue">
+              <option value="NEW" ${(item.status === 'NEW' || item.status === 'new') ? 'selected' : ''}>NEW</option>
+              <option value="CONTACTED" ${item.status === 'CONTACTED' ? 'selected' : ''}>CONTACTED</option>
+              <option value="IN_PROGRESS" ${item.status === 'IN_PROGRESS' ? 'selected' : ''}>IN_PROGRESS</option>
+              <option value="COMPLETED" ${item.status === 'COMPLETED' ? 'selected' : ''}>COMPLETED</option>
+              <option value="CANCELLED" ${item.status === 'CANCELLED' ? 'selected' : ''}>CANCELLED</option>
+            </select>
+          </td>
+          <td class="p-4 text-on-surface-variant font-mono text-[11px]">
+            ${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
+          </td>
+          <td class="p-4 text-right space-x-2">
+            <button onclick="viewEnquiryDetail('${item.id}')" class="px-2.5 py-1 rounded bg-white/5 border border-surface-border text-brand-blue hover:bg-brand-blue hover:text-white transition-all text-xs">
+              View Brief
+            </button>
+            <button onclick="confirmDelete('projectEnquiries', '${item.id}', 'Project Brief from ${item.name || item.email}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+              <span class="material-symbols-outlined text-sm">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
     }
 
-    // Load Applications
-    async function loadApplications() {
-      if (!token) return;
-      const tbody = document.getElementById('applicationsTableBody');
-      try {
-        const res = await fetch('/api/admin/applications', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const list = await res.json();
-        if (!list || list.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">No candidate applications recorded yet.</td></tr>';
-          return;
-        }
-
-        tbody.innerHTML = list.map(item => `
-          <tr class="hover:bg-white/[0.02] transition-colors">
-            <td class="px-5 py-4">
-              <p class="font-bold text-white">${escapeHtml(item.name)}</p>
-              <p class="text-xs text-brand-blue">${escapeHtml(item.email)}</p>
-              <p class="text-xs text-on-surface-variant">${escapeHtml(item.phone || '')}</p>
-            </td>
-            <td class="px-5 py-4">
-              <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 text-xs font-semibold">
-                ${escapeHtml(item.jobTitle)}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-xs text-on-surface-variant max-w-xs">
-              ${item.portfolioUrl ? `<a href="${escapeHtml(item.portfolioUrl)}" target="_blank" class="text-brand-blue hover:underline block mb-1">Portfolio Link</a>` : ''}
-              <p class="line-clamp-2">${escapeHtml(item.coverLetter || 'No cover note')}</p>
-            </td>
-            <td class="px-5 py-4 text-xs">
-              ${item.resumeFilename && item.resumeFilename !== 'no_file' ? `
-                <a href="/api/admin/download/${item.resumeFilename}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/5 border border-white/10 text-white hover:bg-brand-blue hover:border-transparent transition-all" download>
-                  <span class="material-symbols-outlined text-sm">description</span>
-                  Download Resume
-                </a>
-              ` : '<span class="text-white/30 font-mono">No file</span>'}
-            </td>
-            <td class="px-5 py-4">
-              <span class="px-2.5 py-1 rounded text-xs font-semibold ${item.status === 'new' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
-                ${item.status}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-right">
-              ${item.status === 'new' ? `
-                <button onclick="updateApplicationStatus(${item.id}, 'reviewed')" class="text-xs px-3 py-1.5 rounded bg-purple-500/10 text-purple-300 hover:bg-purple-600 hover:text-white transition-all">
-                  Mark Reviewed
-                </button>
-              ` : `
-                <button onclick="updateApplicationStatus(${item.id}, 'shortlisted')" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white transition-all">
-                  Shortlist
-                </button>
-              `}
-            </td>
-          </tr>
-        `).join('');
-      } catch (e) {
-        tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-red-400">Failed to fetch applications.</td></tr>';
+    function renderRecentEnquiries(items) {
+      const container = document.getElementById('recentEnquiriesList');
+      if (!items || items.length === 0) {
+        container.innerHTML = '<p class="text-xs text-on-surface-variant py-4 text-center">No recent briefs.</p>';
+        return;
       }
+      container.innerHTML = items.map(item => `
+        <div class="p-3 rounded-lg border border-surface-border bg-black/40 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-white">${item.name || 'Anonymous'}</p>
+            <p class="text-[11px] text-on-surface-variant">${item.service || item.projectType || 'Project Inquiry'}</p>
+          </div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-blue/10 text-brand-blue border border-brand-blue/30 uppercase">
+            ${item.status || 'NEW'}
+          </span>
+        </div>
+      `).join('');
     }
 
-    // Load Messages
+    window.updateEnquiryStatus = async function(id, newStatus) {
+      try {
+        await updateDoc(doc(db, 'projectEnquiries', id), {
+          status: newStatus,
+          updatedAt: new Date().toISOString()
+        });
+        showToast('Status Updated', `Enquiry marked as ${newStatus}`);
+        logAuditAction('ENQUIRY_STATUS_UPDATED', `ID ${id} set to ${newStatus}`);
+      } catch (e) {
+        // Fallback to server API
+        try {
+          await fetch(`/api/admin/enquiries/${id}/status`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('anvion_admin_jwt') || ''}`
+            },
+            body: JSON.stringify({ status: newStatus })
+          });
+          showToast('Status Updated', `Enquiry marked as ${newStatus}`);
+        } catch (err) {
+          showToast('Update Failed', e.message, 'error');
+        }
+      }
+    };
+
+    window.viewEnquiryDetail = function(id) {
+      const item = cachedEnquiries.find(e => e.id === id || String(e.id) === String(id));
+      if (!item) return;
+
+      const content = document.getElementById('enquiryModalContent');
+      content.innerHTML = `
+        <div class="grid grid-cols-2 gap-4 pb-4 border-b border-surface-border">
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Client Name</span>
+            <p class="text-white font-bold text-sm">${item.name || 'Not provided'}</p>
+          </div>
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Work Email</span>
+            <p class="text-white font-mono">${item.email}</p>
+          </div>
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Phone</span>
+            <p class="text-white">${item.phone || 'Not provided'}</p>
+          </div>
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Company</span>
+            <p class="text-white">${item.company || 'Direct Client'}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 pb-4 border-b border-surface-border">
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Service</span>
+            <p class="text-white font-semibold">${item.service || 'Custom Solution'}</p>
+          </div>
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Budget</span>
+            <p class="text-emerald-400 font-mono">${item.budget || 'TBD'}</p>
+          </div>
+          <div>
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Timeline</span>
+            <p class="text-blue-400">${item.timeline || 'Flexible'}</p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-on-surface-variant font-mono uppercase text-[10px]">Project Narrative & Technical Brief</span>
+          <div class="p-4 rounded-lg bg-black/60 border border-surface-border text-on-surface leading-relaxed whitespace-pre-wrap text-xs">
+            ${item.description || item.projectDescription || 'No description entered.'}
+          </div>
+        </div>
+
+        ${item.attachmentFilename || item.attachmentUrl ? `
+          <div class="pt-2">
+            <span class="text-on-surface-variant font-mono uppercase text-[10px]">Project Specification Attachment</span>
+            <div class="mt-1">
+              <a href="${item.attachmentUrl || `/api/admin/download/${item.attachmentFilename}`}" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-surface-border text-brand-blue hover:underline">
+                <span class="material-symbols-outlined text-sm">attachment</span>
+                <span>Download Attachment Document</span>
+              </a>
+            </div>
+          </div>
+        ` : ''}
+      `;
+      openModal('enquiryDetailModal');
+    };
+
+    // 2. Load Contact Messages
     async function loadMessages() {
-      if (!token) return;
-      const tbody = document.getElementById('messagesTableBody');
       try {
-        const res = await fetch('/api/admin/messages', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const list = await res.json();
-        if (!list || list.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-on-surface-variant">No contact inquiries recorded yet.</td></tr>';
-          return;
+        const snap = await getDocs(collection(db, 'contactMessages'));
+        cachedMessages = [];
+        snap.forEach(d => cachedMessages.push({ id: d.id, ...d.data() }));
+
+        if (cachedMessages.length === 0) {
+          const res = await fetch('/api/admin/messages', {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('anvion_admin_jwt') || ''}` }
+          });
+          if (res.ok) cachedMessages = await res.json();
         }
 
-        tbody.innerHTML = list.map(item => `
-          <tr class="hover:bg-white/[0.02] transition-colors">
-            <td class="px-5 py-4">
-              <p class="font-bold text-white">${escapeHtml(item.name)}</p>
-              <p class="text-xs text-brand-blue">${escapeHtml(item.email)}</p>
-              <p class="text-xs text-on-surface-variant">${item.company ? escapeHtml(item.company) : ''}</p>
-            </td>
-            <td class="px-5 py-4 text-xs font-mono text-on-surface-variant">
-              ${escapeHtml(item.service || 'General')}
-            </td>
-            <td class="px-5 py-4 text-xs text-on-surface-variant max-w-sm">
-              <p class="line-clamp-3">${escapeHtml(item.message)}</p>
-            </td>
-            <td class="px-5 py-4 text-xs text-on-surface-variant">
-              ${new Date(item.createdAt).toLocaleDateString()}
-            </td>
-            <td class="px-5 py-4">
-              <span class="px-2.5 py-1 rounded text-xs font-semibold ${item.status === 'unread' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
-                ${item.status}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-right">
-              ${item.status === 'unread' ? `
-                <button onclick="updateMessageStatus(${item.id}, 'read')" class="text-xs px-3 py-1.5 rounded bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-white transition-all">
-                  Mark Read
-                </button>
-              ` : `
-                <button onclick="updateMessageStatus(${item.id}, 'archived')" class="text-xs px-3 py-1.5 rounded border border-white/10 text-on-surface-variant hover:text-white transition-all">
-                  Archive
-                </button>
-              `}
-            </td>
-          </tr>
-        `).join('');
-      } catch (e) {
-        tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-red-400">Failed to fetch messages.</td></tr>';
+        renderMessagesTable(cachedMessages);
+        renderRecentMessages(cachedMessages.slice(0, 4));
+      } catch (err) {
+        console.warn('Could not fetch messages directly:', err);
       }
     }
 
-    // Status Updates
-    window.updateEnquiryStatus = async (id, status) => {
-      await fetch(`/api/admin/enquiries/${id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ status })
-      });
-      loadEnquiries();
-      loadMetrics();
+    function renderMessagesTable(items) {
+      const tbody = document.getElementById('messagesTableBody');
+      if (!items || items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No contact messages received yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(item => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4">
+            <p class="font-bold text-white">${item.name}</p>
+            ${item.company ? `<span class="text-[10px] text-on-surface-variant">${item.company}</span>` : ''}
+          </td>
+          <td class="p-4 font-mono text-[11px] text-on-surface-variant">
+            <p class="text-white">${item.email}</p>
+            <p>${item.phone || 'No phone'}</p>
+          </td>
+          <td class="p-4 max-w-xs">
+            <p class="font-semibold text-white truncate">${item.subject || 'Direct Inquiry'}</p>
+            <p class="text-on-surface-variant truncate mt-0.5">${item.message}</p>
+          </td>
+          <td class="p-4">
+            <select onchange="updateMessageStatus('${item.id}', this.value)" class="rounded border border-surface-border bg-black/60 px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-brand-blue">
+              <option value="UNREAD" ${item.status === 'unread' || item.status === 'UNREAD' ? 'selected' : ''}>UNREAD</option>
+              <option value="READ" ${item.status === 'READ' ? 'selected' : ''}>READ</option>
+              <option value="REPLIED" ${item.status === 'REPLIED' ? 'selected' : ''}>REPLIED</option>
+              <option value="ARCHIVED" ${item.status === 'ARCHIVED' ? 'selected' : ''}>ARCHIVED</option>
+            </select>
+          </td>
+          <td class="p-4 text-on-surface-variant font-mono text-[11px]">
+            ${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
+          </td>
+          <td class="p-4 text-right">
+            <button onclick="confirmDelete('contactMessages', '${item.id}', 'Message from ${item.name}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+              <span class="material-symbols-outlined text-sm">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderRecentMessages(items) {
+      const container = document.getElementById('recentMessagesList');
+      if (!items || items.length === 0) {
+        container.innerHTML = '<p class="text-xs text-on-surface-variant py-4 text-center">No recent messages.</p>';
+        return;
+      }
+      container.innerHTML = items.map(item => `
+        <div class="p-3 rounded-lg border border-surface-border bg-black/40 flex items-center justify-between">
+          <div class="min-w-0 pr-3">
+            <p class="text-xs font-bold text-white truncate">${item.name} (${item.email})</p>
+            <p class="text-[11px] text-on-surface-variant truncate">${item.message || 'Direct inquiry'}</p>
+          </div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase shrink-0">
+            ${item.status || 'UNREAD'}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    window.updateMessageStatus = async function(id, newStatus) {
+      try {
+        await updateDoc(doc(db, 'contactMessages', id), { status: newStatus });
+        showToast('Message Status Updated', `Status changed to ${newStatus}`);
+      } catch (e) {
+        showToast('Update Failed', e.message, 'error');
+      }
     };
 
-    window.updateApplicationStatus = async (id, status) => {
-      await fetch(`/api/admin/applications/${id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ status })
-      });
-      loadApplications();
-      loadMetrics();
-    };
+    // 3. Load Users
+    async function loadUsers() {
+      try {
+        const snap = await getDocs(collection(db, 'users'));
+        cachedUsers = [];
+        snap.forEach(d => cachedUsers.push({ id: d.id, ...d.data() }));
 
-    window.updateMessageStatus = async (id, status) => {
-      await fetch(`/api/admin/messages/${id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ status })
-      });
-      loadMessages();
-      loadMetrics();
-    };
+        renderUsersTable(cachedUsers);
+      } catch (err) {
+        console.warn('Users load error:', err);
+      }
+    }
 
-    // New Project Form
-    document.getElementById('newProjectForm')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const payload = Object.fromEntries(formData.entries());
+    function renderUsersTable(items) {
+      const tbody = document.getElementById('usersTableBody');
+      if (!items || items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No registered clients found.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(user => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-bold text-white">${user.name || 'Unnamed Client'}</td>
+          <td class="p-4 font-mono text-[11px] text-on-surface-variant">${user.email}</td>
+          <td class="p-4 text-on-surface-variant">${user.phone || 'Not provided'}</td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold border ${
+              user.role === 'ADMIN' ? 'bg-red-500/10 text-red-400 border-red-500/30' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+            }">
+              ${user.role || 'USER'}
+            </span>
+          </td>
+          <td class="p-4 text-on-surface-variant font-mono text-[11px]">
+            ${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+          </td>
+          <td class="p-4 text-right">
+            ${user.role !== 'ADMIN' ? `
+              <button onclick="toggleUserAdmin('${user.uid || user.id}', '${user.email}', true)" class="px-2.5 py-1 rounded bg-brand-blue/10 border border-brand-blue/30 text-brand-blue hover:bg-brand-blue hover:text-white transition-all text-xs font-semibold">
+                Promote to Admin
+              </button>
+            ` : `
+              <span class="text-[11px] text-on-surface-variant font-mono">Protected Admin</span>
+            `}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Assign / Revoke Admin Role
+    window.toggleUserAdmin = async function(uid, email, makeAdmin) {
+      if (!confirm(`Are you sure you want to grant authoritative ADMIN clearance to ${email}?`)) {
+        return;
+      }
 
       try {
-        const res = await fetch('/api/admin/projects', {
+        // Call backend admin claim API with authoritative Firebase ID token
+        const token = currentAdmin ? await currentAdmin.getIdToken() : (localStorage.getItem('anvion_admin_jwt') || '');
+        const res = await fetch('/api/admin/set-claim', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify(payload)
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ uid, email, makeAdmin })
         });
+
         if (res.ok) {
-          alert('Project created and published to ANVION database successfully.');
-          form.reset();
+          showToast('Admin Role Granted', `User ${email} now possesses Custom Claim { admin: true }.`);
+          loadUsers();
+          logAuditAction('USER_ROLE_CHANGED', `Promoted ${email} to ADMIN`);
         } else {
-          const err = await res.json();
-          alert('Error creating project: ' + (err.error || 'Server rejected request'));
+          const data = await res.json();
+          showToast('Role Assignment Error', data.error || 'Server rejected claim update.', 'error');
         }
       } catch (err) {
-        alert('Failed to connect to backend server');
+        showToast('Network Error', err.message, 'error');
+      }
+    };
+
+    // Grant Admin input handler
+    document.getElementById('grantAdminBtn').addEventListener('click', async () => {
+      const input = document.getElementById('grantAdminInput').value.trim();
+      if (!input) {
+        alert('Please enter a user email or UID.');
+        return;
+      }
+      await window.toggleUserAdmin(input, input, true);
+    });
+
+    // 4. Load Projects CMS
+    async function loadProjects() {
+      try {
+        const snap = await getDocs(collection(db, 'projects'));
+        cachedProjects = [];
+        snap.forEach(d => cachedProjects.push({ id: d.id, ...d.data() }));
+
+        if (cachedProjects.length === 0) {
+          const res = await fetch('/api/projects');
+          if (res.ok) cachedProjects = await res.json();
+        }
+
+        renderProjectsTable(cachedProjects);
+      } catch (err) {
+        console.warn('Projects load error:', err);
+      }
+    }
+
+    function renderProjectsTable(items) {
+      const tbody = document.getElementById('projectsTableBody');
+      if (!items || items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No projects created yet. Click "Add New Project" above.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(p => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4">
+            <p class="font-bold text-white">${p.title}</p>
+            <p class="text-on-surface-variant font-mono text-[11px]">${p.slug}</p>
+          </td>
+          <td class="p-4 font-mono text-xs uppercase">${p.category || 'software'}</td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold ${
+              p.projectType === 'REAL PROJECT' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-blue-500/10 text-blue-400 border border-blue-500/30'
+            }">
+              ${p.projectType || 'CONCEPT PROJECT'}
+            </span>
+          </td>
+          <td class="p-4 text-on-surface-variant text-[11px] max-w-xs truncate">${p.technologyStack || (Array.isArray(p.technologies) ? p.technologies.join(', ') : 'N/A')}</td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase ${
+              p.published === true || p.published === 'true' || p.status === 'published' ? 'text-emerald-400 bg-emerald-500/10' : 'text-on-surface-variant bg-white/5'
+            }">
+              ${(p.published === true || p.published === 'true' || p.status === 'published') ? 'PUBLISHED' : 'DRAFT'}
+            </span>
+          </td>
+          <td class="p-4 text-right space-x-2">
+            <button onclick="editProject('${p.id}')" class="p-1 rounded text-on-surface-variant hover:text-white">
+              <span class="material-symbols-outlined text-sm">edit</span>
+            </button>
+            <button onclick="confirmDelete('projects', '${p.id}', '${p.title}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+              <span class="material-symbols-outlined text-sm">delete</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Open Project Create Modal
+    document.getElementById('openNewProjectBtn').addEventListener('click', () => {
+      document.getElementById('projectModalTitle').textContent = 'Create New Project';
+      document.getElementById('projectForm').reset();
+      document.getElementById('projId').value = '';
+      openModal('projectModal');
+    });
+
+    window.editProject = function(id) {
+      const p = cachedProjects.find(item => item.id === id || String(item.id) === String(id));
+      if (!p) return;
+      document.getElementById('projectModalTitle').textContent = 'Edit Project';
+      document.getElementById('projId').value = p.id;
+      document.getElementById('projTitle').value = p.title || '';
+      document.getElementById('projCategory').value = p.category || 'software';
+      document.getElementById('projType').value = p.projectType || (p.isConcept ? 'CONCEPT PROJECT' : 'REAL PROJECT');
+      document.getElementById('projClient').value = p.clientName || '';
+      document.getElementById('projShortDesc').value = p.shortDescription || p.summary || '';
+      document.getElementById('projDesc').value = p.description || p.overview || '';
+      document.getElementById('projTech').value = p.technologyStack || (Array.isArray(p.technologies) ? p.technologies.join(', ') : '');
+      document.getElementById('projUrl').value = p.projectUrl || p.demoUrl || '';
+      document.getElementById('projImage').value = p.images || '';
+      document.getElementById('projPublished').checked = (p.published === true || p.published === 'true' || p.status === 'published');
+      openModal('projectModal');
+    };
+
+    document.getElementById('projectForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('projId').value;
+      const title = document.getElementById('projTitle').value.trim();
+      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      const category = document.getElementById('projCategory').value;
+      const projectType = document.getElementById('projType').value;
+      const clientName = document.getElementById('projClient').value.trim();
+      const shortDescription = document.getElementById('projShortDesc').value.trim();
+      const description = document.getElementById('projDesc').value.trim();
+      const technologyStack = document.getElementById('projTech').value.trim();
+      const projectUrl = document.getElementById('projUrl').value.trim();
+      const images = document.getElementById('projImage').value.trim();
+      const published = document.getElementById('projPublished').checked;
+
+      const payload = {
+        title,
+        slug,
+        category,
+        projectType,
+        clientName: clientName || null,
+        shortDescription,
+        description,
+        technologyStack,
+        projectUrl: projectUrl || null,
+        images: images || null,
+        published,
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        if (id) {
+          // Update
+          await updateDoc(doc(db, 'projects', id), payload);
+          showToast('Project Updated', `Case study "${title}" updated.`);
+          logAuditAction('PROJECT_UPDATED', `ID ${id}: ${title}`);
+        } else {
+          // Create
+          payload.createdAt = new Date().toISOString();
+          const docRef = doc(collection(db, 'projects'));
+          await setDoc(docRef, payload);
+          showToast('Project Published', `Case study "${title}" created.`);
+          logAuditAction('PROJECT_CREATED', title);
+        }
+        closeModal('projectModal');
+        loadProjects();
+      } catch (err) {
+        showToast('Save Error', err.message, 'error');
       }
     });
 
-    // Refresh listeners
-    document.getElementById('refreshEnquiriesBtn')?.addEventListener('click', loadEnquiries);
-    document.getElementById('refreshApplicationsBtn')?.addEventListener('click', loadApplications);
-    document.getElementById('refreshMessagesBtn')?.addEventListener('click', loadMessages);
+    // 5. Load Reviews CMS
+    async function loadReviews() {
+      try {
+        const snap = await getDocs(collection(db, 'reviews'));
+        cachedReviews = [];
+        snap.forEach(d => cachedReviews.push({ id: d.id, ...d.data() }));
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const grid = document.getElementById('reviewsGrid');
+        if (cachedReviews.length === 0) {
+          grid.innerHTML = '<div class="col-span-full p-8 text-center text-on-surface-variant text-xs">No client testimonials entered yet. Add legitimate customer feedback.</div>';
+          return;
+        }
+
+        grid.innerHTML = cachedReviews.map(r => `
+          <div class="bg-surface-card border border-surface-border rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-amber-400 flex items-center gap-0.5 text-sm">
+                ${'★'.repeat(Math.min(5, parseInt(r.rating || '5', 10)))}
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded ${r.published ? 'text-emerald-400 bg-emerald-500/10' : 'text-on-surface-variant bg-white/5'}">
+                ${r.published ? 'PUBLISHED' : 'DRAFT'}
+              </span>
+            </div>
+            <p class="text-xs text-on-surface-variant italic line-clamp-3">"${r.review}"</p>
+            <div class="pt-2 border-t border-surface-border flex items-center justify-between">
+              <div>
+                <p class="text-xs font-bold text-white">${r.customerName}</p>
+                <p class="text-[10px] text-on-surface-variant">${r.designation || ''} ${r.company ? `at ${r.company}` : ''}</p>
+              </div>
+              <button onclick="confirmDelete('reviews', '${r.id}', 'Review by ${r.customerName}')" class="p-1 text-on-surface-variant hover:text-red-400">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.warn('Reviews load error:', e);
+      }
     }
 
-    // Auto verify initial session
-    if (token) {
-      showDashboard();
-    } else {
-      showLogin();
+    // 6. Load Careers & Applications
+    async function loadCareers() {
+      try {
+        const snap = await getDocs(collection(db, 'jobs'));
+        cachedJobs = [];
+        snap.forEach(d => cachedJobs.push({ id: d.id, ...d.data() }));
+
+        const tbody = document.getElementById('jobsTableBody');
+        if (cachedJobs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No career postings.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = cachedJobs.map(j => `
+          <tr class="hover:bg-white/[0.02] transition-colors">
+            <td class="p-4 font-bold text-white">${j.title}</td>
+            <td class="p-4 font-mono text-xs">${j.department || 'Engineering'}</td>
+            <td class="p-4 text-on-surface-variant">${j.location || 'Remote'}</td>
+            <td class="p-4 text-on-surface-variant">${j.experience || '1-3 yrs'}</td>
+            <td class="p-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase ${j.published !== false ? 'bg-emerald-500/10 text-emerald-400' : 'bg-white/5 text-on-surface-variant'}">
+                ${j.published !== false ? 'ACTIVE' : 'DRAFT'}
+              </span>
+            </td>
+            <td class="p-4 text-right">
+              <button onclick="confirmDelete('jobs', '${j.id}', '${j.title}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.warn('Careers load error:', e);
+      }
+    }
+
+    async function loadApplications() {
+      try {
+        const snap = await getDocs(collection(db, 'jobApplications'));
+        cachedApplications = [];
+        snap.forEach(d => cachedApplications.push({ id: d.id, ...d.data() }));
+
+        if (cachedApplications.length === 0) {
+          const res = await fetch('/api/admin/applications', {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('anvion_admin_jwt') || ''}` }
+          });
+          if (res.ok) cachedApplications = await res.json();
+        }
+
+        const tbody = document.getElementById('applicationsTableBody');
+        if (cachedApplications.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No candidate applications received yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = cachedApplications.map(a => `
+          <tr class="hover:bg-white/[0.02] transition-colors">
+            <td class="p-4">
+              <p class="font-bold text-white">${a.name}</p>
+              <p class="text-on-surface-variant font-mono text-[11px]">${a.email}</p>
+            </td>
+            <td class="p-4 font-medium text-white">${a.jobTitle || 'General Engineering'}</td>
+            <td class="p-4 text-on-surface-variant">${a.phone || 'N/A'}</td>
+            <td class="p-4">
+              ${a.resumeUrl || a.resumeFilename ? `
+                <a href="${a.resumeUrl || `/api/admin/download/${a.resumeFilename}`}" target="_blank" class="inline-flex items-center gap-1 text-xs text-brand-blue hover:underline">
+                  <span class="material-symbols-outlined text-sm">description</span>
+                  <span>View Resume</span>
+                </a>
+              ` : '<span class="text-on-surface-variant">No resume file</span>'}
+            </td>
+            <td class="p-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-purple-500/10 text-purple-400 border border-purple-500/30">
+                ${a.status || 'NEW'}
+              </span>
+            </td>
+            <td class="p-4 text-right">
+              <button onclick="confirmDelete('jobApplications', '${a.id}', 'Application from ${a.name}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.warn('Applications load error:', e);
+      }
+    }
+
+    // 7. Load Blog Posts
+    async function loadBlog() {
+      try {
+        const snap = await getDocs(collection(db, 'blogPosts'));
+        cachedBlogPosts = [];
+        snap.forEach(d => cachedBlogPosts.push({ id: d.id, ...d.data() }));
+
+        const tbody = document.getElementById('blogTableBody');
+        if (cachedBlogPosts.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No blog posts created yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = cachedBlogPosts.map(b => `
+          <tr class="hover:bg-white/[0.02] transition-colors">
+            <td class="p-4 font-bold text-white">${b.title}</td>
+            <td class="p-4 text-on-surface-variant">${b.author || 'ANVION Engineering'}</td>
+            <td class="p-4 font-mono text-xs uppercase">${b.category || 'Architecture'}</td>
+            <td class="p-4">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono ${b.published ? 'text-emerald-400 bg-emerald-500/10' : 'text-on-surface-variant bg-white/5'}">
+                ${b.published ? 'PUBLISHED' : 'DRAFT'}
+              </span>
+            </td>
+            <td class="p-4 font-mono text-on-surface-variant text-[11px]">${b.createdAt ? new Date(b.createdAt).toLocaleDateString() : 'Recent'}</td>
+            <td class="p-4 text-right">
+              <button onclick="confirmDelete('blogPosts', '${b.id}', '${b.title}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.warn('Blog load error:', e);
+      }
+    }
+
+    // 8. Load FAQs
+    async function loadFAQs() {
+      try {
+        const snap = await getDocs(collection(db, 'faqs'));
+        const list = document.getElementById('faqsList');
+        const items = [];
+        snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+
+        if (items.length === 0) {
+          list.innerHTML = '<div class="p-8 text-center text-on-surface-variant text-xs">No FAQs created yet.</div>';
+          return;
+        }
+
+        list.innerHTML = items.map(f => `
+          <div class="bg-surface-card border border-surface-border rounded-xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold text-white">${f.question}</h4>
+              <button onclick="confirmDelete('faqs', '${f.id}', 'FAQ: ${f.question}')" class="p-1 text-on-surface-variant hover:text-red-400">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </div>
+            <p class="text-xs text-on-surface-variant">${f.answer}</p>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    // 9. Load Audit Logs
+    async function loadAuditLogs() {
+      try {
+        const snap = await getDocs(query(collection(db, 'adminAuditLogs'), orderBy('timestamp', 'desc'), limit(50)));
+        const tbody = document.getElementById('auditTableBody');
+        const logs = [];
+        snap.forEach(d => logs.push({ id: d.id, ...d.data() }));
+
+        if (logs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-on-surface-variant">No audit events recorded yet.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = logs.map(l => `
+          <tr class="hover:bg-white/[0.02] transition-colors font-mono text-[11px]">
+            <td class="p-4 text-on-surface-variant">${l.timestamp ? new Date(l.timestamp).toLocaleString() : 'Just now'}</td>
+            <td class="p-4 text-white">${l.adminEmail || l.adminUid}</td>
+            <td class="p-4 text-brand-blue font-bold">${l.action}</td>
+            <td class="p-4 text-on-surface-variant">${l.details || '-'}</td>
+          </tr>
+        `).join('');
+      } catch (e) {}
+    }
+
+    // Log administrative action
+    async function logAuditAction(action, details) {
+      if (!currentAdmin) return;
+      try {
+        const logDoc = doc(collection(db, 'adminAuditLogs'));
+        await setDoc(logDoc, {
+          adminUid: currentAdmin.uid,
+          adminEmail: currentAdmin.email,
+          action,
+          details,
+          timestamp: new Date().toISOString()
+        });
+      } catch (e) {
+        console.warn('Audit log write error:', e);
+      }
+    }
+
+    // Generic Delete Flow with Confirmation Modal
+    window.confirmDelete = function(collName, docId, label) {
+      pendingDeleteAction = { collName, docId };
+      document.getElementById('deleteConfirmMessage').textContent = `Are you sure you want to permanently delete "${label}"? This action cannot be reverted.`;
+      openModal('deleteConfirmModal');
+    };
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+      if (!pendingDeleteAction) return;
+      const { collName, docId } = pendingDeleteAction;
+
+      try {
+        await deleteDoc(doc(db, collName, docId));
+        showToast('Record Deleted', 'The item has been removed from the database.');
+        logAuditAction('RECORD_DELETED', `Deleted ${collName}/${docId}`);
+        closeModal('deleteConfirmModal');
+        loadAdminData();
+      } catch (err) {
+        showToast('Delete Failed', err.message, 'error');
+      } finally {
+        pendingDeleteAction = null;
+      }
+    });
+
+    document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+      closeModal('deleteConfirmModal');
+      pendingDeleteAction = null;
+    });
+
+    // Save Website Content Form
+    document.getElementById('websiteContentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        heroHeading: document.getElementById('cfgHeroHeading').value.trim(),
+        heroDescription: document.getElementById('cfgHeroDescription').value.trim(),
+        ctaText: document.getElementById('cfgCtaText').value.trim(),
+        contactEmail: document.getElementById('cfgContactEmail').value.trim(),
+        contactPhone: document.getElementById('cfgContactPhone').value.trim(),
+        contactAddress: document.getElementById('cfgContactAddress').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        await setDoc(doc(db, 'websiteContent', 'global'), payload, { merge: true });
+        showToast('Content Saved', 'Global website copy updated successfully.');
+        logAuditAction('WEBSITE_CONTENT_UPDATED', 'Updated global hero & contact parameters');
+      } catch (err) {
+        showToast('Save Failed', err.message, 'error');
+      }
+    });
+
+    // 10. Load Media Assets
+    async function loadMediaAssets() {
+      try {
+        const snap = await getDocs(query(collection(db, 'media'), orderBy('uploadedAt', 'desc'), limit(48)));
+        cachedMedia = [];
+        snap.forEach(d => cachedMedia.push({ id: d.id, ...d.data() }));
+
+        const grid = document.getElementById('mediaGrid');
+        if (!grid) return;
+
+        if (cachedMedia.length === 0) {
+          grid.innerHTML = '<div class="col-span-full p-8 text-center text-on-surface-variant text-xs">No media assets uploaded yet. Upload images above (PNG, JPEG, WebP up to 10MB).</div>';
+          return;
+        }
+
+        grid.innerHTML = cachedMedia.map(m => `
+          <div class="group relative bg-surface-card border border-surface-border rounded-xl overflow-hidden p-2 flex flex-col justify-between hover:border-brand-blue/50 transition-all">
+            <div class="h-28 w-full rounded-lg bg-black/50 overflow-hidden flex items-center justify-center">
+              <img src="${m.url}" alt="${m.name || 'Media Asset'}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' fill=\\'%23666\\' viewBox=\\'0 0 24 24\\'><path d=\\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\\'/></svg>'"/>
+            </div>
+            <div class="mt-2 space-y-1">
+              <p class="text-[11px] font-bold text-white truncate" title="${m.name}">${m.name}</p>
+              <div class="flex items-center justify-between text-[10px] text-on-surface-variant">
+                <span>${m.size ? (m.size > 1024 * 1024 ? (m.size / (1024 * 1024)).toFixed(1) + ' MB' : (m.size / 1024).toFixed(0) + ' KB') : ''}</span>
+                <span class="font-mono">${m.uploadedAt ? new Date(m.uploadedAt).toLocaleDateString() : ''}</span>
+              </div>
+              <div class="flex items-center gap-1.5 pt-1 border-t border-surface-border">
+                <button onclick="copyMediaUrl('${m.url}')" class="flex-1 py-1 rounded bg-white/5 hover:bg-brand-blue/20 text-brand-blue text-[10px] font-mono flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-xs">content_copy</span>
+                  <span>Copy</span>
+                </button>
+                <button onclick="confirmDelete('media', '${m.id}', '${m.name || 'Media'}')" class="p-1 text-on-surface-variant hover:text-red-400">
+                  <span class="material-symbols-outlined text-xs">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.warn('Failed to load media assets:', err);
+      }
+    }
+
+    // Copy URL helper
+    window.copyMediaUrl = function(url) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('URL Copied', 'Media asset URL copied to clipboard.');
+        }).catch(() => {
+          prompt('Copy media URL:', url);
+        });
+      } else {
+        prompt('Copy media URL:', url);
+      }
+    };
+
+    // Media Upload Event Listener
+    const mediaFileInput = document.getElementById('mediaFileInput');
+    if (mediaFileInput) {
+      mediaFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        // Size check (10MB limit)
+        if (file.size > 10 * 1024 * 1024) {
+          showToast('Upload Error', 'File size exceeds the 10MB limit permitted by storage rules.', 'error');
+          mediaFileInput.value = '';
+          return;
+        }
+
+        // MIME check
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+        if (!allowedTypes.includes(file.type)) {
+          showToast('Invalid Format', 'Only PNG, JPEG, WebP, and SVG images are permitted.', 'error');
+          mediaFileInput.value = '';
+          return;
+        }
+
+        showToast('Uploading Asset', `Uploading ${file.name} to Firebase Storage...`);
+
+        try {
+          const uploadResult = await uploadMediaFile(file, 'media');
+          
+          // Save record in Firestore media collection
+          const mediaDoc = doc(collection(db, 'media'));
+          await setDoc(mediaDoc, {
+            name: file.name,
+            url: uploadResult.downloadUrl,
+            path: uploadResult.path,
+            size: file.size,
+            type: file.type,
+            uploadedBy: currentAdmin.email || currentAdmin.uid,
+            uploadedAt: new Date().toISOString()
+          });
+
+          showToast('Upload Complete', `${file.name} saved successfully.`);
+          logAuditAction('MEDIA_UPLOADED', `Uploaded ${file.name} (${uploadResult.path})`);
+          mediaFileInput.value = '';
+          loadMediaAssets();
+        } catch (err) {
+          showToast('Upload Failed', err.message, 'error');
+          mediaFileInput.value = '';
+        }
+      });
     }
   </script>
 </body>

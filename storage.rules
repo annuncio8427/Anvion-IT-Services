@@ -1,0 +1,62 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.get('admin', false) == true;
+    }
+
+    // 1. Project, Blog & Website Media (Public read, Admin-only write)
+    match /media/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() &&
+        request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/(jpeg|png|webp|svg\\+xml)');
+    }
+
+    match /projects/{projectId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() &&
+        request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    match /blogs/{blogId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() &&
+        request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    // 2. User Profile Avatars (Owner upload up to 2MB, public read)
+    match /profiles/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn() && (request.auth.uid == userId || isAdmin()) &&
+        request.resource.size < 2 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+
+    // 3. Confidential Resumes (Strict Candidate Privacy: Upload allowed, Read strictly restricted to Admin)
+    match /resumes/{candidateId}/{filename} {
+      // Allow candidate submission (max 5MB, PDF or Word documents only, no executables)
+      allow create: if request.resource.size < 5 * 1024 * 1024 &&
+        request.resource.contentType.matches('application/(pdf|msword|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document)');
+
+      // Strictly confidential: Only admins can view, download, or delete applicant resumes
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    // 4. Project Enquiry Attachments (Quotation briefs, architecture specs)
+    match /enquiry-attachments/{attachmentId}/{filename} {
+      allow create: if request.resource.size < 10 * 1024 * 1024 &&
+        request.resource.contentType.matches('(application/pdf|application/msword|application/vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document|image/.*|application/zip)');
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == attachmentId);
+      allow delete: if isAdmin();
+    }
+  }
+}

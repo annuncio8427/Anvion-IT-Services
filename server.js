@@ -21,7 +21,9 @@ import {
   blogPosts,
   auditLogs,
 } from './src/db/schema.ts';
-import { requireAuth } from './src/middleware/auth.js';
+import { requireAuth, requireAdminAuth } from './src/middleware/auth.js';
+import { adminAuth, adminDb } from './src/lib/firebase-admin.ts';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -167,7 +169,8 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
 
     const file = req.file;
 
-    await db.insert(jobApplications).values({
+    // 1. Save to Drizzle PostgreSQL
+    const inserted = await db.insert(jobApplications).values({
       jobId: jobId ? parseInt(jobId, 10) : null,
       jobTitle: role || 'General Application',
       name: name.trim(),
@@ -180,7 +183,27 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
       portfolioUrl: portfolio || null,
       coverLetter: message || null,
       status: 'new',
-    });
+    }).returning();
+
+    // 2. Synchronize with Firebase Firestore
+    if (adminDb) {
+      try {
+        await adminDb.collection('jobApplications').add({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone ? phone.trim() : '',
+          jobTitle: role || 'General Application',
+          portfolioUrl: portfolio || '',
+          coverLetter: message || '',
+          resumeFilename: file ? file.filename : '',
+          resumeOriginalName: file ? file.originalname : '',
+          status: 'NEW',
+          createdAt: new Date().toISOString(),
+        });
+      } catch (fe) {
+        console.warn('Firestore sync for job application:', fe.message);
+      }
+    }
 
     res.status(201).json({
       success: true,
@@ -201,6 +224,7 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Name, email, and message are required.' });
     }
 
+    // 1. Save to Drizzle PostgreSQL
     await db.insert(contactMessages).values({
       name: name.trim(),
       email: email.trim().toLowerCase(),
@@ -212,6 +236,26 @@ app.post('/api/contact', async (req, res) => {
       status: 'unread',
       ipAddress: req.ip,
     });
+
+    // 2. Synchronize with Firebase Firestore
+    if (adminDb) {
+      try {
+        await adminDb.collection('contactMessages').add({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone ? phone.trim() : '',
+          company: company ? company.trim() : '',
+          service: service || '',
+          budget: budget || '',
+          message: message.trim(),
+          status: 'UNREAD',
+          ipAddress: req.ip,
+          createdAt: new Date().toISOString(),
+        });
+      } catch (fe) {
+        console.warn('Firestore sync for contact message:', fe.message);
+      }
+    }
 
     res.status(201).json({
       success: true,
@@ -252,6 +296,17 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
       ? [projectType]
       : [];
 
+    // Optional user token identification
+    let userId = null;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ') && adminAuth) {
+      try {
+        const decoded = await adminAuth.verifyIdToken(authHeader.split('Bearer ')[1]);
+        userId = decoded.uid;
+      } catch (e) {}
+    }
+
+    // 1. Save to Drizzle PostgreSQL
     await db.insert(projectEnquiries).values({
       name: name.trim(),
       email: email.trim().toLowerCase(),
@@ -270,6 +325,31 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
       status: 'new',
     });
 
+    // 2. Synchronize with Firebase Firestore
+    if (adminDb) {
+      try {
+        await adminDb.collection('projectEnquiries').add({
+          userId: userId || null,
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone ? phone.trim() : '',
+          company: company ? company.trim() : '',
+          service: parsedServices.join(', ') || projectType || 'Custom Solution',
+          description: description.trim(),
+          features: features || '',
+          targetUsers: targetUsers || '',
+          timeline: timeline || '',
+          budget: budget || '',
+          attachmentFilename: file ? file.filename : null,
+          status: 'NEW',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      } catch (fe) {
+        console.warn('Firestore sync for project enquiry:', fe.message);
+      }
+    }
+
     res.status(201).json({
       success: true,
       message: 'Project inquiry recorded. An ANVION solutions architect will connect with you within 24-48 hours.',
@@ -279,6 +359,112 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
     res.status(500).json({ error: 'Failed to submit project inquiry' });
   }
 });
+
+// Endpoint: Client-Safe Firebase Config
+app.get('/api/firebase-config', (req, res) => {
+  const configPath = path.join(__dirname, 'firebase-applet-config.json');
+  if (fs.existsSync(configPath)) {
+    try {
+      const cfg = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      return res.json(cfg);
+    } catch (e) {}
+  }
+  res.json({
+    projectId: 'pure-formula-xxjsq',
+    appId: '1:514186575326:web:b88af124692fd9138c714f',
+    apiKey: 'AIzaSyBK1B0W_bTsQ0TGKTJmKknik5IrjjBJcw4',
+    authDomain: 'pure-formula-xxjsq.firebaseapp.com',
+    storageBucket: 'pure-formula-xxjsq.firebasestorage.app',
+    messagingSenderId: '514186575326',
+    oAuthClientId: '514186575326-gou7sg4ft1b32dg08p4rc9v7f4usphuq.apps.googleusercontent.com'
+  });
+});
+
+// Endpoint: Client's own enquiries (for /profile)
+app.get('/api/my-enquiries', async (req, res) => {
+  try {
+    const email = req.query.email;
+    if (!email) {
+      return res.json([]);
+    }
+    const results = await db
+      .select()
+      .from(projectEnquiries)
+      .where(eq(projectEnquiries.email, String(email).trim().toLowerCase()))
+      .orderBy(desc(projectEnquiries.createdAt));
+
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch personal enquiries' });
+  }
+});
+
+// Endpoint: Authoritative Admin Role Assignment (Strict RBAC)
+app.post('/api/admin/set-claim', requireAdminAuth, async (req, res) => {
+  try {
+    const { uid, email, makeAdmin } = req.body;
+    if (!uid && !email) {
+      return res.status(400).json({ error: 'Target user UID or email is required.' });
+    }
+
+    if (!adminAuth) {
+      return res.status(500).json({ error: 'Firebase Admin Auth is not configured.' });
+    }
+
+    let targetUser;
+    if (uid && !uid.includes('@')) {
+      targetUser = await adminAuth.getUser(uid);
+    } else if (email || uid.includes('@')) {
+      targetUser = await adminAuth.getUserByEmail((email || uid).trim().toLowerCase());
+    }
+
+    // Set Custom Claims
+    const shouldBeAdmin = makeAdmin !== false;
+    await adminAuth.setCustomUserClaims(targetUser.uid, { admin: shouldBeAdmin });
+
+    // Sync Firestore admins and users collections
+    if (adminDb) {
+      if (shouldBeAdmin) {
+        await adminDb.collection('admins').doc(targetUser.uid).set({
+          uid: targetUser.uid,
+          email: targetUser.email,
+          role: 'ADMIN',
+          grantedBy: req.user?.email || 'admin',
+          grantedAt: new Date().toISOString(),
+        }, { merge: true });
+
+        await adminDb.collection('users').doc(targetUser.uid).set({
+          role: 'ADMIN',
+          updatedAt: new Date().toISOString(),
+        }, { merge: true });
+      } else {
+        await adminDb.collection('admins').doc(targetUser.uid).delete();
+        await adminDb.collection('users').doc(targetUser.uid).set({
+          role: 'USER',
+          updatedAt: new Date().toISOString(),
+        }, { merge: true });
+      }
+    }
+
+    await logAudit(
+      req.user?.email || 'admin',
+      shouldBeAdmin ? 'GRANT_ADMIN_ROLE' : 'REVOKE_ADMIN_ROLE',
+      `Target: ${targetUser.email} (UID: ${targetUser.uid})`,
+      req.ip
+    );
+
+    res.json({
+      success: true,
+      message: `Successfully ${shouldBeAdmin ? 'granted' : 'revoked'} admin role for ${targetUser.email}.`,
+      uid: targetUser.uid,
+      admin: shouldBeAdmin,
+    });
+  } catch (error) {
+    console.error('Error setting custom claim:', error);
+    res.status(500).json({ error: 'Failed to assign custom claim', details: error.message });
+  }
+});
+
 
 // ==========================================
 // 2. AUTHENTICATION & ADMIN API
@@ -524,10 +710,24 @@ app.use(express.static(__dirname, {
   extensions: ['html', 'htm'],
 }));
 
+// Explicit HTML Page Routes
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login.html')));
+app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'signup.html')));
+app.get('/forgot-password', (req, res) => res.sendFile(path.join(__dirname, 'forgot-password.html')));
+app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, 'profile.html')));
+app.get('/admin-login', (req, res) => res.sendFile(path.join(__dirname, 'admin-login.html')));
+app.get('/admin/login', (req, res) => res.sendFile(path.join(__dirname, 'admin-login.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/start-a-project', (req, res) => res.sendFile(path.join(__dirname, 'start-a-project.html')));
+app.get('/contact', (req, res) => res.sendFile(path.join(__dirname, 'contact.html')));
+app.get('/careers', (req, res) => res.sendFile(path.join(__dirname, 'careers.html')));
+app.get('/case-studies', (req, res) => res.sendFile(path.join(__dirname, 'case-studies.html')));
+
 // Fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 
 const server = app.listen(PORT, HOST, () => {
   console.log(`ANVION Production Engine running at http://${HOST}:${PORT}`);

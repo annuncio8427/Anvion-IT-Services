@@ -1,0 +1,306 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based attributes and contact details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full name of the user", "maxLength": 100 },
+        "email": { "type": "string", "description": "Primary email address", "maxLength": 150 },
+        "phone": { "type": "string", "description": "Contact phone number", "maxLength": 30 },
+        "role": { "type": "string", "description": "Role: USER or ADMIN", "enum": ["USER", "ADMIN"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last modification" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized administrator whitelist for security rule synchronization",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Admin UID" },
+        "email": { "type": "string", "description": "Admin Email", "maxLength": 150 },
+        "role": { "type": "string", "description": "ADMIN", "enum": ["ADMIN"] },
+        "addedAt": { "type": "string", "format": "date-time", "description": "Granted timestamp" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "ProjectEnquiry": {
+      "title": "ProjectEnquiry",
+      "description": "Enterprise project brief and quotation request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique inquiry ID" },
+        "userId": { "type": "string", "description": "Firebase Auth UID or empty if anonymous", "maxLength": 128 },
+        "name": { "type": "string", "description": "Contact name", "maxLength": 120 },
+        "email": { "type": "string", "description": "Contact work email", "maxLength": 150 },
+        "phone": { "type": "string", "description": "Phone number", "maxLength": 35 },
+        "company": { "type": "string", "description": "Company name", "maxLength": 150 },
+        "service": { "type": "string", "description": "Selected service offering", "maxLength": 100 },
+        "projectType": { "type": "string", "description": "Project archetype", "maxLength": 80 },
+        "budget": { "type": "string", "description": "Estimated budget tier", "maxLength": 80 },
+        "timeline": { "type": "string", "description": "Expected timeline", "maxLength": 80 },
+        "description": { "type": "string", "description": "Detailed project brief", "maxLength": 5000 },
+        "attachmentUrl": { "type": "string", "description": "Storage URL or filename", "maxLength": 500 },
+        "status": { "type": "string", "description": "Inquiry state", "enum": ["NEW", "CONTACTED", "IN_PROGRESS", "COMPLETED", "CANCELLED"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Modification timestamp" }
+      },
+      "required": ["name", "email", "description", "status"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "General corporate contact inquiry message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID" },
+        "userId": { "type": "string", "description": "Author UID if authenticated", "maxLength": 128 },
+        "name": { "type": "string", "description": "Sender name", "maxLength": 120 },
+        "email": { "type": "string", "description": "Sender email", "maxLength": 150 },
+        "phone": { "type": "string", "description": "Sender phone", "maxLength": 35 },
+        "company": { "type": "string", "description": "Company or organization", "maxLength": 150 },
+        "service": { "type": "string", "description": "Service category", "maxLength": 80 },
+        "budget": { "type": "string", "description": "Budget scope", "maxLength": 80 },
+        "subject": { "type": "string", "description": "Inquiry subject", "maxLength": 200 },
+        "message": { "type": "string", "description": "Message text", "maxLength": 3000 },
+        "status": { "type": "string", "description": "Message status", "enum": ["UNREAD", "READ", "REPLIED", "ARCHIVED"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["name", "email", "message", "status"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Commercial case study or portfolio showcase entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Project ID" },
+        "title": { "type": "string", "description": "Project name", "maxLength": 150 },
+        "slug": { "type": "string", "description": "URL-safe unique identifier", "maxLength": 150 },
+        "description": { "type": "string", "description": "Full case study narrative", "maxLength": 10000 },
+        "shortDescription": { "type": "string", "description": "High-level summary", "maxLength": 400 },
+        "category": { "type": "string", "description": "Category slug", "maxLength": 80 },
+        "clientName": { "type": "string", "description": "Client or internal designation", "maxLength": 120 },
+        "projectType": { "type": "string", "description": "Classification", "enum": ["REAL PROJECT", "CONCEPT PROJECT", "DEMO PROJECT"] },
+        "technologyStack": { "type": "string", "description": "Comma-separated or list of tech", "maxLength": 300 },
+        "features": { "type": "string", "description": "Key capabilities", "maxLength": 2000 },
+        "challenges": { "type": "string", "description": "Technical obstacles solved", "maxLength": 2000 },
+        "solution": { "type": "string", "description": "Architectural solution provided", "maxLength": 2000 },
+        "results": { "type": "string", "description": "Outcomes and performance metrics", "maxLength": 2000 },
+        "projectUrl": { "type": "string", "description": "Live production link", "maxLength": 400 },
+        "images": { "type": "string", "description": "Hero and gallery image URLs", "maxLength": 2000 },
+        "featured": { "type": "string", "description": "true or false flag", "maxLength": 10 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["title", "slug", "projectType", "published"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Authentic client testimonial and rating",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Review ID" },
+        "customerName": { "type": "string", "description": "Client name", "maxLength": 120 },
+        "company": { "type": "string", "description": "Client organization", "maxLength": 150 },
+        "designation": { "type": "string", "description": "Job title or role", "maxLength": 100 },
+        "review": { "type": "string", "description": "Feedback body", "maxLength": 2000 },
+        "rating": { "type": "string", "description": "1 to 5 numeric rating", "maxLength": 5 },
+        "photo": { "type": "string", "description": "Avatar image URL", "maxLength": 400 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["customerName", "review", "published"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Enterprise engineering service catalog item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Service ID" },
+        "title": { "type": "string", "description": "Service title", "maxLength": 120 },
+        "slug": { "type": "string", "description": "URL slug", "maxLength": 120 },
+        "description": { "type": "string", "description": "Description", "maxLength": 3000 },
+        "icon": { "type": "string", "description": "Material symbol or SVG class", "maxLength": 60 },
+        "features": { "type": "string", "description": "Feature highlights", "maxLength": 2000 },
+        "technology": { "type": "string", "description": "Supported technologies", "maxLength": 500 },
+        "benefits": { "type": "string", "description": "Business impact", "maxLength": 1000 },
+        "faq": { "type": "string", "description": "Q&A specifics", "maxLength": 2000 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "order": { "type": "string", "description": "Display order integer string", "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["title", "slug", "published"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Engineering insights and thought leadership article",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Blog Post ID" },
+        "title": { "type": "string", "description": "Post headline", "maxLength": 200 },
+        "slug": { "type": "string", "description": "Unique URL slug", "maxLength": 200 },
+        "excerpt": { "type": "string", "description": "Short overview for lists", "maxLength": 500 },
+        "content": { "type": "string", "description": "Full sanitized article content", "maxLength": 30000 },
+        "featuredImage": { "type": "string", "description": "Cover visual URL", "maxLength": 500 },
+        "author": { "type": "string", "description": "Author name", "maxLength": 100 },
+        "category": { "type": "string", "description": "Topic category", "maxLength": 80 },
+        "tags": { "type": "string", "description": "Keywords comma-separated", "maxLength": 300 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "publishedAt": { "type": "string", "format": "date-time", "description": "Publication timestamp" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["title", "slug", "published"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Career opening and hiring specification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Job ID" },
+        "title": { "type": "string", "description": "Job title", "maxLength": 150 },
+        "slug": { "type": "string", "description": "Job slug", "maxLength": 150 },
+        "department": { "type": "string", "description": "Engineering, Design, Cloud, etc.", "maxLength": 80 },
+        "location": { "type": "string", "description": "Remote or office location", "maxLength": 100 },
+        "employmentType": { "type": "string", "description": "Full-time, Contract, etc.", "maxLength": 50 },
+        "experience": { "type": "string", "description": "Years of experience", "maxLength": 50 },
+        "description": { "type": "string", "description": "Role overview", "maxLength": 5000 },
+        "responsibilities": { "type": "string", "description": "Day-to-day duties", "maxLength": 3000 },
+        "requirements": { "type": "string", "description": "Qualifications & skills", "maxLength": 3000 },
+        "skills": { "type": "string", "description": "Tech stack requirements", "maxLength": 500 },
+        "deadline": { "type": "string", "description": "Application deadline", "maxLength": 50 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["title", "slug", "published"]
+    },
+    "JobApplication": {
+      "title": "JobApplication",
+      "description": "Confidential candidate application for career opportunities",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Application ID" },
+        "jobId": { "type": "string", "description": "Referenced Job ID", "maxLength": 100 },
+        "jobTitle": { "type": "string", "description": "Target job title", "maxLength": 150 },
+        "name": { "type": "string", "description": "Candidate full name", "maxLength": 120 },
+        "email": { "type": "string", "description": "Candidate email", "maxLength": 150 },
+        "phone": { "type": "string", "description": "Candidate phone", "maxLength": 35 },
+        "resumeUrl": { "type": "string", "description": "Secure storage download path", "maxLength": 500 },
+        "linkedIn": { "type": "string", "description": "LinkedIn profile URL", "maxLength": 300 },
+        "gitHub": { "type": "string", "description": "GitHub profile URL", "maxLength": 300 },
+        "portfolio": { "type": "string", "description": "Portfolio website URL", "maxLength": 300 },
+        "coverLetter": { "type": "string", "description": "Candidate statement", "maxLength": 5000 },
+        "status": { "type": "string", "description": "Candidate hiring stage", "enum": ["NEW", "REVIEWING", "SHORTLISTED", "INTERVIEW", "REJECTED", "HIRED"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission date" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update" }
+      },
+      "required": ["name", "email", "status"]
+    },
+    "FAQ": {
+      "title": "FAQ",
+      "description": "Frequently asked question entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "FAQ ID" },
+        "question": { "type": "string", "description": "Question text", "maxLength": 300 },
+        "answer": { "type": "string", "description": "Answer narrative", "maxLength": 2000 },
+        "category": { "type": "string", "description": "Category name", "maxLength": 80 },
+        "published": { "type": "string", "description": "true or false", "maxLength": 10 },
+        "order": { "type": "string", "description": "Sort order number", "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp" }
+      },
+      "required": ["question", "answer", "published"]
+    },
+    "WebsiteContent": {
+      "title": "WebsiteContent",
+      "description": "Global configurable site copy, hero parameters, and metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "heroHeading": { "type": "string", "description": "Main banner heading", "maxLength": 300 },
+        "heroDescription": { "type": "string", "description": "Main banner subhead", "maxLength": 1000 },
+        "ctaText": { "type": "string", "description": "Primary action copy", "maxLength": 80 },
+        "aboutContent": { "type": "string", "description": "Company summary", "maxLength": 5000 },
+        "contactEmail": { "type": "string", "description": "Inquiry routing email", "maxLength": 150 },
+        "contactPhone": { "type": "string", "description": "Corporate phone line", "maxLength": 50 },
+        "contactAddress": { "type": "string", "description": "Office location", "maxLength": 300 },
+        "socialLinks": { "type": "string", "description": "JSON string of social profile URLs", "maxLength": 1500 },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      }
+    },
+    "AdminAuditLog": {
+      "title": "AdminAuditLog",
+      "description": "Immutable security tracking record for admin mutations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Log ID" },
+        "adminUid": { "type": "string", "description": "Administrator UID", "maxLength": 128 },
+        "adminEmail": { "type": "string", "description": "Admin email", "maxLength": 150 },
+        "action": { "type": "string", "description": "Action opcode", "maxLength": 100 },
+        "collection": { "type": "string", "description": "Target collection", "maxLength": 80 },
+        "documentId": { "type": "string", "description": "Affected doc ID", "maxLength": 128 },
+        "details": { "type": "string", "description": "Contextual parameters", "maxLength": 2000 },
+        "ipAddress": { "type": "string", "description": "Client IP address", "maxLength": 60 },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Event timestamp" }
+      },
+      "required": ["adminUid", "action"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles restricted to owner and administrators"
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Authorized administrators whitelist"
+    },
+    "/projectEnquiries/{enquiryId}": {
+      "schema": "ProjectEnquiry",
+      "description": "Enterprise project quotation inquiries"
+    },
+    "/contactMessages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Corporate general inquiries"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Commercial case studies and portfolio projects"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Published client testimonials and ratings"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Dynamic service catalog"
+    },
+    "/blogPosts/{postId}": {
+      "schema": "BlogPost",
+      "description": "Engineering articles and publications"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Career postings"
+    },
+    "/jobApplications/{applicationId}": {
+      "schema": "JobApplication",
+      "description": "Confidential candidate resumes and job applications"
+    },
+    "/faqs/{faqId}": {
+      "schema": "FAQ",
+      "description": "Corporate FAQs"
+    },
+    "/websiteContent/{contentId}": {
+      "schema": "WebsiteContent",
+      "description": "Configurable site copy"
+    },
+    "/adminAuditLogs/{logId}": {
+      "schema": "AdminAuditLog",
+      "description": "Tamper-evident administrative audit log"
+    }
+  }
+}

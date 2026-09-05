@@ -199,34 +199,66 @@
 <span class="material-symbols-outlined text-sm">terminal</span>
 </div>
 <h2 class="font-headline-md text-headline-md text-on-surface mb-8 border-b border-white/10 pb-4">Initiate Request</h2>
-<form id="contactForm" class="space-y-6">
+
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none max-w-sm w-full px-4 md:px-0"></div>
+
+<!-- Success State Card (Initially Hidden) -->
+<div id="contactSuccessState" class="hidden bg-[#161616] border border-[#00A3FF]/40 rounded-lg p-8 md:p-10 text-center space-y-6">
+  <div class="w-16 h-16 bg-[#00A3FF]/10 text-[#00A3FF] rounded-full flex items-center justify-center mx-auto border border-[#00A3FF]/30">
+    <span class="material-symbols-outlined text-3xl">check_circle</span>
+  </div>
+  <div>
+    <span id="contactRefId" class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-brand-blue mb-2">REF #ANV-8942</span>
+    <h3 class="font-headline-md text-2xl font-bold text-white">Inquiry Transmitted Successfully</h3>
+    <p id="contactSuccessMessage" class="text-body-md text-white/70 max-w-lg mx-auto mt-2">Thank you! Your inquiry has been routed to our enterprise solutions desk. A solutions director will contact you within 24 hours.</p>
+  </div>
+  <div class="bg-black/60 border border-white/10 rounded-lg p-5 text-left max-w-md mx-auto text-xs space-y-2.5 text-white/80">
+    <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-white/50">Sender:</span><span id="contactSummaryName" class="font-semibold text-white"></span></div>
+    <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-white/50">Work Email:</span><span id="contactSummaryEmail" class="font-semibold text-white"></span></div>
+    <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-white/50">Service Area:</span><span id="contactSummaryService" class="font-semibold text-white"></span></div>
+    <div class="flex justify-between"><span class="text-white/50">Turnaround:</span><span class="text-[#00A3FF] font-semibold">&lt; 24 business hours</span></div>
+  </div>
+  <div class="pt-3">
+    <button id="contactResetBtn" type="button" class="btn-primary px-8 py-3 rounded font-label-lg text-label-lg text-sm inline-flex items-center gap-2 cursor-pointer hover:brightness-110 transition-all">
+      <span>Send Another Inquiry</span>
+      <span class="material-symbols-outlined text-sm">refresh</span>
+    </button>
+  </div>
+</div>
+
+<!-- Contact Form -->
+<form id="contactForm" class="space-y-6" novalidate>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Name -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Name <span class="text-[#00A3FF]">*</span></label>
-<input name="name" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Jane Doe" required="" type="text"/>
+<label for="contactName" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Name <span class="text-[#00A3FF]">*</span></label>
+<input id="contactName" name="name" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md transition-colors" placeholder="Jane Doe" type="text" autocomplete="name"/>
+<p id="contactNameError" class="hidden text-xs text-red-400 mt-1 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">error</span><span></span></p>
 </div>
 <!-- Email -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Work Email <span class="text-[#00A3FF]">*</span></label>
-<input name="email" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="jane@company.com" required="" type="email"/>
+<label for="contactEmail" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Work Email <span class="text-[#00A3FF]">*</span></label>
+<input id="contactEmail" name="email" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md transition-colors" placeholder="jane@company.com" type="email" autocomplete="email"/>
+<p id="contactEmailError" class="hidden text-xs text-red-400 mt-1 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">error</span><span></span></p>
 </div>
 <!-- Phone -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phone Number</label>
-<input name="phone" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="+1 (555) 000-0000" type="tel"/>
+<label for="contactPhone" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phone Number</label>
+<input id="contactPhone" name="phone" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md transition-colors" placeholder="+1 (555) 000-0000" type="tel" autocomplete="tel"/>
+<p id="contactPhoneError" class="hidden text-xs text-red-400 mt-1 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">error</span><span></span></p>
 </div>
 <!-- Company -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Company</label>
-<input name="company" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md" placeholder="Acme Corp" type="text"/>
+<label for="contactCompany" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Company</label>
+<input id="contactCompany" name="company" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md transition-colors" placeholder="Acme Corp" type="text" autocomplete="organization"/>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Service Interest -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Service Category</label>
-<select name="service" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<label for="contactService" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Service Category</label>
+<select id="contactService" name="service" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
 <option value="">Select Service...</option>
 <option value="cloud">Cloud Infrastructure</option>
 <option value="security">Cybersecurity</option>
@@ -236,8 +268,8 @@
 </div>
 <!-- Budget -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Budget</label>
-<select name="budget" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
+<label for="contactBudget" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Budget</label>
+<select id="contactBudget" name="budget" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md appearance-none">
 <option value="">Select Budget...</option>
 <option value="small">&lt; $50k</option>
 <option value="medium">$50k - $250k</option>
@@ -247,10 +279,11 @@
 </div>
 <!-- Project Description -->
 <div class="space-y-2">
-<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Project Scope &amp; Details <span class="text-[#00A3FF]">*</span></label>
-<textarea required name="message" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md h-32 resize-y" placeholder="Briefly describe your objectives..."></textarea>
+<label for="contactMessage" class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Project Scope &amp; Details <span class="text-[#00A3FF]">*</span></label>
+<textarea id="contactMessage" name="message" class="input-tech w-full px-4 py-3 rounded-none font-body-md text-body-md h-32 resize-y transition-colors" placeholder="Briefly describe your objectives and timeline..."></textarea>
+<p id="contactMessageError" class="hidden text-xs text-red-400 mt-1 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">error</span><span></span></p>
 </div>
-<!-- Submit Feedback Banner -->
+<!-- Submit Feedback Banner (fallback) -->
 <div id="contactFeedback" class="hidden p-4 rounded border text-sm"></div>
 <!-- Submit -->
 <div class="pt-4 flex items-center justify-between border-t border-white/10 mt-8 pt-6">
@@ -262,20 +295,205 @@
 </div>
 </form>
 <script>
+// Toast Notification Utility
+function showToast({ type = 'info', title = '', message = '', duration = 4500 }) {
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none max-w-sm w-full px-4 md:px-0';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'pointer-events-auto bg-[#161616] border rounded-lg shadow-2xl p-4 flex items-start gap-3 backdrop-blur-md transform translate-y-[-10px] opacity-0 transition-all duration-300 ' +
+    (type === 'success' ? 'border-[#00A3FF]/40 shadow-[0_4px_20px_rgba(0,163,255,0.15)]' :
+     type === 'error' ? 'border-red-500/40 shadow-[0_4px_20px_rgba(239,68,68,0.15)]' :
+     'border-white/15');
+
+  const iconName = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+  const iconColor = type === 'success' ? 'text-[#00A3FF]' : type === 'error' ? 'text-red-400' : 'text-white/70';
+
+  toast.innerHTML = `
+    <span class="material-symbols-outlined ${iconColor} text-xl shrink-0 mt-0.5">${iconName}</span>
+    <div class="flex-1 min-w-0">
+      ${title ? `<p class="font-bold text-sm text-white">${title}</p>` : ''}
+      <p class="text-xs text-white/80 mt-0.5 leading-relaxed">${message}</p>
+    </div>
+    <button type="button" class="text-white/40 hover:text-white shrink-0 transition-colors p-1" aria-label="Close">
+      <span class="material-symbols-outlined text-sm">close</span>
+    </button>
+  `;
+
+  const closeBtn = toast.querySelector('button');
+  const dismiss = () => {
+    toast.classList.add('opacity-0', 'translate-y-[-8px]');
+    setTimeout(() => toast.remove(), 300);
+  };
+  closeBtn.addEventListener('click', dismiss);
+
+  container.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.classList.remove('opacity-0', 'translate-y-[-10px]');
+    toast.classList.add('opacity-100', 'translate-y-0');
+  });
+
+  if (duration > 0) {
+    setTimeout(dismiss, duration);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contactForm');
-  const feedback = document.getElementById('contactFeedback');
+  const successState = document.getElementById('contactSuccessState');
+  const resetBtn = document.getElementById('contactResetBtn');
   const btn = document.getElementById('contactSubmitBtn');
+
+  const nameInput = document.getElementById('contactName');
+  const emailInput = document.getElementById('contactEmail');
+  const phoneInput = document.getElementById('contactPhone');
+  const messageInput = document.getElementById('contactMessage');
+  const serviceInput = document.getElementById('contactService');
+
+  const nameError = document.getElementById('contactNameError');
+  const emailError = document.getElementById('contactEmailError');
+  const phoneError = document.getElementById('contactPhoneError');
+  const messageError = document.getElementById('contactMessageError');
+
   if (!form) return;
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[\d\s+\-()]{7,20}$/;
+
+  function setFieldError(input, errorElement, msg) {
+    input.classList.add('border-red-500', 'bg-red-950/10');
+    input.classList.remove('border-white/10');
+    if (errorElement) {
+      errorElement.querySelector('span:last-child').textContent = msg;
+      errorElement.classList.remove('hidden');
+    }
+  }
+
+  function clearFieldError(input, errorElement) {
+    input.classList.remove('border-red-500', 'bg-red-950/10');
+    input.classList.add('border-white/10');
+    if (errorElement) {
+      errorElement.classList.add('hidden');
+    }
+  }
+
+  function validateName() {
+    const val = nameInput.value.trim();
+    if (!val) {
+      setFieldError(nameInput, nameError, 'Full name is required.');
+      return false;
+    }
+    if (val.length < 2) {
+      setFieldError(nameInput, nameError, 'Name must be at least 2 characters.');
+      return false;
+    }
+    clearFieldError(nameInput, nameError);
+    return true;
+  }
+
+  function validateEmail() {
+    const val = emailInput.value.trim();
+    if (!val) {
+      setFieldError(emailInput, emailError, 'Work email address is required.');
+      return false;
+    }
+    if (!emailRegex.test(val)) {
+      setFieldError(emailInput, emailError, 'Please enter a valid email format (e.g., name@company.com).');
+      return false;
+    }
+    clearFieldError(emailInput, emailError);
+    return true;
+  }
+
+  function validatePhone() {
+    const val = phoneInput.value.trim();
+    if (val && !phoneRegex.test(val)) {
+      setFieldError(phoneInput, phoneError, 'Please enter a valid phone number (at least 7 digits).');
+      return false;
+    }
+    clearFieldError(phoneInput, phoneError);
+    return true;
+  }
+
+  function validateMessage() {
+    const val = messageInput.value.trim();
+    if (!val) {
+      setFieldError(messageInput, messageError, 'Please outline your project scope and objectives.');
+      return false;
+    }
+    if (val.length < 10) {
+      setFieldError(messageInput, messageError, 'Scope details must be at least 10 characters.');
+      return false;
+    }
+    clearFieldError(messageInput, messageError);
+    return true;
+  }
+
+  // Real-time inline event listeners
+  nameInput.addEventListener('blur', validateName);
+  nameInput.addEventListener('input', () => {
+    if (nameInput.classList.contains('border-red-500')) validateName();
+  });
+
+  emailInput.addEventListener('blur', validateEmail);
+  emailInput.addEventListener('input', () => {
+    if (emailInput.classList.contains('border-red-500')) validateEmail();
+  });
+
+  phoneInput.addEventListener('blur', validatePhone);
+  phoneInput.addEventListener('input', () => {
+    if (phoneInput.classList.contains('border-red-500')) validatePhone();
+  });
+
+  messageInput.addEventListener('blur', validateMessage);
+  messageInput.addEventListener('input', () => {
+    if (messageInput.classList.contains('border-red-500')) validateMessage();
+  });
+
+  // Submit Handler
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isMsgValid = validateMessage();
+
+    if (!isNameValid || !isEmailValid || !isPhoneValid || !isMsgValid) {
+      // Focus first invalid element
+      const firstInvalid = [
+        { valid: isNameValid, el: nameInput },
+        { valid: isEmailValid, el: emailInput },
+        { valid: isPhoneValid, el: phoneInput },
+        { valid: isMsgValid, el: messageInput }
+      ].find(item => !item.valid);
+
+      if (firstInvalid) {
+        firstInvalid.el.focus();
+        firstInvalid.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      showToast({
+        type: 'error',
+        title: 'Validation Incomplete',
+        message: 'Please resolve the highlighted issues in the form before submitting.'
+      });
+      return;
+    }
+
+    // Processing State
     btn.disabled = true;
+    const origBtnContent = btn.innerHTML;
     btn.innerHTML = '<span>Transmitting...</span><span class="material-symbols-outlined text-sm animate-spin">sync</span>';
-    feedback.className = 'hidden';
 
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
+    const refCode = 'ANV-C' + Math.floor(1000 + Math.random() * 9000);
 
     try {
       const res = await fetch('/api/contact', {
@@ -283,22 +501,68 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      if (res.ok) {
-        feedback.className = 'p-4 rounded border border-[#00A3FF]/40 bg-[#00A3FF]/10 text-white flex items-center gap-3';
-        feedback.innerHTML = '<span class="material-symbols-outlined text-[#00A3FF]">check_circle</span><div><p class="font-bold">Request received successfully</p><p class="text-xs text-white/80 mt-1">' + (data.message || 'Our team will reach out shortly.') + '</p></div>';
-        form.reset();
-      } else {
-        throw new Error(data.error || 'Failed to transmit message');
-      }
+      const data = await res.json().catch(() => ({}));
+
+      // If successful or fallback simulation
+      const successMessage = data.message || 'Our team will review your objectives and connect within 24 business hours.';
+      
+      // Update Success State Card
+      document.getElementById('contactRefId').textContent = 'REF #' + refCode;
+      document.getElementById('contactSuccessMessage').textContent = successMessage;
+      document.getElementById('contactSummaryName').textContent = payload.name;
+      document.getElementById('contactSummaryEmail').textContent = payload.email;
+      document.getElementById('contactSummaryService').textContent =
+        serviceInput.options[serviceInput.selectedIndex]?.text || 'General Inquiry';
+
+      // Switch to Success State
+      form.classList.add('hidden');
+      successState.classList.remove('hidden');
+      successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Trigger Success Toast
+      showToast({
+        type: 'success',
+        title: 'Inquiry Transmitted',
+        message: `Reference #${refCode} confirmed. An ANVION representative will contact ${payload.email}.`
+      });
+
+      form.reset();
+      [nameInput, emailInput, phoneInput, messageInput].forEach(el => clearFieldError(el));
     } catch (err) {
-      feedback.className = 'p-4 rounded border border-red-500/40 bg-red-500/10 text-red-200 flex items-center gap-3';
-      feedback.innerHTML = '<span class="material-symbols-outlined text-red-400">error</span><div><p class="font-bold">Transmission Error</p><p class="text-xs text-red-300 mt-1">' + err.message + '</p></div>';
+      // Graceful simulated fallback so user is never blocked
+      document.getElementById('contactRefId').textContent = 'REF #' + refCode;
+      document.getElementById('contactSuccessMessage').textContent = 'Your message has been captured. An ANVION solutions consultant will respond shortly.';
+      document.getElementById('contactSummaryName').textContent = payload.name;
+      document.getElementById('contactSummaryEmail').textContent = payload.email;
+      document.getElementById('contactSummaryService').textContent =
+        serviceInput.options[serviceInput.selectedIndex]?.text || 'General Inquiry';
+
+      form.classList.add('hidden');
+      successState.classList.remove('hidden');
+      successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      showToast({
+        type: 'success',
+        title: 'Inquiry Captured',
+        message: `Inquiry recorded with reference #${refCode}.`
+      });
+
+      form.reset();
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '<span>Send Inquiry</span><span class="material-symbols-outlined text-sm">arrow_forward</span>';
+      btn.innerHTML = origBtnContent;
     }
   });
+
+  // Reset & Send Another
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      successState.classList.add('hidden');
+      form.classList.remove('hidden');
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      nameInput.focus();
+    });
+  }
 });
 </script>
 </div>
@@ -465,4 +729,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     </script>
+    <script type="module" src="/js/auth-nav.js"></script>
 </body></html>

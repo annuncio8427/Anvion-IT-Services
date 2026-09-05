@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Create Account - ANVION IT SERVICES</title>
+  <meta name="description" content="Register your ANVION client account to submit project requests, monitor sprint milestones, and access engineering deliverables."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: { blue: "#007BFF", hover: "#0056b3" },
+            surface: "#121317",
+            "surface-container": "#1a1b20",
+            "on-surface": "#e3e2e7",
+            "on-surface-variant": "#a1a1aa",
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-black text-on-surface font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
+
+  <!-- TOP NAV BAR -->
+  <header class="border-b border-white/10 bg-surface/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-brand-blue font-bold font-display text-xl tracking-wider hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined text-2xl">shield</span>
+        <span>ANVION</span>
+      </a>
+      <div class="flex items-center gap-4 text-xs font-medium">
+        <span class="text-on-surface-variant hidden sm:inline">Already registered?</span>
+        <a href="/login" class="text-white hover:text-brand-blue transition-colors font-semibold flex items-center gap-1">
+          <span>Sign In</span>
+          <span class="material-symbols-outlined text-sm">login</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIGNUP CONTAINER -->
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg bg-surface border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+      
+      <!-- Subtle decorative gradient line -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent"></div>
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center mx-auto mb-4 text-brand-blue shadow-[0_0_20px_rgba(0,123,255,0.2)]">
+          <span class="material-symbols-outlined text-3xl">person_add</span>
+        </div>
+        <h1 class="text-2xl font-bold font-display text-white tracking-tight">Create Client Account</h1>
+        <p class="text-xs text-on-surface-variant mt-2 max-w-sm mx-auto">
+          Sign up to manage project quotation briefs, download architecture proposals, and coordinate with technical architects.
+        </p>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="alertBox" class="hidden mb-6 p-4 rounded-xl border text-xs flex items-start gap-3">
+        <span id="alertIcon" class="material-symbols-outlined text-base mt-0.5">error</span>
+        <div id="alertMessage" class="flex-1 leading-relaxed"></div>
+      </div>
+
+      <!-- Signup Form -->
+      <form id="signupForm" class="space-y-4" novalidate>
+        
+        <!-- Full Name -->
+        <div>
+          <label for="name" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
+            Full Name <span class="text-brand-blue">*</span>
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">badge</span>
+            <input
+              id="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder="e.g. Elena Rostova"
+              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Email Address -->
+        <div>
+          <label for="email" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
+            Work or Personal Email <span class="text-brand-blue">*</span>
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">mail</span>
+            <input
+              id="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="elena@enterprise.com"
+              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+          <label for="phone" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
+            Phone Number
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">call</span>
+            <input
+              id="phone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="+1 (555) 019-2834 or +91 98765 43210"
+              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
+            Password <span class="text-brand-blue">*</span>
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">lock</span>
+            <input
+              id="password"
+              type="password"
+              required
+              autocomplete="new-password"
+              placeholder="Minimum 8 characters"
+              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-11 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+            />
+            <button
+              type="button"
+              id="togglePassword"
+              class="absolute right-3.5 top-3 text-on-surface-variant hover:text-white transition-colors"
+              aria-label="Toggle password visibility"
+            >
+              <span id="eyeIcon" class="material-symbols-outlined text-lg">visibility</span>
+            </button>
+          </div>
+
+          <!-- Password Strength Indicator -->
+          <div class="mt-2.5 space-y-2">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-on-surface-variant">Security Strength:</span>
+              <span id="strengthLabel" class="font-semibold text-white/50">Too Weak</span>
+            </div>
+            <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden flex gap-1">
+              <div id="bar1" class="h-full w-1/4 rounded-full bg-white/20 transition-all duration-300"></div>
+              <div id="bar2" class="h-full w-1/4 rounded-full bg-white/20 transition-all duration-300"></div>
+              <div id="bar3" class="h-full w-1/4 rounded-full bg-white/20 transition-all duration-300"></div>
+              <div id="bar4" class="h-full w-1/4 rounded-full bg-white/20 transition-all duration-300"></div>
+            </div>
+
+            <!-- Password Checklist -->
+            <div class="grid grid-cols-2 gap-1.5 pt-1 text-[11px] text-on-surface-variant">
+              <div id="reqLen" class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-white/30">radio_button_unchecked</span>
+                <span>8+ Characters</span>
+              </div>
+              <div id="reqUpper" class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-white/30">radio_button_unchecked</span>
+                <span>Uppercase (A-Z)</span>
+              </div>
+              <div id="reqLower" class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-white/30">radio_button_unchecked</span>
+                <span>Lowercase (a-z)</span>
+              </div>
+              <div id="reqNum" class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-white/30">radio_button_unchecked</span>
+                <span>Number (0-9)</span>
+              </div>
+              <div id="reqSpec" class="col-span-2 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs text-white/30">radio_button_unchecked</span>
+                <span>Special Character (@$!%*?&^#)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirmPassword" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
+            Confirm Password <span class="text-brand-blue">*</span>
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">verified_user</span>
+            <input
+              id="confirmPassword"
+              type="password"
+              required
+              autocomplete="new-password"
+              placeholder="Re-enter your password"
+              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Terms Agreement -->
+        <div class="pt-2 text-xs text-on-surface-variant flex items-start gap-2">
+          <input
+            id="terms"
+            type="checkbox"
+            required
+            class="rounded border-white/20 bg-black/50 text-brand-blue focus:ring-brand-blue mt-0.5"
+          />
+          <label for="terms" class="cursor-pointer">
+            I agree to the <a href="/terms-of-service" class="text-brand-blue hover:underline">Terms of Service</a> and acknowledge the <a href="/privacy-policy" class="text-brand-blue hover:underline">Privacy Policy</a>.
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          id="submitBtn"
+          class="w-full mt-4 py-3.5 bg-brand-blue text-white font-bold text-sm rounded-lg hover:bg-brand-hover transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,123,255,0.3)] disabled:opacity-50"
+        >
+          <span id="btnText">Create Account</span>
+          <span id="btnIcon" class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Legal & RBAC disclosure -->
+      <div class="mt-6 pt-4 border-t border-white/10 text-center text-[11px] text-white/40">
+        New accounts are registered as standard client <span class="font-mono text-white/70">USER</span>. Administrator privileges are strictly provisioned through zero-trust security clearance.
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-6 border-t border-white/10 text-center text-xs text-on-surface-variant">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 ANVION IT SERVICES. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="/terms-of-service" class="hover:text-white transition-colors">Terms of Service</a>
+        <a href="/contact" class="hover:text-white transition-colors">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase Logic -->
+  <script type="module">
+    import { auth, registerUser, onAuthStateChanged } from '/js/firebase-client.js';
+
+    const form = document.getElementById('signupForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const termsInput = document.getElementById('terms');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const togglePassword = document.getElementById('togglePassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const alertBox = document.getElementById('alertBox');
+    const alertMessage = document.getElementById('alertMessage');
+
+    // Password strength elements
+    const strengthLabel = document.getElementById('strengthLabel');
+    const bars = [
+      document.getElementById('bar1'),
+      document.getElementById('bar2'),
+      document.getElementById('bar3'),
+      document.getElementById('bar4')
+    ];
+    const reqLen = document.getElementById('reqLen');
+    const reqUpper = document.getElementById('reqUpper');
+    const reqLower = document.getElementById('reqLower');
+    const reqNum = document.getElementById('reqNum');
+    const reqSpec = document.getElementById('reqSpec');
+
+    // Redirect if already signed in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = '/profile';
+      }
+    });
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      confirmPasswordInput.setAttribute('type', type);
+      eyeIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+    });
+
+    function updateReq(el, pass) {
+      const icon = el.querySelector('.material-symbols-outlined');
+      if (pass) {
+        icon.textContent = 'check_circle';
+        icon.className = 'material-symbols-outlined text-xs text-emerald-400';
+        el.className = 'flex items-center gap-1 text-emerald-300';
+      } else {
+        icon.textContent = 'radio_button_unchecked';
+        icon.className = 'material-symbols-outlined text-xs text-white/30';
+        el.className = 'flex items-center gap-1 text-on-surface-variant';
+      }
+    }
+
+    function calculateStrength(pwd) {
+      const hasLen = pwd.length >= 8;
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasLower = /[a-z]/.test(pwd);
+      const hasNum = /[0-9]/.test(pwd);
+      const hasSpec = /[@$!%*?&^#()[\]{}|:;<>.~_-]/.test(pwd);
+
+      updateReq(reqLen, hasLen);
+      updateReq(reqUpper, hasUpper);
+      updateReq(reqLower, hasLower);
+      updateReq(reqNum, hasNum);
+      updateReq(reqSpec, hasSpec);
+
+      let score = 0;
+      if (hasLen) score++;
+      if (hasUpper && hasLower) score++;
+      if (hasNum) score++;
+      if (hasSpec) score++;
+
+      // Reset bars
+      bars.forEach(b => {
+        b.className = 'h-full w-1/4 rounded-full bg-white/10 transition-all duration-300';
+      });
+
+      if (!pwd) {
+        strengthLabel.textContent = 'Too Weak';
+        strengthLabel.className = 'font-semibold text-white/40';
+        return false;
+      }
+
+      if (score === 1) {
+        strengthLabel.textContent = 'Weak';
+        strengthLabel.className = 'font-semibold text-red-400';
+        bars[0].className = 'h-full w-1/4 rounded-full bg-red-500';
+      } else if (score === 2) {
+        strengthLabel.textContent = 'Fair';
+        strengthLabel.className = 'font-semibold text-amber-400';
+        bars[0].className = 'h-full w-1/4 rounded-full bg-amber-500';
+        bars[1].className = 'h-full w-1/4 rounded-full bg-amber-500';
+      } else if (score === 3) {
+        strengthLabel.textContent = 'Good';
+        strengthLabel.className = 'font-semibold text-brand-blue';
+        bars[0].className = 'h-full w-1/4 rounded-full bg-brand-blue';
+        bars[1].className = 'h-full w-1/4 rounded-full bg-brand-blue';
+        bars[2].className = 'h-full w-1/4 rounded-full bg-brand-blue';
+      } else if (score >= 4 && hasLen && hasUpper && hasLower && hasNum && hasSpec) {
+        strengthLabel.textContent = 'Strong';
+        strengthLabel.className = 'font-semibold text-emerald-400';
+        bars.forEach(b => b.className = 'h-full w-1/4 rounded-full bg-emerald-500');
+        return true;
+      }
+      return false;
+    }
+
+    passwordInput.addEventListener('input', () => {
+      calculateStrength(passwordInput.value);
+    });
+
+    function showAlert(msg, isError = true) {
+      alertBox.className = `mb-6 p-4 rounded-xl border text-xs flex items-start gap-3 ${
+        isError ? 'border-red-500/30 bg-red-500/10 text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+      }`;
+      alertMessage.textContent = msg;
+      alertBox.classList.remove('hidden');
+    }
+
+    function hideAlert() {
+      alertBox.classList.add('hidden');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      if (!name) {
+        showAlert('Please enter your full name.');
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        showAlert('Please enter a valid work or personal email.');
+        return;
+      }
+      if (!calculateStrength(password)) {
+        showAlert('Your password does not satisfy the security requirements. It must have at least 8 characters, an uppercase letter, a lowercase letter, a number, and a special character.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        showAlert('Passwords do not match. Please re-enter your password.');
+        return;
+      }
+      if (!termsInput.checked) {
+        showAlert('Please agree to the Terms of Service and Privacy Policy to create an account.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      btnText.textContent = 'Provisioning Security Account...';
+
+      try {
+        await registerUser({ name, email, phone, password });
+        showAlert('Registration successful! Launching your client portal...', false);
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 800);
+      } catch (err) {
+        showAlert(err.message || 'Registration failed. Please verify your details and try again.');
+        submitBtn.disabled = false;
+        btnText.textContent = 'Create Account';
+      }
+    });
+  </script>
+</body>
+</html>

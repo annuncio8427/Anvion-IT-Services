@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Client Profile & Project Hub - ANVION IT SERVICES</title>
+  <meta name="description" content="View and manage your ANVION project briefs, account credentials, and engineering consultations."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: { blue: "#007BFF", hover: "#0056b3" },
+            surface: "#121317",
+            "surface-container": "#1a1b20",
+            "surface-container-high": "#22242b",
+            "on-surface": "#e3e2e7",
+            "on-surface-variant": "#a1a1aa",
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-black text-on-surface font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
+
+  <!-- TOP NAV BAR -->
+  <header class="border-b border-white/10 bg-surface/90 backdrop-blur-md px-6 py-4 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="/" class="flex items-center gap-2 text-brand-blue font-bold font-display text-xl tracking-wider hover:opacity-90 transition-opacity">
+          <span class="material-symbols-outlined text-2xl">shield</span>
+          <span>ANVION</span>
+        </a>
+        <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-on-surface-variant">Client Portal</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a href="/start-a-project" class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue hover:bg-brand-blue hover:text-white text-xs font-bold rounded-lg transition-all">
+          <span class="material-symbols-outlined text-sm">add_circle</span>
+          <span>New Project Brief</span>
+        </a>
+        <div class="flex items-center gap-3 pl-3 border-l border-white/10">
+          <div class="text-right hidden sm:block">
+            <p id="topBarUserName" class="text-xs font-semibold text-white">Loading...</p>
+            <span class="text-[10px] uppercase font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">Client User</span>
+          </div>
+          <button id="logoutBtn" class="flex items-center gap-1 text-xs px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-on-surface-variant hover:text-red-400 hover:border-red-400/30 transition-all">
+            <span class="material-symbols-outlined text-sm">logout</span>
+            <span class="hidden sm:inline">Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed top-20 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- MAIN PORTAL CONTENT -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+    <!-- WELCOME BANNER -->
+    <div class="bg-gradient-to-r from-surface to-surface-container border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="flex items-center gap-5 relative z-10">
+        <div id="userAvatar" class="w-16 h-16 rounded-2xl bg-brand-blue/20 border border-brand-blue/40 flex items-center justify-center text-brand-blue text-2xl font-bold font-display shadow-lg">
+          U
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 id="greetingName" class="text-2xl font-bold font-display text-white">Welcome, Client</h1>
+            <span id="roleBadge" class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">USER</span>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-1 flex items-center gap-2">
+            <span id="userEmailText">client@enterprise.com</span>
+            <span id="emailVerifiedBadge" class="hidden items-center gap-0.5 text-[11px] text-emerald-400 font-medium">
+              <span class="material-symbols-outlined text-xs">verified</span> Verified
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 relative z-10">
+        <a href="/start-a-project" class="px-5 py-2.5 bg-brand-blue hover:bg-brand-hover text-white text-xs font-bold rounded-lg transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(0,123,255,0.3)]">
+          <span class="material-symbols-outlined text-base">rocket_launch</span>
+          <span>Submit Project Enquiry</span>
+        </a>
+        <a href="/contact" class="px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold rounded-lg transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-base">support_agent</span>
+          <span>Contact Engineers</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN TWO COLUMN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- LEFT COLUMN: PROFILE CARD & EDIT -->
+      <div class="space-y-6">
+        <div class="bg-surface border border-white/10 rounded-2xl p-6 shadow-lg">
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+            <h2 class="text-base font-bold font-display text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-brand-blue text-xl">person</span>
+              Profile Details
+            </h2>
+            <button id="editToggleBtn" class="text-xs text-brand-blue hover:underline font-semibold flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">edit</span>
+              <span>Edit Profile</span>
+            </button>
+          </div>
+
+          <!-- View Mode -->
+          <div id="profileViewMode" class="space-y-4 text-xs">
+            <div>
+              <span class="text-on-surface-variant block uppercase tracking-wider text-[10px] font-mono">Full Name</span>
+              <p id="viewName" class="text-white font-medium text-sm mt-0.5">-</p>
+            </div>
+            <div>
+              <span class="text-on-surface-variant block uppercase tracking-wider text-[10px] font-mono">Email Address</span>
+              <p id="viewEmail" class="text-white font-medium text-sm mt-0.5">-</p>
+            </div>
+            <div>
+              <span class="text-on-surface-variant block uppercase tracking-wider text-[10px] font-mono">Phone Number</span>
+              <p id="viewPhone" class="text-white font-medium text-sm mt-0.5">Not provided</p>
+            </div>
+            <div>
+              <span class="text-on-surface-variant block uppercase tracking-wider text-[10px] font-mono">Account Role</span>
+              <p class="mt-0.5 inline-flex items-center gap-1 text-emerald-400 font-mono text-xs">
+                <span class="material-symbols-outlined text-xs">shield</span>
+                USER (Standard Client)
+              </p>
+            </div>
+            <div>
+              <span class="text-on-surface-variant block uppercase tracking-wider text-[10px] font-mono">Account Created</span>
+              <p id="viewCreatedAt" class="text-on-surface-variant text-xs mt-0.5">-</p>
+            </div>
+          </div>
+
+          <!-- Edit Mode (Hidden initially) -->
+          <form id="profileEditForm" class="hidden space-y-4 pt-2">
+            <div>
+              <label class="block text-[10px] uppercase font-mono text-on-surface-variant mb-1">Full Name</label>
+              <input id="editNameInput" type="text" required class="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue"/>
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase font-mono text-on-surface-variant mb-1">Phone Number</label>
+              <input id="editPhoneInput" type="tel" class="w-full rounded-lg border border-white/10 bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue"/>
+            </div>
+            <div class="p-3 bg-white/5 rounded-lg border border-white/5 text-[11px] text-on-surface-variant">
+              Email and Security Role are verified by Firebase Authentication and cannot be edited directly.
+            </div>
+            <div class="flex items-center gap-2 pt-2">
+              <button type="submit" id="saveProfileBtn" class="flex-1 py-2 bg-brand-blue text-white rounded-lg text-xs font-bold hover:bg-brand-hover transition-all">
+                Save Changes
+              </button>
+              <button type="button" id="cancelEditBtn" class="px-3 py-2 border border-white/10 text-on-surface-variant hover:text-white rounded-lg text-xs">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Security Badge Card -->
+        <div class="bg-surface border border-white/10 rounded-2xl p-5 shadow-lg space-y-3">
+          <h3 class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+            <span class="material-symbols-outlined text-brand-blue text-base">verified_user</span>
+            Zero-Trust Isolation
+          </h3>
+          <p class="text-[11px] text-on-surface-variant leading-relaxed">
+            Your project briefs, quotations, and technical specifications are protected by collection-level Firestore Security Rules and isolated strictly to your account UID.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: MY SUBMITTED PROJECT ENQUIRIES & MESSAGES -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- PROJECT ENQUIRIES SECTION -->
+        <div class="bg-surface border border-white/10 rounded-2xl p-6 shadow-lg space-y-4">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <h2 class="text-base font-bold font-display text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-blue text-xl">folder_shared</span>
+                My Submitted Project Enquiries
+              </h2>
+              <p class="text-xs text-on-surface-variant mt-0.5">Track real-time status and engineering assignments for your briefs.</p>
+            </div>
+            <span id="enquiryCountBadge" class="px-2.5 py-0.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue font-mono text-xs">0 Inquiries</span>
+          </div>
+
+          <!-- Loading skeleton -->
+          <div id="enquiriesLoading" class="py-12 text-center text-on-surface-variant text-xs space-y-2">
+            <span class="material-symbols-outlined animate-spin text-2xl text-brand-blue">sync</span>
+            <p>Retrieving secure Firestore records...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div id="enquiriesEmpty" class="hidden py-12 text-center text-on-surface-variant space-y-4 border border-dashed border-white/10 rounded-xl">
+            <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto text-on-surface-variant">
+              <span class="material-symbols-outlined text-2xl">description</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold text-white">No Project Enquiries Yet</h4>
+              <p class="text-xs text-on-surface-variant mt-1 max-w-sm mx-auto">Have an idea for a web app, mobile platform, or enterprise cloud system? Submit a brief for an architect quote.</p>
+            </div>
+            <a href="/start-a-project" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue text-white text-xs font-bold rounded-lg hover:bg-brand-hover transition-all">
+              <span>Start Your First Project</span>
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+          </div>
+
+          <!-- Enquiries List -->
+          <div id="enquiriesList" class="hidden space-y-3"></div>
+        </div>
+
+        <!-- MY CONTACT MESSAGES SECTION -->
+        <div class="bg-surface border border-white/10 rounded-2xl p-6 shadow-lg space-y-4">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <h2 class="text-base font-bold font-display text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-blue text-xl">forum</span>
+                My Contact Inquiries
+              </h2>
+              <p class="text-xs text-on-surface-variant mt-0.5">Direct inquiries submitted through our contact channels.</p>
+            </div>
+            <span id="messagesCountBadge" class="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-on-surface-variant font-mono text-xs">0 Messages</span>
+          </div>
+
+          <div id="messagesList" class="space-y-3">
+            <p class="text-xs text-on-surface-variant py-4 text-center">No recent general contact messages.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-6 border-t border-white/10 text-center text-xs text-on-surface-variant">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 ANVION IT SERVICES. Enterprise Client Portal.</p>
+      <div class="flex items-center gap-4">
+        <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="/terms-of-service" class="hover:text-white transition-colors">Terms of Service</a>
+        <a href="/contact" class="hover:text-white transition-colors">Engineering Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase Logic -->
+  <script type="module">
+    import {
+      auth,
+      db,
+      doc,
+      getDoc,
+      updateDoc,
+      collection,
+      query,
+      where,
+      getDocs,
+      onAuthStateChanged,
+      logoutUser,
+      checkAdminAuthorization
+    } from '/js/firebase-client.js';
+
+    let currentUser = null;
+
+    // Toast Notification System
+    function showToast(title, msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-2xl transition-all duration-300 transform translate-x-8 opacity-0 ${
+        type === 'error'
+          ? 'bg-red-950/90 border-red-500/40 text-red-200'
+          : 'bg-surface-container border-emerald-500/40 text-emerald-200'
+      }`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-lg ${type === 'error' ? 'text-red-400' : 'text-emerald-400'}">
+          ${type === 'error' ? 'error' : 'check_circle'}
+        </span>
+        <div class="flex-1 text-xs">
+          <p class="font-bold text-white">${title}</p>
+          <p class="mt-0.5 text-on-surface-variant">${msg}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-x-8', 'opacity-0');
+      });
+      setTimeout(() => {
+        toast.classList.add('translate-x-8', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Auth state observer
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = '/login';
+        return;
+      }
+
+      currentUser = user;
+      document.getElementById('topBarUserName').textContent = user.displayName || user.email;
+      document.getElementById('greetingName').textContent = user.displayName ? `Welcome, ${user.displayName}` : 'Welcome, Client';
+      document.getElementById('userEmailText').textContent = user.email;
+      document.getElementById('userAvatar').textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
+
+      if (user.emailVerified) {
+        document.getElementById('emailVerifiedBadge').classList.remove('hidden');
+        document.getElementById('emailVerifiedBadge').classList.add('inline-flex');
+      }
+
+      // Populate view info
+      document.getElementById('viewName').textContent = user.displayName || 'Not provided';
+      document.getElementById('viewEmail').textContent = user.email;
+      document.getElementById('editNameInput').value = user.displayName || '';
+
+      // Fetch Firestore profile document
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          if (data.phone) {
+            document.getElementById('viewPhone').textContent = data.phone;
+            document.getElementById('editPhoneInput').value = data.phone;
+          }
+          if (data.createdAt) {
+            document.getElementById('viewCreatedAt').textContent = new Date(data.createdAt).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('Profile fetch warning:', e);
+      }
+
+      // Fetch user's project enquiries
+      loadUserEnquiries(user.uid, user.email);
+    });
+
+    // Load Project Enquiries for this User
+    async function loadUserEnquiries(uid, email) {
+      const loading = document.getElementById('enquiriesLoading');
+      const empty = document.getElementById('enquiriesEmpty');
+      const list = document.getElementById('enquiriesList');
+      const badge = document.getElementById('enquiryCountBadge');
+
+      try {
+        // Query by authenticated UID
+        const q = query(collection(db, 'projectEnquiries'), where('userId', '==', uid));
+        const snap = await getDocs(q);
+
+        loading.classList.add('hidden');
+
+        if (snap.empty) {
+          // Also try querying backend API as fallback
+          try {
+            const apiRes = await fetch(`/api/my-enquiries?email=${encodeURIComponent(email)}`);
+            if (apiRes.ok) {
+              const apiData = await apiRes.json();
+              if (apiData && apiData.length > 0) {
+                renderEnquiries(apiData);
+                return;
+              }
+            }
+          } catch (err) {}
+
+          empty.classList.remove('hidden');
+          badge.textContent = '0 Inquiries';
+          return;
+        }
+
+        const items = [];
+        snap.forEach((docSnap) => {
+          items.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        renderEnquiries(items);
+      } catch (err) {
+        console.error('Enquiries load error:', err);
+        loading.classList.add('hidden');
+        empty.classList.remove('hidden');
+      }
+    }
+
+    function renderEnquiries(items) {
+      const empty = document.getElementById('enquiriesEmpty');
+      const list = document.getElementById('enquiriesList');
+      const badge = document.getElementById('enquiryCountBadge');
+
+      badge.textContent = `${items.length} ${items.length === 1 ? 'Inquiry' : 'Inquiries'}`;
+      empty.classList.add('hidden');
+      list.classList.remove('hidden');
+      list.innerHTML = '';
+
+      items.forEach((item) => {
+        const statusColors = {
+          NEW: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+          CONTACTED: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+          IN_PROGRESS: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+          COMPLETED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+          CANCELLED: 'bg-red-500/10 text-red-400 border-red-500/30',
+        };
+
+        const status = (item.status || 'NEW').toUpperCase();
+        const badgeClass = statusColors[status] || statusColors.NEW;
+
+        const card = document.createElement('div');
+        card.className = 'p-5 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 transition-all space-y-3';
+        card.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono text-on-surface-variant font-semibold">REF #${(item.id || 'PRJ').substring(0, 8).toUpperCase()}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold border ${badgeClass}">
+                ${status}
+              </span>
+            </div>
+            <span class="text-[11px] text-on-surface-variant">
+              ${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
+            </span>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white">${item.service || item.projectType || 'Custom Digital Solution'}</h4>
+            <p class="text-xs text-on-surface-variant line-clamp-2 mt-1">${item.description || item.projectDescription || 'No description provided'}</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-[11px] text-on-surface-variant pt-2 border-t border-white/5">
+            ${item.budget ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">payments</span> Budget: ${item.budget}</span>` : ''}
+            ${item.timeline ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">schedule</span> Timeline: ${item.timeline}</span>` : ''}
+            ${item.company ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">domain</span> ${item.company}</span>` : ''}
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    // Profile Edit Mode Toggle
+    const editToggleBtn = document.getElementById('editToggleBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const profileViewMode = document.getElementById('profileViewMode');
+    const profileEditForm = document.getElementById('profileEditForm');
+
+    editToggleBtn.addEventListener('click', () => {
+      profileViewMode.classList.add('hidden');
+      profileEditForm.classList.remove('hidden');
+    });
+
+    cancelEditBtn.addEventListener('click', () => {
+      profileEditForm.classList.add('hidden');
+      profileViewMode.classList.remove('hidden');
+    });
+
+    // Save profile changes
+    profileEditForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const newName = document.getElementById('editNameInput').value.trim();
+      const newPhone = document.getElementById('editPhoneInput').value.trim();
+      const saveBtn = document.getElementById('saveProfileBtn');
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        // Update Firestore document
+        await updateDoc(doc(db, 'users', currentUser.uid), {
+          name: newName,
+          phone: newPhone,
+          updatedAt: new Date().toISOString(),
+        });
+
+        document.getElementById('viewName').textContent = newName;
+        document.getElementById('viewPhone').textContent = newPhone || 'Not provided';
+        document.getElementById('greetingName').textContent = `Welcome, ${newName}`;
+        document.getElementById('topBarUserName').textContent = newName;
+
+        profileEditForm.classList.add('hidden');
+        profileViewMode.classList.remove('hidden');
+        showToast('Profile Updated', 'Your profile details have been saved successfully.');
+      } catch (err) {
+        showToast('Update Failed', err.message || 'Could not update profile.', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Changes';
+      }
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      logoutUser();
+    });
+  </script>
+</body>
+</html>
