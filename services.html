@@ -87,104 +87,26 @@
                     "stack-md": "24px"
             },
             "fontFamily": {
-                    "headline-lg-mobile": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "headline-md": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "body-md": [
-                            "Inter"
-                    ],
-                    "label-lg": [
-                            "Inter"
-                    ],
-                    "label-sm": [
-                            "Inter"
-                    ],
-                    "headline-lg": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "body-lg": [
-                            "Inter"
-                    ],
-                    "display-lg": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "display-sm": [
-                            "Plus Jakarta Sans"
-                    ]
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "display-sm": ["Plus Jakarta Sans"]
             },
             "fontSize": {
-                    "headline-lg-mobile": [
-                            "28px",
-                            {
-                                    "lineHeight": "36px",
-                                    "letterSpacing": "-0.01em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "headline-md": [
-                            "24px",
-                            {
-                                    "lineHeight": "32px",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "body-md": [
-                            "16px",
-                            {
-                                    "lineHeight": "24px",
-                                    "fontWeight": "400"
-                            }
-                    ],
-                    "label-lg": [
-                            "14px",
-                            {
-                                    "lineHeight": "20px",
-                                    "letterSpacing": "0.05em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "label-sm": [
-                            "12px",
-                            {
-                                    "lineHeight": "16px",
-                                    "letterSpacing": "0.02em",
-                                    "fontWeight": "500"
-                            }
-                    ],
-                    "headline-lg": [
-                            "32px",
-                            {
-                                    "lineHeight": "40px",
-                                    "letterSpacing": "-0.01em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "body-lg": [
-                            "18px",
-                            {
-                                    "lineHeight": "28px",
-                                    "fontWeight": "400"
-                            }
-                    ],
-                    "display-lg": [
-                            "64px",
-                            {
-                                    "lineHeight": "72px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "700"
-                            }
-                    ],
-                    "display-sm": [
-                            "48px",
-                            {
-                                    "lineHeight": "56px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "700"
-                            }
-                    ]
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-sm": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
             }
     },
         },
@@ -194,11 +116,9 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .text-electric-blue { color: #007AFF; } /* Placeholder for electric blue accent if needed outside config */
+        .text-electric-blue { color: #007AFF; }
         .border-electric-blue { border-color: #007AFF; }
         .bg-electric-blue { background-color: #007AFF; }
-        
-        /* High-contrast minimal scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #121317; }
         ::-webkit-scrollbar-thumb { background: #343539; border-radius: 4px; }
@@ -209,14 +129,9 @@
 <!-- TopNavBar Component -->
 <header class="w-full top-0 sticky z-50 bg-surface/90 backdrop-blur-md border-b border-white/10 flex justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20 transition-all duration-300 shadow-sm shadow-black/20">
 <div class="flex items-center gap-gutter">
-<!-- Brand Logo -->
-<a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface" href="index.html">
-                ANVION
-            </a>
-<!-- Desktop Navigation -->
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface" href="index.html">ANVION</a>
 <nav class="hidden md:flex items-center gap-6 ml-stack-md">
 <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="index.html">Home</a>
-<!-- Active Navigation Item -->
 <a class="font-label-lg text-label-lg text-primary border-b-2 border-primary pb-1 active:scale-95 transition-transform" href="services.html">Services</a>
 <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="solution.html">Solutions</a>
 <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="projects.html">Projects</a>
@@ -225,13 +140,11 @@
 <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
 </nav>
 </div>
-<!-- Trailing Actions -->
 <div class="flex items-center gap-4 md:pl-6">
 <a class="hidden md:inline-flex font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" href="contact.html">Contact</a>
 <a class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-2 rounded font-bold hover:brightness-110 transition-all" href="start-a-project.html">Start a Project</a>
-<!-- Mobile Menu Toggle -->
-<button class="md:hidden text-on-surface">
-<span class="material-symbols-outlined">menu</span>
+<button class="md:hidden text-on-surface" aria-label="Open navigation menu">
+<span class="material-symbols-outlined" aria-hidden="true">menu</span>
 </button>
 </div>
 </header>
@@ -240,112 +153,88 @@
 <section class="relative w-full py-stack-xl md:py-[120px] overflow-hidden border-b border-white/5">
 <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" data-alt="A highly abstract, dark-mode representation of digital data flows and network connections. Thin glowing white lines intersect over a deep black background, creating a sense of vast digital space and high-end enterprise architecture. Minimalist, high contrast, technical aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGsZykZRsbvZl-GvylC_WPXTWAFvzkP-tBF_4sXaZxIishOqFpBTCYFrd_8ADtmVfda1qpv-37XKRvwJJAVp3QQja8ZX-FByujDnR5HGwzIL3VBR6ejqB0u4jvN6PrLPAJpB60syArgKbJZ-Ik8F6z6hQW5g5x7rrMBPyIlPMds5AwBXl74EpmKNeaN8hUeyIt1f8v3v8-N0NAloNmf5D-nWa8B97t2kjRBB0P66D2IuJ8bC1yhP_F')"></div>
 <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
-<h1 class="font-display-sm text-display-sm md:font-display-lg md:text-display-lg text-on-surface mb-stack-md mx-auto max-w-4xl tracking-tight leading-tight">
-                    Technology Services Built Around Your Business.
-                </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-stack-lg">
-                    We engineer high-performance digital solutions designed to scale. From foundational infrastructure to advanced artificial intelligence, our technical expertise drives operational excellence.
-                </p>
+<h1 class="font-display-sm text-display-sm md:font-display-lg md:text-display-lg text-on-surface mb-stack-md mx-auto max-w-4xl tracking-tight leading-tight">Technology Services Built Around Your Business.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-stack-lg">We engineer high-performance digital solutions designed to scale. From foundational infrastructure to advanced artificial intelligence, our technical expertise drives operational excellence.</p>
 </div>
 </section>
 <!-- Services Grid Section -->
 <section class="py-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="mb-stack-lg border-b border-white/10 pb-4 flex justify-between items-end">
+<div class="mb-stack-lg border-b border-white/10 pb-4 flex flex-wrap items-baseline gap-4">
 <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Our Expertise</h2>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest hidden md:inline-block">Capabilities Index // 11</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide hidden md:inline-block">11 capabilities</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
 <!-- Card 1: Website -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
-<div class="flex justify-between items-start mb-stack-md relative z-10">
-<span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors">language</span>
-<div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div>
-</div>
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">language</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
 <div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">Web Platforms</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">High-performance corporate websites engineered for speed, accessibility, and seamless content management.</p>
-<ul class="mb-stack-md space-y-2 relative z-10">
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Jamstack Architecture</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Headless CMS Integration</li>
-</ul>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Jamstack Architecture</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Headless CMS Integration</li></ul>
 <a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="web-development.html">Learn More</a>
 </div>
 <!-- Card 2: E-Commerce -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
-<div class="flex justify-between items-start mb-stack-md relative z-10">
-<span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors">shopping_cart</span>
-<div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div>
-</div>
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">shopping_cart</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
 <div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">Digital Commerce</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Scalable e-commerce ecosystems designed for high conversion rates and secure transaction processing.</p>
-<ul class="mb-stack-md space-y-2 relative z-10">
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Custom Storefronts</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Payment Gateway Integration</li>
-</ul>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Custom Storefronts</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Payment Gateway Integration</li></ul>
 <a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="service-details.html">Learn More</a>
 </div>
 <!-- Card 3: Mobile -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
-<div class="flex justify-between items-start mb-stack-md relative z-10">
-<span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors">smartphone</span>
-<div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div>
-</div>
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">smartphone</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
 <div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">Mobile Applications</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Native and cross-platform mobile experiences that deliver seamless performance across all devices.</p>
-<ul class="mb-stack-md space-y-2 relative z-10">
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> iOS &amp; Android Native</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> React Native / Flutter</li>
-</ul>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> iOS &amp; Android Native</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> React Native / Flutter</li></ul>
 <a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="mobile-development.html">Learn More</a>
 </div>
 <!-- Card 4: Custom Software -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full lg:col-span-2 relative overflow-hidden">
-<div class="flex justify-between items-start mb-stack-md relative z-10">
-<span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors">code_blocks</span>
-<div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div>
-</div>
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">code_blocks</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
 <div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">Bespoke Software Engineering</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow max-w-2xl relative z-10">End-to-end development of custom software solutions tailored to solve complex business challenges. We build robust, scalable architectures that integrate seamlessly with your existing enterprise systems.</p>
-<ul class="mb-stack-md flex flex-wrap gap-4 relative z-10">
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Microservices</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Legacy Modernization</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary">done</span> Enterprise Integration</li>
-</ul>
+<ul class="mb-stack-md flex flex-wrap gap-4 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Microservices</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Legacy Modernization</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface px-3 py-1 border border-white/10 rounded"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Enterprise Integration</li></ul>
 <a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto self-start relative z-10" href="case-studies.html">Explore Case Studies</a>
 </div>
 <!-- Card 5: Cloud -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
-<div class="flex justify-between items-start mb-stack-md relative z-10">
-<span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors">cloud</span>
-<div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div>
-</div>
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">cloud</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
 <div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">Cloud Infrastructure</h3>
 <p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Secure, resilient, and highly available cloud architectures designed for modern workloads.</p>
-<ul class="mb-stack-md space-y-2 relative z-10">
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> AWS / Azure / GCP</li>
-<li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary">done</span> DevOps &amp; CI/CD</li>
-</ul>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> AWS / Azure / GCP</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> DevOps &amp; CI/CD</li></ul>
 <a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="service-details.html">Learn More</a>
 </div>
-<!-- Add a few more smaller cards for balance -->
+<!-- Card 6: AI & Automation -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">smart_toy</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
+<div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">AI &amp; Automation</h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Intelligent systems that automate workflows.</p>
-<a class="font-label-lg text-label-lg text-primary hover:underline mt-auto relative z-10" href="ai-machine-learning.html">Learn More</a>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Intelligent systems that automate workflows and support faster, data-driven operations.</p>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Workflow Automation</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> AI-Assisted Operations</li></ul>
+<a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="ai-machine-learning.html">Learn More</a>
 </div>
+<!-- Card 7: API Development -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">api</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
+<div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">API Development</h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Robust interfaces for data exchange.</p>
-<a class="font-label-lg text-label-lg text-primary hover:underline mt-auto relative z-10" href="service-details.html">Learn More</a>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Robust interfaces for secure data exchange and reliable system integration.</p>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> REST &amp; API Design</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Secure Integrations</li></ul>
+<a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="service-details.html">Learn More</a>
 </div>
+<!-- Card 8: System Maintenance -->
 <div class="bg-surface-container-low border border-white/10 rounded-xl p-stack-md flex flex-col group hover:border-white/30 transition-colors h-full relative overflow-hidden">
+<div class="flex justify-between items-start mb-stack-md relative z-10"><span class="material-symbols-outlined text-4xl text-on-surface group-hover:text-primary transition-colors" aria-hidden="true">build_circle</span><div class="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors"></div></div>
+<div class="w-full h-px bg-white/5 mb-stack-sm relative z-10"></div>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-xs relative z-10">System Maintenance</h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">24/7 support and security patching.</p>
-<a class="font-label-lg text-label-lg text-primary hover:underline mt-auto relative z-10" href="service-details.html">Learn More</a>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md flex-grow relative z-10">Reliable ongoing support, monitoring, and security patching for critical systems.</p>
+<ul class="mb-stack-md space-y-2 relative z-10"><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Proactive Monitoring</li><li class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">done</span> Security Patching</li></ul>
+<a class="font-label-lg text-label-lg text-on-surface border border-white/20 py-2 px-4 rounded text-center hover:bg-white/5 transition-colors mt-auto relative z-10" href="service-details.html">Learn More</a>
 </div>
 </div>
 </section>
@@ -354,90 +243,37 @@
 <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
 <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-stack-lg text-center">Project Methodology</h2>
 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<!-- Step 1 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-primary rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-2">Phase 01</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Discovery</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Comprehensive analysis of requirements, business objectives, and technical constraints.</p>
-</div>
-<!-- Step 2 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 02</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Architecture</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Designing resilient, scalable blueprints and selecting the optimal technology stack.</p>
-</div>
-<!-- Step 3 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 03</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Execution</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Agile development sprints with rigorous code reviews and continuous integration.</p>
-</div>
-<!-- Step 4 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 04</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Deployment</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Seamless rollout, monitoring, and transition to ongoing maintenance protocols.</p>
-</div>
+<div class="relative pl-6 border-l border-white/10"><div class="absolute w-3 h-3 bg-primary rounded-full -left-[6px] top-1"></div><p class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-2">Phase 01</p><h3 class="font-headline-md text-headline-md text-on-surface mb-2">Discovery</h3><p class="font-body-md text-body-md text-on-surface-variant">Comprehensive analysis of requirements, business objectives, and technical constraints.</p></div>
+<div class="relative pl-6 border-l border-white/10"><div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div><p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 02</p><h3 class="font-headline-md text-headline-md text-on-surface mb-2">Architecture</h3><p class="font-body-md text-body-md text-on-surface-variant">Designing resilient, scalable blueprints and selecting the optimal technology stack.</p></div>
+<div class="relative pl-6 border-l border-white/10"><div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div><p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 03</p><h3 class="font-headline-md text-headline-md text-on-surface mb-2">Execution</h3><p class="font-body-md text-body-md text-on-surface-variant">Agile development sprints with rigorous code reviews and continuous integration.</p></div>
+<div class="relative pl-6 border-l border-white/10"><div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div><p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 04</p><h3 class="font-headline-md text-headline-md text-on-surface mb-2">Deployment</h3><p class="font-body-md text-body-md text-on-surface-variant">Seamless rollout, monitoring, and transition to ongoing maintenance protocols.</p></div>
 </div>
 </div>
 </section>
 <!-- Bottom CTA -->
 <section class="py-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
-<div class="bg-surface-container-high border border-white/10 rounded-xl p-stack-lg relative overflow-hidden">
-<div class="relative z-10">
-<h2 class="font-display-sm text-display-sm text-on-surface mb-stack-sm">Ready to optimize your infrastructure?</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl mx-auto">Engage with our technical architects to discuss your specific operational challenges and discover tailored solutions.</p>
-<a class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-4 rounded font-bold hover:brightness-110 transition-all inline-flex items-center gap-2" href="contact.html">
-                        Initiate Consultation <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</a>
-</div>
-</div>
+<div class="bg-surface-container-high border border-white/10 rounded-xl p-stack-lg relative overflow-hidden"><div class="relative z-10"><h2 class="font-display-sm text-display-sm text-on-surface mb-stack-sm">Ready to optimize your infrastructure?</h2><p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl mx-auto">Engage with our technical architects to discuss your specific operational challenges and discover tailored solutions.</p><a class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-4 rounded font-bold hover:brightness-110 transition-all inline-flex items-center gap-2" href="contact.html">Initiate Consultation <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_forward</span></a></div></div>
 </section>
 </main>
 <!-- Footer Component -->
 <footer class="bg-surface-container-lowest w-full py-stack-xl border-t border-white/10 mt-auto">
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto">
-<div class="col-span-1 md:col-span-1">
-<div class="font-headline-md text-headline-md font-bold text-on-surface mb-stack-sm">ANVION</div>
-<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">Engineered for Enterprise.</p>
-</div>
+<div class="col-span-1 md:col-span-1"><div class="font-headline-md text-headline-md font-bold text-on-surface mb-stack-sm">ANVION</div><p class="font-body-md text-body-md text-on-surface-variant mb-stack-md">Engineered for Enterprise.</p></div>
 <div class="col-span-1 md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-8">
-<div class="flex flex-col gap-3">
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="services.html">Services</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="solution.html">Solutions</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="projects.html">Projects</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="portfolio.html">Portfolio</a>
-</div>
-<div class="flex flex-col gap-3">
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="about.html">About</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="careers.html">Careers</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="contact.html">Contact</a>
-</div>
-<div class="flex flex-col gap-3">
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="privacy-policy.html">Privacy Policy</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="terms-of-service.html">Terms of Service</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="admin.html">Admin Portal</a>
+<div class="flex flex-col gap-3"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="services.html">Services</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="solution.html">Solutions</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="projects.html">Projects</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="portfolio.html">Portfolio</a></div>
+<div class="flex flex-col gap-3"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="about.html">About</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="careers.html">Careers</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="contact.html">Contact</a></div>
+<div class="flex flex-col gap-3"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="privacy-policy.html">Privacy Policy</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="terms-of-service.html">Terms of Service</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors" href="admin.html">Admin Portal</a></div>
 </div>
 </div>
-</div>
-<div class="w-full h-px bg-white/10 my-stack-md"></div>
-<div class="px-margin-desktop max-w-container-max mx-auto">
-<p class="font-body-md text-body-md text-on-surface-variant">© 2026 ANVION IT SERVICES. All rights reserved.</p>
-</div>
+<div class="w-full h-px bg-white/10 my-stack-md"></div><div class="px-margin-desktop max-w-container-max mx-auto"><p class="font-body-md text-body-md text-on-surface-variant">© 2026 ANVION IT SERVICES. All rights reserved.</p></div>
 </footer>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const menuButton = document.querySelector("header button.md\\:hidden");
   const header = document.querySelector("header");
-
   if (menuButton && header) {
     menuButton.addEventListener("click", () => {
       let mobilePanel = header.querySelector(".mobile-nav-panel");
-
       if (!mobilePanel) {
         mobilePanel = document.createElement("div");
         mobilePanel.className = "mobile-nav-panel md:hidden absolute top-20 left-0 right-0 bg-surface border-b border-white/10 px-5 py-5";
@@ -455,7 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>`;
         header.appendChild(mobilePanel);
       }
-
       mobilePanel.classList.toggle("hidden");
     });
   }
