@@ -45,7 +45,7 @@ test('static hosting blocks private uploads and backend source', () => {
 });
 
 test('admin fallback checks require the explicit ADMIN role in backend, client and rules', () => {
-  assert.ok(auth.includes("adminDoc.exists() && adminDoc.data()?.role === 'ADMIN'"));
+  assert.ok(auth.includes("isAdmin = adminDoc.exists() && adminDoc.data()?.role === 'ADMIN'"));
   assert.ok(client.includes("adminDoc.exists() && adminDoc.data()?.role === 'ADMIN'"));
   assert.ok(rules.includes("get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'ADMIN'"));
 });
