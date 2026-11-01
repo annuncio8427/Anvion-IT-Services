@@ -20,36 +20,36 @@ test('every admin API route requires administrator authorization', () => {
 });
 
 test('legacy JWT authentication has no built-in fallback secret', () => {
-  assert.match(server, /const JWT_SECRET = process\.env\.ADMIN_JWT_SECRET;/);
-  assert.doesNotMatch(server, /anvion_secure_super_secret_jwt_key_2026/);
-  assert.match(auth, /if \(!JWT_SECRET\) return null;/);
-  assert.match(auth, /decoded\.role !== 'ADMIN'/);
+  assert.ok(server.includes('const JWT_SECRET = process.env.ADMIN_JWT_SECRET;'));
+  assert.ok(!server.includes('anvion_secure_super_secret_jwt_key_2026'));
+  assert.ok(auth.includes('if (!JWT_SECRET) return null;'));
+  assert.ok(auth.includes("decoded.role !== 'ADMIN'"));
 });
 
 test('client enquiry history uses the authenticated identity, not a query email', () => {
   const route = server.match(/app\.get\('\/api\/my-enquiries',[\s\S]*?\n\}\);/);
   assert.ok(route, 'my-enquiries route should exist');
-  assert.match(route[0], /requireAuth/);
-  assert.match(route[0], /req\.user\?\.email/);
-  assert.doesNotMatch(route[0], /req\.query\.email/);
+  assert.ok(route[0].includes('requireAuth'));
+  assert.ok(route[0].includes('req.user?.email'));
+  assert.ok(!route[0].includes('req.query.email'));
 });
 
 test('public project and service endpoints expose published content only', () => {
-  assert.match(server, /eq\(projects\.status, 'published'\)/);
-  assert.match(server, /eq\(services\.status, 'published'\)/);
+  assert.ok(server.includes("eq(projects.status, 'published')"));
+  assert.ok(server.includes("eq(services.status, 'published')"));
 });
 
 test('static hosting blocks private uploads and backend source', () => {
-  assert.match(server, /src\|node_modules\|uploads/);
-  assert.match(server, /server\\?\.js/);
+  assert.ok(server.includes(String.raw`src|node_modules|uploads`));
+  assert.ok(server.includes(String.raw`server\.js`));
 });
 
 test('admin fallback checks require the explicit ADMIN role in backend, client and rules', () => {
-  assert.match(auth, /adminDoc\.data\(\)\?\.role === 'ADMIN'/);
-  assert.match(client, /adminDoc\.data\(\)\?\.role === 'ADMIN'/);
-  assert.match(rules, /get\([^\n]+admins\/\$\(request\.auth\.uid\)[^\n]+\)\.data\.role == 'ADMIN'/);
+  assert.ok(auth.includes("adminDoc.exists() && adminDoc.data()?.role === 'ADMIN'"));
+  assert.ok(client.includes("adminDoc.exists() && adminDoc.data()?.role === 'ADMIN'"));
+  assert.ok(rules.includes("get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'ADMIN'"));
 });
 
 test('PostgreSQL connection honors SQL_PORT', () => {
-  assert.match(database, /port: Number\(process\.env\.SQL_PORT \|\| 5432\)/);
+  assert.ok(database.includes('port: Number(process.env.SQL_PORT || 5432)'));
 });
