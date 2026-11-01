@@ -20,7 +20,10 @@ service cloud.firestore {
     function isAdmin() {
       return isSignedIn() && (
         request.auth.token.get('admin', false) == true ||
-        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        (
+          exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'ADMIN'
+        )
       );
     }
 
