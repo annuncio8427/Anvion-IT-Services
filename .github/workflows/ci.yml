@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, fix/security-and-api-auth]
   pull_request:
     branches: [main]
 
