@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -29,9 +30,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
-const HOST = '0.0.0.0';
-const JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'anvion_secure_super_secret_jwt_key_2026';
+const PORT = Number(process.env.PORT || 3000);
+const HOST = process.env.HOST || '0.0.0.0';
+const JWT_SECRET = process.env.ADMIN_JWT_SECRET;
 
 // Uploads configuration
 const uploadDir = path.join(__dirname, 'uploads');
@@ -381,11 +382,12 @@ app.get('/api/firebase-config', (req, res) => {
 });
 
 // Endpoint: Client's own enquiries (for /profile)
-app.get('/api/my-enquiries', async (req, res) => {
+app.get('/api/my-enquiries', requireAuth, async (req, res) => {
   try {
-    const email = req.query.email;
+    // Never trust an email supplied in the query string; derive identity from the verified token.
+    const email = req.user?.email;
     if (!email) {
-      return res.json([]);
+      return res.status(403).json({ error: 'An authenticated account with an email address is required.' });
     }
     const results = await db
       .select()
@@ -477,6 +479,9 @@ app.post('/api/auth/login', async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password required' });
     }
+    if (!JWT_SECRET || JWT_SECRET.length < 32) {
+      return res.status(503).json({ error: 'Admin JWT login is not configured. Set ADMIN_JWT_SECRET to a random value of at least 32 characters.' });
+    }
 
     const adminUser = await db
       .select()
@@ -498,7 +503,7 @@ app.post('/api/auth/login', async (req, res) => {
         id: adminUser[0].id,
         email: adminUser[0].email,
         name: adminUser[0].name,
-        role: adminUser[0].role,
+        role: 'ADMIN',
       },
       JWT_SECRET,
       { expiresIn: '7d' }
@@ -523,7 +528,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // Admin Dashboard Summary Metrics (Protected)
-app.get('/api/admin/metrics', requireAuth, async (req, res) => {
+app.get('/api/admin/metrics', requireAdminAuth, async (req, res) => {
   try {
     const enquiries = await db.select().from(projectEnquiries);
     const messages = await db.select().from(contactMessages);
@@ -556,7 +561,7 @@ app.get('/api/admin/metrics', requireAuth, async (req, res) => {
 });
 
 // Manage Project Enquiries (Protected)
-app.get('/api/admin/enquiries', requireAuth, async (req, res) => {
+app.get('/api/admin/enquiries', requireAdminAuth, async (req, res) => {
   try {
     const list = await db.select().from(projectEnquiries).orderBy(desc(projectEnquiries.createdAt));
     res.json(list);
@@ -565,10 +570,13 @@ app.get('/api/admin/enquiries', requireAuth, async (req, res) => {
   }
 });
 
-app.patch('/api/admin/enquiries/:id/status', requireAuth, async (req, res) => {
+app.patch('/api/admin/enquiries/:id/status', requireAdminAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
     const { status } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['new', 'in_review', 'contacted', 'closed'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid enquiry ID or status.' });
+    }
     await db.update(projectEnquiries).set({ status }).where(eq(projectEnquiries.id, id));
     await logAudit(req.user?.email || 'admin', 'UPDATE_ENQUIRY_STATUS', `ID ${id} -> ${status}`, req.ip);
     res.json({ success: true });
@@ -578,7 +586,7 @@ app.patch('/api/admin/enquiries/:id/status', requireAuth, async (req, res) => {
 });
 
 // Manage Contact Messages (Protected)
-app.get('/api/admin/messages', requireAuth, async (req, res) => {
+app.get('/api/admin/messages', requireAdminAuth, async (req, res) => {
   try {
     const list = await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
     res.json(list);
@@ -587,10 +595,13 @@ app.get('/api/admin/messages', requireAuth, async (req, res) => {
   }
 });
 
-app.patch('/api/admin/messages/:id/status', requireAuth, async (req, res) => {
+app.patch('/api/admin/messages/:id/status', requireAdminAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
     const { status } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['unread', 'read', 'replied', 'archived'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid message ID or status.' });
+    }
     await db.update(contactMessages).set({ status }).where(eq(contactMessages.id, id));
     await logAudit(req.user?.email || 'admin', 'UPDATE_MESSAGE_STATUS', `ID ${id} -> ${status}`, req.ip);
     res.json({ success: true });
@@ -600,7 +611,7 @@ app.patch('/api/admin/messages/:id/status', requireAuth, async (req, res) => {
 });
 
 // Manage Job Applications (Protected)
-app.get('/api/admin/applications', requireAuth, async (req, res) => {
+app.get('/api/admin/applications', requireAdminAuth, async (req, res) => {
   try {
     const list = await db.select().from(jobApplications).orderBy(desc(jobApplications.createdAt));
     res.json(list);
@@ -609,10 +620,13 @@ app.get('/api/admin/applications', requireAuth, async (req, res) => {
   }
 });
 
-app.patch('/api/admin/applications/:id/status', requireAuth, async (req, res) => {
+app.patch('/api/admin/applications/:id/status', requireAdminAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
     const { status } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['new', 'reviewed', 'interviewing', 'rejected', 'accepted'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid application ID or status.' });
+    }
     await db.update(jobApplications).set({ status }).where(eq(jobApplications.id, id));
     await logAudit(req.user?.email || 'admin', 'UPDATE_APPLICATION_STATUS', `ID ${id} -> ${status}`, req.ip);
     res.json({ success: true });
@@ -622,7 +636,7 @@ app.patch('/api/admin/applications/:id/status', requireAuth, async (req, res) =>
 });
 
 // Secure download for resumes & attachments (Protected)
-app.get('/api/admin/download/:filename', requireAuth, (req, res) => {
+app.get('/api/admin/download/:filename', requireAdminAuth, (req, res) => {
   const safeFilename = path.basename(req.params.filename);
   const filePath = path.join(uploadDir, safeFilename);
   if (!fs.existsSync(filePath)) {
@@ -632,7 +646,7 @@ app.get('/api/admin/download/:filename', requireAuth, (req, res) => {
 });
 
 // Manage Projects (Protected)
-app.post('/api/admin/projects', requireAuth, async (req, res) => {
+app.post('/api/admin/projects', requireAdminAuth, async (req, res) => {
   try {
     const {
       title,
@@ -677,7 +691,7 @@ app.post('/api/admin/projects', requireAuth, async (req, res) => {
 });
 
 // Manage Careers / Jobs (Protected)
-app.post('/api/admin/jobs', requireAuth, async (req, res) => {
+app.post('/api/admin/jobs', requireAdminAuth, async (req, res) => {
   try {
     const { title, slug, department, employmentType, location, experience, overview, requirements, responsibilities } = req.body;
 
@@ -705,7 +719,16 @@ app.post('/api/admin/jobs', requireAuth, async (req, res) => {
 // 3. STATIC FILES & FALLBACK
 // ==========================================
 
-// Serve static HTML/assets from root
+// Do not expose server code, dependency metadata, configuration, or private uploads via static hosting.
+app.use((req, res, next) => {
+  const pathname = decodeURIComponent(req.path);
+  const blockedPath = /^\\/(?:src|node_modules|uploads|\\.git)(?:\\/|$)/i.test(pathname);
+  const blockedFile = /^\\/(?:server\\.js|package(?:-lock)?\\.json|bun\\.lock|pnpm-lock\\.yaml|yarn\\.lock|drizzle\\.config\\.[^/]+|tsconfig(?:\\.[^/]+)?|firestore\\.rules(?:\\.test\\.[^/]+)?|firebase-blueprint\\.json)$/i.test(pathname);
+  if (blockedPath || blockedFile) return res.status(404).end();
+  next();
+});
+
+// Serve public HTML/assets from the root after private paths have been denied.
 app.use(express.static(__dirname, {
   extensions: ['html', 'htm'],
 }));
