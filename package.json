@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js",
-    "build": "npm run lint",
+    "build": "npm run lint && npm test",
     "start": "node server.js",
-    "lint": "node --check server.js && node --check src/middleware/auth.js"
+    "lint": "node --check server.js && node --check src/middleware/auth.js && node --check js/firebase-client.js && node --check security.test.js",
+    "test": "node --test security.test.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
