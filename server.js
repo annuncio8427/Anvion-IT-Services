@@ -6,7 +6,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and } from 'drizzle-orm';
 import { db } from './src/db/index.ts';
 import {
   admins,
@@ -104,12 +104,13 @@ app.get('/api/projects', async (req, res) => {
       list = await db
         .select()
         .from(projects)
-        .where(eq(projects.category, category))
+        .where(and(eq(projects.category, category), eq(projects.status, 'published')))
         .orderBy(desc(projects.createdAt));
     } else {
       list = await db
         .select()
         .from(projects)
+        .where(eq(projects.status, 'published'))
         .orderBy(desc(projects.createdAt));
     }
     res.json(list);
@@ -124,7 +125,7 @@ app.get('/api/projects/:slug', async (req, res) => {
     const item = await db
       .select()
       .from(projects)
-      .where(eq(projects.slug, req.params.slug))
+      .where(and(eq(projects.slug, req.params.slug), eq(projects.status, 'published')))
       .limit(1);
     if (!item || item.length === 0) {
       return res.status(404).json({ error: 'Project not found' });
@@ -138,7 +139,7 @@ app.get('/api/projects/:slug', async (req, res) => {
 // Fetch Services
 app.get('/api/services', async (req, res) => {
   try {
-    const list = await db.select().from(services).orderBy(desc(services.createdAt));
+    const list = await db.select().from(services).where(eq(services.status, 'published')).orderBy(desc(services.createdAt));
     res.json(list);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve services' });
