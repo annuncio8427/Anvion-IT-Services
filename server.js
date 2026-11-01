@@ -722,8 +722,8 @@ app.post('/api/admin/jobs', requireAdminAuth, async (req, res) => {
 // Do not expose server code, dependency metadata, configuration, or private uploads via static hosting.
 app.use((req, res, next) => {
   const pathname = decodeURIComponent(req.path);
-  const blockedPath = /^\\/(?:src|node_modules|uploads|\\.git)(?:\\/|$)/i.test(pathname);
-  const blockedFile = /^\\/(?:server\\.js|package(?:-lock)?\\.json|bun\\.lock|pnpm-lock\\.yaml|yarn\\.lock|drizzle\\.config\\.[^/]+|tsconfig(?:\\.[^/]+)?|firestore\\.rules(?:\\.test\\.[^/]+)?|firebase-blueprint\\.json)$/i.test(pathname);
+  const blockedPath = /^\/(?:src|node_modules|uploads|\.git)(?:\/|$)/i.test(pathname);
+  const blockedFile = /^\/(?:server\.js|package(?:-lock)?\.json|bun\.lock|pnpm-lock\.yaml|yarn\.lock|drizzle\.config\.[^/]+|tsconfig(?:\.[^/]+)?|firestore\.rules(?:\.test\.[^/]+)?|firebase-blueprint\.json)$/i.test(pathname);
   if (blockedPath || blockedFile) return res.status(404).end();
   next();
 });
