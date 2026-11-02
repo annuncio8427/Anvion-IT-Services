@@ -59,9 +59,9 @@ test('PostgreSQL connection honors SQL_PORT', () => {
   assert.ok(database.includes('port: Number(process.env.SQL_PORT || 5432)'));
 });
 
-test('Vercel runs the Express app through the framework entry point', () => {
-  assert.equal(packageJson.main, 'index.js');
-  assert.equal(vercelConfig.framework, 'express');
+test('Vercel exposes the Express backend through an API function entry point', () => {
+  assert.equal(vercelConfig.framework, null);
+  assert.equal(vercelConfig.outputDirectory, 'public');
   assert.equal(vercelConfig.buildCommand, 'npm run build');
   assert.ok(vercelEntry.includes("export { default } from './server.js';"));
   assert.ok(server.includes('if (!process.env.VERCEL)'));
