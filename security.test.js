@@ -105,5 +105,5 @@ test('Vercel serves public HTML through the CDN, not through Express file reads'
   assert.ok(staticBlock.includes('if (!process.env.VERCEL)'));
   assert.ok(staticBlock.includes('app.use(express.static(publicDir'));
   assert.ok(staticBlock.includes('if (process.env.VERCEL) return res.redirect(308'));
-  assert.ok(staticBlock.includes("if (!process.env.VERCEL) {\\n  app.get('*'"));
+  assert.match(staticBlock, /if \\(!process\\.env\\.VERCEL\\)\\s*\\{\\s*app\\.get\\(\'\\*\'/);
 });
