@@ -9,6 +9,7 @@ const client = read('./js/firebase-client.js');
 const rules = read('./firestore.rules');
 const database = read('./src/db/index.ts');
 const packageJson = JSON.parse(read('./package.json'));
+const vercelConfig = JSON.parse(read('./vercel.json'));
 const vercelEntry = read('./index.js');
 const prepareScript = read('./scripts/prepare-vercel.mjs');
 
@@ -59,6 +60,8 @@ test('PostgreSQL connection honors SQL_PORT', () => {
 
 test('Vercel runs the Express app through the framework entry point', () => {
   assert.equal(packageJson.main, 'index.js');
+  assert.equal(vercelConfig.framework, 'express');
+  assert.equal(vercelConfig.buildCommand, 'npm run build');
   assert.ok(vercelEntry.includes("export { default } from './server.js';"));
   assert.ok(server.includes('if (!process.env.VERCEL)'));
   assert.ok(server.includes('export default app;'));
