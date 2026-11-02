@@ -799,39 +799,6 @@
     <span class="hidden sm:inline">WhatsApp Chat</span>
   </a>
 
-  <!-- Mobile Navigation Toggle Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const mobileBtn = document.getElementById("mobileMenuBtn");
-      const header = document.querySelector("header");
-      if (mobileBtn && header) {
-        mobileBtn.addEventListener("click", () => {
-          let panel = document.getElementById("mobileNavPanel");
-          if (!panel) {
-            panel = document.createElement("div");
-            panel.id = "mobileNavPanel";
-            panel.className = "lg:hidden absolute top-20 left-0 right-0 bg-[#060709] border-b border-white/10 px-6 py-6 shadow-2xl flex flex-col gap-4 text-sm font-semibold";
-            panel.innerHTML = `
-              <a href="index.html" class="text-neutral-300 hover:text-white py-1">Home</a>
-              <a href="services.html" class="text-neutral-300 hover:text-white py-1">Services</a>
-              <a href="solution.html" class="text-neutral-300 hover:text-white py-1">Solutions</a>
-              <a href="projects.html" class="text-neutral-300 hover:text-white py-1">Projects</a>
-              <a href="portfolio.html" class="text-neutral-300 hover:text-white py-1">Portfolio</a>
-              <a href="case-studies.html" class="text-neutral-300 hover:text-white py-1">Case Studies</a>
-              <a href="about.html" class="text-white font-bold py-1">About</a>
-              <a href="careers.html" class="text-neutral-300 hover:text-white py-1">Careers</a>
-              <a href="contact.html" class="text-neutral-300 hover:text-white py-1">Contact</a>
-              <a href="start-a-project.html" class="bg-brand-blue text-white text-center py-3 rounded-lg font-bold mt-2">Start a Project</a>
-            `;
-            header.appendChild(panel);
-          } else {
-            panel.classList.toggle("hidden");
-          }
-        });
-      }
-    });
-  </script>
-
   <script src="js/navbar.js"></script>
 </body>
 </html>
