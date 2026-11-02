@@ -401,7 +401,6 @@ function setupMobileDrawer(header) {
     }
   });
 }
-}
 
 /**
  * Updates User profile snippet in mobile drawer
