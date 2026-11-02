@@ -28,6 +28,7 @@ import { adminAuth, adminDb } from './src/lib/firebase-admin.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const publicDir = process.env.VERCEL ? path.join(__dirname, 'public') : __dirname;
 
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
@@ -366,7 +367,7 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
 
 // Endpoint: Client-Safe Firebase Config
 app.get('/api/firebase-config', (req, res) => {
-  const configPath = path.join(__dirname, 'firebase-applet-config.json');
+  const configPath = path.join(publicDir, 'firebase-applet-config.json');
   if (fs.existsSync(configPath)) {
     try {
       const cfg = JSON.parse(fs.readFileSync(configPath, 'utf8'));
@@ -732,26 +733,28 @@ app.use((req, res, next) => {
 });
 
 // Serve public HTML/assets from the root after private paths have been denied.
-app.use(express.static(__dirname, {
+app.use(express.static(publicDir, {
   extensions: ['html', 'htm'],
+  index: 'index.html',
+  fallthrough: true,
 }));
 
 // Explicit HTML Page Routes
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login.html')));
-app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'signup.html')));
-app.get('/forgot-password', (req, res) => res.sendFile(path.join(__dirname, 'forgot-password.html')));
-app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, 'profile.html')));
-app.get('/admin-login', (req, res) => res.sendFile(path.join(__dirname, 'admin-login.html')));
-app.get('/admin/login', (req, res) => res.sendFile(path.join(__dirname, 'admin-login.html')));
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
-app.get('/start-a-project', (req, res) => res.sendFile(path.join(__dirname, 'start-a-project.html')));
-app.get('/contact', (req, res) => res.sendFile(path.join(__dirname, 'contact.html')));
-app.get('/careers', (req, res) => res.sendFile(path.join(__dirname, 'careers.html')));
-app.get('/case-studies', (req, res) => res.sendFile(path.join(__dirname, 'case-studies.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(publicDir, 'login.html')));
+app.get('/signup', (req, res) => res.sendFile(path.join(publicDir, 'signup.html')));
+app.get('/forgot-password', (req, res) => res.sendFile(path.join(publicDir, 'forgot-password.html')));
+app.get('/profile', (req, res) => res.sendFile(path.join(publicDir, 'profile.html')));
+app.get('/admin-login', (req, res) => res.sendFile(path.join(publicDir, 'admin-login.html')));
+app.get('/admin/login', (req, res) => res.sendFile(path.join(publicDir, 'admin-login.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(publicDir, 'admin.html')));
+app.get('/start-a-project', (req, res) => res.sendFile(path.join(publicDir, 'start-a-project.html')));
+app.get('/contact', (req, res) => res.sendFile(path.join(publicDir, 'contact.html')));
+app.get('/careers', (req, res) => res.sendFile(path.join(publicDir, 'careers.html')));
+app.get('/case-studies', (req, res) => res.sendFile(path.join(publicDir, 'case-studies.html')));
 
 // Fallback to index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 
