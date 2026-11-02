@@ -723,39 +723,50 @@ app.post('/api/admin/jobs', requireAdminAuth, async (req, res) => {
 // 3. STATIC FILES & FALLBACK
 // ==========================================
 
-// Do not expose server code, dependency metadata, configuration, or private uploads via static hosting.
+// Do not expose server code, dependency metadata, configuration, or private uploads.
 app.use((req, res, next) => {
   const pathname = decodeURIComponent(req.path);
-  const blockedPath = /^\/(?:src|node_modules|uploads|\.git)(?:\/|$)/i.test(pathname);
-  const blockedFile = /^\/(?:server\.js|package(?:-lock)?\.json|bun\.lock|pnpm-lock\.yaml|yarn\.lock|drizzle\.config\.[^/]+|tsconfig(?:\.[^/]+)?|firestore\.rules(?:\.test\.[^/]+)?|firebase-blueprint\.json)$/i.test(pathname);
+  const blockedPath = /^\\/(?:src|node_modules|uploads|\\.git)(?:\\/|$)/i.test(pathname);
+  const blockedFile = /^\\/(?:server\\.js|package(?:-lock)?\\.json|bun\\.lock|pnpm-lock\\.yaml|yarn\\.lock|drizzle\\.config\\.[^/]+|tsconfig(?:\\.[^/]+)?|firestore\\.rules(?:\\.test\\.[^/]+)?|firebase-blueprint\\.json)$/i.test(pathname);
   if (blockedPath || blockedFile) return res.status(404).end();
   next();
 });
 
-// Serve public HTML/assets from the root after private paths have been denied.
-app.use(express.static(publicDir, {
-  extensions: ['html', 'htm'],
-  index: 'index.html',
-  fallthrough: true,
-}));
+// Vercel publishes public/** through its CDN. express.static() and file-based
+// fallbacks are retained only for local development.
+if (!process.env.VERCEL) {
+  app.use(express.static(publicDir, {
+    extensions: ['html', 'htm'],
+    index: 'index.html',
+    fallthrough: true,
+  }));
+}
+
+const servePage = (file) => (req, res) => {
+  if (process.env.VERCEL) return res.redirect(308, `/${file}`);
+  return res.sendFile(path.join(publicDir, file));
+};
 
 // Explicit HTML Page Routes
-app.get('/login', (req, res) => res.sendFile(path.join(publicDir, 'login.html')));
-app.get('/signup', (req, res) => res.sendFile(path.join(publicDir, 'signup.html')));
-app.get('/forgot-password', (req, res) => res.sendFile(path.join(publicDir, 'forgot-password.html')));
-app.get('/profile', (req, res) => res.sendFile(path.join(publicDir, 'profile.html')));
-app.get('/admin-login', (req, res) => res.sendFile(path.join(publicDir, 'admin-login.html')));
-app.get('/admin/login', (req, res) => res.sendFile(path.join(publicDir, 'admin-login.html')));
-app.get('/admin', (req, res) => res.sendFile(path.join(publicDir, 'admin.html')));
-app.get('/start-a-project', (req, res) => res.sendFile(path.join(publicDir, 'start-a-project.html')));
-app.get('/contact', (req, res) => res.sendFile(path.join(publicDir, 'contact.html')));
-app.get('/careers', (req, res) => res.sendFile(path.join(publicDir, 'careers.html')));
-app.get('/case-studies', (req, res) => res.sendFile(path.join(publicDir, 'case-studies.html')));
+app.get('/login', servePage('login.html'));
+app.get('/signup', servePage('signup.html'));
+app.get('/forgot-password', servePage('forgot-password.html'));
+app.get('/profile', servePage('profile.html'));
+app.get('/admin-login', servePage('admin-login.html'));
+app.get('/admin/login', servePage('admin/login.html'));
+app.get('/admin', servePage('admin.html'));
+app.get('/start-a-project', servePage('start-a-project.html'));
+app.get('/contact', servePage('contact.html'));
+app.get('/careers', servePage('careers.html'));
+app.get('/case-studies', servePage('case-studies.html'));
 
-// Fallback to index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicDir, 'index.html'));
-});
+// Local fallback only. Vercel's CDN serves public/index.html at / and returns
+// its normal 404 for unknown static paths without invoking this function.
+if (!process.env.VERCEL) {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicDir, 'index.html'));
+  });
+}
 
 
 // Vercel executes the exported Express app as a serverless function.
