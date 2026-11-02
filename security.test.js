@@ -96,3 +96,14 @@ test('Vercel public output contains the site pages and browser assets, not backe
     assert.ok(!existsSync(new URL(privateFile, import.meta.url)), `Private file was copied: ${privateFile}`);
   }
 });
+
+test('Vercel serves public HTML through the CDN, not through Express file reads', () => {
+  const staticBlock = server.slice(
+    server.indexOf('// Vercel publishes public/** through its CDN.'),
+    server.indexOf('// Vercel executes the Express app as a serverless function.')
+  );
+  assert.ok(staticBlock.includes('if (!process.env.VERCEL)'));
+  assert.ok(staticBlock.includes('app.use(express.static(publicDir'));
+  assert.ok(staticBlock.includes('if (process.env.VERCEL) return res.redirect(308'));
+  assert.ok(staticBlock.includes("if (!process.env.VERCEL) {\\n  app.get('*'"));
+});
