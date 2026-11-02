@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "server.js",
+    "index.js",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "js/**/*.js",
+    "scripts/**/*.mjs",
+    "security.test.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
+}

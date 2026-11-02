@@ -340,7 +340,7 @@ export async function checkAdminAuthorization(user = auth.currentUser) {
     }
     // Check fallback admin document in Firestore
     const adminDoc = await getDoc(doc(db, 'admins', user.uid));
-    return adminDoc.exists();
+    return adminDoc.exists() && adminDoc.data()?.role === 'ADMIN';
   } catch (e) {
     return false;
   }

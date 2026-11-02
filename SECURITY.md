@@ -2,20 +2,19 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+Security fixes are applied to the current default development branch. Older deployments should be upgraded to the latest reviewed release.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Please report suspected vulnerabilities privately to **anvionitservices@gmail.com**.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Include:
+- A clear description of the affected page, endpoint or component.
+- Steps to reproduce the issue and its impact.
+- Relevant screenshots or request/response details, with passwords, tokens and personal data removed.
+
+Please do not publish exploitable details in a public issue before the team has had an opportunity to investigate. We will acknowledge reports and coordinate a fix and disclosure with the reporter.
+
+## Deployment security
+
+Never commit `.env` files, Firebase service-account credentials, database passwords, API secrets or admin signing keys. Rotate any secret that has been exposed.
