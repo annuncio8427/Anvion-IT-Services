@@ -236,23 +236,18 @@ function updateNavbarAuthState(header, actionContainer, user) {
  * Creates and connects the mobile sliding drawer
  */
 function setupMobileDrawer(header) {
-  // Mobile trigger - support all variations of classes and IDs across screens
-  const mobileToggle = header.querySelector("#mobileMenuBtn, button.lg\\:hidden, button.md\\:hidden, button[aria-label*='Navigation' i], button[aria-label*='menu' i]") || 
-                       document.querySelector("#mobileMenuBtn, header button.lg\\:hidden, header button.md\\:hidden");
-  if (!mobileToggle) return;
-
   // Check if drawer already exists
   let drawer = document.getElementById("anvionMobileDrawer");
   if (!drawer) {
     drawer = document.createElement("div");
     drawer.id = "anvionMobileDrawer";
-    drawer.className = "fixed inset-0 z-50 hidden";
+    drawer.className = "fixed inset-0 z-[99999] hidden";
     drawer.innerHTML = `
       <!-- Backdrop -->
-      <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0"></div>
+      <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 opacity-0 z-[99998]"></div>
 
       <!-- Drawer Content -->
-      <div id="mobileDrawerPanel" class="fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] bg-surface-card border-l border-white/10 p-5 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out z-10 shadow-2xl overflow-y-auto">
+      <div id="mobileDrawerPanel" class="fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] bg-surface-card border-l border-white/10 p-5 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out z-[99999] shadow-2xl overflow-y-auto">
         <div>
           <!-- Header -->
           <div class="flex items-center justify-between pb-6 border-b border-white/10">
@@ -348,11 +343,15 @@ function setupMobileDrawer(header) {
 
   function openDrawer() {
     drawer.classList.remove("hidden");
+    // Force layout reflow so CSS transition runs immediately
+    void drawer.offsetWidth;
     document.body.style.overflow = "hidden";
-    setTimeout(() => {
-      backdrop.classList.remove("opacity-0");
-      panel.classList.remove("translate-x-full");
-    }, 10);
+    backdrop.classList.remove("opacity-0");
+    panel.classList.remove("translate-x-full");
+
+    // Hide floating WhatsApp button on mobile while drawer is active
+    const wa = document.getElementById("anvionWhatsAppFloat");
+    if (wa) wa.style.visibility = "hidden";
   }
 
   function closeDrawer() {
@@ -361,10 +360,34 @@ function setupMobileDrawer(header) {
     document.body.style.overflow = "";
     setTimeout(() => {
       drawer.classList.add("hidden");
+      const wa = document.getElementById("anvionWhatsAppFloat");
+      if (wa) wa.style.visibility = "visible";
     }, 300);
   }
 
-  mobileToggle.onclick = openDrawer;
+  // Connect click listeners to all mobile toggle buttons across page
+  const triggers = document.querySelectorAll(
+    "#mobileMenuBtn, [data-mobile-toggle], button.lg\\:hidden, button.md\\:hidden, button[aria-label*='Navigation' i], button[aria-label*='menu' i]"
+  );
+  triggers.forEach(btn => {
+    if (btn.id === "closeMobileDrawer" || btn.closest("#anvionMobileDrawer")) return;
+    btn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openDrawer();
+    };
+  });
+
+  // Event delegation guarantees any click on hamburger button or inner icon opens drawer
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest("#mobileMenuBtn, [data-mobile-toggle], header button.lg\\:hidden, header button.md\\:hidden, button[aria-label*='navigation' i], button[aria-label*='menu' i]");
+    if (trigger && !trigger.closest("#anvionMobileDrawer")) {
+      e.preventDefault();
+      e.stopPropagation();
+      openDrawer();
+    }
+  });
+
   backdrop.onclick = closeDrawer;
   if (closeBtn) closeBtn.onclick = closeDrawer;
 
@@ -377,6 +400,7 @@ function setupMobileDrawer(header) {
       closeDrawer();
     }
   });
+}
 }
 
 /**
