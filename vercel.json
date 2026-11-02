@@ -1,5 +1,56 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "express",
-  "buildCommand": "npm run build"
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/signup",
+      "destination": "/signup.html"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "/forgot-password.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/profile.html"
+    },
+    {
+      "source": "/admin-login",
+      "destination": "/admin-login.html"
+    },
+    {
+      "source": "/admin/login",
+      "destination": "/admin/login.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/start-a-project",
+      "destination": "/start-a-project.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/careers",
+      "destination": "/careers.html"
+    },
+    {
+      "source": "/case-studies",
+      "destination": "/case-studies.html"
+    }
+  ]
 }
