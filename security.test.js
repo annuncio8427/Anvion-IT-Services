@@ -8,6 +8,9 @@ const auth = read('./src/middleware/auth.js');
 const client = read('./js/firebase-client.js');
 const rules = read('./firestore.rules');
 const database = read('./src/db/index.ts');
+const packageJson = JSON.parse(read('./package.json'));
+const vercelEntry = read('./index.js');
+const prepareScript = read('./scripts/prepare-vercel.mjs');
 
 test('every admin API route requires administrator authorization', () => {
   const routes = [...server.matchAll(/app\.(?:get|post|patch|delete)\(\s*['"](\/api\/admin[^'"]*)['"]\s*,\s*([A-Za-z_$][\w$]*)/g)];
@@ -52,4 +55,19 @@ test('admin fallback checks require the explicit ADMIN role in backend, client a
 
 test('PostgreSQL connection honors SQL_PORT', () => {
   assert.ok(database.includes('port: Number(process.env.SQL_PORT || 5432)'));
+});
+
+test('Vercel runs the Express app through the framework entry point', () => {
+  assert.equal(packageJson.main, 'index.js');
+  assert.ok(vercelEntry.includes("export { default } from './server.js';"));
+  assert.ok(server.includes('if (!process.env.VERCEL)'));
+  assert.ok(server.includes('export default app;'));
+});
+
+test('Vercel build prepares public pages and browser assets', () => {
+  assert.ok(packageJson.scripts.build.includes('npm run prepare:vercel'));
+  assert.ok(packageJson.scripts['prepare:vercel'].includes('scripts/prepare-vercel.mjs'));
+  assert.ok(prepareScript.includes("['images', 'js', 'admin']"));
+  assert.ok(prepareScript.includes('firebase-applet-config.json'));
+  assert.ok(!prepareScript.includes("'src'"));
 });
