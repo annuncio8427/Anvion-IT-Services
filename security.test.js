@@ -12,6 +12,7 @@ const packageJson = JSON.parse(read('./package.json'));
 const vercelConfig = JSON.parse(read('./vercel.json'));
 const vercelEntry = read('./index.js');
 const prepareScript = read('./scripts/prepare-vercel.mjs');
+const apiEntry = read('./api/index.js');
 
 test('every admin API route requires administrator authorization', () => {
   const routes = [...server.matchAll(/app\.(?:get|post|patch|delete)\(\s*['"](\/api\/admin[^'"]*)['"]\s*,\s*([A-Za-z_$][\w$]*)/g)];
@@ -58,9 +59,9 @@ test('PostgreSQL connection honors SQL_PORT', () => {
   assert.ok(database.includes('port: Number(process.env.SQL_PORT || 5432)'));
 });
 
-test('Vercel runs the Express app through the framework entry point', () => {
-  assert.equal(packageJson.main, 'index.js');
-  assert.equal(vercelConfig.framework, 'express');
+test('Vercel exposes the Express backend through an API function entry point', () => {
+  assert.equal(vercelConfig.framework, null);
+  assert.equal(vercelConfig.outputDirectory, 'public');
   assert.equal(vercelConfig.buildCommand, 'npm run build');
   assert.ok(vercelEntry.includes("export { default } from './server.js';"));
   assert.ok(server.includes('if (!process.env.VERCEL)'));
@@ -106,4 +107,13 @@ test('Vercel serves public HTML through the CDN, not through Express file reads'
   assert.ok(staticBlock.includes('app.use(express.static(publicDir'));
   assert.ok(staticBlock.includes('if (process.env.VERCEL) return res.redirect(308'));
   assert.match(staticBlock, /if \(!process\.env\.VERCEL\)\s*\{\s*app\.get\('\*'/);
+});
+
+
+test('Vercel serves the frontend as static output and isolates Express under /api', () => {
+  assert.equal(vercelConfig.framework, null);
+  assert.equal(vercelConfig.outputDirectory, 'public');
+  assert.ok(vercelConfig.rewrites.some((rule) => rule.source === '/api/:path*' && rule.destination === '/api/index'));
+  assert.ok(apiEntry.includes("import app from '../server.js';"));
+  assert.ok(apiEntry.includes('export default app;'));
 });
