@@ -43,10 +43,27 @@
   </script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+    }
     body {
       background-color: #060709;
       color: #E3E2E7;
+      position: relative;
       overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+      min-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    header, main, footer, section {
+      width: 100%;
+      max-width: 100%;
     }
     .tech-border {
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -68,24 +85,34 @@
       filter: blur(140px);
       pointer-events: none;
       z-index: 0;
+      max-width: 100vw;
     }
     .text-gradient-hero {
       background: linear-gradient(135deg, #FFFFFF 20%, #93C5FD 50%, #00A3FF 80%, #C084FC 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 
-<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative">
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
-  <!-- Ambient Light Orbs -->
-  <div class="hero-glow w-[600px] h-[600px] -top-40 left-[10%] bg-blue-600/15"></div>
-  <div class="hero-glow w-[500px] h-[500px] top-[30%] -right-20 bg-purple-600/15"></div>
-  <div class="hero-glow w-[450px] h-[450px] bottom-[20%] left-[5%] bg-cyan-500/10"></div>
+    <!-- Ambient Light Orbs (Strictly Overflow Clipped) -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="hero-glow w-[600px] h-[600px] -top-40 left-[10%] bg-blue-600/15"></div>
+    <div class="hero-glow w-[500px] h-[500px] top-[30%] -right-20 bg-purple-600/15"></div>
+    <div class="hero-glow w-[450px] h-[450px] bottom-[20%] left-[5%] bg-cyan-500/10"></div>
+  </div>
 
   <!-- Sticky Glassmorphic Header -->
-  <header class="bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+  <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
     <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
       
       <!-- Brand Logo -->
@@ -133,7 +160,7 @@
     </div>
   </header>
 
-  <main>
+  <main class="w-full overflow-hidden">
     <!-- Hero Section -->
     <section class="relative pt-12 pb-20 md:py-24 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -154,7 +181,7 @@
           </div>
 
           <!-- Main Hero Headline -->
-          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
+          <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.15] tracking-tight">
             We Build Digital Products That <span class="text-gradient-hero">Scale Real Businesses.</span>
           </h1>
 
@@ -168,16 +195,16 @@
           </p>
 
           <!-- Interactive CTAs -->
-          <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center gap-2">
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
+            <a href="start-a-project.html" class="w-full sm:w-auto justify-center bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center gap-2">
               <span>Start a Project</span>
               <span class="material-symbols-outlined text-base">arrow_forward</span>
             </a>
-            <a href="https://wa.me/919150270802?text=Hi%20ANVION,%20I%20would%20like%20to%20discuss%20a%20new%20project." target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2">
+            <a href="https://wa.me/919150270802?text=Hi%20ANVION,%20I%20would%20like%20to%20discuss%20a%20new%20project." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
               <span>WhatsApp Discussion</span>
             </a>
-            <a href="projects.html" class="bg-surface-card hover:bg-white/10 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/10 transition-all inline-flex items-center gap-1.5">
+            <a href="projects.html" class="w-full sm:w-auto justify-center bg-surface-card hover:bg-white/10 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/10 transition-all inline-flex items-center gap-1.5">
               <span>View Projects</span>
               <span class="material-symbols-outlined text-sm">visibility</span>
             </a>
@@ -209,30 +236,30 @@
           <div class="tech-border rounded-2xl bg-surface-card p-2 shadow-2xl relative">
             
             <!-- Terminal Header -->
-            <div class="flex items-center justify-between px-4 py-3 bg-neutral-950 border-b border-white/10 rounded-t-xl">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-rose-500/90"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-500/90"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-500/90"></span>
-                <span class="text-xs font-mono text-neutral-400 ml-2">anvion-production-stack.sys</span>
+            <div class="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-neutral-950 border-b border-white/10 rounded-t-xl gap-2">
+              <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/90 flex-shrink-0"></span>
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/90 flex-shrink-0"></span>
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/90 flex-shrink-0"></span>
+                <span class="text-[11px] sm:text-xs font-mono text-neutral-400 ml-1 truncate">anvion-production-stack.sys</span>
               </div>
-              <div class="status-live">
+              <div class="status-live flex-shrink-0 text-[10px] sm:text-xs">
                 <span class="status-live-dot"></span> Active Engine
               </div>
             </div>
 
             <!-- Interactive Project Switcher Tabs -->
-            <div class="flex items-center gap-1.5 p-2 bg-neutral-900 border-b border-white/10 overflow-x-auto text-[11px] font-mono">
-              <button type="button" class="hero-tab active-tab px-3 py-1.5 rounded-lg bg-brand-blue text-white font-bold transition-all" data-project="homeluxe">
+            <div class="flex items-center gap-1.5 p-2 bg-neutral-900 border-b border-white/10 overflow-x-auto no-scrollbar text-[11px] font-mono">
+              <button type="button" class="hero-tab active-tab px-3 py-1.5 rounded-lg bg-brand-blue text-white font-bold transition-all flex-shrink-0 whitespace-nowrap" data-project="homeluxe">
                 HOMELUXE
               </button>
-              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all" data-project="invoice">
+              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="invoice">
                 Invoice Builder
               </button>
-              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all" data-project="eduverify">
+              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="eduverify">
                 EduVerify
               </button>
-              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all" data-project="task">
+              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="task">
                 Task Planner
               </button>
             </div>

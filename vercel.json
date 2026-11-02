@@ -1,56 +1,19 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "buildCommand": "npm run build",
-  "outputDirectory": "public",
-  "rewrites": [
+  "cleanUrls": true,
+  "headers": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/index"
+      "source": "/css/(.*)",
+      "headers": [
+        { "key": "Content-Type", "value": "text/css; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
     },
     {
-      "source": "/login",
-      "destination": "/login.html"
-    },
-    {
-      "source": "/signup",
-      "destination": "/signup.html"
-    },
-    {
-      "source": "/forgot-password",
-      "destination": "/forgot-password.html"
-    },
-    {
-      "source": "/profile",
-      "destination": "/profile.html"
-    },
-    {
-      "source": "/admin-login",
-      "destination": "/admin-login.html"
-    },
-    {
-      "source": "/admin/login",
-      "destination": "/admin/login.html"
-    },
-    {
-      "source": "/admin",
-      "destination": "/admin.html"
-    },
-    {
-      "source": "/start-a-project",
-      "destination": "/start-a-project.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/contact.html"
-    },
-    {
-      "source": "/careers",
-      "destination": "/careers.html"
-    },
-    {
-      "source": "/case-studies",
-      "destination": "/case-studies.html"
+      "source": "/js/(.*)",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
     }
   ]
 }
