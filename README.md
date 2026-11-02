@@ -59,13 +59,15 @@ npm run build
 - Server source, dependency metadata, configuration files and uploaded private documents are not served by the public static-file middleware.
 - Keep `.env`, Firebase service-account credentials, database passwords and signing secrets out of Git.
 
-## Vercel deployment
 
-The Vercel project uses the **Express** framework preset and the repository-root `index.js` entry point.
+## Vercel deployment architecture
 
-- `index.js` exports the Express application from `server.js` for Vercel's serverless runtime.
-- The local server listener is started only outside Vercel.
-- `npm run build` prepares `public/` with the existing HTML pages, browser JavaScript, images and client-safe Firebase configuration before running validation.
-- Uploads use `/tmp/anvion-uploads` on Vercel because serverless instances do not provide persistent local storage.
+The public website is deployed as static output from `public/`. The Express backend is exposed only through the Vercel function at `api/index.js`.
 
-Configure PostgreSQL and Firebase Admin credentials in the Vercel project settings for the environments that use the corresponding APIs. Do not add private credentials to the public asset directory or commit them to Git.
+- `npm run build` generates `public/` with the existing HTML pages, browser JS, images, client-safe Firebase configuration and admin static files.
+- Vercel serves `public/**` directly as static content; homepage and page requests do not invoke Express.
+- Requests under `/api/*` are rewritten to the Express function at `api/index.js`.
+- Friendly page paths such as `/contact` and `/admin/login` are rewritten to their existing HTML files.
+- Backend database and Firebase credentials are needed only by API routes that use those services.
+
+This keeps the public site available independently of backend runtime health while preserving the existing page designs and API route paths.
