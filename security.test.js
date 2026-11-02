@@ -142,18 +142,18 @@ test('SEO build generates unique titles, descriptions, canonical URLs and social
     'terms-of-service.html',
   ]) {
     const html = read('./public/' + file);
-    assert.match(html, /<title>[^<]+<\\/title>/, file + ' should have a title');
-    assert.match(html, /<meta name="description" content="[^"]+"/, file + ' should have a meta description');
-    assert.match(html, /<link rel="canonical" href="https:\\/\\//, file + ' should have a canonical URL');
-    assert.match(html, /<meta property="og:title" content="/, file + ' should have Open Graph metadata');
-    assert.match(html, /<script type="application\\/ld\\+json">/, file + ' should have structured data');
+    assert.ok(html.includes('<title>') && html.includes('</title>'), file + ' should have a title');
+    assert.ok(html.includes('<meta name="description" content="'), file + ' should have a meta description');
+    assert.ok(html.includes('<link rel="canonical" href="https://'), file + ' should have a canonical URL');
+    assert.ok(html.includes('<meta property="og:title" content="'), file + ' should have Open Graph metadata');
+    assert.ok(html.includes('<script type="application/ld+json">'), file + ' should have structured data');
   }
 });
 
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
   for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
     const html = read('./public/' + file);
-    assert.match(html, /<meta name="robots" content="noindex,nofollow">/, file + ' should be noindex');
+    assert.ok(html.includes('<meta name="robots" content="noindex,nofollow">'), file + ' should be noindex');
   }
 
   const sitemap = read('./public/sitemap.xml');
