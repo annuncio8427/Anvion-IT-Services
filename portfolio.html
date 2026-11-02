@@ -123,7 +123,7 @@
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
 <!-- TopNavBar -->
-<nav class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 text-primary dark:text-primary docked full-width top-0 sticky border-b border-white/10 z-50">
+<header class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 text-primary dark:text-primary docked full-width top-0 sticky border-b border-white/10 z-50">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
 <!-- Brand -->
 <a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface" href="index.html">
@@ -140,16 +140,16 @@
 <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
 </div>
 <!-- Actions -->
-<div class="hidden lg:flex items-center space-x-stack-sm">
+<div class="hidden md:flex items-center gap-4">
 <a class="font-label-lg text-label-lg text-on-surface border border-white/10 px-4 py-2 rounded hover:bg-surface-container-high transition-colors" href="contact.html">Contact</a>
-<a class="font-label-lg text-label-lg bg-primary text-primary-container px-4 py-2 rounded hover:brightness-110 transition-all font-bold" href="start-a-project.html">Start a Project</a>
+<a class="bg-brand-blue text-white font-label-lg text-label-lg px-5 py-2.5 rounded-lg hover:brightness-110 transition-all font-bold btn-glow text-xs" href="start-a-project.html">Start a Project</a>
 </div>
 <!-- Mobile Menu Toggle -->
-<button class="md:hidden text-on-surface">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<button class="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+<span class="material-symbols-outlined text-2xl">menu</span>
 </button>
 </div>
-</nav>
+</header>
 <!-- Main Content -->
 <main class="flex-grow flex flex-col relative technical-grid overflow-hidden">
   <div class="ambient-orb ambient-orb-blue w-[500px] h-[500px] top-[-100px] left-[20%]"></div>
@@ -698,5 +698,5 @@
   </div>
 </footer>
 
-    <script type="module" src="js/navbar.js"></script>
+    <script src="js/navbar.js"></script>
 </body></html>

@@ -1,504 +1,1356 @@
 <!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Services - Enterprise Digital Solutions &amp; Engineering | ANVION IT SERVICES</title>
+  <meta name="description" content="Explore ANVION IT SERVICES comprehensive technology disciplines: Full-stack web development, cross-platform mobile apps, AI & machine learning, cybersecurity audits, cloud infrastructure, and IT consultancy." />
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Services - ANVION IT SERVICES</title>
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Config -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-highest": "#343539",
-                    "on-secondary-fixed-variant": "#474646",
-                    "inverse-surface": "#e3e2e7",
-                    "tertiary-container": "#000000",
-                    "on-secondary": "#313030",
-                    "on-primary-fixed-variant": "#474747",
-                    "error-container": "#93000a",
-                    "surface-container-lowest": "#0d0e12",
-                    "surface-container-low": "#1a1b1f",
-                    "primary-container": "#000000",
-                    "primary-fixed": "#e2e2e2",
-                    "tertiary": "#c6c6c8",
-                    "on-tertiary-container": "#747577",
-                    "on-primary-container": "#757575",
-                    "secondary-container": "#4a4949",
-                    "secondary": "#c8c6c5",
-                    "on-tertiary-fixed-variant": "#454749",
-                    "on-error-container": "#ffdad6",
-                    "on-secondary-container": "#bab8b7",
-                    "surface": "#121317",
-                    "tertiary-fixed-dim": "#c6c6c8",
-                    "inverse-primary": "#5e5e5e",
-                    "surface-bright": "#38393d",
-                    "primary": "#c6c6c6",
-                    "on-error": "#690005",
-                    "inverse-on-surface": "#2f3034",
-                    "error": "#ffb4ab",
-                    "on-primary-fixed": "#1b1b1b",
-                    "surface-container-high": "#292a2e",
-                    "surface-tint": "#c6c6c6",
-                    "on-secondary-fixed": "#1c1b1b",
-                    "outline": "#988e90",
-                    "on-primary": "#303030",
-                    "on-surface": "#e3e2e7",
-                    "on-tertiary": "#2f3132",
-                    "on-tertiary-fixed": "#1a1c1d",
-                    "secondary-fixed": "#e5e2e1",
-                    "background": "#121317",
-                    "surface-dim": "#121317",
-                    "on-surface-variant": "#cfc4c5",
-                    "on-background": "#e3e2e7",
-                    "primary-fixed-dim": "#c6c6c6",
-                    "tertiary-fixed": "#e2e2e4",
-                    "surface-container": "#1e1f23",
-                    "secondary-fixed-dim": "#c8c6c5",
-                    "outline-variant": "#4c4546",
-                    "surface-variant": "#343539"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "base": "8px",
-                    "stack-xl": "80px",
-                    "gutter": "24px",
-                    "stack-sm": "12px",
-                    "container-max": "1280px",
-                    "margin-mobile": "20px",
-                    "margin-desktop": "64px",
-                    "stack-xs": "4px",
-                    "stack-lg": "48px",
-                    "stack-md": "24px"
-            },
-            "fontFamily": {
-                    "headline-lg-mobile": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "headline-md": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "body-md": [
-                            "Inter"
-                    ],
-                    "label-lg": [
-                            "Inter"
-                    ],
-                    "label-sm": [
-                            "Inter"
-                    ],
-                    "headline-lg": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "body-lg": [
-                            "Inter"
-                    ],
-                    "display-lg": [
-                            "Plus Jakarta Sans"
-                    ],
-                    "display-sm": [
-                            "Plus Jakarta Sans"
-                    ]
-            },
-            "fontSize": {
-                    "headline-lg-mobile": [
-                            "28px",
-                            {
-                                    "lineHeight": "36px",
-                                    "letterSpacing": "-0.01em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "headline-md": [
-                            "24px",
-                            {
-                                    "lineHeight": "32px",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "body-md": [
-                            "16px",
-                            {
-                                    "lineHeight": "24px",
-                                    "fontWeight": "400"
-                            }
-                    ],
-                    "label-lg": [
-                            "14px",
-                            {
-                                    "lineHeight": "20px",
-                                    "letterSpacing": "0.05em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "label-sm": [
-                            "12px",
-                            {
-                                    "lineHeight": "16px",
-                                    "letterSpacing": "0.02em",
-                                    "fontWeight": "500"
-                            }
-                    ],
-                    "headline-lg": [
-                            "32px",
-                            {
-                                    "lineHeight": "40px",
-                                    "letterSpacing": "-0.01em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "body-lg": [
-                            "18px",
-                            {
-                                    "lineHeight": "28px",
-                                    "fontWeight": "400"
-                            }
-                    ],
-                    "display-lg": [
-                            "64px",
-                            {
-                                    "lineHeight": "72px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "700"
-                            }
-                    ],
-                    "display-sm": [
-                            "48px",
-                            {
-                                    "lineHeight": "56px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "700"
-                            }
-                    ]
-            }
-    },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  <!-- Tailwind CSS CDN with plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/custom-styles.css"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#0E1015",
+            "surface-low": "#060709",
+            "surface-card": "#0E1118",
+            "surface-border": "rgba(255, 255, 255, 0.08)",
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008BE5",
+            "brand-cyan": "#00F5FF",
+            "brand-purple": "#8B5CF6",
+            "brand-emerald": "#10B981",
+            "brand-amber": "#F59E0B"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
         }
-        .text-electric-blue { color: #007AFF; } /* Placeholder for electric blue accent if needed outside config */
-        .border-electric-blue { border-color: #007AFF; }
-        .bg-electric-blue { background-color: #007AFF; }
-        
-        /* High-contrast minimal scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #121317; }
-        ::-webkit-scrollbar-thumb { background: #343539; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #474646; }
-    </style>
-    <link rel="stylesheet" href="css/custom-styles.css"/>
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #060709;
+      color: #E3E2E7;
+      overflow-x: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .text-gradient-hero {
+      background: linear-gradient(135deg, #FFFFFF 20%, #93C5FD 50%, #00A3FF 80%, #C084FC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
 </head>
-<body class="bg-background text-on-background font-body-md antialiased selection:bg-surface-container-highest selection:text-white flex flex-col min-h-screen">
-<!-- TopNavBar Component -->
-<header class="w-full top-0 sticky z-50 bg-surface/90 backdrop-blur-md border-b border-white/10 flex justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20 transition-all duration-300 shadow-sm shadow-black/20">
-<div class="flex items-center gap-gutter">
-<!-- Brand Logo -->
-<a class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface" href="index.html">
-                ANVION
-            </a>
-<!-- Desktop Navigation -->
-<nav class="hidden md:flex items-center gap-6 ml-stack-md">
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="index.html">Home</a>
-<!-- Active Navigation Item -->
-<a class="font-label-lg text-label-lg text-primary border-b-2 border-primary pb-1 active:scale-95 transition-transform" href="services.html">Services</a>
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="solution.html">Solutions</a>
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="projects.html">Projects</a>
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="portfolio.html">Portfolio</a>
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="about.html">About</a>
-<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
-</nav>
-</div>
-<!-- Trailing Actions -->
-<div class="flex items-center gap-4">
-<a class="hidden md:inline-flex font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" href="contact.html">Contact</a>
-<a class="bg-primary text-on-primary font-label-lg text-label-lg px-6 py-2 rounded font-bold hover:brightness-110 transition-all" href="start-a-project.html">Start a Project</a>
-<!-- Mobile Menu Toggle -->
-<button class="md:hidden text-on-surface">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</header>
-<main class="flex-grow">
-<!-- Hero Section -->
-<section class="relative w-full py-stack-xl md:py-[120px] overflow-hidden border-b border-white/5">
-  <div class="ambient-orb ambient-orb-blue w-[500px] h-[500px] top-[-100px] left-[20%]"></div>
-  <div class="ambient-orb ambient-orb-cyan w-[400px] h-[400px] bottom-0 right-[15%]"></div>
-  <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue mb-4">
-      <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
-      <span>ANVION Capabilities • 6 Core Disciplines</span>
-    </div>
-    <h1 class="font-display-sm text-display-sm md:font-display-lg md:text-display-lg text-white mb-stack-md mx-auto max-w-4xl tracking-tight leading-tight">
-      Technology Services Built Around <span class="text-gradient-blue">Your Business.</span>
-    </h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-stack-lg">
-      We engineer high-performance digital solutions designed to scale. From foundational web platforms to custom mobile apps and digital strategies, our technical expertise drives operational excellence.
-    </p>
-  </div>
-</section>
-<!-- Services Grid Section -->
-<section class="py-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="mb-stack-lg border-b border-white/10 pb-4 flex justify-between items-end">
-<div>
-  <p class="text-label-lg uppercase tracking-[0.18em] text-brand-blue mb-2">Our Capabilities</p>
-  <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Our Services</h2>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest hidden md:inline-block">6 Core Disciplines</span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-<!-- Service 1: Website Development -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/LdVdvNYBN3RYWfrkLER5C_GSlQ6Gr-Hm5dUtPOB6KdOlfWSArTtNhLuw5gk5w6HaVukwDaPCpkRa_fHuRDCBq_Bqen5W6vHjow54dY3B1VW21NL5rpBbsIVCd5Fsa1JgpQOdT-s5UmZbGnXcjY1tc65ISnWFtadn-Rb9iuqULwE?purpose=inline" alt="Website Development" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">01 // Web</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">Website Development</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Professional, responsive and user-friendly websites that strengthen your online presence and generate business opportunities.
-      </p>
-    </div>
-    <a href="web-development.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative min-h-screen flex flex-col">
 
-<!-- Service 2: Mobile App Development -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/F78ViiHON4kluNDc1GTbRvFAU9D2AZGmCw4vfYy3ePkYR2FS3PWHf3RmFXR6hEK81WGLjTu2JuzZlNsD5VA8iZ45LxwDvG08VymBMriF7WYPmS7oiQ0MZMTTStcaWDxT0P-ay-hIeaWRMX-KXlbjGHXbOUh7QO2eFpIHGIFyA1w?purpose=inline" alt="Mobile App Development" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">02 // Mobile</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">Mobile App Development</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Custom mobile applications designed to improve business operations and customer experiences.
-      </p>
-    </div>
-    <a href="mobile-development.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
+  <!-- Ambient Light Orbs -->
+  <div class="hero-glow w-[600px] h-[600px] -top-40 left-[15%] bg-blue-600/15"></div>
+  <div class="hero-glow w-[500px] h-[500px] top-[35%] -right-20 bg-purple-600/15"></div>
+  <div class="hero-glow w-[450px] h-[450px] top-[65%] left-[5%] bg-cyan-500/10"></div>
 
-<!-- Service 3: Digital Marketing -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/LTEGcNp4KD6_mHJzdxpAb_LN2JxO34zH7bQ789V3286OamDzZUJ9tRke2O1dq4EA6RH58_pDlmQhL7ozMCiIzcp2H1q3-Lm-VGbTKt_XhteE21spaR0EnW9ioK_URIiPP09KjkMNM3rbqguEQ3R3Up4tQ09uYOQkzpgBsa_A8kQ?purpose=inline" alt="Digital Marketing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">03 // Marketing</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">Digital Marketing</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Strategic digital campaigns to increase brand visibility, attract customers and support business growth.
-      </p>
-    </div>
-    <a href="service-details.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
-
-<!-- Service 4: Social Media Management -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/CEAggk6NyGt5yi12Hcop4syZfezDcLMX7UagkT1yRxWNYEWcFw6GXCkTa3FRfmwFDItwD1SU6TuOXVVFM80upRyGCeP0tau5jaex0EQf7PzpoApWnSvmyLq_g8RUMcJCn_IB75RHm9wvW4Wf6ansxhSwYegpVNmckZ9zsMh0aiQ?purpose=inline" alt="Social Media Management" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">04 // Social</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">Social Media Management</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Content creation, social media strategy and account management to build strong online communities.
-      </p>
-    </div>
-    <a href="service-details.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
-
-<!-- Service 5: Branding & Design -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/E7djGV9cI60jK4BhgnoddiyUI8W4_hEIvoVDsUzg81159LmBdMJbwaKras3CDNwyswmHgjuDy8SoYDs21_sx7aF0uiXxsCMQ1sIodkDd_LPKHuHlF9q15jNAy2JsY_CyL5lx5EfV_VH8AVoMvPouqSRuTpCxy_XfMAaE-DpQpU4?purpose=inline" alt="Branding & Design" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">05 // Branding</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">Branding & Design</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Creative brand identities, graphic designs and marketing materials that make businesses stand out.
-      </p>
-    </div>
-    <a href="service-details.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
-
-<!-- Service 6: IT Consulting -->
-<article class="tech-border rounded-xl overflow-hidden bg-surface hover:border-brand-blue/60 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
-  <div class="relative h-52 w-full overflow-hidden bg-neutral-900">
-    <img src="https://images.openai.com/static-rsc-4/nJNdEGjF2-ZykTq-L-cKQlmaolpneuz92rAlU5I_AC4i6SkjTB0wu0pw0t_t6RUrwlx0jPgAav_ehTY4TPjvGia58DqVllM0QwkLDe-IB-xYUn2Oo5RV2nFTCXD2Wxki82RfQcAvf7RX5p3ya7JOHRwXJsPOevbXcQ2jJciSvkk?purpose=inline" alt="IT Consulting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-brand-blue font-mono">06 // Consulting</span>
-  </div>
-  <div class="p-6 flex flex-col flex-grow justify-between">
-    <div>
-      <h3 class="text-headline-md font-bold text-white group-hover:text-brand-blue transition-colors">IT Consulting</h3>
-      <p class="text-body-md text-on-surface-variant mt-3 text-sm leading-relaxed">
-        Technology guidance and customized digital solutions to help businesses solve operational challenges.
-      </p>
-    </div>
-    <a href="it-consulting.html" class="inline-flex items-center gap-2 mt-5 text-label-lg text-white hover:text-brand-blue transition-colors font-semibold">
-      Explore Service <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-  </div>
-</article>
-
-</div>
-</section>
-<!-- How We Work Section -->
-<section class="py-stack-xl bg-surface-container-lowest border-y border-white/5">
-<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-stack-lg text-center">Project Methodology</h2>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<!-- Step 1 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-primary rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-2">Phase 01</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Discovery</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Comprehensive analysis of requirements, business objectives, and technical constraints.</p>
-</div>
-<!-- Step 2 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 02</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Architecture</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Designing resilient, scalable blueprints and selecting the optimal technology stack.</p>
-</div>
-<!-- Step 3 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 03</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Execution</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Agile development sprints with rigorous code reviews and continuous integration.</p>
-</div>
-<!-- Step 4 -->
-<div class="relative pl-6 border-l border-white/10">
-<div class="absolute w-3 h-3 bg-surface border border-white/30 rounded-full -left-[6px] top-1"></div>
-<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Phase 04</h4>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Deployment</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Seamless rollout, monitoring, and transition to ongoing maintenance protocols.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Bottom CTA -->
-<section class="py-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
-<div class="bg-surface-container-high border border-white/10 rounded-xl p-stack-lg relative overflow-hidden">
-<div class="relative z-10">
-<h2 class="font-display-sm text-display-sm text-on-surface mb-stack-sm">Ready to optimize your infrastructure?</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-2xl mx-auto">Engage with our technical architects to discuss your specific operational challenges and discover tailored solutions.</p>
-<a class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-4 rounded font-bold hover:brightness-110 transition-all inline-flex items-center gap-2" href="contact.html">
-                        Initiate Consultation <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</a>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer Component -->
-<!-- Footer -->
-<footer class="bg-surface-container-lowest text-primary w-full py-stack-xl border-t border-white/10 mt-auto">
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-    <div class="flex flex-col gap-stack-sm">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+  <!-- Sticky Glassmorphic Header -->
+  <header class="bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
           <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
         </div>
-        <span class="font-headline-md text-xl font-bold text-on-surface">ANVION IT SERVICES</span>
-      </div>
-      <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-        Innovative digital solutions, mobile engineering, cloud infrastructure, and IT consultancy.
-      </p>
-      <div class="mt-3 p-3.5 rounded-xl bg-surface-card border border-brand-blue/30 text-xs">
-        <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
-          <span class="material-symbols-outlined text-sm">verified</span>
-          <span>Govt. of India MSME Registered</span>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+            ANVION
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
         </div>
-        <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
-        <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise • Services (NIC 62011)</p>
-      </div>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Company</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="about.html">About Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="careers.html">Careers</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="contact.html">Contact Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Expertise</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="services.html">All Services</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="web-development.html">Web Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="mobile-development.html">Mobile Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="ai-machine-learning.html">AI & Machine Learning</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="cybersecurity.html">Cybersecurity</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="projects.html">Featured Projects</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="portfolio.html">Portfolio</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Official Registration</h4>
-      <p class="text-xs text-neutral-300 leading-relaxed">
-        <strong>ANVION IT SERVICES</strong><br/>
-        Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
-      </p>
-      <div class="text-xs text-neutral-400 space-y-1 mt-1">
-        <p><span class="text-neutral-500">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
-        <p><span class="text-neutral-500">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue">anvionitservices@gmail.com</a></p>
-      </div>
-      <div class="flex items-center gap-3 pt-2">
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
-        <span class="text-neutral-600">•</span>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
-      </div>
-    </div>
-  </div>
-  <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mt-stack-lg pt-stack-sm border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-2">
-    <p>© 2026 ANVION IT SERVICES. All rights reserved. • Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
-    <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
-  </div>
-</footer>
+      </a>
 
-    <script type="module" src="js/navbar.js"></script>
-</body></html>
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-neutral-300">
+        <a class="hover:text-brand-blue transition-colors" href="index.html">Home</a>
+        <a class="text-white font-bold border-b-2 border-brand-blue pb-1" href="services.html">Services</a>
+        <a class="hover:text-brand-blue transition-colors" href="solution.html">Solutions</a>
+        <a class="hover:text-brand-blue transition-colors" href="projects.html">Projects</a>
+        <a class="hover:text-brand-blue transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="hover:text-brand-blue transition-colors" href="case-studies.html">Case Studies</a>
+        <a class="hover:text-brand-blue transition-colors" href="about.html">About</a>
+        <a class="hover:text-brand-blue transition-colors" href="careers.html">Careers</a>
+      </nav>
+
+      <!-- Trailing Action Buttons -->
+      <div class="flex items-center gap-3.5">
+        <div class="hidden md:flex items-center gap-3.5">
+          <a href="dashboard.html" class="text-xs font-mono px-3 py-2 rounded-lg text-neutral-300 hover:text-white border border-white/10 hover:border-brand-blue/40 transition-colors flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-brand-blue">login</span>
+            Client Portal
+          </a>
+          <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-blue/30 transition-all btn-glow inline-flex items-center gap-1.5">
+            <span>Start a Project</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
+      <div class="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+        
+        <!-- Badges Pill Row -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            <span>Enterprise Engineering Disciplines</span>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-400">
+            <span class="material-symbols-outlined text-sm">bolt</span>
+            <span>Production SLA Ready</span>
+          </span>
+          <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 hover:bg-amber-500/20 transition-colors">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>MSME: UDYAM-TN-09-0098980</span>
+          </a>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
+          Engineering Capabilities Built for <br class="hidden sm:block"/>
+          <span class="text-gradient-hero">Enterprise Velocity &amp; Scale.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
+          From full-stack cloud platforms and cross-platform mobile apps to AI automation and air-gapped data utilities, our technical teams deliver resilient software engineered for mission-critical business workflows.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <a href="start-a-project.html" class="w-full sm:w-auto bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center justify-center gap-2">
+            <span>Submit Project Brief</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </a>
+          <a href="https://wa.me/919150270802?text=Hi%20ANVION,%20I%20would%20like%20to%20discuss%20our%20service%20requirements." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 fill-current flex-shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>WhatsApp Discovery</span>
+          </a>
+          <a href="contact.html" class="w-full sm:w-auto bg-surface-card hover:bg-white/10 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/10 transition-all inline-flex items-center justify-center gap-1.5">
+            <span>Schedule Technical Review</span>
+            <span class="material-symbols-outlined text-sm">event</span>
+          </a>
+        </div>
+
+        <!-- Capability Performance Metrics Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/10 max-w-3xl mx-auto">
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <p class="text-2xl font-extrabold text-white font-mono">25+</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Projects Delivered</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <p class="text-2xl font-extrabold text-brand-blue font-mono">8 Core</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Specialized Disciplines</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <p class="text-2xl font-extrabold text-brand-cyan font-mono">&lt; 15 min</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Engineering SLA Response</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <p class="text-2xl font-extrabold text-emerald-400 font-mono">100%</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Client IP Ownership</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Interactive Discipline Filter Bar -->
+    <section class="px-6 md:px-12 max-w-7xl mx-auto mb-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-surface-card/90 border border-white/10 backdrop-blur-md">
+        
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar text-xs font-mono" id="serviceFilterTabs">
+          <button type="button" class="service-tab-btn active-tab px-4 py-2 rounded-xl bg-brand-blue text-white font-bold transition-all shadow-md shadow-brand-blue/30 whitespace-nowrap" data-filter="all">
+            All Disciplines <span class="ml-1 opacity-80">(8)</span>
+          </button>
+          <button type="button" class="service-tab-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-semibold transition-all whitespace-nowrap border border-white/5 hover:border-white/20" data-filter="web">
+            Web &amp; Cloud <span class="ml-1 opacity-70">(2)</span>
+          </button>
+          <button type="button" class="service-tab-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-semibold transition-all whitespace-nowrap border border-white/5 hover:border-white/20" data-filter="mobile">
+            Mobile &amp; Desktop <span class="ml-1 opacity-70">(2)</span>
+          </button>
+          <button type="button" class="service-tab-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-semibold transition-all whitespace-nowrap border border-white/5 hover:border-white/20" data-filter="ai">
+            AI &amp; Strategy <span class="ml-1 opacity-70">(2)</span>
+          </button>
+          <button type="button" class="service-tab-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-semibold transition-all whitespace-nowrap border border-white/5 hover:border-white/20" data-filter="security">
+            Security &amp; Advisory <span class="ml-1 opacity-70">(2)</span>
+          </button>
+        </div>
+
+        <!-- Live Status Label -->
+        <div class="hidden sm:flex items-center gap-2 text-xs font-mono text-neutral-400 shrink-0 pr-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Showing <strong id="servicesCountDisplay" class="text-white">8</strong> capabilities</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Services Grid: 8 Comprehensive Bento Cards -->
+    <section class="px-6 md:px-12 pb-20 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGridContainer">
+
+        <!-- ========================================================
+             SERVICE 01: Full-Stack Web Development
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-brand-blue/60 transition-all duration-300" data-category="web">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-blue-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">language</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-brand-blue/10 text-brand-blue border border-brand-blue/20 font-bold uppercase tracking-wider">
+                  01 // Web
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Active
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-brand-blue transition-colors">
+                  Full-Stack Web Development
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Engineered web applications, enterprise portals, and SaaS platforms built with high-velocity frameworks, sub-second TTFB, and SEO-first architectures.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>React 18, Next.js App Router &amp; Vite architectures</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>REST &amp; GraphQL APIs with robust PostgreSQL backends</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>Core Web Vitals 95+ score optimization</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Next.js</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">React</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Node.js</span>
+                <span class="px-2.5 py-1 rounded bg-brand-blue/10 text-brand-blue border border-brand-blue/20">Tailwind</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="web-development.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-brand-blue transition-colors">
+                <span>View Full Discipline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-brand-blue hover:underline">
+                Request Scope →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 02: Mobile Application Engineering
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-cyan-400/60 transition-all duration-300" data-category="mobile">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-cyan-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">smartphone</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold uppercase tracking-wider">
+                  02 // Mobile
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Active
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-cyan-400 transition-colors">
+                  Mobile App Engineering
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Native-grade iOS and Android mobile apps crafted with Flutter. Offline-first local data caching, biometric security, and background data synchronization.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>Single codebase deployment for iOS &amp; Android</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>Riverpod architecture with SQLite local DB caching</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>Native camera OCR, push telemetry &amp; payment APIs</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Flutter</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Dart</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Riverpod</span>
+                <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SQLite</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="mobile-development.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
+                <span>View Full Discipline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="project-smart-invoice-builder.html" class="text-[11px] font-mono text-cyan-400 hover:underline">
+                Invoice App Case Study →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 03: AI, Automation & Machine Learning
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-purple-400/60 transition-all duration-300" data-category="ai">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-purple-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">neurology</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold uppercase tracking-wider">
+                  03 // AI &amp; ML
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Hot
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-purple-400 transition-colors">
+                  AI &amp; Machine Learning Systems
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Integrating intelligent automation, bespoke LLM pipelines, semantic vector search, automated invoice extraction, and predictive business engines.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>Document parsing &amp; OCR invoice structuring</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>RAG pipelines with vector databases (Pinecone / Qdrant)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>Python FastAPI microservices with model quantization</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Python</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">PyTorch</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">OpenAI API</span>
+                <span class="px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Vector DB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="ai-machine-learning.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-purple-400 transition-colors">
+                <span>View Full Discipline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-purple-400 hover:underline">
+                Explore Use Cases →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 04: Cybersecurity & Cloud Hardening
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-emerald-400/60 transition-all duration-300" data-category="security">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-emerald-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">shield</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold uppercase tracking-wider">
+                  04 // Security
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Zero-Trust
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-emerald-400 transition-colors">
+                  Cybersecurity &amp; Cloud Hardening
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Rigorous code-level vulnerability assessments, penetration testing, automated dependency scanning, and zero-trust cloud network defense.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span>
+                  <span>OWASP Top 10 penetration testing &amp; remediation</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span>
+                  <span>Role-Based Access Control (RBAC) &amp; MFA architecture</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span>
+                  <span>Continuous vulnerability monitoring &amp; audit reports</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Zero-Trust</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">OAuth 2.0</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">TLS 1.3</span>
+                <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">SOC2 Ready</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="cybersecurity.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
+                <span>View Full Discipline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-emerald-400 hover:underline">
+                Request Security Audit →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 05: Cloud Infrastructure & DevOps
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-brand-blue/60 transition-all duration-300" data-category="web">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-blue-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">cloud_sync</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-brand-blue/10 text-brand-blue border border-brand-blue/20 font-bold uppercase tracking-wider">
+                  05 // Cloud
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> 99.98%
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-brand-blue transition-colors">
+                  Cloud Infrastructure &amp; DevOps
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Fault-tolerant cloud setups across AWS, GCP, and Vercel. Docker containerization, automated GitHub CI/CD pipelines, and auto-scaling load balancing.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>Zero-downtime deployment pipelines via GitHub Actions</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>Docker containers &amp; AWS ECS / Fargate orchestration</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-brand-blue">check_circle</span>
+                  <span>Automated backups, Redis caching &amp; disaster recovery</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">AWS</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Docker</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">CI/CD</span>
+                <span class="px-2.5 py-1 rounded bg-brand-blue/10 text-brand-blue border border-brand-blue/20">Firebase</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="solution.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-brand-blue transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-brand-blue hover:underline">
+                Plan Infrastructure →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 06: Enterprise IT Consulting & Architecture
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-amber-400/60 transition-all duration-300" data-category="security">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-amber-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">hub</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold uppercase tracking-wider">
+                  06 // Consulting
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Advisory
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-amber-400 transition-colors">
+                  Enterprise IT Consulting
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Strategic technical guidance for growing companies. Tech stack selection, legacy database modernization, performance audits, and digital transformation roadmaps.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-amber-400">check_circle</span>
+                  <span>Comprehensive architecture review &amp; bottleneck audit</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-amber-400">check_circle</span>
+                  <span>Legacy monolithic to microservices migration roadmaps</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-amber-400">check_circle</span>
+                  <span>Fractional CTO &amp; technology roadmap governance</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Architecture</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Roadmap</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">SLA Audit</span>
+                <span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Advisory</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="it-consulting.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-amber-400 transition-colors">
+                <span>View Full Discipline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="contact.html" class="text-[11px] font-mono text-amber-400 hover:underline">
+                Book CTO Session →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 07: Custom Desktop & High-Speed Data Tools
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-cyan-400/60 transition-all duration-300" data-category="mobile">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-cyan-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">desktop_windows</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold uppercase tracking-wider">
+                  07 // Desktop
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Air-Gapped
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-cyan-400 transition-colors">
+                  Desktop &amp; Data Validation Software
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  Native Windows utilities designed for educational institutions, corporate finance, and operations requiring rapid spreadsheet auditing, bulk Excel concatenation, and error elimination.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>Sub-50ms batch spreadsheet validation &amp; merger</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>100% offline air-gapped security (zero cloud leakage)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-cyan-400">check_circle</span>
+                  <span>Single portable executable with zero runtime dependencies</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Windows 11</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Excel .xlsx</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">CSV Audit</span>
+                <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Zero-Leak</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="project-eduverify.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
+                <span>EduVerify Case Study</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-cyan-400 hover:underline">
+                Custom Utility Brief →
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             SERVICE 08: Digital Strategy, SEO & Design Systems
+             ======================================================== -->
+        <article class="service-card tech-border rounded-2xl overflow-hidden bg-surface-card flex flex-col justify-between group hover:border-purple-400/60 transition-all duration-300" data-category="ai">
+          <div>
+            <!-- Card Header Visual Bar -->
+            <div class="p-6 pb-4 bg-gradient-to-b from-purple-950/30 to-transparent border-b border-white/5 flex items-start justify-between">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-2xl">insights</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold uppercase tracking-wider">
+                  08 // Strategy
+                </span>
+                <span class="status-live">
+                  <span class="status-live-dot"></span> Growth
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white group-hover:text-purple-400 transition-colors">
+                  Digital Strategy &amp; Design Systems
+                </h3>
+                <p class="text-neutral-300 text-xs mt-2 leading-relaxed">
+                  High-converting UI/UX design systems, technical search engine optimization, semantic schema markup, and performance analytics to turn digital traffic into clients.
+                </p>
+              </div>
+
+              <!-- Technical Deliverables Checklist -->
+              <div class="space-y-2 pt-2 border-t border-white/5 text-xs text-neutral-300">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>Figma component design tokens &amp; accessible UI kits</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>Technical SEO, JSON-LD structured data &amp; sitemaps</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-purple-400">check_circle</span>
+                  <span>Conversion rate optimization &amp; user journey analytics</span>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-[11px]">
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Figma</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Tech SEO</span>
+                <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">GA4 Analytics</span>
+                <span class="px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">CRO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 border-t border-white/5 mt-4">
+            <div class="flex items-center justify-between pt-4">
+              <a href="service-details.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-purple-400 transition-colors">
+                <span>View Details</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              <a href="start-a-project.html" class="text-[11px] font-mono text-purple-400 hover:underline">
+                Plan Campaign →
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Enterprise Technology Ecosystem Matrix -->
+    <section class="py-20 px-6 md:px-12 border-t border-white/10 bg-[#08090C] relative">
+      <div class="max-w-7xl mx-auto space-y-12">
+        
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-mono font-bold text-brand-blue mb-3">
+            <span>TECH ARSENAL</span>
+          </div>
+          <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white">
+            Enterprise Technology Ecosystem
+          </h2>
+          <p class="text-neutral-400 text-sm mt-3 leading-relaxed">
+            We avoid technology lock-in by utilizing industry-proven, high-performance open-source tools and battle-tested cloud primitives.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          <!-- Category 1: Frontend & Interface -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-brand-blue">
+                <span class="material-symbols-outlined text-xl">web</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Frontend Engineering</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">Interfaces &amp; Web Apps</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">React 18</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Next.js 14</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">TypeScript</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Tailwind CSS</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Vite</span>
+            </div>
+          </div>
+
+          <!-- Category 2: Backend & Microservices -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                <span class="material-symbols-outlined text-xl">dns</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Backend &amp; APIs</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">High-Throughput Engines</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Node.js</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Python FastAPI</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">REST APIs</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">GraphQL</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Kafka / WebSockets</span>
+            </div>
+          </div>
+
+          <!-- Category 3: Mobile Architecture -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                <span class="material-symbols-outlined text-xl">devices</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Mobile Architecture</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">Cross-Platform iOS &amp; Android</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Flutter</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Dart</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Riverpod</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Offline SQLite</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Native Bridges</span>
+            </div>
+          </div>
+
+          <!-- Category 4: Cloud Infrastructure & DevOps -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <span class="material-symbols-outlined text-xl">cloud_queue</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Cloud &amp; DevOps</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">99.98% High Availability</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">AWS ECS</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Docker</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">GitHub Actions</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Firebase Auth</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Vercel Edge</span>
+            </div>
+          </div>
+
+          <!-- Category 5: Databases & Real-Time Sync -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                <span class="material-symbols-outlined text-xl">database</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Databases &amp; Caching</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">ACID Compliant Storage</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">PostgreSQL</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Redis Cache</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Firestore DB</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">SQLite B-Tree</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">MongoDB</span>
+            </div>
+          </div>
+
+          <!-- Category 6: AI, Security & Compliance -->
+          <div class="p-6 rounded-2xl tech-border bg-surface-card/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+                <span class="material-symbols-outlined text-xl">security</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm">Security &amp; AI Stack</h4>
+                <p class="text-[11px] text-neutral-400 font-mono">Zero-Trust Verification</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">PyTorch</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">OpenAI API</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">Vector Embeddings</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">TLS 1.3 / OAuth</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300">SOC2 Hardening</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Stage-Gated Production Delivery Methodology -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Stage-Gated Execution</p>
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white">How We Deliver Software</h2>
+        <p class="text-neutral-400 text-sm mt-3">
+          Transparent, milestone-driven sprints with continuous staging builds and zero hidden dependencies.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Step 1 -->
+        <div class="p-6 rounded-2xl tech-border bg-surface-card relative group hover:border-brand-blue/50 transition-all">
+          <span class="text-3xl font-display font-extrabold text-white/10 group-hover:text-brand-blue/30 transition-colors">01</span>
+          <div class="mt-4">
+            <span class="text-[11px] font-mono text-brand-blue font-bold tracking-wider">PHASE 01 • DAYS 1–5</span>
+            <h3 class="font-bold text-white text-base mt-1">Architecture Discovery</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Requirements deep-dive, database schema design, third-party API audit, and technical scope sign-off.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-neutral-500 font-mono">
+            Deliverable: Technical Spec Sheet
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-6 rounded-2xl tech-border bg-surface-card relative group hover:border-cyan-400/50 transition-all">
+          <span class="text-3xl font-display font-extrabold text-white/10 group-hover:text-cyan-400/30 transition-colors">02</span>
+          <div class="mt-4">
+            <span class="text-[11px] font-mono text-cyan-400 font-bold tracking-wider">PHASE 02 • SPRINT 1</span>
+            <h3 class="font-bold text-white text-base mt-1">Rapid Prototyping &amp; UX</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              High-fidelity interactive prototype, UI design tokens, core user flow validation, and baseline DevOps CI pipeline setup.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-neutral-500 font-mono">
+            Deliverable: Figma UI &amp; Staging Env
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-6 rounded-2xl tech-border bg-surface-card relative group hover:border-purple-400/50 transition-all">
+          <span class="text-3xl font-display font-extrabold text-white/10 group-hover:text-purple-400/30 transition-colors">03</span>
+          <div class="mt-4">
+            <span class="text-[11px] font-mono text-purple-400 font-bold tracking-wider">PHASE 03 • SPRINTS 2–5</span>
+            <h3 class="font-bold text-white text-base mt-1">Iterative Sprint Build</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Bi-weekly deliverables, automated testing suites, code reviews, and live milestone review on client staging URLs.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-neutral-500 font-mono">
+            Deliverable: Bi-Weekly Working Demos
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="p-6 rounded-2xl tech-border bg-surface-card relative group hover:border-emerald-400/50 transition-all">
+          <span class="text-3xl font-display font-extrabold text-white/10 group-hover:text-emerald-400/30 transition-colors">04</span>
+          <div class="mt-4">
+            <span class="text-[11px] font-mono text-emerald-400 font-bold tracking-wider">PHASE 04 • LAUNCH &amp; SLA</span>
+            <h3 class="font-bold text-white text-base mt-1">Production Rollout</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Zero-downtime deployment, automated backups, telemetry logging, full source IP handover, and ongoing support.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-neutral-500 font-mono">
+            Deliverable: Live Production Release
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Engagement Models Bento -->
+    <section class="py-20 px-6 md:px-12 bg-[#08090C] border-y border-white/10">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="text-center max-w-2xl mx-auto">
+          <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue">Flexible Collaboration</span>
+          <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white mt-2">
+            Engagement Models Tailored to Your Growth
+          </h2>
+          <p class="text-neutral-400 text-sm mt-3">
+            Choose the engagement structure that aligns with your engineering timeline, project scope, and budget.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Model 1 -->
+          <div class="p-7 rounded-2xl tech-border bg-surface-card flex flex-col justify-between space-y-6 hover:border-brand-blue/50 transition-all">
+            <div>
+              <span class="text-xs font-mono font-bold text-brand-blue uppercase tracking-wider">PROJECT-BASED</span>
+              <h3 class="font-display font-extrabold text-xl text-white mt-1">Milestone Delivery</h3>
+              <p class="text-xs text-neutral-300 mt-2 leading-relaxed">
+                Ideal for well-defined web apps, mobile apps, or custom desktop software requiring fixed scope and clear milestone sign-offs.
+              </p>
+              
+              <ul class="space-y-2.5 mt-6 text-xs text-neutral-300 border-t border-white/10 pt-4">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-brand-blue">check</span>Guaranteed timeline &amp; fixed milestone pricing</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-brand-blue">check</span>Complete technical spec sheet upfront</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-brand-blue">check</span>Dedicated Project Manager &amp; Staging URL</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-brand-blue">check</span>30-day post-launch warranty included</li>
+              </ul>
+            </div>
+
+            <a href="start-a-project.html" class="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition-all">
+              Submit Fixed-Scope Brief
+            </a>
+          </div>
+
+          <!-- Model 2 (Recommended) -->
+          <div class="p-7 rounded-2xl tech-border bg-gradient-to-b from-blue-950/40 via-surface-card to-surface-card border-brand-blue/40 flex flex-col justify-between space-y-6 shadow-2xl shadow-brand-blue/10 relative">
+            <div class="absolute -top-3 right-6 px-3 py-1 rounded-full bg-brand-blue text-white font-mono text-[10px] font-bold uppercase tracking-widest shadow-md">
+              Most Popular
+            </div>
+
+            <div>
+              <span class="text-xs font-mono font-bold text-brand-cyan uppercase tracking-wider">DEDICATED TEAM</span>
+              <h3 class="font-display font-extrabold text-xl text-white mt-1">Dedicated Tech Squad</h3>
+              <p class="text-xs text-neutral-300 mt-2 leading-relaxed">
+                Full-stack engineers, UI designers, and QA specialists acting as a seamless extension of your in-house product team.
+              </p>
+              
+              <ul class="space-y-2.5 mt-6 text-xs text-neutral-300 border-t border-white/10 pt-4">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-cyan-400">check</span>Full-time agile engineering capacity</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-cyan-400">check</span>Daily Standups, Slack &amp; GitHub integration</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-cyan-400">check</span>Dynamic backlog prioritization as you grow</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-cyan-400">check</span>Scale team up or down with 2-week notice</li>
+              </ul>
+            </div>
+
+            <a href="start-a-project.html" class="w-full py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-xs text-center transition-all btn-glow shadow-lg shadow-brand-blue/30">
+              Engage Dedicated Squad
+            </a>
+          </div>
+
+          <!-- Model 3 -->
+          <div class="p-7 rounded-2xl tech-border bg-surface-card flex flex-col justify-between space-y-6 hover:border-purple-400/50 transition-all">
+            <div>
+              <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">TECHNICAL ADVISORY</span>
+              <h3 class="font-display font-extrabold text-xl text-white mt-1">CTO &amp; Architecture Review</h3>
+              <p class="text-xs text-neutral-300 mt-2 leading-relaxed">
+                Specialized consulting for code audits, performance bottlenecks, security assessments, and cloud infrastructure optimization.
+              </p>
+              
+              <ul class="space-y-2.5 mt-6 text-xs text-neutral-300 border-t border-white/10 pt-4">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-purple-400">check</span>Deep-dive code &amp; security vulnerability audit</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-purple-400">check</span>Cloud AWS / GCP cost &amp; scaling optimization</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-purple-400">check</span>Executive architectural roadmap documentation</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-purple-400">check</span>Direct access to Principal Systems Engineers</li>
+              </ul>
+            </div>
+
+            <a href="contact.html" class="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition-all">
+              Schedule Architecture Audit
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions (FAQ Accordion) -->
+    <section class="py-20 px-6 md:px-12 max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue">Clear Answers</span>
+        <h2 class="font-display text-3xl font-extrabold text-white mt-2">Frequently Asked Questions</h2>
+        <p class="text-neutral-400 text-sm mt-2">Everything you need to know about partnering with ANVION IT SERVICES.</p>
+      </div>
+
+      <div class="space-y-3" id="faqAccordion">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item tech-border rounded-xl bg-surface-card overflow-hidden transition-all">
+          <button type="button" class="faq-btn w-full p-5 text-left flex justify-between items-center text-sm font-bold text-white hover:text-brand-blue transition-colors">
+            <span>Who owns the intellectual property (IP) and source code?</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+            <strong>You own 100% of all intellectual property, source code, and assets.</strong> Upon milestone sign-off, all Git repositories, production keys, design files, and documentation are transferred directly into your organization's accounts. Zero licensing traps or vendor lock-in.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item tech-border rounded-xl bg-surface-card overflow-hidden transition-all">
+          <button type="button" class="faq-btn w-full p-5 text-left flex justify-between items-center text-sm font-bold text-white hover:text-brand-blue transition-colors">
+            <span>How fast can an engineering squad commence on our project?</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+            Following brief submission and architecture alignment, standard milestone projects kick off within <strong>3 to 5 business days</strong>. Dedicated squads can typically be onboarded and integrated into your tools within 1 week.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item tech-border rounded-xl bg-surface-card overflow-hidden transition-all">
+          <button type="button" class="faq-btn w-full p-5 text-left flex justify-between items-center text-sm font-bold text-white hover:text-brand-blue transition-colors">
+            <span>Can ANVION sign a non-disclosure agreement (NDA) before we share details?</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+            <strong>Absolutely.</strong> We execute mutual non-disclosure agreements with enterprise clients, startups, and institutions before reviewing proprietary workflows, datasets, or architecture specifications.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item tech-border rounded-xl bg-surface-card overflow-hidden transition-all">
+          <button type="button" class="faq-btn w-full p-5 text-left flex justify-between items-center text-sm font-bold text-white hover:text-brand-blue transition-colors">
+            <span>Do you provide post-launch maintenance, SLAs, and technical support?</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+            Yes. Every project includes a <strong>30-day post-rollout warranty</strong>. Furthermore, we offer customized Service Level Agreements (SLAs) with 24/7 uptime monitoring, security patching, and dedicated on-call response within 15 minutes.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item tech-border rounded-xl bg-surface-card overflow-hidden transition-all">
+          <button type="button" class="faq-btn w-full p-5 text-left flex justify-between items-center text-sm font-bold text-white hover:text-brand-blue transition-colors">
+            <span>Is ANVION an officially registered enterprise?</span>
+            <span class="material-symbols-outlined text-base transition-transform duration-300">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+            Yes. ANVION IT SERVICES is a registered Micro Enterprise under the Ministry of MSME, Government of India (Registration Number: <strong>UDYAM-TN-09-0098980</strong>, NIC Code 62011 for Software Publishing, Consultancy and Supply).
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Radiant High-Impact Bottom CTA Banner -->
+    <section class="py-16 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="tech-border rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-surface-card via-surface-card to-blue-950/40 relative overflow-hidden text-center sm:text-left flex flex-col lg:flex-row items-center justify-between gap-8 border-brand-blue/30 shadow-2xl">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-brand-blue/15 blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-4 max-w-2xl relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/15 border border-brand-blue/30 text-brand-blue text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            <span>Now Scheduling Technical Engagements</span>
+          </div>
+
+          <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+            Ready to Architect Your <br class="hidden sm:block"/>
+            <span class="text-gradient-hero">Next Digital Milestone?</span>
+          </h2>
+
+          <p class="text-neutral-300 text-sm leading-relaxed">
+            Connect with an ANVION Principal Engineer today. We evaluate requirements, assess feasibility, and provide complete technical scopes within 24 hours.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-400 pt-2">
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-emerald-400 text-sm">verified</span> Verified MSME</span>
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-brand-blue text-sm">lock</span> Strict NDA Signed</span>
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-purple-400 text-sm">code</span> 100% IP Handover</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto relative z-10 shrink-0">
+          <a href="start-a-project.html" class="px-8 py-4 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-sm tracking-wide transition-all shadow-xl shadow-brand-blue/30 btn-glow flex items-center justify-center gap-2">
+            <span>Start a Project</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </a>
+          <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all">
+            <svg class="w-4 h-4 fill-current flex-shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
+            <span>Chat on WhatsApp</span>
+          </a>
+          <a href="tel:+919150270802" class="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 hover:text-white font-mono text-xs flex items-center justify-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-sm">call</span>
+            <span>+91 9150270802</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-[#040508] text-neutral-400 w-full py-16 border-t border-white/10 mt-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 px-6 md:px-12 max-w-7xl mx-auto">
+      
+      <!-- Col 1: Brand Info & MSME Seal -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5">
+            <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+          </div>
+          <div>
+            <span class="font-display text-lg font-extrabold text-white leading-tight">ANVION</span>
+            <p class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-400 leading-relaxed">
+          Next-generation digital engineering, enterprise web &amp; mobile solutions, AI automation, and cloud architecture across India and worldwide.
+        </p>
+        <div class="p-3.5 rounded-xl bg-surface-card border border-brand-blue/30 text-xs">
+          <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>Govt. of India MSME Registered</span>
+          </div>
+          <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+          <p class="text-[10px] text-neutral-400 mt-0.5">Micro Enterprise • Services (NIC 62011)</p>
+        </div>
+      </div>
+
+      <!-- Col 2: Company Navigation -->
+      <div class="flex flex-col gap-3 text-xs">
+        <h4 class="font-display font-bold text-white text-sm mb-1 uppercase tracking-wider">Company</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About ANVION</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers &amp; Openings</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="case-studies.html">Case Studies &amp; Architecture</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+      </div>
+
+      <!-- Col 3: Engineering Disciplines -->
+      <div class="flex flex-col gap-3 text-xs">
+        <h4 class="font-display font-bold text-white text-sm mb-1 uppercase tracking-wider">Disciplines</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="web-development.html">Full-Stack Web Development</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="mobile-development.html">Mobile App Engineering</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="ai-machine-learning.html">AI &amp; Machine Learning</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="cybersecurity.html">Cybersecurity &amp; Audits</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="it-consulting.html">Enterprise IT Consulting</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="projects.html">Featured Projects</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Live Architecture Portfolio</a>
+      </div>
+
+      <!-- Col 4: Corporate Info -->
+      <div class="flex flex-col gap-3 text-xs">
+        <h4 class="font-display font-bold text-white text-sm mb-1 uppercase tracking-wider">Registered Office</h4>
+        <p class="text-neutral-300 leading-relaxed text-[11px]">
+          <strong>ANVION IT SERVICES</strong><br/>
+          Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+        </p>
+        <div class="space-y-1 text-xs text-neutral-400 font-mono pt-1">
+          <p><span class="text-neutral-500">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a></p>
+          <p><span class="text-neutral-500">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue">anvionitservices@gmail.com</a></p>
+        </div>
+        <div class="flex items-center gap-3 pt-2 text-[11px]">
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
+          <span class="text-neutral-600">•</span>
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="px-6 md:px-12 max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-500 gap-2">
+      <p>© 2026 ANVION IT SERVICES. All rights reserved. • Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+      <p class="font-mono text-[11px]">DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+    </div>
+  </footer>
+
+  <!-- Universal Navbar & WhatsApp Controller -->
+  <script src="js/navbar.js"></script>
+
+  <!-- Interactive Filter & FAQ Controller Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Service Category Filter
+      const filterBtns = document.querySelectorAll(".service-tab-btn");
+      const serviceCards = document.querySelectorAll(".service-card");
+      const countDisplay = document.getElementById("servicesCountDisplay");
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const filter = btn.getAttribute("data-filter");
+
+          // Toggle tab button states
+          filterBtns.forEach(b => {
+            b.classList.remove("active-tab", "bg-brand-blue", "text-white");
+            b.classList.add("bg-white/5", "text-neutral-300");
+          });
+          btn.classList.add("active-tab", "bg-brand-blue", "text-white");
+          btn.classList.remove("bg-white/5", "text-neutral-300");
+
+          let visibleCount = 0;
+          serviceCards.forEach(card => {
+            const category = card.getAttribute("data-category");
+            if (filter === "all" || category === filter) {
+              card.classList.remove("hidden");
+              card.classList.add("flex");
+              visibleCount++;
+            } else {
+              card.classList.add("hidden");
+              card.classList.remove("flex");
+            }
+          });
+
+          if (countDisplay) {
+            countDisplay.textContent = visibleCount;
+          }
+        });
+      });
+
+      // 2. FAQ Accordion Toggle
+      const faqItems = document.querySelectorAll(".faq-item");
+      faqItems.forEach(item => {
+        const btn = item.querySelector(".faq-btn");
+        const content = item.querySelector(".faq-content");
+        const icon = btn.querySelector(".material-symbols-outlined");
+
+        btn.addEventListener("click", () => {
+          const isHidden = content.classList.contains("hidden");
+          
+          // Close others
+          faqItems.forEach(otherItem => {
+            otherItem.querySelector(".faq-content").classList.add("hidden");
+            otherItem.querySelector(".faq-btn .material-symbols-outlined").style.transform = "rotate(0deg)";
+          });
+
+          if (isHidden) {
+            content.classList.remove("hidden");
+            icon.style.transform = "rotate(180deg)";
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

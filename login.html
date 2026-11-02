@@ -221,15 +221,15 @@
 
         <!-- Instant Demo / Quick Test Bar -->
         <div class="mt-8 pt-6 border-t border-white/10">
-          <p class="text-xs text-neutral-400 mb-3 text-center sm:text-left flex items-center justify-between">
-            <span class="font-semibold text-neutral-300 flex items-center gap-1.5">
+          <div class="text-xs text-neutral-400 mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-center sm:text-left">
+            <span class="font-semibold text-neutral-300 flex items-center justify-center sm:justify-start gap-1.5">
               <span class="material-symbols-outlined text-amber-400 text-base">bolt</span>
               Fast-Track Testing (One-Click)
             </span>
             <span class="text-[11px] text-neutral-500">Zero credentials needed</span>
-          </p>
+          </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button id="btnDemoClient" type="button" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-brand-blue/15 border border-white/10 hover:border-brand-blue/40 text-xs text-neutral-200 hover:text-brand-blue font-semibold transition-all">
               <span class="material-symbols-outlined text-sm text-brand-blue">domain</span>
               Demo Client Login
@@ -246,9 +246,9 @@
   </main>
 
   <!-- Bottom Brand Footer -->
-  <footer class="w-full max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3 z-10">
+  <footer class="w-full max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3 z-10 text-center sm:text-left">
     <p>© 2026 ANVION IT SERVICES. MSME Reg: <span class="text-amber-400 font-medium">UDYAM-TN-09-0098980</span> • Karungal, Kanniyakumari</p>
-    <div class="flex gap-4">
+    <div class="flex flex-wrap gap-4 justify-center sm:justify-start">
       <a href="privacy-policy.html" class="hover:text-white">Privacy Policy</a>
       <a href="terms-of-service.html" class="hover:text-white">Terms of Service</a>
       <a href="contact.html" class="hover:text-white">Help & Support</a>
@@ -258,7 +258,7 @@
 
   <!-- Firebase Config Settings Modal -->
   <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
-    <div class="bg-surface-card border border-surface-border rounded-2xl w-full max-w-lg p-6 sm:p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+    <div class="bg-surface-card border border-surface-border rounded-2xl w-full max-w-lg p-6 sm:p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-start mb-4">
         <div>
           <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-semibold mb-2">
@@ -280,7 +280,7 @@
           <label class="block text-neutral-400 mb-1">API Key</label>
           <input id="cfgApiKey" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-neutral-400 mb-1">Project ID</label>
             <input id="cfgProjectId" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
@@ -290,7 +290,7 @@
             <input id="cfgAuthDomain" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-neutral-400 mb-1">Storage Bucket</label>
             <input id="cfgStorageBucket" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
@@ -311,6 +311,30 @@
       </div>
     </div>
   </div>
+
+  <!-- Protocol Warning for file:/// -->
+  <script>
+    if (window.location.protocol === "file:") {
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.querySelector(".lg\\:col-span-7");
+        if (container) {
+          const notice = document.createElement("div");
+          notice.className = "mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-start gap-3";
+          notice.innerHTML = `
+            <span class="material-symbols-outlined text-amber-400 text-base shrink-0 mt-0.5">warning</span>
+            <div>
+              <strong class="font-bold text-white">Opening via Local File (file:///):</strong>
+              <p class="mt-1 text-[11px] text-neutral-300 leading-relaxed">
+                Browser security policies block Firebase authentication and ES modules on <code class="bg-black/40 px-1 py-0.5 rounded text-amber-400 font-mono">file:///</code>. 
+                Double-click <strong class="text-white font-mono">start-server.bat</strong> in the project folder to run with complete authentication support at <strong class="text-brand-blue font-mono">http://localhost:8080</strong>.
+              </p>
+            </div>
+          `;
+          container.insertBefore(notice, container.firstChild);
+        }
+      });
+    }
+  </script>
 
   <!-- Client-Side JavaScript Logic -->
   <script type="module">

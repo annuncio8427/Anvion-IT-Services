@@ -488,10 +488,8 @@
             });
         });
     </script>
-    <script type="module" src="js/navbar.js"></script>
-<script type="module">
-import { submitProjectInquiry } from "./js/auth.js";
-
+    <script src="js/navbar.js"></script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const success = document.getElementById("contactSuccess");
@@ -515,14 +513,32 @@ document.addEventListener("DOMContentLoaded", () => {
         if (inp.tagName === "TEXTAREA") data.scope = inp.value;
       });
 
-      await submitProjectInquiry({
+      const payload = {
         name: data.name || "Contact Request",
         email: data.email || "",
         phone: data.phone || "",
         company: data.company || "",
         serviceCategory: data.category || "IT Consulting",
         scope: data.scope || "General inquiry from contact form"
-      });
+      };
+
+      if (window.location.protocol.startsWith("http")) {
+        try {
+          const auth = await import("./js/auth.js");
+          if (auth && auth.submitProjectInquiry) {
+            await auth.submitProjectInquiry(payload);
+          }
+        } catch (err) {
+          console.warn("[Contact] Local fallback used:", err);
+        }
+      } else {
+        try {
+          const raw = localStorage.getItem("anvion_user_inquiries");
+          const list = raw ? JSON.parse(raw) : [];
+          list.unshift({ ...payload, submittedAt: new Date().toISOString(), status: "Under Review" });
+          localStorage.setItem("anvion_user_inquiries", JSON.stringify(list));
+        } catch (err) {}
+      }
 
       form.classList.add("hidden");
       success.classList.remove("hidden");

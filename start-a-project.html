@@ -389,35 +389,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.querySelector("header button.md\\:hidden");
-  const header = document.querySelector("header");
-  const nav = header?.querySelector("nav");
-
-  if (menuButton && header) {
-    menuButton.addEventListener("click", () => {
-      let mobilePanel = header.querySelector(".mobile-nav-panel");
-
-      if (!mobilePanel) {
-        mobilePanel = document.createElement("div");
-        mobilePanel.className = "mobile-nav-panel md:hidden absolute top-20 left-0 right-0 bg-surface border-b border-white/10 px-5 py-5";
-        mobilePanel.innerHTML = `
-          <div class="flex flex-col gap-4">
-            <a href="index.html" class="text-on-surface py-2">Home</a>
-            <a href="services.html" class="text-on-surface-variant hover:text-on-surface py-2">Services</a>
-            <a href="solution.html" class="text-on-surface-variant hover:text-on-surface py-2">Solutions</a>
-            <a href="projects.html" class="text-on-surface-variant hover:text-on-surface py-2">Projects</a>
-            <a href="portfolio.html" class="text-on-surface-variant hover:text-on-surface py-2">Portfolio</a>
-            <a href="about.html" class="text-on-surface-variant hover:text-on-surface py-2">About</a>
-            <a href="careers.html" class="text-on-surface-variant hover:text-on-surface py-2">Careers</a>
-            <a href="contact.html" class="text-on-surface-variant hover:text-on-surface py-2">Contact</a>
-            <a href="start-a-project.html" class="bg-brand-blue text-white text-center font-bold px-5 py-3 rounded mt-2">Start a Project</a>
-          </div>`;
-        header.appendChild(mobilePanel);
-      }
-
-      mobilePanel.classList.toggle("hidden");
-    });
-  }
 
   const revealItems = document.querySelectorAll("main section");
   const observer = new IntersectionObserver((entries) => {
@@ -436,9 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script type="module">
-import { submitProjectInquiry } from "./js/auth.js";
-
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("projectForm");
   const success = document.getElementById("formSuccess");
@@ -452,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.classList.add("opacity-70");
-        submitBtn.innerHTML = `<span>Saving to Firebase...</span>`;
+        submitBtn.innerHTML = `<span>Saving brief...</span>`;
       }
 
       const formData = new FormData(form);
@@ -467,18 +436,30 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline: formData.get("timeline") || "1 – 3 months"
       };
 
-      try {
-        await submitProjectInquiry(briefData);
-        form.classList.add("hidden");
-        success.classList.remove("hidden");
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
-      } catch (err) {
-        console.error("Firebase submit error:", err);
-        success.classList.remove("hidden");
+      if (window.location.protocol.startsWith("http")) {
+        try {
+          const auth = await import("./js/auth.js");
+          if (auth && auth.submitProjectInquiry) {
+            await auth.submitProjectInquiry(briefData);
+          }
+        } catch (err) {
+          console.warn("[Start a Project] Local fallback used:", err);
+        }
+      } else {
+        try {
+          const raw = localStorage.getItem("anvion_user_inquiries");
+          const list = raw ? JSON.parse(raw) : [];
+          list.unshift({ ...briefData, submittedAt: new Date().toISOString(), status: "Under Review" });
+          localStorage.setItem("anvion_user_inquiries", JSON.stringify(list));
+        } catch (err) {}
       }
+
+      form.classList.add("hidden");
+      success.classList.remove("hidden");
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }
 });
 </script>
-    <script type="module" src="js/navbar.js"></script>
+    <script src="js/navbar.js"></script>
 </body></html>
