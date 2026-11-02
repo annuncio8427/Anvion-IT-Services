@@ -35,7 +35,9 @@ const HOST = process.env.HOST || '0.0.0.0';
 const JWT_SECRET = process.env.ADMIN_JWT_SECRET;
 
 // Uploads configuration
-const uploadDir = path.join(__dirname, 'uploads');
+const uploadDir = process.env.VERCEL
+  ? path.join('/tmp', 'anvion-uploads')
+  : path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -753,26 +755,26 @@ app.get('*', (req, res) => {
 });
 
 
-const server = app.listen(PORT, HOST, () => {
-  console.log(`ANVION Production Engine running at http://${HOST}:${PORT}`);
-});
-
-server.on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.warn(`Port ${PORT} is already in use by active process. Existing listener retained.`);
-  } else {
-    console.error('Server listen error:', err);
-  }
-});
-
-process.on('SIGTERM', () => {
-  server.close(() => {
-    process.exit(0);
+// Vercel executes the exported Express app as a serverless function.
+// Keep the listener only for local/self-hosted execution.
+if (!process.env.VERCEL) {
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`ANVION Production Engine running at http://${HOST}:${PORT}`);
   });
-});
 
-process.on('SIGINT', () => {
-  server.close(() => {
-    process.exit(0);
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`Port ${PORT} is already in use by active process. Existing listener retained.`);
+    } else {
+      console.error('Server listen error:', err);
+    }
   });
-});
+
+  const shutdown = () => {
+    server.close(() => process.exit(0));
+  };
+  process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
+}
+
+export default app;
