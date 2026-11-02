@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), 'utf8');
 const server = read('./server.js');
@@ -73,4 +73,26 @@ test('Vercel build prepares public pages and browser assets', () => {
   assert.ok(prepareScript.includes("['images', 'js', 'admin']"));
   assert.ok(prepareScript.includes('firebase-applet-config.json'));
   assert.ok(!prepareScript.includes("'src'"));
+});
+
+test('Vercel public output contains the site pages and browser assets, not backend source', () => {
+  for (const file of [
+    './public/index.html',
+    './public/contact.html',
+    './public/js/firebase-client.js',
+    './public/images/annuncio.png',
+    './public/admin/login.html',
+    './public/firebase-applet-config.json',
+  ]) {
+    assert.ok(existsSync(new URL(file, import.meta.url)), `Missing expected public asset: ${file}`);
+  }
+
+  for (const privateFile of [
+    './public/server.js',
+    './public/package.json',
+    './public/firestore.rules',
+    './public/src',
+  ]) {
+    assert.ok(!existsSync(new URL(privateFile, import.meta.url)), `Private file was copied: ${privateFile}`);
+  }
 });
