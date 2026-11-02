@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applySeo } from './seo.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, 'public');
@@ -28,4 +29,6 @@ for (const directory of ['images', 'js', 'admin']) {
   }
 }
 
+const seoSummary = applySeo(output);
 console.log('Prepared public website assets in ./public');
+console.log('Applied SEO metadata to ' + seoSummary.pageCount + ' public pages; marked ' + seoSummary.noindexCount + ' private pages noindex.');
