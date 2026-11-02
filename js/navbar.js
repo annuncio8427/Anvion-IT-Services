@@ -35,6 +35,25 @@ function performLogout() {
   }
 }
 
+// Helper to safely locate ONLY the action buttons container (never <nav>!)
+function findHeaderActionContainer(header) {
+  // Find trailing action containers (where Client Portal, Sign In, or Start a Project buttons live)
+  const candidates = header.querySelectorAll("div.hidden.md\\:flex, div.hidden.lg\\:flex, div.flex.items-center.gap-3\\.5, div.flex.items-center.gap-4");
+  
+  for (const div of candidates) {
+    // Strictly skip <nav> or any container inside <nav>
+    if (div.tagName === "NAV" || div.closest("nav")) continue;
+    // Skip containers with more than 3 links (those are nav menus)
+    const links = div.querySelectorAll("a");
+    if (links.length > 3) continue;
+    // Ensure it contains an action button
+    if (div.querySelector("a[href*='start-a-project'], a[href*='login'], a[href*='dashboard'], a[href*='contact']")) {
+      return div;
+    }
+  }
+  return null;
+}
+
 // Initialize when DOM is ready
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initNavbar);
@@ -54,8 +73,8 @@ function initNavbar() {
     img.classList.add("object-contain");
   });
 
-  // 2. Identify or create Action Containers (Desktop Right Side)
-  let actionContainer = header.querySelector(".hidden.md\\:flex.items-center.gap-4, .hidden.md\\:flex.items-center.space-x-4, .hidden.md\\:flex.items-center, .hidden.lg\\:flex.items-center.space-x-stack-sm, .hidden.lg\\:flex.items-center");
+  // 2. Identify Action Container (strictly trailing action buttons, NEVER <nav>)
+  const actionContainer = findHeaderActionContainer(header);
 
   // 3. Setup or replace Mobile Menu Drawer
   setupMobileDrawer(header);
@@ -63,15 +82,19 @@ function initNavbar() {
   // 4. Highlight active navigation link
   highlightActiveLink(header);
 
-  // 5. Initial auth state render from localStorage (zero delay)
+  // 5. Auth state render from localStorage ONLY if a user is logged in
   const initialUser = getActiveCachedUser();
-  updateNavbarAuthState(header, actionContainer, initialUser);
+  if (initialUser && actionContainer) {
+    updateNavbarAuthState(header, actionContainer, initialUser);
+  }
   updateMobileDrawerAuthState(initialUser);
 
   // 6. Connect to local custom auth state change listener
   window.addEventListener("anvion:auth-changed", (e) => {
     const user = (e && e.detail && e.detail.user !== undefined) ? e.detail.user : getActiveCachedUser();
-    updateNavbarAuthState(header, actionContainer, user);
+    if (actionContainer) {
+      updateNavbarAuthState(header, actionContainer, user);
+    }
     updateMobileDrawerAuthState(user);
   });
 
@@ -81,7 +104,9 @@ function initNavbar() {
       .then(authMod => {
         if (authMod && typeof authMod.onAuthChange === "function") {
           authMod.onAuthChange((user) => {
-            updateNavbarAuthState(header, actionContainer, user);
+            if (actionContainer) {
+              updateNavbarAuthState(header, actionContainer, user);
+            }
             updateMobileDrawerAuthState(user);
           });
         }
@@ -109,7 +134,7 @@ function highlightActiveLink(header) {
 
     if (linkPath === currentPath || (currentPath === "" && linkPath === "index.html")) {
       link.classList.add("text-white", "font-bold", "border-b-2", "border-brand-blue", "pb-1");
-      link.classList.remove("text-on-surface-variant", "text-neutral-400");
+      link.classList.remove("text-on-surface-variant", "text-neutral-400", "text-neutral-300");
     } else {
       link.classList.remove("border-b-2", "border-brand-blue", "pb-1");
     }
@@ -118,12 +143,17 @@ function highlightActiveLink(header) {
 
 /**
  * Updates Desktop Header Action Buttons based on User State
+ * NEVER modifies <nav>!
  */
 function updateNavbarAuthState(header, actionContainer, user) {
-  if (!actionContainer) return;
+  if (!actionContainer || actionContainer.tagName === "NAV" || actionContainer.closest("nav")) return;
 
   if (user) {
-    // Logged In State: Avatar + Dropdown Menu
+    // Save original markup before overwriting with user profile
+    if (!actionContainer.getAttribute("data-original-html")) {
+      actionContainer.setAttribute("data-original-html", actionContainer.innerHTML);
+    }
+
     const displayName = user.displayName || (user.email ? user.email.split("@")[0] : "Client");
     const initials = displayName.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
     const avatarHtml = user.avatar 
@@ -194,16 +224,11 @@ function updateNavbarAuthState(header, actionContainer, user) {
     }
 
   } else {
-    // Logged Out State: Sign In + Start a Project
-    actionContainer.innerHTML = `
-      <a href="login.html" class="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-300 hover:text-white hover:text-brand-blue transition-colors px-3 py-2">
-        <span class="material-symbols-outlined text-sm">account_circle</span>
-        Sign In
-      </a>
-      <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow-md shadow-brand-blue/20 btn-glow">
-        Start a Project
-      </a>
-    `;
+    // Restore original HTML if previously logged in
+    if (actionContainer.hasAttribute("data-original-html")) {
+      actionContainer.innerHTML = actionContainer.getAttribute("data-original-html");
+      actionContainer.removeAttribute("data-original-html");
+    }
   }
 }
 
