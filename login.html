@@ -3,23 +3,31 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Client Sign In - ANVION IT SERVICES</title>
-  <meta name="description" content="Sign in to your ANVION client portal to track project briefs, communicate with engineering teams, and view quotations."/>
-  <meta name="robots" content="noindex, nofollow"/>
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
-  <script>
+  <title>ANVION - Client Portal & Authentication</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <!-- Custom Modern Stylesheet -->
+  <link rel="stylesheet" href="css/custom-styles.css"/>
+
+  <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
           colors: {
-            brand: { blue: "#007BFF", hover: "#0056b3" },
-            surface: "#121317",
-            "surface-container": "#1a1b20",
-            "on-surface": "#e3e2e7",
-            "on-surface-variant": "#a1a1aa",
+            "surface": "#0E1015",
+            "surface-low": "#08090C",
+            "surface-card": "#12141C",
+            "surface-border": "rgba(255, 255, 255, 0.1)",
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008be5",
+            "brand-glow": "rgba(0, 163, 255, 0.25)"
           },
           fontFamily: {
             sans: ["Inter", "sans-serif"],
@@ -30,256 +38,549 @@
     };
   </script>
 </head>
-<body class="bg-black text-on-surface font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
 
-  <!-- TOP NAV BAR -->
-  <header class="border-b border-white/10 bg-surface/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2 text-brand-blue font-bold font-display text-xl tracking-wider hover:opacity-90 transition-opacity">
-        <span class="material-symbols-outlined text-2xl">shield</span>
-        <span>ANVION</span>
-      </a>
-      <div class="flex items-center gap-4 text-xs font-medium">
-        <span class="text-on-surface-variant hidden sm:inline">Don't have an account?</span>
-        <a href="/signup" class="text-white hover:text-brand-blue transition-colors font-semibold flex items-center gap-1">
-          <span>Create Account</span>
-          <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </a>
+<body class="bg-surface-low text-[#E3E2E7] font-sans antialiased min-h-screen flex flex-col justify-between relative overflow-x-hidden selection:bg-brand-blue selection:text-white mesh-bg">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-blue/10 blur-[130px] pointer-events-none -z-10 animate-pulse" style="animation-duration: 8s;"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#7928CA]/15 blur-[140px] pointer-events-none -z-10 animate-pulse" style="animation-duration: 10s;"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Top Simple Bar -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center z-20">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <div class="h-10 w-10 rounded-lg bg-surface-card border border-surface-border flex items-center justify-center p-1.5 group-hover:border-brand-blue transition-colors shadow-lg shadow-black/40">
+        <img src="images/logo.png" alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110"/>
       </div>
+      <span class="font-display font-extrabold text-2xl tracking-tight text-white group-hover:text-brand-blue transition-colors">ANVION</span>
+    </a>
+
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hidden sm:inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-base">arrow_back</span>
+        Back to Website
+      </a>
+      <button id="configModalTrigger" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-surface-card/80 border border-surface-border hover:border-brand-blue text-neutral-300 hover:text-brand-blue transition-all">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span>Firebase Config</span>
+      </button>
     </div>
   </header>
 
-  <!-- LOGIN CONTAINER -->
-  <main class="flex-1 flex items-center justify-center px-4 py-12">
-    <div class="w-full max-w-md bg-surface border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+  <!-- Main Container -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 z-10">
+    <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       
-      <!-- Subtle top decorative gradient line -->
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent"></div>
+      <!-- Left Hero Showcase (Desktop only) -->
+      <div class="hidden lg:flex lg:col-span-5 flex-col justify-between p-8 rounded-2xl bg-surface-card/60 border border-surface-border backdrop-blur-xl relative overflow-hidden">
+        <div class="absolute inset-0 cyber-grid opacity-30 -z-10"></div>
+        <div class="absolute -top-24 -left-24 w-48 h-48 bg-brand-blue/20 rounded-full blur-3xl"></div>
 
-      <!-- Header Icon & Title -->
-      <div class="text-center mb-8">
-        <div class="w-14 h-14 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center mx-auto mb-4 text-brand-blue shadow-[0_0_20px_rgba(0,123,255,0.2)]">
-          <span class="material-symbols-outlined text-3xl">lock_open</span>
-        </div>
-        <h1 class="text-2xl font-bold font-display text-white tracking-tight">Sign In to ANVION</h1>
-        <p class="text-xs text-on-surface-variant mt-2 max-w-xs mx-auto">
-          Access your enterprise project tracking dashboard, quotation briefs, and service status.
-        </p>
-      </div>
-
-      <!-- Alert Box -->
-      <div id="alertBox" class="hidden mb-6 p-4 rounded-xl border text-xs flex items-start gap-3">
-        <span id="alertIcon" class="material-symbols-outlined text-base mt-0.5">error</span>
-        <div id="alertMessage" class="flex-1 leading-relaxed"></div>
-      </div>
-
-      <!-- Login Form -->
-      <form id="loginForm" class="space-y-5" novalidate>
-        <!-- Email Input -->
         <div>
-          <label for="email" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">
-            Work or Personal Email
-          </label>
-          <div class="relative">
-            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">mail</span>
-            <input
-              id="email"
-              type="email"
-              required
-              autocomplete="email"
-              placeholder="alex@enterprise.com"
-              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
-            />
+          <!-- Status Pill -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-semibold mb-6">
+            <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+            ENTERPRISE CLIENT SUITE
+          </div>
+
+          <h2 class="font-display font-bold text-3xl text-white leading-tight mb-4">
+            Architecting Your <br/><span class="text-gradient-blue">Digital Realities.</span>
+          </h2>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-8">
+            Access your active development portals, review project milestones, submit architecture requirements, and connect directly with dedicated engineers.
+          </p>
+
+          <!-- Feature Stack -->
+          <div class="space-y-4">
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-colors">
+              <span class="material-symbols-outlined text-brand-blue text-xl mt-0.5">verified_user</span>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Enterprise Security</h4>
+                <p class="text-xs text-neutral-400 mt-0.5">Firebase Auth with encrypted session management and optional MFA.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-colors">
+              <span class="material-symbols-outlined text-brand-blue text-xl mt-0.5">monitoring</span>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Live Project Telemetry</h4>
+                <p class="text-xs text-neutral-400 mt-0.5">Real-time status updates on active sprint deliverables and staging builds.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-colors">
+              <span class="material-symbols-outlined text-brand-blue text-xl mt-0.5">support_agent</span>
+              <div>
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">Direct Consultation SLA</h4>
+                <p class="text-xs text-neutral-400 mt-0.5">Priority response channel directly to lead technical architects.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Password Input with Show/Hide -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <label for="password" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
-              Password
+        <!-- Footer review -->
+        <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-bold">★★★★★</span>
+            <span class="text-white font-medium">SOC2 Certified</span>
+          </div>
+          <span class="text-neutral-500 font-mono">Firebase v10.12</span>
+        </div>
+      </div>
+
+      <!-- Right Form Container -->
+      <div class="lg:col-span-7 bg-surface-card/90 border border-surface-border rounded-2xl p-6 sm:p-10 backdrop-blur-2xl shadow-2xl relative">
+        
+        <!-- Tab Navigation -->
+        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+          <div class="flex gap-6">
+            <button id="tabSignIn" class="font-display font-bold text-base sm:text-lg text-white pb-2 relative transition-colors focus:outline-none">
+              Sign In
+              <span id="tabIndicatorSignIn" class="absolute bottom-[-17px] left-0 right-0 h-0.5 bg-brand-blue rounded-full shadow-[0_0_10px_#00A3FF]"></span>
+            </button>
+            <button id="tabSignUp" class="font-display font-medium text-base sm:text-lg text-neutral-400 hover:text-white pb-2 relative transition-colors focus:outline-none">
+              Create Account
+              <span id="tabIndicatorSignUp" class="hidden absolute bottom-[-17px] left-0 right-0 h-0.5 bg-brand-blue rounded-full shadow-[0_0_10px_#00A3FF]"></span>
+            </button>
+          </div>
+
+          <span class="text-xs text-neutral-500 uppercase tracking-widest hidden sm:inline-block">Client Portal</span>
+        </div>
+
+        <!-- Social Google Auth -->
+        <div class="mb-6">
+          <button id="btnGoogleAuth" type="button" class="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-white font-medium text-sm transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] group">
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span id="googleButtonText">Continue with Google</span>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative flex items-center justify-center my-6">
+          <div class="border-t border-white/10 w-full"></div>
+          <span class="bg-surface-card px-3 text-xs text-neutral-500 uppercase tracking-wider relative z-10">or continue with email</span>
+        </div>
+
+        <!-- Auth Form -->
+        <form id="authForm" class="space-y-4">
+          
+          <!-- Full Name Field (Sign Up Only) -->
+          <div id="fieldFullName" class="hidden space-y-1.5">
+            <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider">Full Name <span class="text-brand-blue">*</span></label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">person</span>
+              <input id="inputFullName" type="text" placeholder="Sarah Connor" class="input-futuristic w-full pl-10 pr-4 py-3 rounded-xl text-sm" />
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider">Email Address <span class="text-brand-blue">*</span></label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">mail</span>
+              <input id="inputEmail" type="email" required placeholder="client@company.com" class="input-futuristic w-full pl-10 pr-4 py-3 rounded-xl text-sm" />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-semibold text-neutral-300 uppercase tracking-wider">Password <span class="text-brand-blue">*</span></label>
+              <button id="btnForgotPassword" type="button" class="text-xs text-brand-blue hover:underline">Forgot password?</button>
+            </div>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">lock</span>
+              <input id="inputPassword" type="password" required placeholder="••••••••••••" class="input-futuristic w-full pl-10 pr-11 py-3 rounded-xl text-sm" />
+              <button id="togglePassword" type="button" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-lg">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox (Sign In) -->
+          <div id="rowRememberMe" class="flex items-center justify-between pt-1">
+            <label class="flex items-center gap-2 cursor-pointer text-xs text-neutral-400 hover:text-neutral-300">
+              <input id="checkboxRemember" type="checkbox" checked class="rounded border-neutral-700 bg-neutral-900 text-brand-blue focus:ring-brand-blue/30"/>
+              <span>Remember this session</span>
             </label>
-            <a href="/forgot-password" class="text-xs text-brand-blue hover:underline">
-              Forgot password?
-            </a>
           </div>
-          <div class="relative">
-            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-on-surface-variant text-lg">key</span>
-            <input
-              id="password"
-              type="password"
-              required
-              autocomplete="current-password"
-              placeholder="••••••••"
-              class="w-full rounded-lg border border-white/10 bg-black/60 pl-11 pr-11 py-3 text-sm text-white placeholder:text-white/20 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
-            />
-            <button
-              type="button"
-              id="togglePassword"
-              class="absolute right-3.5 top-3 text-on-surface-variant hover:text-white transition-colors"
-              aria-label="Toggle password visibility"
-            >
-              <span id="eyeIcon" class="material-symbols-outlined text-lg">visibility</span>
+
+          <!-- Submit Button -->
+          <button id="btnSubmitAuth" type="submit" class="w-full py-3.5 px-6 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-sm tracking-wide transition-all duration-300 shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 flex items-center justify-center gap-2 mt-4 btn-glow">
+            <span id="btnSubmitText">Sign In to Client Portal</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </form>
+
+        <!-- Instant Demo / Quick Test Bar -->
+        <div class="mt-8 pt-6 border-t border-white/10">
+          <p class="text-xs text-neutral-400 mb-3 text-center sm:text-left flex items-center justify-between">
+            <span class="font-semibold text-neutral-300 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-amber-400 text-base">bolt</span>
+              Fast-Track Testing (One-Click)
+            </span>
+            <span class="text-[11px] text-neutral-500">Zero credentials needed</span>
+          </p>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button id="btnDemoClient" type="button" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-brand-blue/15 border border-white/10 hover:border-brand-blue/40 text-xs text-neutral-200 hover:text-brand-blue font-semibold transition-all">
+              <span class="material-symbols-outlined text-sm text-brand-blue">domain</span>
+              Demo Client Login
+            </button>
+            <button id="btnDemoAdmin" type="button" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-purple-500/15 border border-white/10 hover:border-purple-400/40 text-xs text-neutral-200 hover:text-purple-400 font-semibold transition-all">
+              <span class="material-symbols-outlined text-sm text-purple-400">admin_panel_settings</span>
+              Demo Director Login
             </button>
           </div>
         </div>
 
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          id="submitBtn"
-          class="w-full py-3.5 bg-brand-blue text-white font-bold text-sm rounded-lg hover:bg-brand-hover transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,123,255,0.3)] disabled:opacity-50"
-        >
-          <span id="btnText">Sign In to Dashboard</span>
-          <span id="btnIcon" class="material-symbols-outlined text-base">login</span>
-        </button>
-      </form>
-
-      <!-- Divider -->
-      <div class="my-6 flex items-center gap-3">
-        <div class="flex-1 h-px bg-white/10"></div>
-        <span class="text-[11px] text-on-surface-variant uppercase font-mono tracking-wider">or sign in with</span>
-        <div class="flex-1 h-px bg-white/10"></div>
-      </div>
-
-      <!-- Google Sign-in Button -->
-      <button
-        type="button"
-        id="googleBtn"
-        class="w-full py-3 border border-white/10 bg-white/5 hover:bg-white/10 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-3 transition-all"
-      >
-        <svg class="w-4 h-4" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
-          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.36 7.33 24 12 24z"/>
-          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.94 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
-          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.25 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-        </svg>
-        <span>Continue with Google</span>
-      </button>
-
-      <!-- Portal Switch & Legal -->
-      <div class="mt-8 pt-6 border-t border-white/10 text-center space-y-2">
-        <p class="text-xs text-on-surface-variant">
-          Are you an administrator?
-          <a href="/admin/login" class="text-brand-blue font-semibold hover:underline">
-            Admin Command Center
-          </a>
-        </p>
-        <p class="text-[11px] text-white/30">
-          Protected by Firebase Authentication & Zero-Trust RBAC.
-        </p>
       </div>
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="py-6 border-t border-white/10 text-center text-xs text-on-surface-variant">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© 2026 ANVION IT SERVICES. All rights reserved.</p>
-      <div class="flex items-center gap-4">
-        <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a>
-        <a href="/terms-of-service" class="hover:text-white transition-colors">Terms of Service</a>
-        <a href="/contact" class="hover:text-white transition-colors">Support</a>
-      </div>
+  <!-- Bottom Brand Footer -->
+  <footer class="w-full max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3 z-10">
+    <p>© 2026 ANVION IT SERVICES. MSME Reg: <span class="text-amber-400 font-medium">UDYAM-TN-09-0098980</span> • Karungal, Kanniyakumari</p>
+    <div class="flex gap-4">
+      <a href="privacy-policy.html" class="hover:text-white">Privacy Policy</a>
+      <a href="terms-of-service.html" class="hover:text-white">Terms of Service</a>
+      <a href="contact.html" class="hover:text-white">Help & Support</a>
+      <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Udyam Certificate</a>
     </div>
   </footer>
 
-  <!-- Firebase Logic -->
+  <!-- Firebase Config Settings Modal -->
+  <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+    <div class="bg-surface-card border border-surface-border rounded-2xl w-full max-w-lg p-6 sm:p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-semibold mb-2">
+            🔥 Firebase v10
+          </div>
+          <h3 class="font-display font-bold text-xl text-white">Firebase Project Settings</h3>
+        </div>
+        <button id="closeConfigModal" class="text-neutral-400 hover:text-white p-1">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <p class="text-xs text-neutral-400 mb-4 leading-relaxed">
+        ANVION uses the modular Firebase v10 SDK. You can view or connect your own live Firebase project keys here. Configuration is saved in local browser storage or directly in <code class="text-brand-blue font-mono">js/firebase-config.js</code>.
+      </p>
+
+      <div class="space-y-3 font-mono text-xs">
+        <div>
+          <label class="block text-neutral-400 mb-1">API Key</label>
+          <input id="cfgApiKey" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-400 mb-1">Project ID</label>
+            <input id="cfgProjectId" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
+          </div>
+          <div>
+            <label class="block text-neutral-400 mb-1">Auth Domain</label>
+            <input id="cfgAuthDomain" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-400 mb-1">Storage Bucket</label>
+            <input id="cfgStorageBucket" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
+          </div>
+          <div>
+            <label class="block text-neutral-400 mb-1">App ID</label>
+            <input id="cfgAppId" type="text" class="input-futuristic w-full px-3 py-2 rounded-lg text-xs" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
+        <button id="btnResetConfig" type="button" class="text-xs text-rose-400 hover:underline">Reset to Defaults</button>
+        <div class="flex gap-2">
+          <button id="btnCancelConfig" type="button" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-semibold">Cancel</button>
+          <button id="btnSaveConfig" type="button" class="px-4 py-2 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold shadow-lg shadow-brand-blue/30">Save & Reconnect</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-Side JavaScript Logic -->
   <script type="module">
-    import { auth, loginUser, loginWithGoogle, onAuthStateChanged, checkAdminAuthorization } from '/js/firebase-client.js';
+    import { 
+      loginWithEmail, 
+      signupWithEmail, 
+      loginWithGoogle, 
+      resetPassword, 
+      loginDemo,
+      getCachedUser, 
+      onAuthChange 
+    } from "./js/auth.js";
+    import { 
+      getActiveFirebaseConfig, 
+      saveCustomFirebaseConfig, 
+      resetFirebaseConfig 
+    } from "./js/firebase-config.js";
 
-    const form = document.getElementById('loginForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const togglePassword = document.getElementById('togglePassword');
-    const eyeIcon = document.getElementById('eyeIcon');
-    const alertBox = document.getElementById('alertBox');
-    const alertMessage = document.getElementById('alertMessage');
-    const googleBtn = document.getElementById('googleBtn');
+    // Toast helper
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = `toast toast-${type}`;
+      
+      const iconMap = {
+        success: "check_circle",
+        error: "error",
+        info: "info",
+        warning: "warning"
+      };
 
-    // Auto-redirect if already signed in
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const isAdmin = await checkAdminAuthorization(user);
-        if (isAdmin) {
-          window.location.href = '/admin';
-        } else {
-          window.location.href = '/profile';
-        }
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-${type === 'success' ? 'emerald-400' : type === 'error' ? 'red-400' : 'brand-blue'}">${iconMap[type] || 'info'}</span>
+        <span class="text-xs text-white font-medium flex-grow">${message}</span>
+        <button class="text-neutral-400 hover:text-white" onclick="this.parentElement.remove()">
+          <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add("toast-fadeout");
+        setTimeout(() => toast.remove(), 300);
+      }, 4500);
+    }
+
+    // State
+    let isSignUpMode = false;
+
+    // Elements
+    const tabSignIn = document.getElementById("tabSignIn");
+    const tabSignUp = document.getElementById("tabSignUp");
+    const tabIndicatorSignIn = document.getElementById("tabIndicatorSignIn");
+    const tabIndicatorSignUp = document.getElementById("tabIndicatorSignUp");
+    const fieldFullName = document.getElementById("fieldFullName");
+    const rowRememberMe = document.getElementById("rowRememberMe");
+    const btnSubmitAuth = document.getElementById("btnSubmitAuth");
+    const btnSubmitText = document.getElementById("btnSubmitText");
+    const googleButtonText = document.getElementById("googleButtonText");
+    const authForm = document.getElementById("authForm");
+
+    const inputFullName = document.getElementById("inputFullName");
+    const inputEmail = document.getElementById("inputEmail");
+    const inputPassword = document.getElementById("inputPassword");
+    const togglePassword = document.getElementById("togglePassword");
+    const checkboxRemember = document.getElementById("checkboxRemember");
+    const btnForgotPassword = document.getElementById("btnForgotPassword");
+
+    const btnGoogleAuth = document.getElementById("btnGoogleAuth");
+    const btnDemoClient = document.getElementById("btnDemoClient");
+    const btnDemoAdmin = document.getElementById("btnDemoAdmin");
+
+    // Modal elements
+    const configModal = document.getElementById("configModal");
+    const configModalTrigger = document.getElementById("configModalTrigger");
+    const closeConfigModal = document.getElementById("closeConfigModal");
+    const btnCancelConfig = document.getElementById("btnCancelConfig");
+    const btnSaveConfig = document.getElementById("btnSaveConfig");
+    const btnResetConfig = document.getElementById("btnResetConfig");
+
+    // Tab Switching
+    function setMode(signUp) {
+      isSignUpMode = signUp;
+      if (isSignUpMode) {
+        tabSignUp.classList.add("text-white", "font-bold");
+        tabSignUp.classList.remove("text-neutral-400", "font-medium");
+        tabIndicatorSignUp.classList.remove("hidden");
+
+        tabSignIn.classList.remove("text-white", "font-bold");
+        tabSignIn.classList.add("text-neutral-400", "font-medium");
+        tabIndicatorSignIn.classList.add("hidden");
+
+        fieldFullName.classList.remove("hidden");
+        rowRememberMe.classList.add("hidden");
+        btnSubmitText.textContent = "Create Enterprise Account";
+        googleButtonText.textContent = "Sign up with Google";
+      } else {
+        tabSignIn.classList.add("text-white", "font-bold");
+        tabSignIn.classList.remove("text-neutral-400", "font-medium");
+        tabIndicatorSignIn.classList.remove("hidden");
+
+        tabSignUp.classList.remove("text-white", "font-bold");
+        tabSignUp.classList.add("text-neutral-400", "font-medium");
+        tabIndicatorSignUp.classList.add("hidden");
+
+        fieldFullName.classList.add("hidden");
+        rowRememberMe.classList.remove("hidden");
+        btnSubmitText.textContent = "Sign In to Client Portal";
+        googleButtonText.textContent = "Continue with Google";
       }
-    });
-
-    // Toggle Password Visibility
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      eyeIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
-    });
-
-    function showAlert(msg, isError = true) {
-      alertBox.className = `mb-6 p-4 rounded-xl border text-xs flex items-start gap-3 ${
-        isError ? 'border-red-500/30 bg-red-500/10 text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-      }`;
-      alertMessage.textContent = msg;
-      alertBox.classList.remove('hidden');
     }
 
-    function hideAlert() {
-      alertBox.classList.add('hidden');
-    }
+    tabSignIn.addEventListener("click", () => setMode(false));
+    tabSignUp.addEventListener("click", () => setMode(true));
 
-    form.addEventListener('submit', async (e) => {
+    // Show/Hide Password
+    togglePassword.addEventListener("click", () => {
+      const type = inputPassword.getAttribute("type") === "password" ? "text" : "password";
+      inputPassword.setAttribute("type", type);
+      togglePassword.querySelector("span").textContent = type === "password" ? "visibility" : "visibility_off";
+    });
+
+    // Handle Form Submit
+    authForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      hideAlert();
-
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const email = inputEmail.value.trim();
+      const password = inputPassword.value;
+      const remember = checkboxRemember.checked;
 
       if (!email || !password) {
-        showAlert('Please enter both email and password.');
+        showToast("Please provide both email and password.", "warning");
         return;
       }
 
-      submitBtn.disabled = true;
-      btnText.textContent = 'Verifying Credentials...';
+      btnSubmitAuth.disabled = true;
+      btnSubmitAuth.classList.add("opacity-70");
+      btnSubmitText.textContent = isSignUpMode ? "Creating Account..." : "Authenticating...";
 
       try {
-        const { role, isAdmin } = await loginUser(email, password);
-        showAlert('Authentication successful. Redirecting...', false);
-        setTimeout(() => {
-          if (isAdmin) {
-            window.location.href = '/admin';
-          } else {
-            window.location.href = '/profile';
-          }
-        }, 600);
+        let res;
+        if (isSignUpMode) {
+          const fullName = inputFullName.value.trim() || email.split("@")[0];
+          res = await signupWithEmail(fullName, email, password);
+        } else {
+          res = await loginWithEmail(email, password, remember);
+        }
+
+        if (res.success) {
+          showToast(`Welcome back, ${res.user.displayName}! Redirecting...`, "success");
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 800);
+        } else {
+          showToast(res.error, "error");
+        }
       } catch (err) {
-        showAlert(err.message || 'Invalid email or password.');
-        submitBtn.disabled = false;
-        btnText.textContent = 'Sign In to Dashboard';
+        showToast(err.message || "Failed to authenticate.", "error");
+      } finally {
+        btnSubmitAuth.disabled = false;
+        btnSubmitAuth.classList.remove("opacity-70");
+        btnSubmitText.textContent = isSignUpMode ? "Create Enterprise Account" : "Sign In to Client Portal";
       }
     });
 
-    googleBtn.addEventListener('click', async () => {
-      hideAlert();
-      googleBtn.disabled = true;
+    // Google Sign In
+    btnGoogleAuth.addEventListener("click", async () => {
+      btnGoogleAuth.disabled = true;
+      btnGoogleAuth.classList.add("opacity-70");
+      showToast("Connecting with Google Provider...", "info");
+
       try {
-        const { isAdmin } = await loginWithGoogle();
-        showAlert('Signed in with Google. Redirecting...', false);
-        setTimeout(() => {
-          if (isAdmin) {
-            window.location.href = '/admin';
-          } else {
-            window.location.href = '/profile';
-          }
-        }, 600);
+        const res = await loginWithGoogle();
+        if (res.success) {
+          showToast(`Signed in as ${res.user.displayName}`, "success");
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 800);
+        } else {
+          showToast(res.error, "error");
+        }
       } catch (err) {
-        showAlert(err.message || 'Google authentication could not be completed.');
-        googleBtn.disabled = false;
+        showToast(err.message || "Google sign-in error.", "error");
+      } finally {
+        btnGoogleAuth.disabled = false;
+        btnGoogleAuth.classList.remove("opacity-70");
       }
     });
+
+    // Forgot Password
+    btnForgotPassword.addEventListener("click", async () => {
+      const email = inputEmail.value.trim();
+      if (!email) {
+        showToast("Please type your email address first to reset password.", "warning");
+        inputEmail.focus();
+        return;
+      }
+      showToast("Sending reset email...", "info");
+      const res = await resetPassword(email);
+      if (res.success) {
+        showToast(res.message, "success");
+      } else {
+        showToast(res.error, "error");
+      }
+    });
+
+    // Demo Logins
+    btnDemoClient.addEventListener("click", () => {
+      const res = loginDemo("client");
+      showToast("Signed in as Enterprise Client (Demo)", "success");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 600);
+    });
+
+    btnDemoAdmin.addEventListener("click", () => {
+      const res = loginDemo("admin");
+      showToast("Signed in as Director / Admin (Demo)", "success");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 600);
+    });
+
+    // Firebase Config Modal logic
+    function loadConfigInputs() {
+      const cfg = getActiveFirebaseConfig();
+      document.getElementById("cfgApiKey").value = cfg.apiKey || "";
+      document.getElementById("cfgProjectId").value = cfg.projectId || "";
+      document.getElementById("cfgAuthDomain").value = cfg.authDomain || "";
+      document.getElementById("cfgStorageBucket").value = cfg.storageBucket || "";
+      document.getElementById("cfgAppId").value = cfg.appId || "";
+    }
+
+    configModalTrigger.addEventListener("click", () => {
+      loadConfigInputs();
+      configModal.classList.remove("hidden");
+      configModal.classList.add("flex");
+    });
+
+    function hideModal() {
+      configModal.classList.add("hidden");
+      configModal.classList.remove("flex");
+    }
+
+    closeConfigModal.addEventListener("click", hideModal);
+    btnCancelConfig.addEventListener("click", hideModal);
+
+    btnSaveConfig.addEventListener("click", () => {
+      const newConfig = {
+        apiKey: document.getElementById("cfgApiKey").value.trim(),
+        projectId: document.getElementById("cfgProjectId").value.trim(),
+        authDomain: document.getElementById("cfgAuthDomain").value.trim(),
+        storageBucket: document.getElementById("cfgStorageBucket").value.trim(),
+        appId: document.getElementById("cfgAppId").value.trim()
+      };
+      saveCustomFirebaseConfig(newConfig);
+      showToast("Custom Firebase config saved! Reloading...", "success");
+      setTimeout(() => window.location.reload(), 1000);
+    });
+
+    btnResetConfig.addEventListener("click", () => {
+      resetFirebaseConfig();
+      showToast("Configuration reset to defaults.", "info");
+      loadConfigInputs();
+    });
+
+    // If already logged in, redirect to dashboard or show toast
+    const currentUser = getCachedUser();
+    if (currentUser) {
+      showToast(`Logged in as ${currentUser.displayName}. <a href="dashboard.html" class="underline font-bold ml-1">Go to Dashboard</a>`, "info");
+    }
   </script>
 </body>
 </html>
