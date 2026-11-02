@@ -318,24 +318,43 @@
           </div>
         </article>
 
-        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden">
-          <div class="h-64 bg-grid relative p-7 flex items-end">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-            <div class="relative">
-              <span class="material-symbols-outlined text-4xl text-brand-blue">smart_toy</span>
+        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden hover:border-brand-blue/50 transition-all group flex flex-col justify-between">
+          <div class="h-64 bg-gradient-to-b from-blue-900/30 via-surface-container-low to-black relative p-6 flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-grid opacity-30"></div>
+            <div class="relative w-full max-w-sm rounded-lg border border-brand-blue/40 bg-neutral-900 overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="flex items-center justify-between px-2.5 py-1 bg-neutral-950 border-b border-white/10">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span class="text-[9px] font-mono text-neutral-400 ml-1">edu_verify.exe</span>
+                </div>
+                <span class="text-[9px] font-mono text-brand-blue font-bold">v1.0 Native</span>
+              </div>
+              <img src="images/projects/eduverify/dashboard-view.png" alt="EduVerify Dashboard View" class="w-full h-auto object-cover" />
+            </div>
+            <div class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 text-brand-blue border border-brand-blue/40">
+              Desktop Software
             </div>
           </div>
-          <div class="p-7">
-            <p class="text-label-sm uppercase tracking-widest text-brand-blue">Automation</p>
-            <h3 class="text-headline-md font-bold text-on-surface mt-3">Intelligent Workflow Automation</h3>
-            <p class="text-body-md text-on-surface-variant mt-3">
-              Automation workflows designed to reduce repetitive tasks, move information
-              between systems and create more consistent operational processes.
-            </p>
-            <div class="flex flex-wrap gap-2 mt-5">
-              <span class="px-3 py-1 tech-border rounded text-label-sm">Python</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">APIs</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">AI</span>
+          <div class="p-7 flex flex-col justify-between flex-grow">
+            <div>
+              <p class="text-label-sm uppercase tracking-widest text-brand-blue">Desktop Software &bull; School Systems</p>
+              <h3 class="text-headline-md font-bold text-on-surface mt-3">EduVerify — Excel Validation System</h3>
+              <p class="text-body-md text-on-surface-variant mt-3">
+                A high-speed Windows desktop application engineered for educational institutions. Merges multi-sheet workbooks in 65ms and audits cell coordinates in 35ms, catching empty rows, blank columns, and formula errors with dual reports.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-5">
+                <span class="px-3 py-1 tech-border rounded text-label-sm text-brand-blue bg-blue-500/10">Windows x64</span>
+                <span class="px-3 py-1 tech-border rounded text-label-sm">Empty Row Sentinel</span>
+                <span class="px-3 py-1 tech-border rounded text-label-sm">Cell-Level Audit</span>
+                <span class="px-3 py-1 tech-border rounded text-label-sm">100% Offline</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <a href="project-eduverify.html" class="inline-flex items-center gap-2 text-label-lg text-white hover:text-brand-blue font-bold transition-colors">
+                View Detailed Case Study <span class="material-symbols-outlined text-base">arrow_forward</span>
+              </a>
             </div>
           </div>
         </article>
