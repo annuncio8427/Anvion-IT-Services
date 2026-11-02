@@ -12,6 +12,7 @@ const packageJson = JSON.parse(read('./package.json'));
 const vercelConfig = JSON.parse(read('./vercel.json'));
 const vercelEntry = read('./index.js');
 const prepareScript = read('./scripts/prepare-vercel.mjs');
+const seoScript = read('./scripts/seo.mjs');
 const apiEntry = read('./api/index.js');
 
 test('every admin API route requires administrator authorization', () => {
@@ -116,4 +117,66 @@ test('Vercel serves the frontend as static output and isolates Express under /ap
   assert.ok(vercelConfig.rewrites.some((rule) => rule.source === '/api/:path*' && rule.destination === '/api/index'));
   assert.ok(apiEntry.includes("import app from '../server.js';"));
   assert.ok(apiEntry.includes('export default app;'));
+});
+
+
+test('SEO build generates unique titles, descriptions, canonical URLs and social metadata', () => {
+  for (const file of [
+    'index.html',
+    'about.html',
+    'services.html',
+    'web-development.html',
+    'mobile-development.html',
+    'ai-machine-learning.html',
+    'cybersecurity.html',
+    'it-consulting.html',
+    'projects.html',
+    'portfolio.html',
+    'case-studies.html',
+    'contact.html',
+    'careers.html',
+    'solution.html',
+    'service-details.html',
+    'start-a-project.html',
+    'privacy-policy.html',
+    'terms-of-service.html',
+  ]) {
+    const html = read('./public/' + file);
+    assert.ok(html.includes('<title>') && html.includes('</title>'), file + ' should have a title');
+    assert.ok(html.includes('<meta name="description" content="'), file + ' should have a meta description');
+    assert.ok(html.includes('<link rel="canonical" href="https://'), file + ' should have a canonical URL');
+    assert.ok(html.includes('<meta property="og:title" content="'), file + ' should have Open Graph metadata');
+    assert.ok(html.includes('<script type="application/ld+json">'), file + ' should have structured data');
+  }
+});
+
+test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
+  for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
+    const html = read('./public/' + file);
+    assert.ok(html.includes('<meta name="robots" content="noindex,nofollow">'), file + ' should be noindex');
+  }
+
+  const sitemap = read('./public/sitemap.xml');
+  assert.ok(sitemap.includes('https://anvion-it-services.vercel.app/'));
+  assert.ok(sitemap.includes('/portfolio.html'));
+  assert.ok(sitemap.includes('/contact.html'));
+  assert.ok(!sitemap.includes('/admin'));
+  assert.ok(!sitemap.includes('/login.html'));
+  assert.ok(!sitemap.includes('/profile.html'));
+
+  const robots = read('./public/robots.txt');
+  assert.ok(robots.includes('User-agent: *'));
+  assert.ok(robots.includes('Disallow: /api/'));
+  assert.ok(robots.includes('Sitemap: https://anvion-it-services.vercel.app/sitemap.xml'));
+});
+
+test('SEO generator only maps public pages and builds accurate organization/service markup', () => {
+  assert.ok(seoScript.includes("'index.html'"));
+  assert.ok(seoScript.includes("'portfolio.html'"));
+  assert.ok(seoScript.includes("'contact.html'"));
+  assert.ok(seoScript.includes("'@type': 'Organization'"));
+  assert.ok(seoScript.includes("'@type': 'WebSite'"));
+  assert.ok(seoScript.includes("'@type': 'Service'"));
+  assert.ok(seoScript.includes("'@type': 'BreadcrumbList'"));
+  assert.ok(seoScript.includes('noindex,nofollow'));
 });

@@ -71,3 +71,19 @@ The public website is deployed as static output from `public/`. The Express back
 - Backend database and Firebase credentials are needed only by API routes that use those services.
 
 This keeps the public site available independently of backend runtime health while preserving the existing page designs and API route paths.
+
+
+## Search engine optimization
+
+The production build runs `scripts/seo.mjs` after copying the public HTML and browser assets. It generates:
+
+- Unique, page-specific titles and meta descriptions for the main public pages.
+- Canonical URLs and Open Graph/Twitter sharing metadata.
+- JSON-LD structured data for the website, organization, services and breadcrumbs.
+- `/sitemap.xml` for the public content pages.
+- `/robots.txt` pointing crawlers to the sitemap.
+- `noindex,nofollow` directives for admin, login, signup, password-reset and profile pages.
+
+The default canonical site URL is `https://anvion-it-services.vercel.app`. When the custom domain is connected to Vercel and serving the production site, set `SITE_URL` in the Vercel production environment to the preferred canonical URL (for example, `https://www.anvionitservices.com`) and redeploy. Do not set the canonical URL to a domain that is not yet connected and live.
+
+After deployment, submit `https://YOUR-CANONICAL-DOMAIN/sitemap.xml` in Google Search Console and verify the domain there. SEO metadata helps search engines understand pages; it does not guarantee indexing or a particular ranking.
