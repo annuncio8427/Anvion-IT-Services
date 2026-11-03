@@ -178,3 +178,47 @@ test('SEO generator only maps public pages and builds accurate organization/serv
   assert.ok(seoScript.includes("'@type': 'BreadcrumbList'"));
   assert.ok(seoScript.includes('noindex,nofollow'));
 });
+
+
+test('Vercel serves public pages statically and sends API paths to the catch-all function', () => {
+  assert.equal(vercelConfig.outputDirectory, 'public');
+  assert.equal(vercelConfig.buildCommand, 'npm run build');
+  assert.ok(existsSync(new URL('./api/[...path].js', import.meta.url)));
+  assert.ok(prepareScript.includes("const output = path.join(root, 'public')"));
+  assert.ok(server.includes("app.get('/api/health'"));
+  assert.ok(server.includes('[ANVION API ERROR]'));
+});
+
+test('Express backend starts in Vercel mode and answers the health endpoint', async () => {
+  const originalVercel = process.env.VERCEL;
+  let app;
+
+  try {
+    process.env.VERCEL = '1';
+    ({ default: app } = await import('./server.js?vercel-runtime-smoke'));
+  } finally {
+    if (originalVercel === undefined) delete process.env.VERCEL;
+    else process.env.VERCEL = originalVercel;
+  }
+
+  const { createServer } = await import('node:http');
+  const serverInstance = createServer(app);
+
+  await new Promise((resolve, reject) => {
+    serverInstance.once('error', reject);
+    serverInstance.listen(0, '127.0.0.1', resolve);
+  });
+
+  try {
+    const address = serverInstance.address();
+    const response = await fetch('http://127.0.0.1:' + address.port + '/api/health');
+    const payload = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(payload.status, 'healthy');
+    assert.ok(payload.timestamp);
+  } finally {
+    await new Promise((resolve, reject) => {
+      serverInstance.close((error) => error ? reject(error) : resolve());
+    });
+  }
+});

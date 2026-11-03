@@ -769,6 +769,30 @@ if (!process.env.VERCEL) {
 }
 
 
+// Normalize unhandled route/middleware errors into predictable API responses.
+// This prevents Express from leaving a serverless invocation in an undefined state.
+app.use((error, req, res, next) => {
+  console.error('[ANVION API ERROR]', {
+    method: req.method,
+    path: req.originalUrl,
+    message: error?.message,
+    stack: error?.stack,
+  });
+
+  if (res.headersSent) return next(error);
+
+  const statusCode = Number.isInteger(error?.statusCode)
+    ? error.statusCode
+    : Number.isInteger(error?.status) && error.status >= 400 && error.status < 600
+      ? error.status
+      : 500;
+
+  return res.status(statusCode).json({
+    error: statusCode >= 500 ? 'Internal server error' : (error.message || 'Request failed'),
+  });
+});
+
+
 // Vercel executes the exported Express app as a serverless function.
 // Keep the listener only for local/self-hosted execution.
 if (!process.env.VERCEL) {

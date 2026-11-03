@@ -87,3 +87,10 @@ The production build runs `scripts/seo.mjs` after copying the public HTML and br
 The default canonical site URL is `https://anvion-it-services.vercel.app`. When the custom domain is connected to Vercel and serving the production site, set `SITE_URL` in the Vercel production environment to the preferred canonical URL (for example, `https://www.anvionitservices.com`) and redeploy. Do not set the canonical URL to a domain that is not yet connected and live.
 
 After deployment, submit `https://YOUR-CANONICAL-DOMAIN/sitemap.xml` in Google Search Console and verify the domain there. SEO metadata helps search engines understand pages; it does not guarantee indexing or a particular ranking.
+
+
+## Vercel production routing
+
+The production website is published as static output from `public/` with the Vercel framework preset set to **None** and the project output directory set to `public`. Do not set the project framework to Express while using `public` as the output directory: the Express preset looks for its application entry point inside that directory and the deployment fails with `No entrypoint found in output directory: public`.
+
+All existing backend endpoints remain in `server.js` and are exposed via `api/[...path].js` as a catch-all Vercel Node function. The homepage and other HTML pages are served by the static CDN and do not invoke the Express function. GitHub Actions includes a Vercel-mode runtime smoke test for `/api/health`.
