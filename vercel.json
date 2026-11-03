@@ -29,5 +29,7 @@
     }
   ],
   "buildCommand": "npm run build",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "outputDirectory": "public",
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
