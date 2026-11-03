@@ -13,7 +13,6 @@ const vercelConfig = JSON.parse(read('./vercel.json'));
 const vercelEntry = read('./index.js');
 const prepareScript = read('./scripts/prepare-vercel.mjs');
 const seoScript = read('./scripts/seo.mjs');
-const apiEntry = read('./api/index.js');
 
 test('every admin API route requires administrator authorization', () => {
   const routes = [...server.matchAll(/app\.(?:get|post|patch|delete)\(\s*['"](\/api\/admin[^'"]*)['"]\s*,\s*([A-Za-z_$][\w$]*)/g)];
@@ -60,11 +59,11 @@ test('PostgreSQL connection honors SQL_PORT', () => {
   assert.ok(database.includes('port: Number(process.env.SQL_PORT || 5432)'));
 });
 
-test('Vercel exposes the Express backend through an API function entry point', () => {
-  assert.equal(vercelConfig.framework ?? null, null);
-  assert.equal(vercelConfig.outputDirectory, 'public');
+test('Vercel uses the root Express app and runs the asset build', () => {
   assert.equal(vercelConfig.buildCommand, 'npm run build');
-  assert.ok(vercelEntry.includes("export { default } from './server.js';"));
+  assert.ok(vercelEntry.includes("import express from 'express';"));
+  assert.ok(vercelEntry.includes("import app from './server.js';"));
+  assert.ok(vercelEntry.includes('export default app;'));
   assert.ok(server.includes('if (!process.env.VERCEL)'));
   assert.ok(server.includes('export default app;'));
 });
@@ -111,12 +110,11 @@ test('Vercel serves public HTML through the CDN, not through Express file reads'
 });
 
 
-test('Vercel serves the frontend as static output and isolates Express under /api', () => {
-  assert.equal(vercelConfig.framework ?? null, null);
-  assert.equal(vercelConfig.outputDirectory, 'public');
-  assert.ok(vercelConfig.rewrites.some((rule) => rule.source === '/api/:path*' && rule.destination === '/api/index'));
-  assert.ok(apiEntry.includes("import app from '../server.js';"));
-  assert.ok(apiEntry.includes('export default app;'));
+test('Vercel uses one Express application and serves public assets through its CDN', () => {
+  assert.ok(vercelEntry.includes("import app from './server.js';"));
+  assert.ok(server.includes('// Vercel publishes public/** through its CDN.'));
+  assert.ok(prepareScript.includes("const output = path.join(root, 'public')"));
+  assert.ok(!existsSync(new URL('./api/index.js', import.meta.url)));
 });
 
 
