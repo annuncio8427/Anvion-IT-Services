@@ -72,7 +72,9 @@ test('Vercel uses the root Express app and runs the asset build', () => {
 test('Vercel build prepares public pages and browser assets', () => {
   assert.ok(packageJson.scripts.build.includes('npm run prepare:vercel'));
   assert.ok(packageJson.scripts['prepare:vercel'].includes('scripts/prepare-vercel.mjs'));
-  assert.ok(prepareScript.includes("['images', 'js', 'admin', 'css']"));
+  assert.ok(prepareScript.includes("['images', 'js', 'admin']"));
+  assert.ok(prepareScript.includes("const cssSource = path.join(root, 'css')"));
+  assert.ok(prepareScript.includes("path.extname(entry.name).toLowerCase() !== '.css'"));
   assert.ok(prepareScript.includes('injectMobileStyles(output)'));
   assert.ok(prepareScript.includes('firebase-applet-config.json'));
   assert.ok(!prepareScript.includes("'src'"));
@@ -254,4 +256,5 @@ test('Shared responsive stylesheet is injected into every public page family', (
 
 test('Responsive stylesheet build copies nested CSS assets into Vercel output', () => {
   assert.ok(existsSync(new URL('./public/css/mobile-responsive.css', import.meta.url)));
+  assert.ok(!existsSync(new URL('./public/css/index.html', import.meta.url)), 'Legacy HTML inside css/ should not be copied');
 });
