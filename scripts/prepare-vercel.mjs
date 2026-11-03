@@ -22,10 +22,21 @@ for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
 }
 
 // Copy only browser-facing assets. Private scripts and server sources are excluded.
-for (const directory of ['images', 'js', 'admin', 'css']) {
+for (const directory of ['images', 'js', 'admin']) {
   const source = path.join(root, directory);
   if (fs.existsSync(source) && fs.statSync(source).isDirectory()) {
     fs.cpSync(source, path.join(output, directory), { recursive: true });
+  }
+}
+
+// Copy CSS files only; the source css/ folder also contains a legacy HTML page.
+const cssSource = path.join(root, 'css');
+const publicCss = path.join(output, 'css');
+if (fs.existsSync(cssSource) && fs.statSync(cssSource).isDirectory()) {
+  fs.mkdirSync(publicCss, { recursive: true });
+  for (const entry of fs.readdirSync(cssSource, { withFileTypes: true })) {
+    if (!entry.isFile() || path.extname(entry.name).toLowerCase() !== '.css') continue;
+    fs.copyFileSync(path.join(cssSource, entry.name), path.join(publicCss, entry.name));
   }
 }
 
