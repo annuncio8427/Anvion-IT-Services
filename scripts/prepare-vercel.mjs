@@ -29,6 +29,45 @@ for (const directory of ['images', 'js', 'admin']) {
   }
 }
 
+// Copy CSS files only; the source css/ folder also contains a legacy HTML page.
+const cssSource = path.join(root, 'css');
+const publicCss = path.join(output, 'css');
+if (fs.existsSync(cssSource) && fs.statSync(cssSource).isDirectory()) {
+  fs.mkdirSync(publicCss, { recursive: true });
+  for (const entry of fs.readdirSync(cssSource, { withFileTypes: true })) {
+    if (!entry.isFile() || path.extname(entry.name).toLowerCase() !== '.css') continue;
+    fs.copyFileSync(path.join(cssSource, entry.name), path.join(publicCss, entry.name));
+  }
+}
+
+// Add the shared responsive layer to every public HTML page, including nested portal/admin pages.
+function injectMobileStyles(directory) {
+  let updated = 0;
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const target = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      updated += injectMobileStyles(target);
+      continue;
+    }
+    if (!entry.isFile() || !/\.html?$/i.test(entry.name)) continue;
+    let html = fs.readFileSync(target, 'utf8');
+    if (html.includes('/css/mobile-responsive.css')) continue;
+    if (!/<\/head>/i.test(html)) {
+      throw new Error('Cannot inject mobile stylesheet: missing </head> in ' + target);
+    }
+    html = html.replace(
+      /<\/head>/i,
+      '<link rel="stylesheet" href="/css/mobile-responsive.css">\n</head>'
+    );
+    fs.writeFileSync(target, html, 'utf8');
+    updated += 1;
+  }
+  return updated;
+}
+
+const mobileResponsivePages = injectMobileStyles(output);
+console.log('Applied shared mobile layout stylesheet to ' + mobileResponsivePages + ' HTML pages.');
+
 const seoSummary = applySeo(output);
 console.log('Prepared public website assets in ./public');
 console.log('Applied SEO metadata to ' + seoSummary.pageCount + ' public pages; marked ' + seoSummary.noindexCount + ' private pages noindex.');
