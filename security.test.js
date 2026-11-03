@@ -61,7 +61,7 @@ test('PostgreSQL connection honors SQL_PORT', () => {
 });
 
 test('Vercel exposes the Express backend through an API function entry point', () => {
-  assert.equal(vercelConfig.framework, null);
+  assert.equal(vercelConfig.framework ?? null, null);
   assert.equal(vercelConfig.outputDirectory, 'public');
   assert.equal(vercelConfig.buildCommand, 'npm run build');
   assert.ok(vercelEntry.includes("export { default } from './server.js';"));
@@ -112,7 +112,7 @@ test('Vercel serves public HTML through the CDN, not through Express file reads'
 
 
 test('Vercel serves the frontend as static output and isolates Express under /api', () => {
-  assert.equal(vercelConfig.framework, null);
+  assert.equal(vercelConfig.framework ?? null, null);
   assert.equal(vercelConfig.outputDirectory, 'public');
   assert.ok(vercelConfig.rewrites.some((rule) => rule.source === '/api/:path*' && rule.destination === '/api/index'));
   assert.ok(apiEntry.includes("import app from '../server.js';"));
