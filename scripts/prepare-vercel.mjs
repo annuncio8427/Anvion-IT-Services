@@ -38,18 +38,25 @@ function injectMobileStyles(directory) {
       updated += injectMobileStyles(target);
       continue;
     }
-    if (!entry.isFile() || !/\\.html?$/i.test(entry.name)) continue;
+    if (!entry.isFile() || !/\.html?$/i.test(entry.name)) continue;
     let html = fs.readFileSync(target, 'utf8');
     if (html.includes('/css/mobile-responsive.css')) continue;
-    if (!/<\\/head>/i.test(html)) throw new Error('Cannot inject mobile stylesheet: missing </head> in ' + target);
-    html = html.replace(/<\\/head>/i, '<link rel="stylesheet" href="/css/mobile-responsive.css">\\n</head>');
+    if (!/<\/head>/i.test(html)) {
+      throw new Error('Cannot inject mobile stylesheet: missing </head> in ' + target);
+    }
+    html = html.replace(
+      /<\/head>/i,
+      '<link rel="stylesheet" href="/css/mobile-responsive.css">\n</head>'
+    );
     fs.writeFileSync(target, html, 'utf8');
     updated += 1;
   }
   return updated;
 }
+
 const mobileResponsivePages = injectMobileStyles(output);
 console.log('Applied shared mobile layout stylesheet to ' + mobileResponsivePages + ' HTML pages.');
+
 const seoSummary = applySeo(output);
 console.log('Prepared public website assets in ./public');
 console.log('Applied SEO metadata to ' + seoSummary.pageCount + ' public pages; marked ' + seoSummary.noindexCount + ' private pages noindex.');
