@@ -1,1183 +1,2398 @@
 <!DOCTYPE html>
+
 <html class="dark" lang="en">
+
 <head>
+
   <meta charset="utf-8"/>
+
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
   <title>ANVION IT SERVICES - Innovative Digital Solutions, Web, Mobile &amp; Desktop Software</title>
+
   <meta name="description" content="ANVION IT SERVICES is a technology and digital solutions company delivering web applications, mobile apps, desktop software, and digital strategy for modern businesses across India and beyond." />
-  
+
   <!-- Tailwind CSS CDN with plugins -->
+
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  
+
   <!-- Google Fonts -->
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  
+
   <!-- Custom Stylesheet -->
+
   <link rel="stylesheet" href="css/custom-styles.css"/>
 
   <script id="tailwind-config">
+
     tailwind.config = {
+
       darkMode: "class",
+
       theme: {
+
         extend: {
+
           colors: {
+
             "surface": "#0E1015",
+
             "surface-low": "#060709",
+
             "surface-card": "#11141C",
+
             "surface-border": "rgba(255, 255, 255, 0.08)",
+
             "brand-blue": "#00A3FF",
+
             "brand-blue-hover": "#008BE5",
+
             "brand-cyan": "#00F5FF",
+
             "brand-purple": "#8B5CF6",
+
             "brand-emerald": "#10B981"
+
           },
+
           fontFamily: {
+
             sans: ["Inter", "sans-serif"],
+
             display: ["Plus Jakarta Sans", "sans-serif"],
+
             mono: ["JetBrains Mono", "monospace"]
+
           }
+
         }
+
       }
+
     };
+
   </script>
 
   <style>
+
     html {
+
       scroll-behavior: smooth;
+
       color-scheme: dark;
+
       overflow-x: hidden;
+
       max-width: 100%;
+
       width: 100%;
+
     }
+
     body {
+
       background-color: #060709;
+
       color: #E3E2E7;
+
       position: relative;
+
       overflow-x: hidden;
+
       max-width: 100%;
+
       width: 100%;
+
       min-width: 100%;
+
       margin: 0;
+
       padding: 0;
+
     }
+
     header, main, footer, section {
+
       width: 100%;
+
       max-width: 100%;
+
     }
+
     .tech-border {
+
       border: 1px solid rgba(255, 255, 255, 0.08);
+
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.005) 100%), #0E1118;
+
     }
+
     .tech-border:hover {
+
       border-color: rgba(0, 163, 255, 0.4);
+
       box-shadow: 0 10px 30px -10px rgba(0, 163, 255, 0.3);
+
     }
+
     .glass-card {
+
       background: rgba(14, 17, 24, 0.7);
+
       backdrop-filter: blur(16px);
+
       -webkit-backdrop-filter: blur(16px);
+
       border: 1px solid rgba(255, 255, 255, 0.08);
+
     }
+
     .hero-glow {
+
       position: absolute;
+
       border-radius: 9999px;
+
       filter: blur(140px);
+
       pointer-events: none;
+
       z-index: 0;
+
       max-width: 100vw;
+
     }
+
     .text-gradient-hero {
+
       background: linear-gradient(135deg, #FFFFFF 20%, #93C5FD 50%, #00A3FF 80%, #C084FC 100%);
+
       -webkit-background-clip: text;
+
       -webkit-text-fill-color: transparent;
+
     }
+
     .no-scrollbar::-webkit-scrollbar {
+
       display: none;
+
     }
+
     .no-scrollbar {
+
       -ms-overflow-style: none;
+
       scrollbar-width: none;
+
     }
+
+    @keyframes marquee-scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 28s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track {
+        animation: none;
+        overflow-x: auto;
+      }
+    }
+
   </style>
+
 </head>
 
 <body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden">
 
     <!-- Ambient Light Orbs (Strictly Overflow Clipped) -->
+
   <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+
     <div class="hero-glow w-[600px] h-[600px] -top-40 left-[10%] bg-blue-600/15"></div>
+
     <div class="hero-glow w-[500px] h-[500px] top-[30%] -right-20 bg-purple-600/15"></div>
+
     <div class="hero-glow w-[450px] h-[450px] bottom-[20%] left-[5%] bg-cyan-500/10"></div>
+
   </div>
 
   <!-- Sticky Glassmorphic Header -->
+
   <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+
     <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
-      
+
       <!-- Brand Logo -->
+
       <a href="index.html" class="flex items-center gap-3.5 group">
+
         <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
+
           <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+
         </div>
+
         <div class="flex flex-col">
+
           <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+
             ANVION
+
           </span>
+
           <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
+
         </div>
+
       </a>
 
       <!-- Desktop Navigation -->
+
       <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-neutral-300">
+
         <a class="text-white font-bold border-b-2 border-brand-blue pb-1" href="index.html">Home</a>
+
         <a class="hover:text-brand-blue transition-colors" href="services.html">Services</a>
+
         <a class="hover:text-brand-blue transition-colors" href="solution.html">Solutions</a>
+
         <a class="hover:text-brand-blue transition-colors" href="projects.html">Projects</a>
+
         <a class="hover:text-brand-blue transition-colors" href="portfolio.html">Portfolio</a>
+
         <a class="hover:text-brand-blue transition-colors" href="case-studies.html">Case Studies</a>
+
         <a class="hover:text-brand-blue transition-colors" href="about.html">About</a>
+
         <a class="hover:text-brand-blue transition-colors" href="careers.html">Careers</a>
+
       </nav>
 
       <!-- Trailing Action Buttons -->
+
       <div class="hidden md:flex items-center gap-3.5">
+
         <a href="dashboard.html" class="text-xs font-mono px-3 py-2 rounded-lg text-neutral-300 hover:text-white border border-white/10 hover:border-brand-blue/40 transition-colors flex items-center gap-1.5">
+
           <span class="material-symbols-outlined text-sm text-brand-blue">login</span>
+
           Client Portal
+
         </a>
+
         <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-blue/30 transition-all btn-glow inline-flex items-center gap-1.5">
+
           <span>Start a Project</span>
+
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
         </a>
+
       </div>
 
       <!-- Mobile Menu Button -->
+
       <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+
         <span class="material-symbols-outlined text-2xl">menu</span>
+
       </button>
 
     </div>
+
   </header>
 
   <main class="w-full overflow-hidden">
+
     <!-- Hero Section -->
+
     <section class="relative pt-12 pb-20 md:py-24 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
+
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        
+
         <!-- Left Column: Copy & Actions -->
+
         <div class="lg:col-span-7 space-y-6">
-          
+
           <!-- Verified MSME & Live Engagements Badge -->
+
           <div class="flex flex-wrap items-center gap-2.5">
+
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue backdrop-blur-md">
+
               <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+
               <span>Next-Gen Digital Solutions</span>
+
             </div>
+
             <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 hover:bg-amber-500/20 transition-colors">
+
               <span class="material-symbols-outlined text-sm">verified</span>
+
               <span>MSME: UDYAM-TN-09-0098980</span>
+
             </a>
+
           </div>
 
           <!-- Main Hero Headline -->
+
           <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.15] tracking-tight">
+
             We Build Digital Products That <span class="text-gradient-hero">Scale Real Businesses.</span>
+
           </h1>
 
           <!-- Official Value Proposition -->
+
           <p class="text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl">
+
             <strong>ANVION IT SERVICES</strong> is a technology and digital solutions company focused on helping businesses establish, strengthen, and grow their digital presence. We combine technology, creativity, and business strategy to deliver innovative digital solutions that simplify operations, improve customer engagement, and create new growth opportunities.
+
           </p>
 
           <p class="text-xs sm:text-sm text-brand-blue font-mono font-medium">
+
             Our mission is to make technology accessible, practical, and valuable for businesses of every size.
+
           </p>
 
           <!-- Interactive CTAs -->
+
           <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
+
             <a href="start-a-project.html" class="w-full sm:w-auto justify-center bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center gap-2">
+
               <span>Start a Project</span>
+
               <span class="material-symbols-outlined text-base">arrow_forward</span>
+
             </a>
+
             <a href="https://wa.me/919150270802?text=Hi%20ANVION,%20I%20would%20like%20to%20discuss%20a%20new%20project." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2">
+
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+
               <span>WhatsApp Discussion</span>
+
             </a>
+
             <a href="projects.html" class="w-full sm:w-auto justify-center bg-surface-card hover:bg-white/10 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/10 transition-all inline-flex items-center gap-1.5">
+
               <span>View Projects</span>
+
               <span class="material-symbols-outlined text-sm">visibility</span>
+
             </a>
+
           </div>
 
           <!-- Trust Proof Metrics Row -->
+
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10">
+
             <div>
+
               <p class="text-2xl font-extrabold text-white font-mono">25+</p>
+
               <p class="text-xs text-neutral-400 mt-0.5">Projects Delivered</p>
+
             </div>
+
             <div>
+
               <p class="text-2xl font-extrabold text-brand-blue font-mono">4 Flagship</p>
+
               <p class="text-xs text-neutral-400 mt-0.5">Live Production Apps</p>
+
             </div>
+
             <div>
+
               <p class="text-2xl font-extrabold text-brand-cyan font-mono">&lt; 50ms</p>
+
               <p class="text-xs text-neutral-400 mt-0.5">Sub-Second Engines</p>
+
             </div>
+
             <div>
+
               <p class="text-2xl font-extrabold text-emerald-400 font-mono">100%</p>
+
               <p class="text-xs text-neutral-400 mt-0.5">Client Commitment</p>
+
             </div>
+
           </div>
+
         </div>
 
         <!-- Right Column: Interactive Production Project Showcase Terminal -->
+
         <div class="lg:col-span-5 relative">
+
           <div class="tech-border rounded-2xl bg-surface-card p-2 shadow-2xl relative">
-            
+
             <!-- Terminal Header -->
+
             <div class="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-neutral-950 border-b border-white/10 rounded-t-xl gap-2">
+
               <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+
                 <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/90 flex-shrink-0"></span>
+
                 <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/90 flex-shrink-0"></span>
+
                 <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/90 flex-shrink-0"></span>
+
                 <span class="text-[11px] sm:text-xs font-mono text-neutral-400 ml-1 truncate">anvion-production-stack.sys</span>
+
               </div>
+
               <div class="status-live flex-shrink-0 text-[10px] sm:text-xs">
+
                 <span class="status-live-dot"></span> Active Engine
+
               </div>
+
             </div>
 
             <!-- Interactive Project Switcher Tabs -->
+
             <div class="flex items-center gap-1.5 p-2 bg-neutral-900 border-b border-white/10 overflow-x-auto no-scrollbar text-[11px] font-mono">
+
               <button type="button" class="hero-tab active-tab px-3 py-1.5 rounded-lg bg-brand-blue text-white font-bold transition-all flex-shrink-0 whitespace-nowrap" data-project="homeluxe">
+
                 HOMELUXE
+
               </button>
+
               <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="invoice">
+
                 Invoice Builder
+
               </button>
+
               <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="eduverify">
+
                 EduVerify
+
               </button>
+
               <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="task">
+
                 Task Planner
+
               </button>
+              <button type="button" class="hero-tab px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all flex-shrink-0 whitespace-nowrap" data-project="stjoseph">
+                St. Joseph College
+              </button>
+
             </div>
 
             <!-- Dynamic Preview Content -->
+
             <div id="heroPreviewContainer" class="p-4 space-y-4">
+
               <!-- Visual Mockup Container -->
+
               <div class="relative rounded-xl overflow-hidden aspect-[16/10] bg-black border border-white/10">
+
                 <img id="heroPreviewImg" src="images/projects/homeluxe/homeluxe-hero.jpg" alt="Featured Project Preview" class="w-full h-full object-cover transition-all duration-500"/>
+
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
                 <div class="absolute top-3 right-3">
+
                   <span id="heroPreviewBadge" class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 font-bold">
+
                     Live on Vercel
+
                   </span>
+
                 </div>
+
                 <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs font-mono">
+
                   <span id="heroPreviewCat" class="text-amber-400 font-bold">Web App • Marketplace</span>
+
                   <span id="heroPreviewSub" class="text-white font-bold">₹ 4.5 Cr – ₹ 48 Cr</span>
+
                 </div>
+
               </div>
 
               <!-- Project Description & Info -->
+
               <div>
+
                 <h3 id="heroPreviewTitle" class="text-base font-bold text-white">HOMELUXE Luxury Real Estate</h3>
+
                 <p id="heroPreviewDesc" class="text-xs text-neutral-400 mt-1 leading-relaxed">
+
                   Premier Indian luxury property platform featuring curated estates, AI valuations, and RERA verified advisory.
+
                 </p>
+
               </div>
 
               <!-- Tech Pills & Action Link -->
+
               <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+
                 <div id="heroPreviewTags" class="flex flex-wrap gap-1.5 text-[10px] font-mono">
+
                   <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">React 18</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">Vite</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">Tailwind</span>
+
                 </div>
+
                 <a id="heroPreviewLink" href="project-homeluxe.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+
                   <span>Explore Case Study</span>
+
                   <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
                 </a>
+
               </div>
+
             </div>
 
           </div>
+
         </div>
 
+      </div>
+
+    </section>
+
+    <!-- Brands We Worked With (Single-Line Running Logos) -->
+    <section id="brands" class="py-8 sm:py-10 border-b border-white/10 bg-[#07090E] relative overflow-hidden">
+      <!-- Ambient light effect -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-48 bg-brand-blue/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 mb-5 text-center">
+        <h2 class="font-mono text-xs font-bold uppercase tracking-[0.25em] text-neutral-400">
+          Brands We Worked With
+        </h2>
+      </div>
+
+      <!-- Single-Line Running Logos Marquee -->
+      <div class="relative w-full overflow-hidden select-none">
+        <!-- Edge Gradient Shadows for Seamless Fade-In/Out -->
+        <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#07090E] via-[#07090E]/80 to-transparent z-10"></div>
+        <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#07090E] via-[#07090E]/80 to-transparent z-10"></div>
+
+        <!-- Infinite Running Track -->
+        <div class="marquee-track">
+          <!-- Primary Track -->
+          <div class="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8 shrink-0">
+            <!-- Brand 1: St. Joseph College of Arts and Science -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2: Virgin Water & Waste Water Solution -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+
+            <!-- Brand 1 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+
+            <!-- Brand 1 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+          </div>
+
+          <!-- Secondary Track (Duplicate for Continuous Loop) -->
+          <div class="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8 shrink-0" aria-hidden="true">
+            <!-- Brand 1: St. Joseph College of Arts and Science -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2: Virgin Water & Waste Water Solution -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+
+            <!-- Brand 1 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+
+            <!-- Brand 1 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College of Arts and Science" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-blue transition-colors whitespace-nowrap">
+                St. Joseph College of Arts &amp; Science
+              </span>
+            </div>
+
+            <!-- Brand 2 Repeat -->
+            <div class="tech-border rounded-xl px-5 py-2.5 bg-surface/80 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all flex items-center gap-3.5 shadow-md shrink-0 group">
+              <div class="w-11 h-11 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm border border-white/20 shrink-0 group-hover:scale-105 transition-transform">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water &amp; Waste Water Solution" class="max-h-full max-w-full object-contain" />
+              </div>
+              <span class="font-display font-bold text-sm sm:text-base text-white group-hover:text-brand-cyan transition-colors whitespace-nowrap">
+                Virgin Water &amp; Waste Water Solution
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Vision & Mission Section -->
+
     <section class="px-6 md:px-12 py-16 border-y border-white/10 bg-[#080A0F] relative overflow-hidden">
+
       <div class="max-w-7xl mx-auto">
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
+
           <!-- Vision Card -->
+
           <div class="tech-border rounded-2xl p-8 relative flex flex-col justify-between group hover:border-brand-blue/50 transition-all">
+
             <div class="absolute top-0 left-0 w-1.5 h-full bg-brand-blue rounded-l-2xl"></div>
+
             <div>
+
               <div class="flex items-center gap-3 mb-4">
+
                 <div class="w-10 h-10 rounded-lg bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue">
+
                   <span class="material-symbols-outlined">visibility</span>
+
                 </div>
+
                 <span class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue">Strategic Direction</span>
+
               </div>
+
               <h3 class="font-display font-bold text-2xl text-white mb-3">Our Vision</h3>
+
               <p class="text-neutral-300 text-sm md:text-base leading-relaxed">
+
                 To become a trusted technology and digital transformation partner for businesses across India and beyond.
+
               </p>
+
             </div>
+
             <div class="mt-6 pt-4 border-t border-white/10 flex items-center gap-2 text-xs text-neutral-400">
+
               <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+
               <span>Engineering with National &amp; Global Standards</span>
+
             </div>
+
           </div>
 
           <!-- Mission Card -->
+
           <div class="tech-border rounded-2xl p-8 relative flex flex-col justify-between group hover:border-brand-purple/50 transition-all">
+
             <div class="absolute top-0 left-0 w-1.5 h-full bg-brand-purple rounded-l-2xl"></div>
+
             <div>
+
               <div class="flex items-center gap-3 mb-4">
+
                 <div class="w-10 h-10 rounded-lg bg-brand-purple/10 border border-brand-purple/30 flex items-center justify-center text-purple-400">
+
                   <span class="material-symbols-outlined">flag</span>
+
                 </div>
+
                 <span class="text-xs font-mono font-bold uppercase tracking-widest text-purple-400">Our Purpose</span>
+
               </div>
+
               <h3 class="font-display font-bold text-2xl text-white mb-3">Our Mission</h3>
+
               <p class="text-neutral-300 text-sm md:text-base leading-relaxed">
+
                 To empower businesses through innovative technology, creative digital strategies, and reliable IT services that deliver measurable value.
+
               </p>
+
             </div>
+
             <div class="mt-6 pt-4 border-t border-white/10 flex items-center gap-2 text-xs text-neutral-400">
+
               <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+
               <span>Measurable ROI &amp; Operational Efficiency</span>
+
             </div>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
 
     <!-- Services Section -->
+
     <section class="px-6 md:px-12 py-20 max-w-7xl mx-auto">
+
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+
         <div class="max-w-2xl">
+
           <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Our Capabilities</p>
+
           <h2 class="font-display text-3xl md:text-4xl font-bold text-white">
+
             Technology Services Engineered for Real Growth
+
           </h2>
+
           <p class="text-neutral-400 text-sm mt-3">
+
             We design, develop, and deliver digital solutions that simplify business operations, engage customers, and scale with confidence.
+
           </p>
+
         </div>
+
         <a href="services.html" class="inline-flex items-center gap-2 text-sm font-bold text-brand-blue hover:text-white transition-colors">
+
           <span>Explore All 6 Disciplines</span>
+
           <span class="material-symbols-outlined text-base">arrow_forward</span>
+
         </a>
+
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
+
         <!-- Service 1: Website Development -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="https://images.openai.com/static-rsc-4/LdVdvNYBN3RYWfrkLER5C_GSlQ6Gr-Hm5dUtPOB6KdOlfWSArTtNhLuw5gk5w6HaVukwDaPCpkRa_fHuRDCBq_Bqen5W6vHjow54dY3B1VW21NL5rpBbsIVCd5Fsa1JgpQOdT-s5UmZbGnXcjY1tc65ISnWFtadn-Rb9iuqULwE?purpose=inline" alt="Website Development" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-brand-blue">01 // Web</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-blue transition-colors">Website Development</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 Professional, responsive, and SEO-optimized web applications and corporate websites engineered for conversion.
+
               </p>
+
             </div>
+
             <a href="web-development.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-brand-blue transition-colors">
+
               <span>View Web Capabilities</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
         <!-- Service 2: Mobile App Development -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="https://images.openai.com/static-rsc-4/F78ViiHON4kluNDc1GTbRvFAU9D2AZGmCw4vfYy3ePkYR2FS3PWHf3RmFXR6hEK81WGLjTu2JuzZlNsD5VA8iZ45LxwDvG08VymBMriF7WYPmS7oiQ0MZMTTStcaWDxT0P-ay-hIeaWRMX-KXlbjGHXbOUh7QO2eFpIHGIFyA1w?purpose=inline" alt="Mobile App Development" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-brand-cyan">02 // Mobile</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-cyan transition-colors">Mobile App Development</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 High-performance iOS and Android applications built with Flutter, local SQLite persistence, and offline capabilities.
+
               </p>
+
             </div>
+
             <a href="mobile-development.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-brand-cyan transition-colors">
+
               <span>View Mobile Capabilities</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
         <!-- Service 3: Desktop Software & Data Validation -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="images/projects/eduverify/dashboard-view.png" alt="Desktop Software Engineering" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-emerald-400">03 // Software</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-emerald-400 transition-colors">Custom Desktop Software</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 High-throughput Windows utilities, institutional spreadsheet auditors, Excel batch concatenators, and local tools.
+
               </p>
+
             </div>
+
             <a href="project-eduverify.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
+
               <span>Inspect EduVerify Case Study</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
         <!-- Service 4: Digital Marketing -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="https://images.openai.com/static-rsc-4/LTEGcNp4KD6_mHJzdxpAb_LN2JxO34zH7bQ789V3286OamDzZUJ9tRke2O1dq4EA6RH58_pDlmQhL7ozMCiIzcp2H1q3-Lm-VGbTKt_XhteE21spaR0EnW9ioK_URIiPP09KjkMNM3rbqguEQ3R3Up4tQ09uYOQkzpgBsa_A8kQ?purpose=inline" alt="Digital Marketing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-purple-400">04 // Marketing</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-purple-400 transition-colors">Digital Marketing</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 Data-driven campaigns, technical SEO, and conversion optimization strategies to boost client revenue.
+
               </p>
+
             </div>
+
             <a href="service-details.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-purple-400 transition-colors">
+
               <span>View Marketing Services</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
         <!-- Service 5: Branding & Design Systems -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="https://images.openai.com/static-rsc-4/E7djGV9cI60jK4BhgnoddiyUI8W4_hEIvoVDsUzg81159LmBdMJbwaKras3CDNwyswmHgjuDy8SoYDs21_sx7aF0uiXxsCMQ1sIodkDd_LPKHuHlF9q15jNAy2JsY_CyL5lx5EfV_VH8AVoMvPouqSRuTpCxy_XfMAaE-DpQpU4?purpose=inline" alt="Branding & Design" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-amber-400">05 // Design</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-amber-400 transition-colors">Branding &amp; UI/UX Design</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 Cohesive brand identity, design systems, and intuitive user interfaces tailored to your target customer base.
+
               </p>
+
             </div>
+
             <a href="service-details.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-amber-400 transition-colors">
+
               <span>Explore Design Systems</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
         <!-- Service 6: IT Consulting & Strategy -->
+
         <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between">
+
           <div class="relative h-48 w-full overflow-hidden bg-neutral-900">
+
             <img src="https://images.openai.com/static-rsc-4/K0x2d18M0p3e29o0kK6HlA301kGqW47d7jJm19L_it_strategy_consulting.jpg?purpose=inline" alt="IT Consulting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+
             <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-rose-400">06 // Strategy</span>
+
           </div>
+
           <div class="p-6 flex flex-col flex-grow justify-between">
+
             <div>
+
               <h3 class="font-display font-bold text-lg text-white group-hover:text-rose-400 transition-colors">IT Strategy &amp; Architecture</h3>
+
               <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                 Practical technology roadmaps, cloud infrastructure planning, and enterprise software architecture guidance.
+
               </p>
+
             </div>
+
             <a href="it-consulting.html" class="inline-flex items-center gap-1.5 mt-5 text-xs font-bold text-white group-hover:text-rose-400 transition-colors">
+
               <span>Explore Consulting</span>
+
               <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
             </a>
+
           </div>
+
         </article>
 
       </div>
+
     </section>
 
-    <!-- Flagship Production Projects Showcase (4 Real Products) -->
+    <!-- Flagship Production Projects Showcase (5 Real Products & Campaigns) -->
+
     <section class="px-6 md:px-12 py-20 border-t border-white/10 bg-[#080A0F]">
+
       <div class="max-w-7xl mx-auto">
+
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+
           <div>
+
             <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Featured Work</p>
+
             <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Production Solutions We've Engineered</h2>
+
             <p class="text-neutral-400 text-sm mt-3">
-              Inspect 4 real applications built by ANVION across web, mobile, vector PDF, and native desktop systems.
+
+              Inspect 5 verified client systems and applications built by ANVION across digital marketing, web, mobile, vector PDF, and native desktop systems.
+
             </p>
+
           </div>
+
           <a href="projects.html" class="inline-flex items-center gap-2 text-sm font-bold text-brand-blue hover:text-white transition-colors">
+
             <span>View Full Portfolio</span>
+
             <span class="material-symbols-outlined text-base">arrow_forward</span>
+
           </a>
+
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+
           <!-- Project 1: HOMELUXE -->
+
           <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between hover:border-amber-400/50 transition-all">
+
             <div class="h-52 relative overflow-hidden bg-neutral-900">
+
               <img src="images/projects/homeluxe/homeluxe-hero.jpg" alt="HomeLuxe Luxury Real Estate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+
               <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+
               <span class="absolute top-3 left-3 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono font-bold text-amber-400 border border-amber-500/30">
+
                 Luxury Real Estate
+
               </span>
+
               <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 flex items-center gap-1 hover:bg-emerald-900 transition-colors">
+
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live
+
               </a>
+
               <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs font-mono">
+
                 <span class="text-white font-bold">₹ 4.5 Cr – ₹ 48 Cr</span>
+
                 <span class="text-amber-400 text-[10px]">RERA Advisory</span>
+
               </div>
+
             </div>
+
             <div class="p-5 flex flex-col justify-between flex-grow">
+
               <div>
+
                 <p class="text-[10px] font-mono uppercase tracking-widest text-amber-400">Web App • Marketplace</p>
+
                 <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-amber-400 transition-colors">HOMELUXE Luxury Estate</h3>
+
                 <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                   Premier Indian luxury property platform featuring curated estates, AI valuations, and RERA advisory.
+
                 </p>
+
                 <div class="flex flex-wrap gap-1.5 mt-4 text-[10px] font-mono">
+
                   <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">React 18</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Vite</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Tailwind</span>
+
                 </div>
+
               </div>
+
               <div class="pt-4 mt-5 border-t border-white/10 flex items-center justify-between">
+
                 <a href="project-homeluxe.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+
                   <span>Case Study</span>
+
                   <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
                 </a>
+
                 <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-[11px] text-amber-400 font-semibold hover:underline flex items-center gap-0.5">
+
                   <span>Live Site</span>
+
                   <span class="material-symbols-outlined text-xs">open_in_new</span>
+
                 </a>
+
               </div>
+
             </div>
+
           </article>
 
           <!-- Project 2: Smart Invoice Builder -->
+
           <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between hover:border-purple-400/50 transition-all">
+
             <div class="h-52 bg-gradient-to-b from-purple-950/20 via-surface to-black relative flex items-center justify-center p-3 overflow-hidden">
+
               <div class="relative flex items-center justify-center -space-x-6 group-hover:scale-105 transition-transform duration-500">
+
                 <div class="w-20 h-36 rounded-xl border border-white/20 bg-neutral-900 overflow-hidden shadow-xl transform -rotate-6">
+
                   <img src="images/projects/smart-invoice-builder/bill-details-form.jpg" alt="Invoice Form" class="w-full h-auto object-cover" />
+
                 </div>
+
                 <div class="w-24 h-36 rounded-xl border border-purple-500/50 bg-white overflow-hidden shadow-2xl transform rotate-3 z-10 p-0.5">
+
                   <img src="images/projects/smart-invoice-builder/invoice-pdf-preview.png" alt="Invoice PDF Preview" class="w-full h-auto object-cover" />
+
                 </div>
+
               </div>
+
               <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950/90 text-purple-300 border border-purple-700/50">
+
                 Vector PDF Engine
+
               </span>
+
             </div>
+
             <div class="p-5 flex flex-col justify-between flex-grow">
+
               <div>
+
                 <p class="text-[10px] font-mono uppercase tracking-widest text-purple-400">Mobile Billing App</p>
+
                 <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-purple-400 transition-colors">Smart Invoice Builder</h3>
+
                 <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                   Field billing mobile application generating print-ready A4 PDF invoices with 1-tap WhatsApp sharing and UPI routing.
+
                 </p>
+
                 <div class="flex flex-wrap gap-1.5 mt-4 text-[10px] font-mono">
+
                   <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">A4 PDF</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">WhatsApp</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">UPI</span>
+
                 </div>
+
               </div>
+
               <div class="pt-4 mt-5 border-t border-white/10 flex items-center justify-between">
+
                 <a href="project-smart-invoice-builder.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+
                   <span>Case Study</span>
+
                   <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
                 </a>
+
                 <span class="text-[11px] text-purple-400 font-mono font-semibold">100% Offline</span>
+
               </div>
+
             </div>
+
           </article>
 
           <!-- Project 3: EduVerify Desktop Software -->
+
           <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between hover:border-brand-blue/50 transition-all">
+
             <div class="h-52 bg-gradient-to-b from-blue-950/20 via-surface to-black relative flex items-center justify-center p-3 overflow-hidden">
+
               <div class="relative w-full max-w-[200px] rounded-lg border border-brand-blue/40 bg-neutral-900 overflow-hidden shadow-xl group-hover:scale-105 transition-transform duration-500">
+
                 <div class="flex items-center justify-between px-2 py-1 bg-neutral-950 border-b border-white/10">
+
                   <div class="flex items-center gap-1">
+
                     <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+
                     <span class="text-[8px] font-mono text-neutral-400 ml-1">edu_verify</span>
+
                   </div>
+
                   <span class="text-[8px] font-mono text-brand-blue font-bold">35ms</span>
+
                 </div>
+
                 <img src="images/projects/eduverify/dashboard-view.png" alt="EduVerify Desktop Software" class="w-full h-auto object-cover" />
+
               </div>
+
               <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/90 text-brand-blue border border-brand-blue/50">
+
                 Desktop x64
+
               </span>
+
             </div>
+
             <div class="p-5 flex flex-col justify-between flex-grow">
+
               <div>
+
                 <p class="text-[10px] font-mono uppercase tracking-widest text-brand-blue">Desktop Software</p>
+
                 <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-brand-blue transition-colors">EduVerify Validation</h3>
+
                 <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
                   Windows software that merges and audits school Excel sheets, intercepting empty rows, columns, and cell calculation errors.
+
                 </p>
+
                 <div class="flex flex-wrap gap-1.5 mt-4 text-[10px] font-mono">
+
                   <span class="px-2 py-0.5 rounded bg-blue-500/10 text-brand-blue border border-brand-blue/20">Empty Rows</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">65ms Merge</span>
+
                   <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Audit Log</span>
+
                 </div>
+
               </div>
+
               <div class="pt-4 mt-5 border-t border-white/10 flex items-center justify-between">
+
                 <a href="project-eduverify.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+
                   <span>Case Study</span>
+
                   <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
                 </a>
+
                 <span class="text-[11px] text-emerald-400 font-mono font-semibold">Air-Gapped</span>
+
               </div>
+
             </div>
+
           </article>
 
           <!-- Project 4: Task Planner -->
+
           <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between hover:border-teal-400/50 transition-all">
+
             <div class="h-52 bg-gradient-to-b from-teal-950/20 via-surface to-black relative flex items-center justify-center p-3 overflow-hidden">
+
               <div class="relative flex items-center justify-center -space-x-6 group-hover:scale-105 transition-transform duration-500">
+
                 <div class="w-20 h-36 rounded-xl border border-white/20 bg-black overflow-hidden shadow-xl transform -rotate-3">
+
                   <img src="images/projects/task-planner/daily-momentum.jpg" alt="Momentum Tracker" class="w-full h-full object-cover object-top" />
+
                 </div>
+
                 <div class="w-20 h-36 rounded-xl border border-teal-500/50 bg-black overflow-hidden shadow-2xl transform rotate-3 z-10">
+
                   <img src="images/projects/task-planner/task-list.jpg" alt="Task List" class="w-full h-full object-cover object-top" />
+
                 </div>
+
               </div>
+
               <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-teal-950/90 text-teal-300 border border-teal-700/50">
+
                 Flutter v1.0
+
+              </span>
+
+            </div>
+
+            <div class="p-5 flex flex-col justify-between flex-grow">
+
+              <div>
+
+                <p class="text-[10px] font-mono uppercase tracking-widest text-teal-400">Mobile Productivity</p>
+
+                <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-teal-400 transition-colors">Task Planner Engine</h3>
+
+                <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
+
+                  Offline-first productivity and momentum tracking engine built with Riverpod state management and SQLite B-Tree indexing.
+
+                </p>
+
+                <div class="flex flex-wrap gap-1.5 mt-4 text-[10px] font-mono">
+
+                  <span class="px-2 py-0.5 rounded bg-teal-500/10 text-teal-300 border border-teal-500/20">Flutter</span>
+
+                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Riverpod</span>
+
+                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">SQLite</span>
+
+                </div>
+
+              </div>
+
+              <div class="pt-4 mt-5 border-t border-white/10 flex items-center justify-between">
+
+                <a href="project-task-planner.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+
+                  <span>Case Study</span>
+
+                  <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
+                </a>
+
+                <span class="text-[11px] text-teal-400 font-mono font-semibold">Zero Drain</span>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- Project 5: St. Joseph College -->
+          <article class="tech-border rounded-xl overflow-hidden bg-surface group flex flex-col justify-between hover:border-brand-blue/50 transition-all">
+            <div class="h-52 bg-gradient-to-b from-blue-950/30 via-surface to-black relative flex items-center justify-center p-4 overflow-hidden">
+              <div class="relative w-28 h-28 rounded-2xl border border-brand-blue/40 bg-neutral-900/90 p-2 shadow-xl group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                <img src="images/projects/st-joseph/st-joseph-logo.jpg" alt="St. Joseph College Crest" class="w-full h-full object-contain filter drop-shadow-md" />
+              </div>
+              <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-500/40">
+                100K+ Views
               </span>
             </div>
             <div class="p-5 flex flex-col justify-between flex-grow">
               <div>
-                <p class="text-[10px] font-mono uppercase tracking-widest text-teal-400">Mobile Productivity</p>
-                <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-teal-400 transition-colors">Task Planner Engine</h3>
+                <p class="text-[10px] font-mono uppercase tracking-widest text-brand-blue">Higher Education</p>
+                <h3 class="font-display font-bold text-base text-white mt-1 group-hover:text-brand-blue transition-colors">St. Joseph College</h3>
                 <p class="text-neutral-400 text-xs mt-2 leading-relaxed">
-                  Offline-first productivity and momentum tracking engine built with Riverpod state management and SQLite B-Tree indexing.
+                  30-day social media and admissions campaign in Tenkasi achieving 77.8% non-follower reach and 2,649 profile visits.
                 </p>
                 <div class="flex flex-wrap gap-1.5 mt-4 text-[10px] font-mono">
-                  <span class="px-2 py-0.5 rounded bg-teal-500/10 text-teal-300 border border-teal-500/20">Flutter</span>
-                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Riverpod</span>
-                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">SQLite</span>
+                  <span class="px-2 py-0.5 rounded bg-blue-500/10 text-brand-blue border border-brand-blue/20">Reels</span>
+                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Admissions</span>
+                  <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Growth</span>
                 </div>
               </div>
               <div class="pt-4 mt-5 border-t border-white/10 flex items-center justify-between">
-                <a href="project-task-planner.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
+                <a href="project-st-joseph.html" class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue hover:text-white transition-colors">
                   <span>Case Study</span>
                   <span class="material-symbols-outlined text-sm">arrow_forward</span>
                 </a>
-                <span class="text-[11px] text-teal-400 font-mono font-semibold">Zero Drain</span>
+                <span class="text-[11px] text-emerald-400 font-mono font-semibold">77.8% New</span>
               </div>
             </div>
           </article>
 
         </div>
+
       </div>
+
     </section>
 
     <!-- Industries We Serve (Domain Bento Grid) -->
+
     <section class="px-6 md:px-12 py-20 max-w-7xl mx-auto">
+
       <div class="max-w-3xl mb-12">
+
         <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Domain Expertise</p>
+
         <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Industries We Empower</h2>
+
         <p class="text-neutral-400 text-sm mt-3">
+
           Tailored digital solutions engineered for the specific workflows and regulatory demands of varied business sectors.
+
         </p>
+
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue shrink-0">
+
             <span class="material-symbols-outlined text-2xl">restaurant</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">Restaurants &amp; Hospitality</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">Digital menus, table reservations, online ordering portals, and POS integrations.</p>
+
           </div>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan shrink-0">
+
             <span class="material-symbols-outlined text-2xl">storefront</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">Retail &amp; Supermarkets</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">Inventory management, e-commerce storefronts, barcode systems, and customer loyalty.</p>
+
           </div>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+
             <span class="material-symbols-outlined text-2xl">school</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">Educational Institutions</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">Data validation software, student management portals, online admissions, and marksheets.</p>
+
           </div>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shrink-0">
+
             <span class="material-symbols-outlined text-2xl">rocket</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">Startups &amp; Entrepreneurs</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">Rapid MVP architecture, product-market validation, modern tech stacks, and scale-up engineering.</p>
+
           </div>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
+
             <span class="material-symbols-outlined text-2xl">local_hospital</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">Healthcare &amp; Clinical Services</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">Appointment scheduling, telemedicine portals, patient records, and HIPAA-compliant architecture.</p>
+
           </div>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border flex items-start gap-4">
+
           <div class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+
             <span class="material-symbols-outlined text-2xl">corporate_fare</span>
+
           </div>
+
           <div>
+
             <h4 class="font-bold text-white text-base">SMEs &amp; Commercial Enterprises</h4>
+
             <p class="text-xs text-neutral-400 mt-1 leading-relaxed">ERP modernization, workflow automation, cloud migration, and custom internal software tools.</p>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- Engineering Delivery Process (6 Stages) -->
+
     <section class="px-6 md:px-12 py-20 border-t border-white/10 bg-[#080A0F]">
+
       <div class="max-w-7xl mx-auto">
+
         <div class="max-w-3xl mb-12">
+
           <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Structured Lifecycle</p>
+
           <h2 class="font-display text-3xl md:text-4xl font-bold text-white">How We Turn Ideas Into Reality</h2>
+
           <p class="text-neutral-400 text-sm mt-3">A transparent, stage-gated delivery process aligning business goals with rock-solid execution.</p>
+
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-brand-blue">01 / DISCOVER</span>
+
             <h3 class="font-bold text-white text-base mt-3">Discover</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Understand goals, users, constraints, and business models.</p>
+
           </div>
 
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-brand-cyan">02 / PLAN</span>
+
             <h3 class="font-bold text-white text-base mt-3">Plan</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Define technical scope, system architecture, and milestone timeline.</p>
+
           </div>
 
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-purple-400">03 / DESIGN</span>
+
             <h3 class="font-bold text-white text-base mt-3">Design</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Craft intuitive user journeys and modern design systems in Figma.</p>
+
           </div>
 
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-emerald-400">04 / DEVELOP</span>
+
             <h3 class="font-bold text-white text-base mt-3">Develop</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Clean code engineering with automated testing and continuous integration.</p>
+
           </div>
 
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-amber-400">05 / LAUNCH</span>
+
             <h3 class="font-bold text-white text-base mt-3">Launch</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Deploy to cloud clusters, app stores, or enterprise endpoints safely.</p>
+
           </div>
 
           <div class="tech-border rounded-xl p-5 bg-surface">
+
             <span class="text-xs font-mono font-bold text-rose-400">06 / SCALE</span>
+
             <h3 class="font-bold text-white text-base mt-3">Scale</h3>
+
             <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Continuous monitoring, security updates, and performance tuning.</p>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- Core Principles & Values -->
+
     <section class="px-6 md:px-12 py-20 max-w-7xl mx-auto">
+
       <div class="text-center max-w-2xl mx-auto mb-14">
+
         <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Guiding Standards</p>
+
         <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Our Core Principles</h2>
+
         <p class="text-neutral-400 text-sm mt-3">The non-negotiables that guide our code, communication, and client partnerships every day.</p>
+
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
         <div class="p-6 rounded-xl tech-border text-center group">
+
           <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue mx-auto mb-4 group-hover:scale-110 transition-transform">
+
             <span class="material-symbols-outlined text-2xl">lightbulb</span>
+
           </div>
+
           <h4 class="font-bold text-white text-base">Innovation</h4>
+
           <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Think beyond traditional limits to build cutting-edge solutions.</p>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border text-center group">
+
           <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto mb-4 group-hover:scale-110 transition-transform">
+
             <span class="material-symbols-outlined text-2xl">verified</span>
+
           </div>
+
           <h4 class="font-bold text-white text-base">Quality</h4>
+
           <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Meticulous craftsmanship with zero compromises on reliability.</p>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border text-center group">
+
           <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mx-auto mb-4 group-hover:scale-110 transition-transform">
+
             <span class="material-symbols-outlined text-2xl">palette</span>
+
           </div>
+
           <h4 class="font-bold text-white text-base">Creativity</h4>
+
           <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Deliver unique, engaging experiences that make brands memorable.</p>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border text-center group">
+
           <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto mb-4 group-hover:scale-110 transition-transform">
+
             <span class="material-symbols-outlined text-2xl">handshake</span>
+
           </div>
+
           <h4 class="font-bold text-white text-base">Trust</h4>
+
           <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Transparent communication, clear scopes, and long-term integrity.</p>
+
         </div>
 
         <div class="p-6 rounded-xl tech-border text-center group">
+
           <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mx-auto mb-4 group-hover:scale-110 transition-transform">
+
             <span class="material-symbols-outlined text-2xl">trending_up</span>
+
           </div>
+
           <h4 class="font-bold text-white text-base">Growth</h4>
+
           <p class="text-xs text-neutral-400 mt-2 leading-relaxed">Measurable client success is the only true benchmark of our work.</p>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- Client Testimonials & Trust -->
+
     <section class="px-6 md:px-12 py-20 border-t border-white/10 bg-[#080A0F]">
+
       <div class="max-w-7xl mx-auto">
+
         <div class="text-center max-w-2xl mx-auto mb-14">
+
           <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Verified Feedback</p>
+
           <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Client Partnerships Built on Trust</h2>
+
           <p class="text-neutral-400 text-sm mt-3">What founders, business leaders, and enterprise clients say about working with ANVION.</p>
+
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between">
+
+          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between hover:border-brand-blue/40 transition-all">
+
             <div>
+
               <div class="text-amber-400 text-sm tracking-widest mb-4">★★★★★</div>
+
               <p class="text-neutral-300 text-sm leading-relaxed">
-                “ANVION understood our requirements quickly and transformed our vision into a polished digital application. Their attention to detail and speed was impressive.”
+                “ANVION orchestrated our institutional social media and admissions drive with extraordinary speed. Their student-life reels and creative strategy achieved over 77% non-follower reach in 30 days.”
               </p>
+
             </div>
+
             <footer class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-brand-blue/20 border border-brand-blue/40 flex items-center justify-center font-bold text-brand-blue text-xs">
-                BO
+
+              <div class="w-10 h-10 rounded-xl bg-white p-1 border border-white/20 flex items-center justify-center shrink-0">
+                <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College" class="w-full h-full object-contain" />
               </div>
+
               <div>
-                <p class="text-white text-xs font-bold">Business Owner</p>
-                <p class="text-[10px] text-neutral-400">Commercial Services Client</p>
+
+                <p class="text-white text-xs font-bold">Institutional Media &amp; Admissions</p>
+
+                <p class="text-[10px] text-neutral-400">St. Joseph College of Arts &amp; Science</p>
+
               </div>
+
             </footer>
+
           </blockquote>
 
-          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between">
+          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between hover:border-brand-cyan/40 transition-all">
+
             <div>
+
               <div class="text-amber-400 text-sm tracking-widest mb-4">★★★★★</div>
+
               <p class="text-neutral-300 text-sm leading-relaxed">
-                “The engineering process was structured, transparent, and easy to follow from the initial architecture plan straight through to production release.”
+                “Their engineering approach to our brand architecture and digital systems was structured, rigorous, and dependable. ANVION delivers true engineering discipline and clarity.”
               </p>
+
             </div>
+
             <footer class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center font-bold text-purple-400 text-xs">
+
+              <div class="w-10 h-10 rounded-xl bg-white p-1 border border-white/20 flex items-center justify-center shrink-0">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water Solutions" class="w-full h-full object-contain" />
+              </div>
+
+              <div>
+
+                <p class="text-white text-xs font-bold">Engineering Operations</p>
+
+                <p class="text-[10px] text-neutral-400">Virgin Water &amp; Waste Water Solution</p>
+
+              </div>
+
+            </footer>
+
+          </blockquote>
+
+          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between hover:border-purple-500/40 transition-all">
+
+            <div>
+
+              <div class="text-amber-400 text-sm tracking-widest mb-4">★★★★★</div>
+
+              <p class="text-neutral-300 text-sm leading-relaxed">
+                “A focused technology partner with a strong understanding of both design aesthetics and rock-solid backend performance. Zero bloated frameworks, pure reliability.”
+              </p>
+
+            </div>
+
+            <footer class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
+
+              <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center font-bold text-purple-400 text-xs shrink-0">
                 MD
               </div>
+
               <div>
+
                 <p class="text-white text-xs font-bold">Managing Director</p>
+
                 <p class="text-[10px] text-neutral-400">Enterprise Technology Partner</p>
+
               </div>
+
             </footer>
+
           </blockquote>
 
-          <blockquote class="tech-border rounded-2xl p-7 bg-surface flex flex-col justify-between">
-            <div>
-              <div class="text-amber-400 text-sm tracking-widest mb-4">★★★★★</div>
-              <p class="text-neutral-300 text-sm leading-relaxed">
-                “A focused technology partner with a strong understanding of both design aesthetics and rock-solid backend performance.”
-              </p>
-            </div>
-            <footer class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3">
               <div class="w-9 h-9 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center font-bold text-cyan-400 text-xs">
+
                 SF
+
               </div>
+
               <div>
+
                 <p class="text-white text-xs font-bold">Startup Founder</p>
+
                 <p class="text-[10px] text-neutral-400">Mobile Product Ecosystem</p>
+
               </div>
+
             </footer>
+
           </blockquote>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- High-Impact Conversion Banner -->
+
     <section class="px-6 md:px-12 py-20 max-w-7xl mx-auto">
+
       <div class="tech-border rounded-2xl bg-gradient-to-r from-blue-950/40 via-surface-card to-purple-950/40 p-8 md:p-14 relative overflow-hidden">
+
         <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-brand-blue/20 blur-3xl pointer-events-none"></div>
+
         <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
+
           <div class="lg:col-span-7 space-y-4">
+
             <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full border border-brand-blue/30">
+
               Let's Build Together
+
             </span>
+
             <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white">
+
               Ready to Accelerate Your Digital Growth?
+
             </h2>
+
             <p class="text-neutral-300 text-sm md:text-base leading-relaxed max-w-xl">
+
               Have an idea, need a custom software solution, or looking to modernize your operations? Let's discuss how ANVION can engineer measurable value for your business.
+
             </p>
+
             <div class="flex flex-wrap gap-4 pt-4">
+
               <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center gap-2">
+
                 <span>Start a Project</span>
+
                 <span class="material-symbols-outlined text-base">arrow_forward</span>
+
               </a>
+
               <a href="contact.html" class="bg-white/5 hover:bg-white/10 text-white text-sm font-semibold px-7 py-3.5 rounded-xl border border-white/10 transition-all">
+
                 Talk to an Engineer
+
               </a>
+
             </div>
+
           </div>
 
           <!-- Direct Channels Box -->
+
           <div class="lg:col-span-5 bg-surface/90 p-6 rounded-xl border border-white/10 space-y-3.5">
+
             <h3 class="text-xs font-mono font-bold text-neutral-400 uppercase tracking-widest border-b border-white/10 pb-2.5">
+
               Instant Contact Channels
+
             </h3>
 
             <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/60 text-white transition-all group">
+
               <svg class="w-5 h-5 fill-emerald-400 group-hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
+
               <div>
+
                 <p class="text-[10px] text-emerald-400 uppercase font-mono font-bold">Fastest Response</p>
+
                 <p class="text-xs font-bold text-white">Chat on WhatsApp (+91 9150270802)</p>
+
               </div>
+
             </a>
 
             <a href="mailto:anvionitservices@gmail.com" class="flex items-center gap-3.5 p-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-brand-blue/40 text-white transition-all group">
+
               <span class="material-symbols-outlined text-brand-blue text-xl group-hover:scale-110 transition-transform">mail</span>
+
               <div>
+
                 <p class="text-[10px] text-neutral-400 uppercase font-mono">Email Inquiries</p>
+
                 <p class="text-xs font-bold text-white">anvionitservices@gmail.com</p>
+
               </div>
+
             </a>
 
             <a href="tel:+919150270802" class="flex items-center gap-3.5 p-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-brand-blue/40 text-white transition-all group">
+
               <span class="material-symbols-outlined text-brand-blue text-xl group-hover:scale-110 transition-transform">call</span>
+
               <div>
+
                 <p class="text-[10px] text-neutral-400 uppercase font-mono">Direct Lines</p>
+
                 <p class="text-xs font-bold text-white">+91 9150270802 / +91 8438464047</p>
+
               </div>
+
             </a>
 
             <!-- Official MSME Certification Pill -->
+
             <div class="p-3 rounded-lg bg-surface border border-brand-blue/30 flex items-center justify-between text-xs">
+
               <div>
+
                 <p class="text-amber-400 font-bold text-[11px] flex items-center gap-1">
+
                   <span class="material-symbols-outlined text-xs">verified</span>
+
                   UDYAM-TN-09-0098980
+
                 </p>
+
                 <p class="text-[10px] text-neutral-400">Govt. of India MSME Registered</p>
+
               </div>
+
               <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="text-[10px] text-brand-blue font-bold hover:underline inline-flex items-center gap-0.5">
+
                 <span>View</span>
+
                 <span class="material-symbols-outlined text-[10px]">open_in_new</span>
+
               </a>
+
             </div>
 
           </div>
 
         </div>
+
       </div>
+
     </section>
 
   </main>
 
   <!-- Comprehensive Footer -->
+
   <footer class="bg-[#050608] text-neutral-300 w-full py-16 border-t border-white/10 mt-auto">
+
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 md:px-12 max-w-7xl mx-auto">
-      
+
       <!-- Brand & MSME Info -->
+
       <div class="space-y-4">
+
         <div class="flex items-center gap-3">
+
           <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+
             <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+
           </div>
+
           <span class="font-display text-lg font-bold text-white">ANVION IT SERVICES</span>
+
         </div>
+
         <p class="text-xs text-neutral-400 leading-relaxed">
+
           Innovative digital solutions, mobile app engineering, cloud infrastructure, desktop software, and IT consultancy.
+
         </p>
+
         <div class="p-3.5 rounded-xl bg-surface border border-brand-blue/30 text-xs">
+
           <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+
             <span class="material-symbols-outlined text-sm">verified</span>
+
             <span>Govt. of India MSME Registered</span>
+
           </div>
+
           <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+
           <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise • Services (NIC 62011)</p>
+
         </div>
+
       </div>
 
       <!-- Company Links -->
+
       <div class="flex flex-col gap-2.5 text-xs">
+
         <h4 class="text-white font-bold text-sm mb-1">Company</h4>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About Us</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers (Hiring Status)</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact Us</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+
       </div>
 
       <!-- Production Projects -->
+
       <div class="flex flex-col gap-2.5 text-xs">
+
         <h4 class="text-white font-bold text-sm mb-1">Featured Projects</h4>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="project-homeluxe.html">HOMELUXE Real Estate</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="project-smart-invoice-builder.html">Smart Invoice Builder</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="project-eduverify.html">EduVerify Software</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="project-task-planner.html">Task Planner App</a>
+
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-st-joseph.html">St. Joseph College Marketing</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="projects.html">All Projects Directory</a>
+
         <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Case Studies Portfolio</a>
+
       </div>
 
       <!-- Official Office & Registration -->
+
       <div class="flex flex-col gap-2.5 text-xs">
+
         <h4 class="text-white font-bold text-sm mb-1">Official Registration</h4>
+
         <p class="text-neutral-400 leading-relaxed text-[11px]">
+
           <strong>ANVION IT SERVICES</strong><br/>
+
           Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+
         </p>
+
         <div class="text-[11px] text-neutral-400 space-y-1 mt-1 font-mono">
+
           <p><span class="text-neutral-500 font-sans">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
+
           <p><span class="text-neutral-500 font-sans">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue font-sans">anvionitservices@gmail.com</a></p>
+
         </div>
+
         <div class="flex items-center gap-3 pt-2 text-[11px]">
+
           <a class="text-neutral-400 hover:text-white underline" href="privacy-policy.html">Privacy Policy</a>
+
           <span class="text-neutral-600">•</span>
+
           <a class="text-neutral-400 hover:text-white underline" href="terms-of-service.html">Terms of Service</a>
+
         </div>
+
       </div>
 
     </div>
 
     <!-- Sub-Footer -->
+
     <div class="max-w-7xl mx-auto px-6 md:px-12 mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-500 gap-4">
+
       <p>© 2026 ANVION IT SERVICES. All rights reserved. • Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+
       <p class="font-mono text-[11px]">DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+
     </div>
+
   </footer>
 
   <!-- Floating WhatsApp CTA -->
+
   <a href="https://wa.me/919150270802?text=Hi%20ANVION,%20I%20would%20like%20to%20discuss%20a%20new%20project." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 font-semibold text-sm group" aria-label="Chat on WhatsApp">
+
     <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+
       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+
     </svg>
+
     <span class="hidden sm:inline">WhatsApp Us</span>
+
   </a>
 
   <!-- Interactive Terminal Tab Switcher Script -->
+
   <script>
+
     document.addEventListener("DOMContentLoaded", () => {
+
       const projects = {
+
         homeluxe: {
+
           title: "HOMELUXE Luxury Real Estate",
+
           desc: "Premier Indian luxury property platform featuring curated estates, AI valuations, and verified RERA advisory.",
+
           img: "images/projects/homeluxe/homeluxe-hero.jpg",
+
           badge: "Live on Vercel",
+
           cat: "Web App • Marketplace",
+
           sub: "₹ 4.5 Cr – ₹ 48 Cr",
+
           tags: ["React 18", "Vite", "Tailwind"],
+
           link: "project-homeluxe.html"
+
         },
+
         invoice: {
+
           title: "Smart Invoice Builder",
+
           desc: "Zero-latency field invoicing app generating print-ready A4 PDF invoices with custom branding, UPI, and 1-tap WhatsApp sharing.",
+
           img: "images/projects/smart-invoice-builder/bill-details-form.jpg",
+
           badge: "Vector PDF Engine",
+
           cat: "Mobile Billing • PDF",
+
           sub: "Offline-First SQLite",
+
           tags: ["Flutter", "A4 PDF", "WhatsApp", "UPI"],
+
           link: "project-smart-invoice-builder.html"
+
         },
+
         eduverify: {
+
           title: "EduVerify Validation Software",
+
           desc: "High-speed Windows desktop application for schools that merges and validates multi-sheet Excel files, catching empty rows, columns, and cell errors.",
+
           img: "images/projects/eduverify/dashboard-view.png",
+
           badge: "35ms Engine",
+
           cat: "Desktop Software • x64",
+
           sub: "Air-Gapped Privacy",
+
           tags: ["Windows x64", "Excel Parser", "Audit Reports"],
+
           link: "project-eduverify.html"
+
         },
+
         task: {
+
           title: "Task Planner & Momentum Engine",
+
           desc: "Offline-first productivity mobile application featuring categorized task queues, instant search, and local SQLite B-Tree storage.",
+
           img: "images/projects/task-planner/daily-momentum.jpg",
+
           badge: "Production v1.0",
+
           cat: "Mobile App • Flutter",
+
           sub: "0% Battery Drain",
+
           tags: ["Flutter", "Riverpod", "SQLite B-Tree"],
+
           link: "project-task-planner.html"
+
+        },
+        stjoseph: {
+          title: "St. Joseph College of Arts & Science",
+          desc: "30-day Instagram growth & admissions campaign in Tenkasi driving 77.8% non-follower discovery and 2,649 profile visits.",
+          img: "images/projects/st-joseph/st-joseph-logo.jpg",
+          badge: "100K+ Views",
+          cat: "Digital Marketing • Higher Ed",
+          sub: "77.8% Non-Followers",
+          tags: ["Instagram Reels", "Admissions Funnel", "Education Growth"],
+          link: "project-st-joseph.html"
         }
+
       };
 
       const tabs = document.querySelectorAll(".hero-tab");
+
       const pTitle = document.getElementById("heroPreviewTitle");
+
       const pDesc = document.getElementById("heroPreviewDesc");
+
       const pImg = document.getElementById("heroPreviewImg");
+
       const pBadge = document.getElementById("heroPreviewBadge");
+
       const pCat = document.getElementById("heroPreviewCat");
+
       const pSub = document.getElementById("heroPreviewSub");
+
       const pTags = document.getElementById("heroPreviewTags");
+
       const pLink = document.getElementById("heroPreviewLink");
 
       tabs.forEach(tab => {
+
         tab.addEventListener("click", () => {
+
           tabs.forEach(t => {
+
             t.classList.remove("bg-brand-blue", "text-white", "font-bold");
+
             t.classList.add("bg-white/5", "text-neutral-300", "font-medium");
+
           });
+
           tab.classList.add("bg-brand-blue", "text-white", "font-bold");
+
           tab.classList.remove("bg-white/5", "text-neutral-300", "font-medium");
 
           const pKey = tab.dataset.project;
+
           const data = projects[pKey];
+
           if (!data) return;
 
           pTitle.textContent = data.title;
+
           pDesc.textContent = data.desc;
+
           pImg.src = data.img;
+
           pBadge.textContent = data.badge;
+
           pCat.textContent = data.cat;
+
           pSub.textContent = data.sub;
+
           pLink.href = data.link;
 
           pTags.innerHTML = data.tags.map(tag => 
+
             `<span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">${tag}</span>`
+
           ).join("");
+
         });
+
       });
+
     });
+
   </script>
 
   <script src="js/navbar.js"></script>
+
 </body>
+
 </html>
