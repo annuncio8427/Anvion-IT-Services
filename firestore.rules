@@ -54,7 +54,7 @@ service cloud.firestore {
         incoming().name is string &&
         incoming().name.size() <= 100;
 
-      // Normal users may update only name and phone. Never allow modifying role or UID!
+      // Normal users may update only name, phone and updatedAt. Never allow modifying role or UID!
       allow update: if isValidId(userId) && (
         (isOwner(userId) &&
          incoming().role == existing().role &&
@@ -74,40 +74,172 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 4. PROJECT ENQUIRIES (/projectEnquiries/{enquiryId})
+    // 4. CLIENTS COLLECTION (/clients/{clientId})
+    // ==========================================
+    match /clients/{clientId} {
+      allow get: if isValidId(clientId) && (isOwner(clientId) || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isValidId(clientId) && (isOwner(clientId) || isAdmin());
+      allow update: if isValidId(clientId) && (
+        (isOwner(clientId) &&
+         incoming().diff(existing()).affectedKeys().hasOnly(['name', 'phone', 'companyName', 'address', 'website', 'profileImage', 'updatedAt'])) ||
+        isAdmin()
+      );
+      allow delete: if isValidId(clientId) && isAdmin();
+    }
+
+    // ==========================================
+    // 5. LEADS / CRM (/leads/{leadId})
+    // ==========================================
+    match /leads/{leadId} {
+      allow create: if isValidId(leadId) && incoming().name is string && incoming().email is string;
+      allow get, list, update, delete: if isValidId(leadId) && isAdmin();
+    }
+
+    // ==========================================
+    // 6. TASKS & MILESTONES (/tasks/{taskId})
+    // ==========================================
+    match /tasks/{taskId} {
+      allow get: if isValidId(taskId) && (
+        isAdmin() ||
+        (isSignedIn() && existing().get('isClientVisible', false) == true && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow list: if isAdmin() || (
+        isSignedIn() && resource.data.get('isClientVisible', false) == true && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create, update, delete: if isValidId(taskId) && isAdmin();
+    }
+
+    match /projectMilestones/{milestoneId} {
+      allow get: if isValidId(milestoneId) && (
+        isAdmin() ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow list: if isAdmin() || (
+        isSignedIn() && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create, update, delete: if isValidId(milestoneId) && isAdmin();
+    }
+
+    // ==========================================
+    // 7. INVOICES (/invoices/{invoiceId})
+    // ==========================================
+    match /invoices/{invoiceId} {
+      allow get: if isValidId(invoiceId) && (
+        isAdmin() ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow list: if isAdmin() || (
+        isSignedIn() && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create, update, delete: if isValidId(invoiceId) && isAdmin();
+    }
+
+    // ==========================================
+    // 8. PAYMENTS (/payments/{paymentId})
+    // ==========================================
+    match /payments/{paymentId} {
+      allow get: if isValidId(paymentId) && (
+        isAdmin() ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow list: if isAdmin() || (
+        isSignedIn() && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create: if isValidId(paymentId) && (isAdmin() || (isSignedIn() && incoming().get('clientId', '') == request.auth.uid));
+      allow update, delete: if isValidId(paymentId) && isAdmin();
+    }
+
+    // ==========================================
+    // 9. SUPPORT TICKETS & MESSAGES
+    // ==========================================
+    match /supportTickets/{ticketId} {
+      allow get: if isValidId(ticketId) && (
+        isAdmin() ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow list: if isAdmin() || (
+        isSignedIn() && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create: if isValidId(ticketId) && (
+        isAdmin() ||
+        (isSignedIn() && (incoming().get('clientId', '') == request.auth.uid || incoming().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow update: if isValidId(ticketId) && (
+        isAdmin() ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email))
+      );
+      allow delete: if isValidId(ticketId) && isAdmin();
+    }
+
+    match /supportMessages/{messageId} {
+      allow get, list: if isSignedIn() && (
+        isAdmin() ||
+        (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)
+      );
+      allow create: if isSignedIn() && (
+        isAdmin() ||
+        (incoming().get('clientId', '') == request.auth.uid || incoming().get('clientEmail', '') == request.auth.token.email)
+      );
+      allow update, delete: if isValidId(messageId) && isAdmin();
+    }
+
+    // ==========================================
+    // 10. NOTIFICATIONS (/notifications/{notificationId})
+    // ==========================================
+    match /notifications/{notificationId} {
+      allow get, list: if isSignedIn() && (
+        isAdmin() ||
+        resource.data.get('userId', '') == request.auth.uid ||
+        resource.data.get('email', '') == request.auth.token.email
+      );
+      allow update: if isSignedIn() && (
+        isAdmin() ||
+        (existing().get('userId', '') == request.auth.uid && incoming().diff(existing()).affectedKeys().hasOnly(['read', 'readAt', 'updatedAt']))
+      );
+      allow create, delete: if isValidId(notificationId) && isAdmin();
+    }
+
+    // ==========================================
+    // 11. STAFF & SETTINGS
+    // ==========================================
+    match /staff/{staffId} {
+      allow read, write: if isValidId(staffId) && isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if isValidId(settingId) && isAdmin();
+    }
+
+    // ==========================================
+    // 12. PROJECT ENQUIRIES (/projectEnquiries/{enquiryId})
     // ==========================================
     match /projectEnquiries/{enquiryId} {
-      // Anyone can submit an inquiry; if logged in, the userId must match the auth UID
       allow create: if isValidId(enquiryId) &&
         incoming().name is string && incoming().name.size() <= 120 &&
         incoming().email is string && incoming().email.size() <= 150 &&
         incoming().description is string && incoming().description.size() <= 5000 &&
         (!isSignedIn() || incoming().get('userId', '') == request.auth.uid || incoming().get('userId', '') == null);
 
-      // Normal users can only get or list their own inquiries. Admins can view all.
       allow get: if isValidId(enquiryId) && (
         (isSignedIn() && existing().get('userId', '') == request.auth.uid) ||
         isAdmin()
       );
 
       allow list: if (isSignedIn() && existing().get('userId', '') == request.auth.uid) || isAdmin();
-
-      // Only admins can update status or delete project briefs
       allow update: if isValidId(enquiryId) && isAdmin();
       allow delete: if isValidId(enquiryId) && isAdmin();
     }
 
     // ==========================================
-    // 5. CONTACT MESSAGES (/contactMessages/{messageId})
+    // 13. CONTACT MESSAGES (/contactMessages/{messageId})
     // ==========================================
     match /contactMessages/{messageId} {
-      // Anyone can submit a contact message
       allow create: if isValidId(messageId) &&
         incoming().name is string && incoming().name.size() <= 120 &&
         incoming().email is string && incoming().email.size() <= 150 &&
         incoming().message is string && incoming().message.size() <= 3000;
 
-      // Only admins can read, list, update status, or delete contact submissions
       allow get: if isValidId(messageId) && isAdmin();
       allow list: if isAdmin();
       allow update: if isValidId(messageId) && isAdmin();
@@ -115,25 +247,26 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 6. PROJECTS & CASE STUDIES (/projects/{projectId})
+    // 14. PROJECTS & CASE STUDIES (/projects/{projectId})
     // ==========================================
     match /projects/{projectId} {
-      // Public visitors can only view published projects
       allow get: if isValidId(projectId) && (
         existing().get('published', false) == true ||
         existing().get('published', '') == 'true' ||
+        (isSignedIn() && (existing().get('clientId', '') == request.auth.uid || existing().get('clientEmail', '') == request.auth.token.email)) ||
         isAdmin()
       );
 
       allow list: if existing().get('published', false) == true ||
                      existing().get('published', '') == 'true' ||
+                     (isSignedIn() && (resource.data.get('clientId', '') == request.auth.uid || resource.data.get('clientEmail', '') == request.auth.token.email)) ||
                      isAdmin();
 
       allow create, update, delete: if isValidId(projectId) && isAdmin();
     }
 
     // ==========================================
-    // 7. SERVICES (/services/{serviceId})
+    // 15. SERVICES (/services/{serviceId})
     // ==========================================
     match /services/{serviceId} {
       allow get: if isValidId(serviceId) && (
@@ -150,7 +283,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 8. REVIEWS / TESTIMONIALS (/reviews/{reviewId})
+    // 16. REVIEWS / TESTIMONIALS (/reviews/{reviewId})
     // ==========================================
     match /reviews/{reviewId} {
       allow get: if isValidId(reviewId) && (
@@ -167,7 +300,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 9. BLOG POSTS (/blogPosts/{postId})
+    // 17. BLOG POSTS (/blogPosts/{postId})
     // ==========================================
     match /blogPosts/{postId} {
       allow get: if isValidId(postId) && (
@@ -184,7 +317,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 10. CAREERS / JOBS (/jobs/{jobId})
+    // 18. CAREERS / JOBS (/jobs/{jobId})
     // ==========================================
     match /jobs/{jobId} {
       allow get: if isValidId(jobId) && (
@@ -201,15 +334,13 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 11. CONFIDENTIAL JOB APPLICATIONS (/jobApplications/{applicationId})
+    // 19. JOB APPLICATIONS (/jobApplications/{applicationId})
     // ==========================================
     match /jobApplications/{applicationId} {
-      // Candidates can submit job applications
       allow create: if isValidId(applicationId) &&
         incoming().name is string && incoming().name.size() <= 120 &&
         incoming().email is string && incoming().email.size() <= 150;
 
-      // STRICT PII RESTRICTION: Only admins can view, update, or delete candidate resumes
       allow get: if isValidId(applicationId) && isAdmin();
       allow list: if isAdmin();
       allow update: if isValidId(applicationId) && isAdmin();
@@ -217,7 +348,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 12. FAQS (/faqs/{faqId})
+    // 20. FAQS (/faqs/{faqId})
     // ==========================================
     match /faqs/{faqId} {
       allow get: if isValidId(faqId) && (
@@ -234,7 +365,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 13. WEBSITE CONTENT (/websiteContent/{contentId})
+    // 21. WEBSITE CONTENT (/websiteContent/{contentId})
     // ==========================================
     match /websiteContent/{contentId} {
       allow get: if isValidId(contentId);
@@ -243,7 +374,7 @@ service cloud.firestore {
     }
 
     // ==========================================
-    // 14. ADMIN AUDIT LOGS (/adminAuditLogs/{logId})
+    // 22. ADMIN AUDIT LOGS (/adminAuditLogs/{logId})
     // ==========================================
     match /adminAuditLogs/{logId} {
       allow create: if isValidId(logId) && isAdmin();

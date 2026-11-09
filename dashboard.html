@@ -144,6 +144,37 @@
 
   <!-- Main Dashboard Content -->
   <main id="dashboardMain" class="flex-grow max-w-7xl mx-auto w-full px-6 py-8 space-y-8 z-10">
+    <!-- Client Portal Tabs Navigation -->
+    <div class="flex items-center gap-2 overflow-x-auto border-b border-surface-border pb-3 scrollbar-none">
+      <button data-tab="overview" class="portal-tab-btn active px-4 py-2 rounded-xl text-xs font-bold text-white bg-brand-blue shadow-lg shadow-brand-blue/20 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">dashboard</span>
+        <span>Overview</span>
+      </button>
+      <button data-tab="projects" class="portal-tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">rocket_launch</span>
+        <span>Projects &amp; Sprints</span>
+      </button>
+      <button data-tab="tasks" class="portal-tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">checklist</span>
+        <span>Tasks &amp; Milestones</span>
+      </button>
+      <button data-tab="invoices" class="portal-tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">receipt_long</span>
+        <span>Invoices &amp; Payments</span>
+      </button>
+      <button data-tab="support" class="portal-tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">support_agent</span>
+        <span>Support Center</span>
+      </button>
+      <button data-tab="profile" class="portal-tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">manage_accounts</span>
+        <span>Profile Settings</span>
+      </button>
+    </div>
+
+    <!-- TAB PANEL 1: OVERVIEW -->
+    <div id="panel-overview" class="portal-panel space-y-8">
+
     
     <!-- Welcome Banner with Live Clock & Firebase Status -->
     <div class="p-8 rounded-2xl bg-gradient-to-r from-surface-card via-surface-card to-brand-blue/10 border border-surface-border relative overflow-hidden">
@@ -415,6 +446,180 @@
 
     </div>
 
+  
+    </div><!-- End #panel-overview -->
+
+    <!-- TAB PANEL 2: MY PROJECTS & SPRINTS -->
+    <div id="panel-projects" class="portal-panel hidden space-y-6">
+      <div class="flex justify-between items-center border-b border-surface-border pb-4">
+        <div>
+          <h2 class="font-display font-bold text-xl text-white">Active Projects &amp; Sprints</h2>
+          <p class="text-xs text-neutral-400">Review real-time sprint execution, architectural deliverables, and live staging builds.</p>
+        </div>
+        <a href="start-a-project.html" class="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-brand-blue/20">
+          <span class="material-symbols-outlined text-sm">add_circle</span>
+          <span>Submit New Brief</span>
+        </a>
+      </div>
+
+      <div id="clientProjectsList" class="space-y-4">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB PANEL 3: TASKS & MILESTONES -->
+    <div id="panel-tasks" class="portal-panel hidden space-y-6">
+      <div class="border-b border-surface-border pb-4">
+        <h2 class="font-display font-bold text-xl text-white">Engineering Sprint Tasks</h2>
+        <p class="text-xs text-neutral-400">View tasks and milestone deliveries visible to your organization.</p>
+      </div>
+
+      <div class="bg-surface-card border border-surface-border rounded-2xl overflow-x-auto">
+        <table class="w-full text-left text-xs text-neutral-200">
+          <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-neutral-400">
+            <tr>
+              <th class="p-4">Task Deliverable</th>
+              <th class="p-4">Sprint / Project</th>
+              <th class="p-4">Assigned Engineer</th>
+              <th class="p-4">Target Date</th>
+              <th class="p-4">Priority</th>
+              <th class="p-4">Status</th>
+            </tr>
+          </thead>
+          <tbody id="clientTasksTableBody" class="divide-y divide-surface-border">
+            <tr><td colspan="6" class="p-6 text-center text-neutral-400">Loading engineering tasks...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB PANEL 4: INVOICES & PAYMENTS -->
+    <div id="panel-invoices" class="portal-panel hidden space-y-6">
+      <div class="flex flex-wrap justify-between items-center gap-4 border-b border-surface-border pb-4">
+        <div>
+          <h2 class="font-display font-bold text-xl text-white">Invoices, Billing &amp; UPI Payments</h2>
+          <p class="text-xs text-neutral-400">Official GST invoices in Indian Rupees (INR ₹) with downloadable receipts and UPI payment reconciliation.</p>
+        </div>
+        <button onclick="document.getElementById('submitPaymentRefModal').classList.remove('hidden')" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-purple-600/20">
+          <span class="material-symbols-outlined text-sm">payments</span>
+          <span>Submit Payment Reference (UTR)</span>
+        </button>
+      </div>
+
+      <!-- Invoices Table -->
+      <div class="bg-surface-card border border-surface-border rounded-2xl overflow-x-auto">
+        <table class="w-full text-left text-xs text-neutral-200">
+          <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-neutral-400">
+            <tr>
+              <th class="p-4">Invoice #</th>
+              <th class="p-4">Project Description</th>
+              <th class="p-4">Subtotal (₹)</th>
+              <th class="p-4">GST (18%)</th>
+              <th class="p-4">Total Amount (₹)</th>
+              <th class="p-4">Due Date</th>
+              <th class="p-4">Status</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientInvoicesTableBody" class="divide-y divide-surface-border">
+            <tr><td colspan="8" class="p-6 text-center text-neutral-400">Loading billing statements...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bank Transfer & UPI Details Card -->
+      <div class="p-6 rounded-2xl bg-black/40 border border-white/10 space-y-3">
+        <h4 class="text-xs font-mono uppercase text-brand-blue font-bold tracking-wider">Official Bank &amp; UPI Account for Direct Transfer</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <span class="text-neutral-500 block text-[10px] font-mono uppercase">Bank Details</span>
+            <strong class="text-white block mt-0.5">ANVION IT SERVICES</strong>
+            <span class="text-neutral-300 font-mono text-[11px]">HDFC Bank / Current A/C</span>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <span class="text-neutral-500 block text-[10px] font-mono uppercase">IFSC Code</span>
+            <strong class="text-emerald-400 font-mono block mt-0.5 text-sm">HDFC0001234</strong>
+            <span class="text-neutral-400 text-[11px]">Branch: Tamil Nadu</span>
+          </div>
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <span class="text-neutral-500 block text-[10px] font-mono uppercase">Official UPI VPA</span>
+            <strong class="text-brand-blue font-mono block mt-0.5 text-sm">9150270802@upi</strong>
+            <span class="text-neutral-400 text-[11px]">Instant UPI confirmation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PANEL 5: SUPPORT CENTER -->
+    <div id="panel-support" class="portal-panel hidden space-y-6">
+      <div class="flex flex-wrap justify-between items-center gap-4 border-b border-surface-border pb-4">
+        <div>
+          <h2 class="font-display font-bold text-xl text-white">Client Support Center</h2>
+          <p class="text-xs text-neutral-400">Direct dedicated priority communication line with ANVION architects (&lt; 15 min SLA).</p>
+        </div>
+        <button onclick="document.getElementById('clientNewTicketModal').classList.remove('hidden')" class="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-brand-blue/20">
+          <span class="material-symbols-outlined text-sm">add_comment</span>
+          <span>Open Support Ticket</span>
+        </button>
+      </div>
+
+      <div class="bg-surface-card border border-surface-border rounded-2xl overflow-x-auto">
+        <table class="w-full text-left text-xs text-neutral-200">
+          <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-neutral-400">
+            <tr>
+              <th class="p-4">Ticket Ref</th>
+              <th class="p-4">Subject</th>
+              <th class="p-4">Priority</th>
+              <th class="p-4">Status</th>
+              <th class="p-4">Logged Date</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientSupportTicketsTableBody" class="divide-y divide-surface-border">
+            <tr><td colspan="6" class="p-6 text-center text-neutral-400">Loading support tickets...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB PANEL 6: PROFILE SETTINGS -->
+    <div id="panel-profile" class="portal-panel hidden space-y-6">
+      <div class="border-b border-surface-border pb-4">
+        <h2 class="font-display font-bold text-xl text-white">Client Account Settings</h2>
+        <p class="text-xs text-neutral-400">Manage your business contact profile and authorized billing address.</p>
+      </div>
+
+      <div class="max-w-xl bg-surface-card border border-surface-border rounded-2xl p-6">
+        <form id="clientProfileForm" class="space-y-4 text-xs">
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Full Name</label>
+            <input id="editProfName" type="text" class="w-full rounded-xl border border-surface-border bg-black/50 px-4 py-2.5 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Email Address (Auth Identity)</label>
+            <input id="editProfEmail" type="email" readonly class="w-full rounded-xl border border-surface-border bg-black/80 px-4 py-2.5 text-neutral-400 outline-none cursor-not-allowed"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Company / Organization</label>
+            <input id="editProfCompany" type="text" class="w-full rounded-xl border border-surface-border bg-black/50 px-4 py-2.5 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Phone Number</label>
+            <input id="editProfPhone" type="tel" class="w-full rounded-xl border border-surface-border bg-black/50 px-4 py-2.5 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Business Billing Address</label>
+            <textarea id="editProfAddress" rows="3" class="w-full rounded-xl border border-surface-border bg-black/50 px-4 py-2.5 text-white outline-none focus:border-brand-blue"></textarea>
+          </div>
+          <div class="flex justify-end pt-3 border-t border-surface-border">
+            <button type="submit" class="px-6 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-xs shadow-md shadow-brand-blue/30">
+              Save Profile Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </main>
 
   <!-- New Inquiry Modal -->
@@ -510,6 +715,99 @@
     }
   </script>
 
+  
+  <!-- Modal: Submit Payment Reference -->
+  <div id="submitPaymentRefModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0E1015] border border-surface-border rounded-2xl max-w-md w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-purple-400">payments</span>
+          Submit Payment Reference (UTR)
+        </h3>
+        <button type="button" onclick="document.getElementById('submitPaymentRefModal').classList.add('hidden')" class="text-neutral-400 hover:text-white">&times;</button>
+      </div>
+      <form id="paymentRefForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block uppercase font-mono text-neutral-400 mb-1">Invoice Number *</label>
+          <input id="clientPayInvNum" type="text" required placeholder="e.g. INV-2026-1001" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Amount Paid (₹) *</label>
+            <input id="clientPayAmount" type="number" required placeholder="45000" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Method</label>
+            <select id="clientPayMethod" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="UPI (GPay / PhonePe / Paytm)">UPI (GPay / PhonePe / Paytm)</option>
+              <option value="Bank Transfer (NEFT / IMPS)">Bank Transfer (NEFT / IMPS)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-neutral-400 mb-1">Bank Reference / UPI UTR Number *</label>
+          <input id="clientPayUtr" type="text" required placeholder="12-digit UPI reference or bank UTR" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-neutral-400 mb-1">Notes (Optional)</label>
+          <textarea id="clientPayNotes" rows="2" placeholder="Any remarks regarding this payment..." class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="document.getElementById('submitPaymentRefModal').classList.add('hidden')" class="px-4 py-2 border border-surface-border text-neutral-400 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl">Submit for Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: New Support Ticket -->
+  <div id="clientNewTicketModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0E1015] border border-surface-border rounded-2xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-brand-blue">support_agent</span>
+          Open Support Ticket
+        </h3>
+        <button type="button" onclick="document.getElementById('clientNewTicketModal').classList.add('hidden')" class="text-neutral-400 hover:text-white">&times;</button>
+      </div>
+      <form id="clientTicketForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block uppercase font-mono text-neutral-400 mb-1">Subject *</label>
+          <input id="ticketSubject" type="text" required placeholder="Brief description of the request or issue" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Category</label>
+            <select id="ticketCategory" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="Technical Architecture">Technical Architecture</option>
+              <option value="Sprint Deliverable">Sprint Deliverable</option>
+              <option value="Deployment & Staging">Deployment &amp; Staging</option>
+              <option value="Billing & Invoicing">Billing &amp; Invoicing</option>
+              <option value="General Query">General Query</option>
+            </select>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-neutral-400 mb-1">Priority</label>
+            <select id="ticketPriority" class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High - Priority SLA</option>
+              <option value="critical">Critical - Production Blocker</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-neutral-400 mb-1">Details &amp; Specifications *</label>
+          <textarea id="ticketMessage" rows="4" required placeholder="Describe your request in detail..." class="w-full rounded-xl border border-surface-border bg-black/50 px-3 py-2 text-white outline-none focus:border-brand-blue"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="document.getElementById('clientNewTicketModal').classList.add('hidden')" class="px-4 py-2 border border-surface-border text-neutral-400 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white font-bold rounded-xl">Submit Ticket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Script Modules -->
   <script type="module">
     import { 
@@ -539,6 +837,228 @@
         setTimeout(() => toast.remove(), 300);
       }, 4000);
     }
+
+    
+    // Tab switching logic
+    document.querySelectorAll('.portal-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.portal-tab-btn').forEach(b => {
+          b.classList.remove('active', 'bg-brand-blue', 'text-white', 'shadow-lg');
+          b.classList.add('text-neutral-400');
+        });
+        btn.classList.add('active', 'bg-brand-blue', 'text-white', 'shadow-lg');
+        btn.classList.remove('text-neutral-400');
+
+        document.querySelectorAll('.portal-panel').forEach(p => p.classList.add('hidden'));
+        const activePanel = document.getElementById('panel-' + tab);
+        if (activePanel) activePanel.classList.remove('hidden');
+
+        if (tab === 'projects') loadClientProjects();
+        if (tab === 'tasks') loadClientTasks();
+        if (tab === 'invoices') loadClientInvoices();
+        if (tab === 'support') loadClientSupport();
+        if (tab === 'profile') loadClientProfile();
+      });
+    });
+
+    async function loadClientProjects() {
+      const container = document.getElementById('clientProjectsList');
+      if (!container) return;
+      try {
+        const res = await fetch('/api/portal/projects');
+        if (res.ok) {
+          const data = await res.json();
+          const list = data.projects || [];
+          if (!list.length) {
+            container.innerHTML = '<div class="p-8 text-center text-xs text-neutral-400 border border-dashed border-white/10 rounded-2xl">No active projects assigned yet. Contact your project architect or submit a new brief.</div>';
+            return;
+          }
+          container.innerHTML = list.map(p => `
+            <div class="p-6 rounded-2xl bg-surface-card border border-surface-border hover:border-brand-blue/30 transition-all space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest">${p.category || 'Engineering'}</span>
+                  <h3 class="text-base font-bold text-white mt-0.5">${p.title}</h3>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
+                  ${p.badgeLabel || 'Active Sprint'}
+                </span>
+              </div>
+              <p class="text-xs text-neutral-400">${p.summary || p.overview || 'Enterprise software architecture deliverable.'}</p>
+              <div class="flex flex-wrap gap-2 pt-2 border-t border-white/5">
+                ${(Array.isArray(p.technologies) ? p.technologies : []).map(t => `<span class="px-2.5 py-1 rounded bg-black/40 border border-white/10 text-[11px] text-neutral-300 font-mono">${t}</span>`).join('')}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function loadClientTasks() {
+      const tbody = document.getElementById('clientTasksTableBody');
+      if (!tbody) return;
+      try {
+        const res = await fetch('/api/portal/tasks');
+        if (res.ok) {
+          const list = await res.json();
+          if (!list.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-neutral-400">All sprint deliverables up to date. No pending tasks.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = list.map(t => `
+            <tr class="hover:bg-white/[0.02] transition-colors">
+              <td class="p-4 font-bold text-white">${t.title}</td>
+              <td class="p-4 font-mono text-[11px] text-brand-blue">${t.projectId}</td>
+              <td class="p-4 text-xs text-neutral-300">${t.assignedStaff || 'Engineering Team'}</td>
+              <td class="p-4 font-mono text-[11px]">${t.dueDate || 'Flexible'}</td>
+              <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.priority === 'high' ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-neutral-300'}">${t.priority.toUpperCase()}</span></td>
+              <td class="p-4"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400">${t.status}</span></td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function loadClientInvoices() {
+      const tbody = document.getElementById('clientInvoicesTableBody');
+      if (!tbody) return;
+      try {
+        const res = await fetch('/api/portal/invoices');
+        if (res.ok) {
+          const list = await res.json();
+          if (!list.length) {
+            tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-neutral-400">No invoices issued for your account.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = list.map(i => `
+            <tr class="hover:bg-white/[0.02] transition-colors">
+              <td class="p-4 font-mono font-bold text-brand-blue">${i.invoiceNumber}</td>
+              <td class="p-4 font-semibold text-white">${i.projectTitle}</td>
+              <td class="p-4 font-mono text-xs">₹${Number(i.amountInr || 0).toLocaleString('en-IN')}</td>
+              <td class="p-4 font-mono text-xs text-neutral-400">₹${Number(i.taxInr || 0).toLocaleString('en-IN')}</td>
+              <td class="p-4 font-mono text-xs font-bold text-emerald-400">₹${Number(i.totalInr || i.amountInr || 0).toLocaleString('en-IN')}</td>
+              <td class="p-4 font-mono text-[11px]">${i.dueDate}</td>
+              <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${i.status === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${(i.status || 'UNPAID').toUpperCase()}</span></td>
+              <td class="p-4 text-right">
+                <button onclick="window.print()" class="px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-xs text-white font-mono">Print/Receipt</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function loadClientSupport() {
+      const tbody = document.getElementById('clientSupportTicketsTableBody');
+      if (!tbody) return;
+      try {
+        const res = await fetch('/api/portal/tickets');
+        if (res.ok) {
+          const list = await res.json();
+          if (!list.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-neutral-400">No support tickets opened. Click "Open Support Ticket" if you need technical assistance.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = list.map(t => `
+            <tr class="hover:bg-white/[0.02] transition-colors">
+              <td class="p-4 font-mono font-bold text-pink-400">${t.ticketRef}</td>
+              <td class="p-4 font-semibold text-white">${t.subject}</td>
+              <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.priority === 'high' || t.priority === 'critical' ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-neutral-300'}">${t.priority.toUpperCase()}</span></td>
+              <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.status === 'open' ? 'bg-blue-500/20 text-blue-400' : 'bg-emerald-500/20 text-emerald-400'}">${t.status.toUpperCase()}</span></td>
+              <td class="p-4 font-mono text-[11px]">${t.createdAt ? new Date(t.createdAt).toLocaleDateString() : '-'}</td>
+              <td class="p-4 text-right">
+                <span class="text-xs text-emerald-400 material-symbols-outlined">mark_email_read</span>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function loadClientProfile() {
+      try {
+        const res = await fetch('/api/portal/profile');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('editProfName').value = data.name || '';
+          document.getElementById('editProfEmail').value = data.email || '';
+          document.getElementById('editProfCompany').value = data.companyName || '';
+          document.getElementById('editProfPhone').value = data.phone || '';
+          document.getElementById('editProfAddress').value = data.address || '';
+        }
+      } catch (e) {}
+    }
+
+    // Payment Reference Form Submission
+    document.getElementById('paymentRefForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        invoiceNumber: document.getElementById('clientPayInvNum').value,
+        amountInr: document.getElementById('clientPayAmount').value,
+        paymentMethod: document.getElementById('clientPayMethod').value,
+        referenceNumber: document.getElementById('clientPayUtr').value,
+        notes: document.getElementById('clientPayNotes').value
+      };
+      const res = await fetch('/api/portal/payments/reference', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('Payment Reference Submitted', 'success');
+        document.getElementById('submitPaymentRefModal').classList.add('hidden');
+        document.getElementById('paymentRefForm').reset();
+        loadClientInvoices();
+      } else {
+        showToast('Failed to submit reference', 'error');
+      }
+    });
+
+    // Support Ticket Form Submission
+    document.getElementById('clientTicketForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        subject: document.getElementById('ticketSubject').value,
+        category: document.getElementById('ticketCategory').value,
+        priority: document.getElementById('ticketPriority').value,
+        message: document.getElementById('ticketMessage').value
+      };
+      const res = await fetch('/api/portal/tickets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('Support ticket logged with dedicated engineering lane.', 'success');
+        document.getElementById('clientNewTicketModal').classList.add('hidden');
+        document.getElementById('clientTicketForm').reset();
+        loadClientSupport();
+      } else {
+        showToast('Failed to create ticket', 'error');
+      }
+    });
+
+    // Client Profile Form Submission
+    document.getElementById('clientProfileForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('editProfName').value,
+        companyName: document.getElementById('editProfCompany').value,
+        phone: document.getElementById('editProfPhone').value,
+        address: document.getElementById('editProfAddress').value
+      };
+      const res = await fetch('/api/portal/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        showToast('Client profile updated successfully.', 'success');
+      } else {
+        showToast('Failed to update profile', 'error');
+      }
+    });
 
     // Dynamic greeting based on current hour
     function updateGreeting() {

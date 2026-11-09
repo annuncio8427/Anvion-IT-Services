@@ -96,6 +96,34 @@
         <span id="badgeUsers" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/10 text-on-surface-variant">0</span>
       </button>
 
+      
+      <!-- Clients Directory -->
+      <button data-section="clients" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">badge</span>
+          <span>Clients Directory</span>
+        </div>
+        <span id="badgeClients" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-400">0</span>
+      </button>
+
+      <!-- Leads / CRM -->
+      <button data-section="leads" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">filter_alt</span>
+          <span>Leads & CRM Pipeline</span>
+        </div>
+        <span id="badgeLeads" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-400">0</span>
+      </button>
+
+      <!-- Tasks & Milestones -->
+      <button data-section="tasks" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">checklist</span>
+          <span>Tasks & Milestones</span>
+        </div>
+        <span id="badgeTasks" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400">0</span>
+      </button>
+
       <!-- Project Enquiries -->
       <button data-section="enquiries" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
         <div class="flex items-center gap-3">
@@ -137,6 +165,37 @@
           <span>Job Applications</span>
         </div>
         <span id="badgeApplications" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400">0</span>
+      </button>
+
+      
+      <!-- Section Label: Finance & Billing -->
+      <p class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/60">Finance & Billing</p>
+
+      <!-- Invoices -->
+      <button data-section="invoices" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">receipt</span>
+          <span>Invoices & Billing</span>
+        </div>
+        <span id="badgeInvoices" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400">0</span>
+      </button>
+
+      <!-- Payments -->
+      <button data-section="payments" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">payments</span>
+          <span>Payments & Receipts</span>
+        </div>
+        <span id="badgePayments" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400">0</span>
+      </button>
+
+      <!-- Support Desk -->
+      <button data-section="support" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">support_agent</span>
+          <span>Client Support Desk</span>
+        </div>
+        <span id="badgeSupport" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-pink-500/20 text-pink-400">0</span>
       </button>
 
       <!-- Section Label: Content Management -->
@@ -276,6 +335,229 @@
     <!-- CONTENT SCROLL AREA -->
     <main id="contentArea" class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
       
+      
+      <!-- ========================================== -->
+      <!-- SECTION: CLIENTS DIRECTORY                 -->
+      <!-- ========================================== -->
+      <section id="sec-clients" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Client Directory &amp; Enterprise Accounts</h2>
+            <p class="text-xs text-on-surface-variant">Manage institutional and corporate clients, contact profiles, assigned managers, and account activation.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="searchClientsInput" type="text" placeholder="Search clients..." class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue"/>
+            <button onclick="openModal('addClientModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-blue hover:bg-brand-hover text-white text-xs font-semibold shadow-md shadow-brand-blue/20">
+              <span class="material-symbols-outlined text-sm">person_add</span>
+              <span>Add Client</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Client ID &amp; Name</th>
+                <th class="p-4">Company / Organization</th>
+                <th class="p-4">Contact (Email &amp; Phone)</th>
+                <th class="p-4">Category</th>
+                <th class="p-4">Assigned Manager</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="7" class="p-6 text-center text-on-surface-variant">Loading client directory...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: LEADS & CRM PIPELINE              -->
+      <!-- ========================================== -->
+      <section id="sec-leads" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Lead Management &amp; CRM Pipeline</h2>
+            <p class="text-xs text-on-surface-variant">Multi-source pipeline: New &rarr; Contacted &rarr; Qualified &rarr; Proposal Sent &rarr; Negotiation &rarr; Converted / Lost.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openModal('addLeadModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-blue hover:bg-brand-hover text-white text-xs font-semibold shadow-md shadow-brand-blue/20">
+              <span class="material-symbols-outlined text-sm">add_circle</span>
+              <span>Create Lead</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Lead Source</th>
+                <th class="p-4">Contact Name</th>
+                <th class="p-4">Email &amp; Phone</th>
+                <th class="p-4">Service &amp; Budget</th>
+                <th class="p-4">Pipeline Status</th>
+                <th class="p-4">Priority</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="7" class="p-6 text-center text-on-surface-variant">Loading CRM pipeline leads...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: TASKS & MILESTONES                -->
+      <!-- ========================================== -->
+      <section id="sec-tasks" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Engineering Tasks &amp; Milestones</h2>
+            <p class="text-xs text-on-surface-variant">Assign sprints, track delivery progress, and toggle client visibility for portal synchronization.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openModal('addTaskModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-blue hover:bg-brand-hover text-white text-xs font-semibold shadow-md shadow-brand-blue/20">
+              <span class="material-symbols-outlined text-sm">add_task</span>
+              <span>Create Task</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Task Title &amp; Project</th>
+                <th class="p-4">Client Associated</th>
+                <th class="p-4">Assigned Staff</th>
+                <th class="p-4">Due Date</th>
+                <th class="p-4">Priority</th>
+                <th class="p-4">Client Visible?</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tasksTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="8" class="p-6 text-center text-on-surface-variant">Loading tasks...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: INVOICES & BILLING                -->
+      <!-- ========================================== -->
+      <section id="sec-invoices" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Invoice &amp; Billing Management</h2>
+            <p class="text-xs text-on-surface-variant">Professional GST billing in INR (₹) with CGST, SGST, IGST calculations and printable receipts.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openModal('addInvoiceModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md shadow-emerald-600/20">
+              <span class="material-symbols-outlined text-sm">post_add</span>
+              <span>Generate Invoice</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Invoice #</th>
+                <th class="p-4">Client Name &amp; Email</th>
+                <th class="p-4">Project Title</th>
+                <th class="p-4">Subtotal (₹)</th>
+                <th class="p-4">GST (₹)</th>
+                <th class="p-4">Total (₹)</th>
+                <th class="p-4">Due Date</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="9" class="p-6 text-center text-on-surface-variant">Loading invoices...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: PAYMENTS & RECEIPTS               -->
+      <!-- ========================================== -->
+      <section id="sec-payments" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Payments &amp; UPI Reconciliation</h2>
+            <p class="text-xs text-on-surface-variant">Record offline payments, NEFT/IMPS transfers, and verify client UPI reference UTR numbers.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openModal('recordPaymentModal')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-blue hover:bg-brand-hover text-white text-xs font-semibold shadow-md shadow-brand-blue/20">
+              <span class="material-symbols-outlined text-sm">add_card</span>
+              <span>Record Payment</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Payment ID</th>
+                <th class="p-4">Invoice #</th>
+                <th class="p-4">Client Email</th>
+                <th class="p-4">Method</th>
+                <th class="p-4">Reference / UTR</th>
+                <th class="p-4">Amount (₹)</th>
+                <th class="p-4">Date</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="9" class="p-6 text-center text-on-surface-variant">Loading payment records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: CLIENT SUPPORT DESK              -->
+      <!-- ========================================== -->
+      <section id="sec-support" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Client Support Tickets Desk</h2>
+            <p class="text-xs text-on-surface-variant">Track support inquiries, priority SLA escalations, engineer responses, and internal notes.</p>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Ticket Ref</th>
+                <th class="p-4">Client Name &amp; Email</th>
+                <th class="p-4">Subject</th>
+                <th class="p-4">Priority</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Created Date</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="supportTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="7" class="p-6 text-center text-on-surface-variant">Loading support tickets...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <!-- ========================================== -->
       <!-- SECTION: OVERVIEW                          -->
       <!-- ========================================== -->
@@ -1039,6 +1321,212 @@
     </div>
   </div>
 
+  
+  <!-- Modal: Add Client -->
+  <div id="addClientModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-brand-blue">person_add</span>
+          Add New Client Profile
+        </h3>
+        <button type="button" onclick="closeModal('addClientModal')" class="text-on-surface-variant hover:text-white">&times;</button>
+      </div>
+      <form id="addClientForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Client Full Name *</label>
+          <input id="clientFullName" type="text" required placeholder="e.g. Dr. S. Xavier" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Company / Organization *</label>
+          <input id="clientCompany" type="text" required placeholder="e.g. St. Joseph College of Arts & Science" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Email Address *</label>
+            <input id="clientEmail" type="email" required placeholder="client@company.com" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Phone Number</label>
+            <input id="clientPhone" type="tel" placeholder="+91 9150270802" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">GST Number (Optional)</label>
+            <input id="clientGst" type="text" placeholder="33AAAAA0000A1Z5" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Category</label>
+            <select id="clientCategory" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="Education & Institutional">Education & Institutional</option>
+              <option value="Enterprise & Corporate">Enterprise & Corporate</option>
+              <option value="Startup & SME">Startup & SME</option>
+              <option value="Retail & E-commerce">Retail & E-commerce</option>
+              <option value="International Client">International Client</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Physical Address</label>
+          <textarea id="clientAddress" rows="2" placeholder="Full business billing address..." class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="closeModal('addClientModal')" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-brand-blue hover:bg-brand-hover text-white font-bold rounded-lg">Save Client</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Create Task -->
+  <div id="addTaskModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-brand-blue">add_task</span>
+          Create Project Task
+        </h3>
+        <button type="button" onclick="closeModal('addTaskModal')" class="text-on-surface-variant hover:text-white">&times;</button>
+      </div>
+      <form id="addTaskForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Task Title *</label>
+          <input id="taskTitle" type="text" required placeholder="e.g. Implement OAuth Flow & Token Verification" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Client Email</label>
+            <input id="taskClientEmail" type="email" placeholder="client@domain.com" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Assigned Staff</label>
+            <input id="taskAssignedStaff" type="text" placeholder="e.g. Annuncio (Lead Architect)" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Due Date</label>
+            <input id="taskDueDate" type="date" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Priority</label>
+            <select id="taskPriority" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="taskIsClientVisible" checked class="rounded border-surface-border bg-black/60 text-brand-blue"/>
+          <label for="taskIsClientVisible" class="text-white cursor-pointer font-medium">Visible to Client in their Portal</label>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="closeModal('addTaskModal')" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-brand-blue hover:bg-brand-hover text-white font-bold rounded-lg">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Generate Invoice -->
+  <div id="addInvoiceModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-400">post_add</span>
+          Generate GST Invoice (INR ₹)
+        </h3>
+        <button type="button" onclick="closeModal('addInvoiceModal')" class="text-on-surface-variant hover:text-white">&times;</button>
+      </div>
+      <form id="addInvoiceForm" class="space-y-4 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Client Full Name *</label>
+            <input id="invClientName" type="text" required placeholder="Dr. S. Xavier" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Client Email *</label>
+            <input id="invClientEmail" type="email" required placeholder="client@institution.edu" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Project Title / Service *</label>
+          <input id="invProjectTitle" type="text" required placeholder="Custom Institutional Portal & High-Throughput Engine" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Subtotal Amount (₹) *</label>
+            <input id="invAmountInr" type="number" required placeholder="50000" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">GST Type (18%)</label>
+            <select id="invGstType" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="INTRA">Intra-State: CGST (9%) + SGST (9%)</option>
+              <option value="INTER">Inter-State: IGST (18%)</option>
+              <option value="EXEMPT">Exempt / Non-GST</option>
+            </select>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Payment Due Date *</label>
+            <input id="invDueDate" type="date" required class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Notes / Bank Transfer Instructions</label>
+          <textarea id="invNotes" rows="2" placeholder="Bank: HDFC Bank / ANVION IT SERVICES / A/C: 502000... / IFSC: HDFC0001234 / UPI: 9150270802@upi" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="closeModal('addInvoiceModal')" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg">Generate &amp; Dispatch</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Record Payment -->
+  <div id="recordPaymentModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface border border-surface-border rounded-2xl max-w-md w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b border-surface-border pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-purple-400">payments</span>
+          Record Received Payment
+        </h3>
+        <button type="button" onclick="closeModal('recordPaymentModal')" class="text-on-surface-variant hover:text-white">&times;</button>
+      </div>
+      <form id="recordPaymentForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Invoice Number *</label>
+          <input id="payInvoiceNumber" type="text" required placeholder="e.g. INV-2026-1001" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Amount Paid (₹) *</label>
+            <input id="payAmountInr" type="number" required placeholder="45000" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+          </div>
+          <div>
+            <label class="block uppercase font-mono text-on-surface-variant mb-1">Payment Method</label>
+            <select id="payMethod" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue">
+              <option value="UPI (Google Pay / PhonePe)">UPI (Google Pay / PhonePe)</option>
+              <option value="Bank Transfer (NEFT / IMPS)">Bank Transfer (NEFT / IMPS)</option>
+              <option value="Cheque / Draft">Cheque / Demand Draft</option>
+              <option value="Cash / Other">Cash / Other</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block uppercase font-mono text-on-surface-variant mb-1">Transaction Ref / UTR Number</label>
+          <input id="payRefNumber" type="text" placeholder="e.g. UPI420918239012" class="w-full rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-white outline-none focus:border-brand-blue"/>
+        </div>
+        <div class="flex justify-end gap-3 pt-3 border-t border-surface-border">
+          <button type="button" onclick="closeModal('recordPaymentModal')" class="px-4 py-2 border border-surface-border text-on-surface-variant rounded-lg">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg">Confirm &amp; Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal: Generic Delete Confirmation -->
   <div id="deleteConfirmModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-surface border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
@@ -1147,6 +1635,14 @@
       // Update Top Page Title
       const titleMap = {
         overview: 'System Overview & Metrics',
+
+      clients: 'Client Directory & Enterprise Accounts',
+      leads: 'Lead Management & CRM Pipeline',
+      tasks: 'Engineering Tasks & Milestones',
+      invoices: 'Invoice & Financial Management',
+      payments: 'Payment Records & UPI Reconciliation',
+      support: 'Client Support Tickets Desk',
+
         users: 'User Directory & RBAC Security',
         enquiries: 'Project Quotation Enquiries',
         consultations: 'Technical Consultation Bookings',
@@ -1238,6 +1734,7 @@
 
         // Load all data
         loadAdminData();
+        loadExtendedModules();
       } catch (err) {
         gateTitle.textContent = 'Security Verification Error';
         gateMessage.textContent = err.message || 'Failed to authenticate claim.';
@@ -2233,6 +2730,343 @@
         showToast('Save Failed', err.message, 'error');
       }
     });
+
+    
+    // Cache for new modules
+    let cachedClients = [];
+    let cachedLeads = [];
+    let cachedTasks = [];
+    let cachedInvoices = [];
+    let cachedPayments = [];
+    let cachedTickets = [];
+
+    // Load Extended Modules
+    async function loadExtendedModules() {
+      // 1. Clients
+      try {
+        const res = await fetch('/api/admin/clients', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedClients = await res.json();
+          renderClientsTable(cachedClients);
+          const b = document.getElementById('badgeClients');
+          if (b) b.textContent = cachedClients.length;
+        }
+      } catch (e) {}
+
+      // 2. Leads
+      try {
+        const res = await fetch('/api/admin/leads', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedLeads = await res.json();
+          renderLeadsTable(cachedLeads);
+          const b = document.getElementById('badgeLeads');
+          if (b) b.textContent = cachedLeads.length;
+        }
+      } catch (e) {}
+
+      // 3. Tasks
+      try {
+        const res = await fetch('/api/admin/tasks', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedTasks = await res.json();
+          renderTasksTable(cachedTasks);
+          const b = document.getElementById('badgeTasks');
+          if (b) b.textContent = cachedTasks.length;
+        }
+      } catch (e) {}
+
+      // 4. Invoices
+      try {
+        const res = await fetch('/api/admin/invoices', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedInvoices = await res.json();
+          renderInvoicesTable(cachedInvoices);
+          const b = document.getElementById('badgeInvoices');
+          if (b) b.textContent = cachedInvoices.length;
+        }
+      } catch (e) {}
+
+      // 5. Payments
+      try {
+        const res = await fetch('/api/admin/payments', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedPayments = await res.json();
+          renderPaymentsTable(cachedPayments);
+          const b = document.getElementById('badgePayments');
+          if (b) b.textContent = cachedPayments.length;
+        }
+      } catch (e) {}
+
+      // 6. Support Tickets
+      try {
+        const res = await fetch('/api/admin/support-tickets', { credentials: 'include', headers: getAuthHeaders() });
+        if (res.ok) {
+          cachedTickets = await res.json();
+          renderSupportTable(cachedTickets);
+          const b = document.getElementById('badgeSupport');
+          if (b) b.textContent = cachedTickets.length;
+        }
+      } catch (e) {}
+    }
+
+    function getAuthHeaders() {
+      const jwt = localStorage.getItem('anvion_admin_jwt');
+      return jwt ? { 'Authorization': 'Bearer ' + jwt, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+    }
+
+    // Render Clients Table
+    function renderClientsTable(list) {
+      const tbody = document.getElementById('clientsTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-on-surface-variant">No clients registered yet. Click "Add Client" to create an account.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(c => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-mono font-bold text-white">${c.id}<br><span class="text-on-surface font-sans font-medium text-xs">${c.name}</span></td>
+          <td class="p-4 font-bold text-brand-blue">${c.companyName || 'Individual'}</td>
+          <td class="p-4 font-mono text-[11px]">${c.email}<br><span class="text-on-surface-variant font-sans">${c.phone || '-'}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] bg-white/10 text-on-surface font-mono">${c.category || 'General'}</span></td>
+          <td class="p-4 text-xs text-on-surface-variant">${c.assignedManager || 'Unassigned'}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${c.status === 'ACTIVE' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}">${c.status || 'ACTIVE'}</span></td>
+          <td class="p-4 text-right">
+            <button onclick="toggleClientStatus('${c.id}', '${c.status}')" class="px-2 py-1 rounded text-[10px] font-mono border border-surface-border hover:bg-white/5 text-on-surface">Toggle Status</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Leads Table
+    function renderLeadsTable(list) {
+      const tbody = document.getElementById('leadsTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-on-surface-variant">No leads currently in pipeline.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(l => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/10 text-indigo-400 font-mono">${l.source}</span></td>
+          <td class="p-4 font-bold text-white">${l.name}<br><span class="text-[11px] text-on-surface-variant font-normal">${l.company || ''}</span></td>
+          <td class="p-4 font-mono text-[11px]">${l.email}<br><span class="text-on-surface-variant font-sans">${l.phone || '-'}</span></td>
+          <td class="p-4 text-xs"><strong class="text-brand-blue">${l.service}</strong><br><span class="font-mono text-[10px] text-emerald-400">${l.budget}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400">${l.status}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${l.priority === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'}">${l.priority}</span></td>
+          <td class="p-4 text-right">
+            <button onclick="updateLeadStage('${l.id}')" class="px-2 py-1 rounded text-[10px] bg-brand-blue/20 text-brand-blue hover:bg-brand-blue hover:text-white transition-colors">Advance</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Tasks Table
+    function renderTasksTable(list) {
+      const tbody = document.getElementById('tasksTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-on-surface-variant">No engineering tasks found. Click "Create Task" to add one.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(t => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-bold text-white">${t.title}<br><span class="font-mono text-[10px] text-brand-blue font-normal">${t.projectId}</span></td>
+          <td class="p-4 font-mono text-[11px] text-on-surface-variant">${t.clientEmail || 'Internal ANVION'}</td>
+          <td class="p-4 text-xs text-on-surface">${t.assignedStaff || 'Team'}</td>
+          <td class="p-4 font-mono text-[11px]">${t.dueDate || 'Flexible'}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.priority === 'high' ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-on-surface'}">${t.priority.toUpperCase()}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.isClientVisible ? 'bg-emerald-500/20 text-emerald-400' : 'bg-neutral-800 text-neutral-400'}">${t.isClientVisible ? 'CLIENT PORTAL' : 'INTERNAL ONLY'}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400">${t.status}</span></td>
+          <td class="p-4 text-right">
+            <button onclick="toggleTaskVisibility('${t.id}', ${t.isClientVisible})" class="px-2 py-1 rounded text-[10px] font-mono border border-surface-border hover:bg-white/5 text-on-surface">Toggle Visibility</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Invoices Table
+    function renderInvoicesTable(list) {
+      const tbody = document.getElementById('invoicesTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="p-6 text-center text-on-surface-variant">No invoices recorded yet. Click "Generate Invoice" to create one.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(i => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-mono font-bold text-brand-blue">${i.invoiceNumber}</td>
+          <td class="p-4 font-bold text-white">${i.clientName}<br><span class="font-mono text-[11px] text-on-surface-variant font-normal">${i.clientEmail}</span></td>
+          <td class="p-4 text-xs text-on-surface">${i.projectTitle}</td>
+          <td class="p-4 font-mono text-xs">₹${Number(i.amountInr || 0).toLocaleString('en-IN')}</td>
+          <td class="p-4 font-mono text-xs text-on-surface-variant">₹${Number(i.taxInr || 0).toLocaleString('en-IN')}</td>
+          <td class="p-4 font-mono text-xs font-bold text-emerald-400">₹${Number(i.totalInr || i.amountInr || 0).toLocaleString('en-IN')}</td>
+          <td class="p-4 font-mono text-[11px]">${i.dueDate}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${i.status === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${(i.status || 'UNPAID').toUpperCase()}</span></td>
+          <td class="p-4 text-right">
+            <button onclick="printInvoiceView('${i.invoiceNumber}', '${i.clientName}', '${i.totalInr}')" class="px-2 py-1 rounded text-[10px] bg-white/5 hover:bg-white/10 text-white font-mono">Print/Receipt</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Payments Table
+    function renderPaymentsTable(list) {
+      const tbody = document.getElementById('paymentsTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="p-6 text-center text-on-surface-variant">No payments recorded yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(p => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-mono font-bold text-purple-400">${p.id}</td>
+          <td class="p-4 font-mono text-white">${p.invoiceNumber}</td>
+          <td class="p-4 font-mono text-[11px] text-on-surface-variant">${p.clientEmail || '-'}</td>
+          <td class="p-4 text-xs font-semibold">${p.method}</td>
+          <td class="p-4 font-mono text-xs text-brand-blue">${p.referenceNumber || '-'}</td>
+          <td class="p-4 font-mono text-xs font-bold text-emerald-400">₹${Number(p.amountInr || 0).toLocaleString('en-IN')}</td>
+          <td class="p-4 font-mono text-[11px]">${p.date || '-'}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">${p.status}</span></td>
+          <td class="p-4 text-right">
+            <span class="text-xs text-emerald-400 material-symbols-outlined">verified</span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Support Tickets Table
+    function renderSupportTable(list) {
+      const tbody = document.getElementById('supportTableBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-on-surface-variant">No support tickets currently logged.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(t => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4 font-mono font-bold text-pink-400">${t.ticketRef}</td>
+          <td class="p-4 font-bold text-white">${t.clientName}<br><span class="font-mono text-[11px] text-on-surface-variant font-normal">${t.clientEmail}</span></td>
+          <td class="p-4 text-xs text-on-surface font-semibold">${t.subject}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.priority === 'high' || t.priority === 'critical' ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-on-surface'}">${t.priority.toUpperCase()}</span></td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.status === 'open' ? 'bg-blue-500/20 text-blue-400' : 'bg-emerald-500/20 text-emerald-400'}">${t.status.toUpperCase()}</span></td>
+          <td class="p-4 font-mono text-[11px]">${t.createdAt ? new Date(t.createdAt).toLocaleDateString() : '-'}</td>
+          <td class="p-4 text-right">
+            <button onclick="resolveTicket('${t.id}')" class="px-2 py-1 rounded text-[10px] bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-colors">Resolve</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Form Submissions
+    document.getElementById('addClientForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('clientFullName').value,
+        companyName: document.getElementById('clientCompany').value,
+        email: document.getElementById('clientEmail').value,
+        phone: document.getElementById('clientPhone').value,
+        gstNumber: document.getElementById('clientGst').value,
+        category: document.getElementById('clientCategory').value,
+        address: document.getElementById('clientAddress').value
+      };
+      const res = await fetch('/api/admin/clients', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+      if (res.ok) {
+        showToast('Client Registered', 'Client profile established successfully.');
+        closeModal('addClientModal');
+        document.getElementById('addClientForm').reset();
+        loadExtendedModules();
+      } else {
+        showToast('Error', 'Failed to register client profile', 'error');
+      }
+    });
+
+    document.getElementById('addTaskForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('taskTitle').value,
+        clientEmail: document.getElementById('taskClientEmail').value,
+        assignedStaff: document.getElementById('taskAssignedStaff').value,
+        dueDate: document.getElementById('taskDueDate').value,
+        priority: document.getElementById('taskPriority').value,
+        isClientVisible: document.getElementById('taskIsClientVisible').checked
+      };
+      const res = await fetch('/api/admin/tasks', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+      if (res.ok) {
+        showToast('Task Created', 'Engineering sprint task registered.');
+        closeModal('addTaskModal');
+        document.getElementById('addTaskForm').reset();
+        loadExtendedModules();
+      } else {
+        showToast('Error', 'Failed to create task', 'error');
+      }
+    });
+
+    document.getElementById('addInvoiceForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const subtotal = Number(document.getElementById('invAmountInr').value);
+      const gstType = document.getElementById('invGstType').value;
+      const tax = gstType === 'EXEMPT' ? 0 : Math.round(subtotal * 0.18);
+      const payload = {
+        clientName: document.getElementById('invClientName').value,
+        clientEmail: document.getElementById('invClientEmail').value,
+        projectTitle: document.getElementById('invProjectTitle').value,
+        amountInr: subtotal,
+        taxInr: tax,
+        dueDate: document.getElementById('invDueDate').value,
+        notes: document.getElementById('invNotes').value
+      };
+      const res = await fetch('/api/admin/invoices', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+      if (res.ok) {
+        showToast('Invoice Dispatched', 'GST Invoice generated successfully.');
+        closeModal('addInvoiceModal');
+        document.getElementById('addInvoiceForm').reset();
+        loadExtendedModules();
+      } else {
+        showToast('Error', 'Failed to create invoice', 'error');
+      }
+    });
+
+    document.getElementById('recordPaymentForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        invoiceNumber: document.getElementById('payInvoiceNumber').value,
+        amountInr: document.getElementById('payAmountInr').value,
+        method: document.getElementById('payMethod').value,
+        referenceNumber: document.getElementById('payRefNumber').value
+      };
+      const res = await fetch('/api/admin/payments', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(payload) });
+      if (res.ok) {
+        showToast('Payment Recorded', 'Payment transaction reconciled and recorded.');
+        closeModal('recordPaymentModal');
+        document.getElementById('recordPaymentForm').reset();
+        loadExtendedModules();
+      } else {
+        showToast('Error', 'Failed to record payment', 'error');
+      }
+    });
+
+    window.printInvoiceView = function(invNum, clientName, total) {
+      window.print();
+    };
+
+    window.toggleTaskVisibility = async function(id, current) {
+      await fetch('/api/admin/tasks/' + id, { method: 'PATCH', headers: getAuthHeaders(), body: JSON.stringify({ isClientVisible: !current }) });
+      showToast('Visibility Toggled', 'Task visibility updated for Client Portal.');
+      loadExtendedModules();
+    };
+
+    window.toggleClientStatus = async function(id, current) {
+      const next = current === 'ACTIVE' ? 'DEACTIVATED' : 'ACTIVE';
+      await fetch('/api/admin/clients/' + id, { method: 'PATCH', headers: getAuthHeaders(), body: JSON.stringify({ status: next }) });
+      showToast('Status Updated', 'Client account set to ' + next);
+      loadExtendedModules();
+    };
+
+    window.resolveTicket = async function(id) {
+      await fetch('/api/admin/support-tickets/' + id + '/status', { method: 'PATCH', headers: getAuthHeaders(), body: JSON.stringify({ status: 'resolved' }) });
+      showToast('Ticket Resolved', 'Support ticket status closed as resolved.');
+      loadExtendedModules();
+    };
 
     // 10. Load Media Assets
     async function loadMediaAssets() {

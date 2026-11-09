@@ -45,9 +45,13 @@ export const DEFAULT_FIREBASE_CONFIG = {
 };
 
 /**
- * Retrieves the active Firebase configuration
+ * Retrieves the active Firebase configuration.
+ * Supports window.__ANVION_FIREBASE_CONFIG__ for runtime environments.
  */
 export function getActiveFirebaseConfig() {
+  if (typeof window !== "undefined" && window.__ANVION_FIREBASE_CONFIG__ && window.__ANVION_FIREBASE_CONFIG__.projectId) {
+    return window.__ANVION_FIREBASE_CONFIG__;
+  }
   return DEFAULT_FIREBASE_CONFIG;
 }
 
@@ -58,18 +62,6 @@ export function saveCustomFirebaseConfig() {
 export function resetFirebaseConfig() {
   try {
     localStorage.removeItem("anvion_custom_firebase_config");
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-/**
- * Resets Firebase configuration back to default
- */
-export function resetFirebaseConfig() {
-  try {
-    localStorage.removeItem(FIREBASE_STORAGE_KEY);
     return true;
   } catch (e) {
     return false;
@@ -94,7 +86,7 @@ try {
   isLive = true;
   console.log("[Firebase] Successfully initialized with project:", currentConfig.projectId);
 } catch (error) {
-  console.warn("[Firebase] Standard initialization warning (demo mode enabled):", error.message);
+  console.warn("[Firebase] Standard initialization warning:", error.message);
   isLive = false;
 }
 

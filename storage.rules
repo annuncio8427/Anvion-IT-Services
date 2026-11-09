@@ -42,11 +42,8 @@ service firebase.storage {
 
     // 3. Confidential Resumes (Strict Candidate Privacy: Upload allowed, Read strictly restricted to Admin)
     match /resumes/{candidateId}/{filename} {
-      // Allow candidate submission (max 5MB, PDF or Word documents only, no executables)
       allow create: if request.resource.size < 5 * 1024 * 1024 &&
         request.resource.contentType.matches('application/(pdf|msword|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document)');
-
-      // Strictly confidential: Only admins can view, download, or delete applicant resumes
       allow read, delete: if isAdmin();
       allow update: if false;
     }
@@ -56,6 +53,21 @@ service firebase.storage {
       allow create: if request.resource.size < 10 * 1024 * 1024 &&
         request.resource.contentType.matches('(application/pdf|application/msword|application/vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document|image/.*|application/zip)');
       allow read: if isAdmin() || (isSignedIn() && request.auth.uid == attachmentId);
+      allow delete: if isAdmin();
+    }
+
+    // 5. Invoices & Receipts (Admin-generated invoices, client read their own)
+    match /invoices/{clientId}/{filename} {
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == clientId);
+      allow write: if isAdmin() &&
+        request.resource.size < 15 * 1024 * 1024 &&
+        request.resource.contentType.matches('application/pdf');
+    }
+
+    // 6. Support Ticket Attachments
+    match /support-attachments/{ticketId}/{filename} {
+      allow create: if isSignedIn() && request.resource.size < 10 * 1024 * 1024;
+      allow read: if isSignedIn();
       allow delete: if isAdmin();
     }
   }

@@ -95,6 +95,151 @@ async function logAudit(adminEmail, action, details, ip) {
   }
 }
 
+
+// ==========================================
+// PORTAL DATA STORE & RESILIENT STORAGE
+// ==========================================
+const portalStore = {
+  clients: [
+    {
+      id: 'CLI-001',
+      uid: 'client-st-joseph',
+      name: 'Dr. S. Xavier',
+      companyName: 'St. Joseph College of Arts & Science',
+      email: 'principal@stjoseph.edu.in',
+      phone: '+91 98401 23456',
+      address: 'Vaikalipatti, Tamil Nadu 627808',
+      gstNumber: '33AAAAA0000A1Z5',
+      website: 'https://stjosephvaikalipatti.edu.in',
+      category: 'Education & Institutional',
+      status: 'ACTIVE',
+      assignedManager: 'Annuncio (Lead Architect)',
+      notes: 'Custom ERP and institutional examination portal development.',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: 'CLI-002',
+      uid: 'client-virgin-water',
+      name: 'R. K. Sundaram',
+      companyName: 'Virgin Water & Waste Water Solutions',
+      email: 'contact@virginwater.in',
+      phone: '+91 94432 78901',
+      address: 'Industrial Estate, Tirunelveli, Tamil Nadu',
+      gstNumber: '33BBBBB1111B2Z6',
+      website: 'https://virginwater.in',
+      category: 'Environmental & Industrial',
+      status: 'ACTIVE',
+      assignedManager: 'Annuncio (Lead Architect)',
+      notes: 'Industrial IoT monitoring dashboard and brand website.',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+  ],
+  leads: [],
+  tasks: [
+    {
+      id: 'TSK-101',
+      projectId: 'PRJ-EDU-01',
+      clientEmail: 'principal@stjoseph.edu.in',
+      title: 'Examination Gradebook Offline-Sync Engine',
+      description: 'Implement high-throughput SQLite batch concatenation with institutional export formatting.',
+      assignedStaff: 'Karthik R. (Systems Engineer)',
+      dueDate: '2026-11-20',
+      priority: 'high',
+      status: 'In Progress',
+      progress: 75,
+      isClientVisible: true,
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'TSK-102',
+      projectId: 'PRJ-VIR-01',
+      clientEmail: 'contact@virginwater.in',
+      title: 'Water Quality Telemetry Ingestion Pipeline',
+      description: 'MQTT & WebSocket sensor bridge for flow meter and pH balance metrics.',
+      assignedStaff: 'Praveen S. (Cloud Architect)',
+      dueDate: '2026-11-25',
+      priority: 'medium',
+      status: 'In Progress',
+      progress: 60,
+      isClientVisible: true,
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'TSK-103',
+      projectId: 'PRJ-EDU-01',
+      clientEmail: 'principal@stjoseph.edu.in',
+      title: 'Internal Server Hardening & Secret Rotation',
+      description: 'Private administrative task for database credential encryption.',
+      assignedStaff: 'Annuncio (Lead Architect)',
+      dueDate: '2026-11-18',
+      priority: 'high',
+      status: 'Completed',
+      progress: 100,
+      isClientVisible: false,
+      createdAt: new Date().toISOString()
+    }
+  ],
+  payments: [
+    {
+      id: 'PAY-801',
+      invoiceNumber: 'INV-2026-1001',
+      clientEmail: 'principal@stjoseph.edu.in',
+      amountInr: 45000,
+      method: 'Bank Transfer (NEFT)',
+      referenceNumber: 'NEFT9201948201',
+      status: 'VERIFIED',
+      recordedBy: 'annuncio8427@gmail.com',
+      date: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString()
+    }
+  ],
+  notifications: []
+};
+
+// Server-side idempotent bootstrap for initial Super Administrator
+async function bootstrapSuperAdmin() {
+  const email = (process.env.INITIAL_ADMIN_EMAIL || 'annuncio8427@gmail.com').trim().toLowerCase();
+  const password = process.env.INITIAL_ADMIN_PASSWORD || 'Annuncio@08';
+
+  if (adminAuth) {
+    try {
+      let user;
+      try {
+        user = await adminAuth.getUserByEmail(email);
+      } catch (err) {
+        if (err.code === 'auth/user-not-found') {
+          user = await adminAuth.createUser({
+            email,
+            password,
+            displayName: 'Super Administrator',
+            emailVerified: true,
+          });
+          console.log(`[Bootstrap] Created Firebase Super Admin Auth user: ${email}`);
+        }
+      }
+
+      if (user) {
+        await adminAuth.setCustomUserClaims(user.uid, { admin: true, role: 'SUPER_ADMIN' });
+        if (adminDb) {
+          await adminDb.collection('admins').doc(user.uid).set({
+            uid: user.uid,
+            email,
+            role: 'ADMIN',
+            superAdmin: true,
+            name: 'Super Administrator',
+            updatedAt: new Date().toISOString(),
+          }, { merge: true });
+        }
+      }
+    } catch (err) {
+      console.warn('[Bootstrap] Firebase Admin notice:', err.message);
+    }
+  }
+}
+bootstrapSuperAdmin();
+
 // ==========================================
 // 1. PUBLIC API ROUTES
 // ==========================================
@@ -1359,6 +1504,637 @@ app.post('/api/admin/pricing-rules', requireAdminAuth, async (req, res) => {
   }
 });
 
+
+// ==========================================
+// EXTENDED ADMIN PORTAL API (Protected by requireAdminAuth)
+// ==========================================
+
+// Client Management
+app.get('/api/admin/clients', requireAdminAuth, async (req, res) => {
+  try {
+    if (adminDb) {
+      try {
+        const snap = await adminDb.collection('clients').get();
+        if (!snap.empty) {
+          const list = [];
+          snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+          return res.json(list);
+        }
+      } catch (e) {}
+    }
+    res.json(portalStore.clients);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch clients' });
+  }
+});
+
+app.post('/api/admin/clients', requireAdminAuth, async (req, res) => {
+  try {
+    const { name, companyName, email, phone, address, gstNumber, website, category, notes, assignedManager } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ error: 'Client name and email are required.' });
+    }
+
+    const clientId = `CLI-${Date.now().toString().slice(-4)}`;
+    const newClient = {
+      id: clientId,
+      uid: `client-${Date.now().toString(36)}`,
+      name: name.trim(),
+      companyName: (companyName || '').trim(),
+      email: email.trim().toLowerCase(),
+      phone: (phone || '').trim(),
+      address: (address || '').trim(),
+      gstNumber: (gstNumber || '').trim(),
+      website: (website || '').trim(),
+      category: category || 'General',
+      status: 'ACTIVE',
+      assignedManager: assignedManager || 'Annuncio (Lead Architect)',
+      notes: notes || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (adminDb) {
+      try {
+        await adminDb.collection('clients').doc(clientId).set(newClient);
+      } catch (e) {}
+    }
+    portalStore.clients.unshift(newClient);
+
+    await logAudit(req.user?.email || 'admin', 'CREATE_CLIENT', `Created Client ${name} (${email})`, req.ip);
+    res.status(201).json(newClient);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create client record', details: error.message });
+  }
+});
+
+app.patch('/api/admin/clients/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = { ...req.body, updatedAt: new Date().toISOString() };
+    delete updates.id;
+
+    if (adminDb) {
+      try {
+        await adminDb.collection('clients').doc(id).set(updates, { merge: true });
+      } catch (e) {}
+    }
+
+    const idx = portalStore.clients.findIndex(c => c.id === id);
+    if (idx !== -1) {
+      portalStore.clients[idx] = { ...portalStore.clients[idx], ...updates };
+    }
+
+    await logAudit(req.user?.email || 'admin', 'UPDATE_CLIENT', `Updated Client ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update client' });
+  }
+});
+
+app.delete('/api/admin/clients/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (adminDb) {
+      try {
+        await adminDb.collection('clients').doc(id).delete();
+      } catch (e) {}
+    }
+    portalStore.clients = portalStore.clients.filter(c => c.id !== id);
+    await logAudit(req.user?.email || 'admin', 'DELETE_CLIENT', `Deleted Client ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete client' });
+  }
+});
+
+// Leads & CRM Management
+app.get('/api/admin/leads', requireAdminAuth, async (req, res) => {
+  try {
+    let enquiries = [];
+    try {
+      enquiries = await db.select().from(projectEnquiries).orderBy(desc(projectEnquiries.createdAt));
+    } catch (e) {
+      enquiries = [];
+    }
+
+    let messages = [];
+    try {
+      messages = await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+    } catch (e) {
+      messages = [];
+    }
+
+    const mappedLeads = [
+      ...portalStore.leads,
+      ...enquiries.map(e => ({
+        id: `ENQ-${e.id}`,
+        source: 'Website Start a Project',
+        name: e.name,
+        email: e.email,
+        phone: e.phone,
+        company: e.company || '',
+        service: Array.isArray(e.servicesNeeded) ? e.servicesNeeded.join(', ') : (e.servicesNeeded || 'General'),
+        budget: e.budget || 'Custom',
+        timeline: e.timeline || 'Flexible',
+        description: e.projectDescription,
+        status: e.status === 'new' ? 'New' : e.status === 'contacted' ? 'Contacted' : e.status === 'in_review' ? 'Qualified' : 'Converted',
+        priority: 'High',
+        createdAt: e.createdAt || new Date().toISOString()
+      })),
+      ...messages.map(m => ({
+        id: `MSG-${m.id}`,
+        source: 'Website Contact Form',
+        name: m.name,
+        email: m.email,
+        phone: m.phone || '',
+        company: m.company || '',
+        service: m.service || 'Inquiry',
+        budget: m.budget || 'Custom',
+        description: m.message,
+        status: m.status === 'unread' ? 'New' : m.status === 'replied' ? 'Contacted' : 'Qualified',
+        priority: 'Medium',
+        createdAt: m.createdAt || new Date().toISOString()
+      }))
+    ];
+
+    res.json(mappedLeads);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to aggregate CRM leads' });
+  }
+});
+
+app.post('/api/admin/leads', requireAdminAuth, async (req, res) => {
+  try {
+    const { name, email, phone, company, service, budget, description, status, priority, source } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ error: 'Name and email are required for leads.' });
+    }
+
+    const leadId = `LEAD-${Date.now().toString().slice(-5)}`;
+    const newLead = {
+      id: leadId,
+      source: source || 'Manual Entry',
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: (phone || '').trim(),
+      company: (company || '').trim(),
+      service: service || 'Custom Software',
+      budget: budget || '₹50,000 - ₹1,00,000',
+      description: description || '',
+      status: status || 'New',
+      priority: priority || 'Medium',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    portalStore.leads.unshift(newLead);
+    if (adminDb) {
+      try {
+        await adminDb.collection('leads').doc(leadId).set(newLead);
+      } catch (e) {}
+    }
+
+    await logAudit(req.user?.email || 'admin', 'CREATE_LEAD', `Added Lead ${name} (${email})`, req.ip);
+    res.status(201).json(newLead);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to record lead' });
+  }
+});
+
+app.patch('/api/admin/leads/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status, priority, notes } = req.body;
+
+    const lead = portalStore.leads.find(l => l.id === id);
+    if (lead) {
+      if (status) lead.status = status;
+      if (priority) lead.priority = priority;
+      if (notes) lead.notes = notes;
+      lead.updatedAt = new Date().toISOString();
+    }
+
+    await logAudit(req.user?.email || 'admin', 'UPDATE_LEAD', `Updated Lead ${id} -> ${status || priority}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update lead status' });
+  }
+});
+
+// Tasks & Milestones Management
+app.get('/api/admin/tasks', requireAdminAuth, async (req, res) => {
+  try {
+    if (adminDb) {
+      try {
+        const snap = await adminDb.collection('tasks').get();
+        if (!snap.empty) {
+          const list = [];
+          snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+          return res.json(list);
+        }
+      } catch (e) {}
+    }
+    res.json(portalStore.tasks);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch tasks' });
+  }
+});
+
+app.post('/api/admin/tasks', requireAdminAuth, async (req, res) => {
+  try {
+    const { title, projectId, clientEmail, assignedStaff, dueDate, priority, status, isClientVisible, description } = req.body;
+    if (!title) {
+      return res.status(400).json({ error: 'Task title is required.' });
+    }
+
+    const taskId = `TSK-${Date.now().toString().slice(-4)}`;
+    const newTask = {
+      id: taskId,
+      title: title.trim(),
+      projectId: projectId || 'PRJ-GEN',
+      clientEmail: (clientEmail || '').trim().toLowerCase(),
+      assignedStaff: assignedStaff || 'Engineering Team',
+      dueDate: dueDate || '',
+      priority: priority || 'medium',
+      status: status || 'To Do',
+      progress: status === 'Completed' ? 100 : 0,
+      isClientVisible: isClientVisible !== false,
+      description: description || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    portalStore.tasks.unshift(newTask);
+    if (adminDb) {
+      try {
+        await adminDb.collection('tasks').doc(taskId).set(newTask);
+      } catch (e) {}
+    }
+
+    await logAudit(req.user?.email || 'admin', 'CREATE_TASK', `Created Task ${title}`, req.ip);
+    res.status(201).json(newTask);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create task' });
+  }
+});
+
+app.patch('/api/admin/tasks/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = { ...req.body, updatedAt: new Date().toISOString() };
+
+    const idx = portalStore.tasks.findIndex(t => t.id === id);
+    if (idx !== -1) {
+      portalStore.tasks[idx] = { ...portalStore.tasks[idx], ...updates };
+    }
+
+    if (adminDb) {
+      try {
+        await adminDb.collection('tasks').doc(id).set(updates, { merge: true });
+      } catch (e) {}
+    }
+
+    await logAudit(req.user?.email || 'admin', 'UPDATE_TASK', `Updated Task ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update task' });
+  }
+});
+
+app.delete('/api/admin/tasks/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    portalStore.tasks = portalStore.tasks.filter(t => t.id !== id);
+    if (adminDb) {
+      try {
+        await adminDb.collection('tasks').doc(id).delete();
+      } catch (e) {}
+    }
+    await logAudit(req.user?.email || 'admin', 'DELETE_TASK', `Deleted Task ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete task' });
+  }
+});
+
+// Payments & Receipts
+app.get('/api/admin/payments', requireAdminAuth, async (req, res) => {
+  try {
+    if (adminDb) {
+      try {
+        const snap = await adminDb.collection('payments').get();
+        if (!snap.empty) {
+          const list = [];
+          snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+          return res.json(list);
+        }
+      } catch (e) {}
+    }
+    res.json(portalStore.payments);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch payments' });
+  }
+});
+
+app.post('/api/admin/payments', requireAdminAuth, async (req, res) => {
+  try {
+    const { invoiceNumber, clientEmail, amountInr, method, referenceNumber, notes } = req.body;
+    if (!invoiceNumber || !amountInr) {
+      return res.status(400).json({ error: 'Invoice number and amount are required.' });
+    }
+
+    const paymentId = `PAY-${Date.now().toString().slice(-4)}`;
+    const newPayment = {
+      id: paymentId,
+      invoiceNumber: invoiceNumber.trim(),
+      clientEmail: (clientEmail || '').trim().toLowerCase(),
+      amountInr: Number(amountInr),
+      method: method || 'Bank Transfer / UPI',
+      referenceNumber: referenceNumber || `REF-${Date.now().toString(36).toUpperCase()}`,
+      status: 'VERIFIED',
+      recordedBy: req.user?.email || 'admin',
+      notes: notes || '',
+      date: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString()
+    };
+
+    portalStore.payments.unshift(newPayment);
+
+    try {
+      if (db) {
+        await db.update(invoices).set({ status: 'paid', paidDate: newPayment.date }).where(eq(invoices.invoiceNumber, invoiceNumber));
+      }
+    } catch (e) {}
+
+    if (adminDb) {
+      try {
+        await adminDb.collection('payments').doc(paymentId).set(newPayment);
+      } catch (e) {}
+    }
+
+    await logAudit(req.user?.email || 'admin', 'RECORD_PAYMENT', `Recorded ₹${amountInr} for ${invoiceNumber}`, req.ip);
+    res.status(201).json(newPayment);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to record payment' });
+  }
+});
+
+app.patch('/api/admin/payments/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status, notes } = req.body;
+    const payment = portalStore.payments.find(p => p.id === id);
+    if (payment) {
+      if (status) payment.status = status;
+      if (notes) payment.notes = notes;
+    }
+    await logAudit(req.user?.email || 'admin', 'UPDATE_PAYMENT', `Updated Payment ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update payment' });
+  }
+});
+
+// Admin Audit Logs (Immutable)
+app.get('/api/admin/audit-logs', requireAdminAuth, async (req, res) => {
+  try {
+    let logs = [];
+    try {
+      logs = await db.select().from(auditLogs).orderBy(desc(auditLogs.createdAt)).limit(100);
+    } catch (e) {
+      logs = [];
+    }
+    res.json(logs);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch audit logs' });
+  }
+});
+
+// Admin CMS & Dynamic Content
+app.get('/api/admin/website-content', requireAdminAuth, async (req, res) => {
+  try {
+    if (adminDb) {
+      try {
+        const docSnap = await adminDb.collection('websiteContent').doc('global').get();
+        if (docSnap.exists) {
+          return res.json(docSnap.data());
+        }
+      } catch (e) {}
+    }
+    res.json({
+      companyName: 'ANVION IT SERVICES',
+      tagline: 'We Build Digital Products That Scale Real Businesses',
+      officialEmail: 'anvionitservices@gmail.com',
+      officialPhone: '+91 9150270802',
+      address: 'Tamil Nadu, India',
+      msmeNumber: 'UDYAM-TN-09-0098980'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch website content' });
+  }
+});
+
+app.post('/api/admin/website-content', requireAdminAuth, async (req, res) => {
+  try {
+    const data = { ...req.body, updatedAt: new Date().toISOString() };
+    if (adminDb) {
+      try {
+        await adminDb.collection('websiteContent').doc('global').set(data, { merge: true });
+      } catch (e) {}
+    }
+    await logAudit(req.user?.email || 'admin', 'UPDATE_CMS_CONTENT', 'Saved website content parameters', req.ip);
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update CMS content' });
+  }
+});
+
+app.patch('/api/admin/website-content/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = { ...req.body, updatedAt: new Date().toISOString() };
+    if (adminDb) {
+      try {
+        await adminDb.collection('websiteContent').doc(id).set(data, { merge: true });
+      } catch (e) {}
+    }
+    await logAudit(req.user?.email || 'admin', 'UPDATE_CMS_ENTITY', `Updated ${id}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update CMS entity' });
+  }
+});
+
+// ==========================================
+// CLIENT PORTAL EXTENSIONS (Protected by requireAuth)
+// ==========================================
+
+app.get('/api/portal/projects', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    if (!email) return res.status(403).json({ error: 'Authenticated email required.' });
+
+    let list = [];
+    try {
+      list = await db.select().from(projects).where(eq(projects.status, 'published'));
+    } catch (e) {
+      list = [];
+    }
+
+    let milestones = [];
+    try {
+      milestones = await db.select().from(projectMilestones).where(eq(projectMilestones.clientEmail, email));
+    } catch (e) {}
+
+    res.json({
+      projects: list,
+      milestones
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve client projects' });
+  }
+});
+
+app.get('/api/portal/tasks', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    const uid = req.user?.uid;
+    if (!email) return res.status(403).json({ error: 'Authenticated identity required.' });
+
+    const clientTasks = portalStore.tasks.filter(t => 
+      t.isClientVisible === true && 
+      (!t.clientEmail || t.clientEmail === email || t.clientId === uid)
+    );
+
+    res.json(clientTasks);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load client tasks' });
+  }
+});
+
+app.get('/api/portal/payments', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    if (!email) return res.status(403).json({ error: 'Authenticated email required.' });
+
+    const clientPayments = portalStore.payments.filter(p => p.clientEmail === email);
+    res.json(clientPayments);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load client payment history' });
+  }
+});
+
+app.post('/api/portal/payments/reference', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    const { invoiceNumber, amountInr, referenceNumber, paymentMethod, notes } = req.body;
+    if (!invoiceNumber || !amountInr || !referenceNumber) {
+      return res.status(400).json({ error: 'Invoice number, amount, and reference number/UTR are required.' });
+    }
+
+    const paymentId = `PAY-REF-${Date.now().toString().slice(-4)}`;
+    const submission = {
+      id: paymentId,
+      invoiceNumber: invoiceNumber.trim(),
+      clientEmail: email,
+      amountInr: Number(amountInr),
+      method: paymentMethod || 'UPI / Bank Transfer',
+      referenceNumber: referenceNumber.trim(),
+      status: 'PENDING_VERIFICATION',
+      notes: notes || '',
+      date: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString()
+    };
+
+    portalStore.payments.push(submission);
+    res.status(201).json({
+      success: true,
+      message: 'Payment reference submitted successfully. Our accounts team will verify and update your invoice.',
+      payment: submission
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to submit payment reference' });
+  }
+});
+
+app.get('/api/portal/profile', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    const client = portalStore.clients.find(c => c.email === email);
+    res.json({
+      uid: req.user?.uid,
+      email: req.user?.email,
+      name: client?.name || req.user?.name || req.user?.email?.split('@')[0],
+      companyName: client?.companyName || 'Enterprise Partner',
+      phone: client?.phone || '',
+      address: client?.address || '',
+      role: req.user?.role || 'CLIENT',
+      assignedManager: client?.assignedManager || 'Annuncio (Lead Architect)'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch client profile' });
+  }
+});
+
+app.patch('/api/portal/profile', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    const { name, phone, companyName, address } = req.body;
+
+    let client = portalStore.clients.find(c => c.email === email);
+    if (!client) {
+      client = {
+        id: `CLI-${Date.now().toString().slice(-4)}`,
+        uid: req.user?.uid,
+        email,
+        name: name || '',
+        phone: phone || '',
+        companyName: companyName || '',
+        address: address || '',
+        status: 'ACTIVE',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      portalStore.clients.push(client);
+    } else {
+      if (name) client.name = name.trim();
+      if (phone) client.phone = phone.trim();
+      if (companyName) client.companyName = companyName.trim();
+      if (address) client.address = address.trim();
+      client.updatedAt = new Date().toISOString();
+    }
+
+    res.json({ success: true, profile: client });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update client profile' });
+  }
+});
+
+app.get('/api/portal/notifications', requireAuth, async (req, res) => {
+  try {
+    const items = [
+      {
+        id: 'NOTIF-1',
+        title: 'Project Sprint 4 In Progress',
+        message: 'Milestone build deliverables updated by engineering team.',
+        read: false,
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'NOTIF-2',
+        title: 'Enterprise Architecture Support Online',
+        message: 'Your dedicated SLA response channel is operational (< 15 min guarantee).',
+        read: true,
+        timestamp: new Date(Date.now() - 86400000).toISOString()
+      }
+    ];
+    res.json(items);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load notifications' });
+  }
+});
+
 // ==========================================
 // 3. STATIC FILES & FALLBACK
 // ==========================================
@@ -1393,6 +2169,18 @@ app.get('/signup', servePage('signup.html'));
 app.get('/forgot-password', servePage('forgot-password.html'));
 app.get('/profile', servePage('profile.html'));
 app.get('/portal', servePage('dashboard.html'));
+app.get('/dashboard', servePage('dashboard.html'));
+app.get('/admin/dashboard', servePage('admin.html'));
+app.get('/admin/clients', servePage('admin.html'));
+app.get('/admin/leads', servePage('admin.html'));
+app.get('/admin/projects', servePage('admin.html'));
+app.get('/admin/tasks', servePage('admin.html'));
+app.get('/admin/invoices', servePage('admin.html'));
+app.get('/admin/payments', servePage('admin.html'));
+app.get('/admin/services', servePage('admin.html'));
+app.get('/admin/messages', servePage('admin.html'));
+app.get('/admin/settings', servePage('admin.html'));
+
 app.get('/admin-login', servePage('admin-login.html'));
 app.get('/admin/login', servePage('admin/login.html'));
 app.get('/admin', servePage('admin.html'));

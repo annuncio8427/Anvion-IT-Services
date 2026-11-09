@@ -258,3 +258,52 @@ test('Responsive stylesheet build copies nested CSS assets into Vercel output', 
   assert.ok(existsSync(new URL('./public/css/mobile-responsive.css', import.meta.url)));
   assert.ok(!existsSync(new URL('./public/css/index.html', import.meta.url)), 'Legacy HTML inside css/ should not be copied');
 });
+
+test('extended admin portal routes strictly enforce requireAdminAuth', () => {
+  const extendedAdminPaths = [
+    '/api/admin/clients',
+    '/api/admin/leads',
+    '/api/admin/tasks',
+    '/api/admin/payments',
+    '/api/admin/audit-logs',
+    '/api/admin/website-content'
+  ];
+
+  for (const p of extendedAdminPaths) {
+    const regex = new RegExp(`app\\.(?:get|post|patch|delete)\\(\\s*['"]` + p.replace('/', '\\/') + `(?:\\/:[a-zA-Z0-9_]+)?['"]\\s*,\\s*([A-Za-z_$][\\w$]*)`);
+    const match = server.match(regex);
+    assert.ok(match, `Route ${p} should be registered in server.js`);
+    assert.equal(match[1], 'requireAdminAuth', `Route ${p} must use requireAdminAuth`);
+  }
+});
+
+test('client portal routes strictly require user authentication and ownership', () => {
+  const portalRoutes = [
+    '/api/portal/overview',
+    '/api/portal/invoices',
+    '/api/portal/tickets',
+    '/api/portal/projects',
+    '/api/portal/tasks',
+    '/api/portal/payments',
+    '/api/portal/profile'
+  ];
+
+  for (const p of portalRoutes) {
+    const regex = new RegExp(`app\\.(?:get|post|patch)\\(\\s*['"]` + p.replace('/', '\\/') + `(?:\\/[a-zA-Z0-9_\\-]+)?['"]\\s*,\\s*([A-Za-z_$][\\w$]*)`);
+    const match = server.match(regex);
+    assert.ok(match, `Portal route ${p} should be registered in server.js`);
+    assert.equal(match[1], 'requireAuth', `Portal route ${p} must use requireAuth`);
+  }
+});
+
+test('task tracking enforces client visibility restrictions', () => {
+  assert.ok(server.includes('isClientVisible === true'), 'Server must filter client-visible tasks');
+  assert.ok(rules.includes("existing().get('isClientVisible', false) == true"), 'Firestore rules must check isClientVisible');
+});
+
+test('firestore rules enforce immutable audit logs and prevent role escalation', () => {
+  assert.ok(rules.includes("match /adminAuditLogs/{logId}"));
+  assert.ok(rules.includes("allow update, delete: if false;"));
+  assert.ok(rules.includes("incoming().role == 'USER'"));
+  assert.ok(rules.includes("Never allow modifying role or UID"));
+});
