@@ -439,7 +439,7 @@ function updateMobileDrawerAuthState(user) {
  * Injects Universal Floating WhatsApp Button on all pages
  */
 function initWhatsAppWidget() {
-  if (document.getElementById("anvionWhatsAppFloat")) return;
+  if (document.getElementById("anvionWhatsAppFloat") || document.getElementById("anvionCommunicationSuite") || document.getElementById("anvionAiLauncher")) return;
 
   const waBtn = document.createElement("a");
   waBtn.id = "anvionWhatsAppFloat";
