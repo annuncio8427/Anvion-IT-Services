@@ -254,3 +254,94 @@ export const auditLogs = pgTable('audit_logs', {
   ipAddress: text('ip_address'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+// 17. Consultations Booking table
+export const consultations = pgTable('consultations', {
+  id: serial('id').primaryKey(),
+  bookingRef: text('booking_ref').notNull().unique(),
+  clientName: text('client_name').notNull(),
+  clientEmail: text('client_email').notNull(),
+  clientPhone: text('client_phone').notNull(),
+  company: text('company'),
+  consultationType: text('consultation_type').notNull(), // Technical Architecture, Product Discovery, Growth Audit, Enterprise Modernization
+  scheduledDate: text('scheduled_date').notNull(), // YYYY-MM-DD
+  timeSlot: text('time_slot').notNull(), // e.g. 10:00 AM, 02:00 PM
+  notes: text('notes'),
+  status: text('status').default('confirmed').notNull(), // confirmed, completed, cancelled, rescheduled
+  meetingLink: text('meeting_link'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// 18. Enquiry Follow-up Notes table
+export const enquiryNotes = pgTable('enquiry_notes', {
+  id: serial('id').primaryKey(),
+  enquiryId: integer('enquiry_id').references(() => projectEnquiries.id).notNull(),
+  authorEmail: text('author_email').notNull(),
+  note: text('note').notNull(),
+  previousStatus: text('previous_status'),
+  newStatus: text('new_status'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// 19. Project Milestones table (Client Portal & Project Tracking)
+export const projectMilestones = pgTable('project_milestones', {
+  id: serial('id').primaryKey(),
+  projectId: integer('project_id').references(() => projects.id),
+  clientEmail: text('client_email').notNull(),
+  title: text('title').notNull(),
+  description: text('description'),
+  sequenceOrder: integer('sequence_order').default(1).notNull(),
+  status: text('status').default('pending').notNull(), // pending, in_progress, completed, delayed
+  targetDate: text('target_date'),
+  completedDate: text('completed_date'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// 20. Invoices table (Client Portal Billing)
+export const invoices = pgTable('invoices', {
+  id: serial('id').primaryKey(),
+  invoiceNumber: text('invoice_number').notNull().unique(),
+  clientEmail: text('client_email').notNull(),
+  clientName: text('client_name').notNull(),
+  projectTitle: text('project_title').notNull(),
+  amountInr: integer('amount_inr').notNull(),
+  taxInr: integer('tax_inr').default(0).notNull(),
+  totalInr: integer('total_inr').notNull(),
+  status: text('status').default('unpaid').notNull(), // unpaid, paid, overdue, cancelled
+  dueDate: text('due_date').notNull(),
+  paidDate: text('paid_date'),
+  pdfUrl: text('pdf_url'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// 21. Client Support Tickets table
+export const supportTickets = pgTable('support_tickets', {
+  id: serial('id').primaryKey(),
+  ticketRef: text('ticket_ref').notNull().unique(),
+  clientEmail: text('client_email').notNull(),
+  clientName: text('client_name').notNull(),
+  subject: text('subject').notNull(),
+  priority: text('priority').default('medium').notNull(), // low, medium, high, critical
+  status: text('status').default('open').notNull(), // open, in_progress, resolved, closed
+  message: text('message').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// 22. Service Pricing Rules table
+export const servicePricing = pgTable('service_pricing', {
+  id: serial('id').primaryKey(),
+  serviceSlug: text('service_slug').notNull().unique(),
+  serviceName: text('service_name').notNull(),
+  basePriceInr: integer('base_price_inr').notNull(),
+  perPageRateInr: integer('per_page_rate_inr').default(2500).notNull(),
+  authIntegrationPriceInr: integer('auth_integration_price_inr').default(8000).notNull(),
+  paymentGatewayPriceInr: integer('payment_gateway_price_inr').default(10000).notNull(),
+  cmsIntegrationPriceInr: integer('cms_integration_price_inr').default(12000).notNull(),
+  monthlyMaintenanceInr: integer('monthly_maintenance_inr').default(5000).notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+

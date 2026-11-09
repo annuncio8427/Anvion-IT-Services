@@ -60,6 +60,18 @@ export const SEO_PAGES = {
     title: 'Careers at ANVION IT Services | Build With Us',
     description: 'Explore opportunities to learn, collaborate and contribute to web, mobile, software and emerging technology projects at ANVION IT SERVICES.',
   },
+  'internships.html': {
+    title: 'Internship Applications | Student Programs - ANVION IT SERVICES',
+    description: 'Apply for hands-on student internships in Full-Stack Web, Flutter Mobile Apps, AI Automation and UI/UX Design at ANVION IT Services. Govt. MSME recognized experience.',
+  },
+  'pricing.html': {
+    title: 'Transparent Pricing & Project Cost Estimator | ANVION IT SERVICES',
+    description: 'Explore transparent milestone pricing and calculate your custom web, mobile, or software project cost in INR with the ANVION IT Services interactive quotation estimator.',
+  },
+  'blog.html': {
+    title: 'Engineering Blog & Technical Insights | ANVION IT SERVICES',
+    description: 'Technical deep dives, architectural breakdowns, Flutter engineering, sub-50ms desktop software, and cloud systems by ANVION IT Services.',
+  },
   'solution.html': {
     title: 'Business Technology Solutions | ANVION IT SERVICES',
     description: 'Explore ANVION solutions for CRM systems, e-commerce, education technology, applied AI and specialized digital architectures.',
@@ -83,6 +95,7 @@ export const SEO_PAGES = {
 };
 
 const NOINDEX_PAGES = [
+  '404.html',
   'admin.html',
   'admin-login.html',
   'admin/login.html',
