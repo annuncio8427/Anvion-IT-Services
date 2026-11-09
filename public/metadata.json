@@ -1,0 +1,8 @@
+{
+  "name": "Anvion IT Services",
+  "description": "Official website for Anvion IT Services showcasing digital solutions, web & mobile development, cloud infrastructure, and consulting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

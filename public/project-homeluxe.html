@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>HOMELUXE Luxury Real Estate - Case Study | ANVION IT SERVICES</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <!-- Custom Modern Stylesheet -->
+  <link rel="stylesheet" href="css/custom-styles.css"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#0E1015",
+            "surface-low": "#08090C",
+            "surface-card": "#12141C",
+            "surface-border": "rgba(255, 255, 255, 0.1)",
+            "brand-blue": "#00A3FF",
+            "brand-gold": "#D4AF37",
+            "brand-teal": "#2DD4BF"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            serif: ["Playfair Display", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+<link rel="stylesheet" href="/css/mobile-responsive.css">
+</head>
+
+<body class="bg-surface-low text-[#E3E2E7] font-sans antialiased min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-blue selection:text-white mesh-bg">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-amber-500/10 blur-[150px] pointer-events-none -z-10"></div>
+  <div class="fixed top-[35%] right-[-10%] w-[500px] h-[500px] rounded-full bg-brand-blue/10 blur-[150px] pointer-events-none -z-10"></div>
+
+  <!-- Header -->
+  <header class="bg-surface/80 backdrop-blur-md sticky top-0 border-b border-white/10 z-50">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="h-10 w-10 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue transition-colors">
+            <img src="images/logo.png" alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110"/>
+          </div>
+          <span class="font-display font-extrabold text-xl tracking-tight text-white group-hover:text-brand-blue transition-colors">ANVION</span>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex gap-8 items-center text-sm font-semibold">
+        <a class="text-neutral-400 hover:text-white transition-colors" href="index.html">Home</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="services.html">Services</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="solution.html">Solutions</a>
+        <a class="text-white border-b-2 border-brand-blue pb-1" href="projects.html">Projects</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-4">
+        <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1.5 px-3 py-2 border border-amber-500/30 rounded-lg bg-amber-500/10">
+          <span>Live Demo</span>
+          <span class="material-symbols-outlined text-xs">open_in_new</span>
+        </a>
+        <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-md shadow-brand-blue/20 transition-all btn-glow">Start a Project</a>
+      </div>
+
+      <button class="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Case Study Header -->
+    <section class="relative pt-16 pb-20 px-6 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-3/5 space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">Luxury Real Estate Platform</span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/30">React &bull; Vite &bull; Tailwind</span>
+            <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 flex items-center gap-1.5 hover:bg-emerald-900/60 transition-colors">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>Live on Vercel</span>
+              <span class="material-symbols-outlined text-xs">arrow_outward</span>
+            </a>
+          </div>
+
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white leading-tight">
+            HOMELUXE: <span class="bg-gradient-to-r from-amber-300 via-amber-100 to-amber-400 bg-clip-text text-transparent">Premier Indian Luxury Real Estate Marketplace.</span>
+          </h1>
+
+          <p class="text-neutral-300 text-lg leading-relaxed">
+            A state-of-the-art web application engineered by ANVION for India's high-net-worth real estate landscape. Featuring verified high-value listings across Mumbai, Goa, Bengaluru, Delhi NCR, and Kochi with automated multi-million INR pricing, AI valuations, and certified RERA compliance advisory.
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/10 text-xs">
+            <div>
+              <p class="text-neutral-400 uppercase font-mono tracking-wider">Client / Market</p>
+              <p class="text-white font-bold text-sm mt-1">Indian Luxury Real Estate</p>
+            </div>
+            <div>
+              <p class="text-neutral-400 uppercase font-mono tracking-wider">Inventory Value</p>
+              <p class="text-amber-400 font-bold text-sm mt-1">&#8377; 4.5 Cr &ndash; &#8377; 48 Cr+</p>
+            </div>
+            <div>
+              <p class="text-neutral-400 uppercase font-mono tracking-wider">Regulatory Compliance</p>
+              <p class="text-white font-bold text-sm mt-1">RERA Certified Advisory</p>
+            </div>
+            <div>
+              <p class="text-neutral-400 uppercase font-mono tracking-wider">Tech Architecture</p>
+              <p class="text-brand-blue font-bold text-sm mt-1">React 18 + Vite SPA</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-extrabold text-sm px-7 py-3.5 rounded-xl shadow-lg shadow-amber-500/25 transition-all inline-flex items-center gap-2">
+              <span>Explore Live Platform</span>
+              <span class="material-symbols-outlined text-base">open_in_new</span>
+            </a>
+            <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 transition-all inline-flex items-center gap-2">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
+              <span>Build Real Estate App</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Visual Showcase -->
+        <div class="lg:w-2/5 relative">
+          <div class="relative rounded-2xl overflow-hidden border border-amber-500/30 shadow-2xl shadow-amber-500/10 group">
+            <img src="images/projects/homeluxe/homeluxe-hero.jpg" alt="HomeLuxe Luxury Villa Hero" class="w-full h-80 sm:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-700"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-black/70 backdrop-blur-md border border-white/10">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-amber-400 font-bold uppercase tracking-wider font-mono">Live Indian Luxury Listing</span>
+                <span class="text-white font-mono font-bold">&#8377; 18.5 Cr</span>
+              </div>
+              <p class="text-white font-bold text-sm mt-1">4 BHK Luxury Coastal Villa with Private Pool</p>
+              <p class="text-neutral-400 text-xs mt-0.5">Candolim Beachfront, North Goa &bull; 6,200 sq.ft</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery Showcase -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-amber-400 font-mono">Showcase &bull; Curated Estates</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mt-2">Visual Gallery of Verified Listings</h2>
+          <p class="text-neutral-400 text-sm mt-2 max-w-2xl">
+            Each estate showcased on HOMELUXE features high-definition spatial photography, certified floorplans, virtual tour capabilities, and verified land registry coordinates.
+          </p>
+        </div>
+        <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-4 md:mt-0 inline-flex items-center gap-1.5 text-xs text-amber-400 font-bold hover:underline">
+          <span>View All 15+ Active Listings</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Image Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1: Sea-Facing Sky Mansion -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-sky-mansion.jpg" alt="5 BHK Sea-Facing Sky Mansion Worli Mumbai" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">MUMBAI &bull; WORLI</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">&#8377; 48.0 Cr</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">5 BHK Sea-Facing Sky Mansion</h3>
+            <p class="text-xs text-neutral-400 mt-1">Worli Sea Face &bull; 8,500 sq.ft &bull; Private Infinity Deck</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-emerald-400 font-semibold">&check; MAHARERA Verified</span>
+              <span>&bull;</span>
+              <span>Ultra-HNW Portfolio</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Coastal Villa -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-coastal-villa.jpg" alt="4 BHK Luxury Coastal Villa Goa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">GOA &bull; CANDOLIM</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">&#8377; 18.5 Cr</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">4 BHK Luxury Coastal Villa</h3>
+            <p class="text-xs text-neutral-400 mt-1">Candolim Beachfront &bull; 6,200 sq.ft &bull; Private Pool &amp; Garden</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-emerald-400 font-semibold">&check; RERA Goa Compliant</span>
+              <span>&bull;</span>
+              <span>Holiday &amp; Rental Yield</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Golf Course Villa -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-golf-villa.jpg" alt="4 BHK Luxury Golf Course Villa Delhi NCR" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">DELHI NCR &bull; GOLF COURSE RD</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">&#8377; 22.0 Cr</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">4 BHK Luxury Golf Course Villa</h3>
+            <p class="text-xs text-neutral-400 mt-1">DLF Phase 5, Gurugram &bull; 7,000 sq.ft &bull; Private Lawns</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-emerald-400 font-semibold">&check; HRERA Certified</span>
+              <span>&bull;</span>
+              <span>Automated Smart Home</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Modern High-Rise -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-modern-highrise.jpg" alt="3 BHK Modern High-Rise Apartment Bengaluru" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">BENGALURU &bull; WHITEFIELD</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">&#8377; 5.2 Cr</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">3 BHK Modern Tech Corridor Penthouse</h3>
+            <p class="text-xs text-neutral-400 mt-1">Whitefield Corridor &bull; 3,400 sq.ft &bull; Skyline Balcony</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-emerald-400 font-semibold">&check; KRERA Registered</span>
+              <span>&bull;</span>
+              <span>EV Charging Bay</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Backwaterfront Estate -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-backwater-estate.jpg" alt="4 BHK Backwaterfront Luxury Estate Kochi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">KOCHI &bull; MARINE DRIVE</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">&#8377; 14.5 Cr</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">4 BHK Waterfront Estate with Private Jetty</h3>
+            <p class="text-xs text-neutral-400 mt-1">Vembanad Waterfront &bull; 5,800 sq.ft &bull; Private Boat Dock</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-emerald-400 font-semibold">&check; K-RERA Verified</span>
+              <span>&bull;</span>
+              <span>Private Moorings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Designer Interiors & Architecture -->
+        <div class="tech-border rounded-2xl overflow-hidden bg-surface-card hover:border-amber-400/50 transition-all duration-300 group">
+          <div class="h-60 relative overflow-hidden">
+            <img src="images/projects/homeluxe/homeluxe-interior-living.jpg" alt="HomeLuxe Luxury Interiors and Architecture" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400 border border-amber-500/30">CURATED DESIGN</span>
+            <span class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-mono font-bold text-white border border-white/10">360&deg; Spatial</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-white text-base">Architectural Spatial Engine</h3>
+            <p class="text-xs text-neutral-400 mt-1">Italian Marble &bull; Double-Height Ceilings &bull; VR Staging</p>
+            <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-neutral-400">
+              <span class="text-amber-400 font-semibold">&star; High-Resolution Visuals</span>
+              <span>&bull;</span>
+              <span>Virtual Inspections</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Deep-Dive Architecture & Core Capabilities -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="text-xs uppercase tracking-widest text-brand-blue font-mono">Full-Stack Engineering &bull; ANVION</p>
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mt-2">How ANVION Built the HOMELUXE Engine</h2>
+        <p class="text-neutral-400 text-sm mt-3">
+          Designing an enterprise luxury real estate marketplace requires seamless performance, multi-tiered security, dynamic Indian currency calculations, and certified regulatory workflows.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Pillar 1 -->
+        <div class="p-8 rounded-2xl bg-surface-card border border-white/10 hover:border-brand-blue/40 transition-all relative">
+          <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue mb-6">
+            <span class="material-symbols-outlined text-2xl">insights</span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white">AI Valuations &amp; INR Engine</h3>
+          <p class="text-neutral-300 text-sm mt-3 leading-relaxed">
+            Engineered real-time algorithmic valuations converting raw carpet area, micro-market capital values, and floor-rise indices into exact Crores (&#8377; Cr) and Lakhs (&#8377; L) calculations with historical appreciation graphs.
+          </p>
+          <ul class="space-y-2 mt-5 text-xs text-neutral-400 border-t border-white/5 pt-4">
+            <li class="flex items-center gap-2"><span class="text-brand-blue">&bull;</span> Dynamic price-per-sq.ft benchmarking</li>
+            <li class="flex items-center gap-2"><span class="text-brand-blue">&bull;</span> Rental yield vs capital growth projection</li>
+            <li class="flex items-center gap-2"><span class="text-brand-blue">&bull;</span> Multi-currency conversion for NRI buyers</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="p-8 rounded-2xl bg-surface-card border border-white/10 hover:border-amber-400/40 transition-all relative">
+          <div class="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 mb-6">
+            <span class="material-symbols-outlined text-2xl">verified_user</span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white">Certified RERA Compliance</h3>
+          <p class="text-neutral-300 text-sm mt-3 leading-relaxed">
+            Integrated regulatory compliance registries across state jurisdictions (MahaRERA, TNRERA, TSRERA, KRERA) ensuring every listing carries verified title documentation, builder encumbrance status, and licensed partner advisory.
+          </p>
+          <ul class="space-y-2 mt-5 text-xs text-neutral-400 border-t border-white/5 pt-4">
+            <li class="flex items-center gap-2"><span class="text-amber-400">&bull;</span> Direct RERA license verification cards</li>
+            <li class="flex items-center gap-2"><span class="text-amber-400">&bull;</span> Title diligence &amp; legal clearance workflow</li>
+            <li class="flex items-center gap-2"><span class="text-amber-400">&bull;</span> Certified wealth advisory lead routing</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="p-8 rounded-2xl bg-surface-card border border-white/10 hover:border-emerald-400/40 transition-all relative">
+          <div class="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mb-6">
+            <span class="material-symbols-outlined text-2xl">speed</span>
+          </div>
+          <h3 class="font-display font-bold text-xl text-white">Edge Performance on Vercel</h3>
+          <p class="text-neutral-300 text-sm mt-3 leading-relaxed">
+            Built using React 18, Vite, and Tailwind CSS with sub-50ms visual render times, zero CLS shifts, responsive mobile-first navigation drawers, and global edge caching on Vercel's multi-region network.
+          </p>
+          <ul class="space-y-2 mt-5 text-xs text-neutral-400 border-t border-white/5 pt-4">
+            <li class="flex items-center gap-2"><span class="text-emerald-400">&bull;</span> 99+ Performance score on Lighthouse</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">&bull;</span> Instant search filters (Buy, Rent, BHK, City)</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">&bull;</span> Direct WhatsApp concierge trigger</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Live Project Summary & Specs Table -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-6 space-y-6">
+          <p class="text-xs uppercase tracking-widest text-amber-400 font-mono">Live Deployment Information</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white">Production Deliverables &amp; Assets</h2>
+          <p class="text-neutral-300 text-sm leading-relaxed">
+            ANVION designed and deployed the entire HOMELUXE experience from foundational wireframing, luxury token design system, and component library to cloud production deployment on Vercel.
+          </p>
+
+          <div class="space-y-3 font-mono text-xs">
+            <div class="p-3.5 rounded-xl bg-surface-card border border-white/10 flex items-center justify-between">
+              <span class="text-neutral-400">Production URL:</span>
+              <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-brand-blue font-bold hover:underline flex items-center gap-1">
+                <span>homeluxe-real-estate-umber.vercel.app</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+            <div class="p-3.5 rounded-xl bg-surface-card border border-white/10 flex items-center justify-between">
+              <span class="text-neutral-400">Frontend Technology:</span>
+              <span class="text-white font-bold">React 18 &bull; Vite &bull; TypeScript &bull; Tailwind CSS</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-surface-card border border-white/10 flex items-center justify-between">
+              <span class="text-neutral-400">Typography:</span>
+              <span class="text-white font-bold">Playfair Display &amp; Plus Jakarta Sans</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-surface-card border border-white/10 flex items-center justify-between">
+              <span class="text-neutral-400">Hosting &amp; CDN:</span>
+              <span class="text-emerald-400 font-bold">Vercel Global Edge Network</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="rounded-2xl p-8 bg-surface-card border border-amber-500/30 relative overflow-hidden tech-border-glow">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-lg bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                <span class="material-symbols-outlined text-2xl">real_estate_agent</span>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-white">Need a Real Estate or Luxury Platform?</h3>
+                <p class="text-xs text-neutral-400">Engineered by ANVION IT SERVICES</p>
+              </div>
+            </div>
+            <p class="text-xs text-neutral-300 leading-relaxed mb-6">
+              Whether you are an established property developer, luxury broker, or PropTech startup, ANVION builds bespoke web and mobile platforms with verified inventory pipelines, dynamic maps, currency engines, and WhatsApp lead funnels.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs text-center transition-all inline-flex items-center justify-center gap-1.5">
+                <span>View Live Site</span>
+                <span class="material-symbols-outlined text-sm">open_in_new</span>
+              </a>
+              <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-all inline-flex items-center justify-center gap-1.5">
+                <span>Chat on WhatsApp</span>
+                <span class="material-symbols-outlined text-sm">chat</span>
+              </a>
+              <a href="start-a-project.html" class="px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs text-center transition-all">
+                Start a Project
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-16 px-6 md:px-12 bg-surface-card border-t border-white/10">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <h3 class="font-display font-extrabold text-3xl text-white">Ready to Transform Your Digital Real Estate Presence?</h3>
+        <p class="text-neutral-300 text-base max-w-xl mx-auto">
+          From custom high-end marketplaces and CRM integrations to interactive AI valuation tools, ANVION delivers digital experiences that captivate buyers.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 pt-4">
+          <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-brand-blue/30 transition-all btn-glow">
+            Start a Project Request
+          </a>
+          <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
+            <span>WhatsApp Discussion</span>
+          </a>
+          <a href="contact.html" class="bg-white/5 border border-white/10 text-white font-semibold text-sm px-8 py-3.5 rounded-xl hover:bg-white/10 transition-all">
+            Contact Technical Team
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Master Footer -->
+  <footer class="bg-surface-container-lowest text-primary w-full py-stack-xl border-t border-white/10 mt-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <div class="flex flex-col gap-stack-sm">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+            <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+          </div>
+          <span class="font-headline-md text-xl font-bold text-on-surface">ANVION IT SERVICES</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Innovative digital solutions, mobile engineering, cloud infrastructure, and IT consultancy.
+        </p>
+        <div class="mt-3 p-3.5 rounded-xl bg-surface-card border border-brand-blue/30 text-xs">
+          <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>Govt. of India MSME Registered</span>
+          </div>
+          <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+          <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise &bull; Services (NIC 62011)</p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Company</h4>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="about.html">About Us</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="careers.html">Careers</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="contact.html">Contact Us</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Featured Projects</h4>
+        <a class="font-label-sm text-label-sm text-white font-semibold transition-colors" href="project-homeluxe.html">HOMELUXE Real Estate</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="project-eduverify.html">EduVerify Desktop Software</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="project-smart-invoice-builder.html">Smart Invoice Builder</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="project-task-planner.html">Task Planner &amp; Momentum</a>
+        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="projects.html">All Projects</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Official Registration</h4>
+        <p class="text-xs text-neutral-300 leading-relaxed">
+          <strong>ANVION IT SERVICES</strong><br/>
+          Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+        </p>
+        <div class="text-xs text-neutral-400 space-y-1 mt-1">
+          <p><span class="text-neutral-500">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
+          <p><span class="text-neutral-500">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue">anvionitservices@gmail.com</a></p>
+        </div>
+        <div class="flex items-center gap-3 pt-2">
+          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
+          <span class="text-neutral-600">&bull;</span>
+          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mt-stack-lg pt-stack-sm border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-2">
+      <p>&copy; 2026 ANVION IT SERVICES. All rights reserved. &bull; Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+      <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+    </div>
+  </footer>
+
+  <script src="js/navbar.js"></script>
+  <!-- Universal ANVION AI Assistant & WhatsApp Suite -->
+  <script src="js/anvion-ai.js"></script>
+</body>
+</html>

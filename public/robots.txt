@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Sitemap: https://anvion-it-services.vercel.app/sitemap.xml

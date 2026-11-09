@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Task Planner Mobile App - Case Study | ANVION IT SERVICES</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <!-- Custom Modern Stylesheet -->
+  <link rel="stylesheet" href="css/custom-styles.css"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#0E1015",
+            "surface-low": "#08090C",
+            "surface-card": "#12141C",
+            "surface-border": "rgba(255, 255, 255, 0.1)",
+            "brand-blue": "#00A3FF",
+            "brand-teal": "#2DD4BF",
+            "brand-glow": "rgba(0, 163, 255, 0.25)"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<link rel="stylesheet" href="/css/mobile-responsive.css">
+</head>
+
+<body class="bg-surface-low text-[#E3E2E7] font-sans antialiased min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-blue selection:text-white mesh-bg">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-brand-blue/10 blur-[150px] pointer-events-none -z-10"></div>
+  <div class="fixed top-[40%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#2DD4BF]/10 blur-[150px] pointer-events-none -z-10"></div>
+
+  <!-- Header -->
+  <header class="bg-surface/80 backdrop-blur-md sticky top-0 border-b border-white/10 z-50">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="h-10 w-10 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue transition-colors">
+            <img src="images/logo.png" alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110"/>
+          </div>
+          <span class="font-display font-extrabold text-xl tracking-tight text-white group-hover:text-brand-blue transition-colors">ANVION</span>
+        </a>
+      </div>
+
+      <nav class="hidden md:flex gap-8 items-center text-sm font-semibold">
+        <a class="text-neutral-400 hover:text-white transition-colors" href="index.html">Home</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="services.html">Services</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="solution.html">Solutions</a>
+        <a class="text-white border-b-2 border-brand-blue pb-1" href="projects.html">Projects</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-4">
+        <a href="login.html" class="text-xs font-semibold text-neutral-300 hover:text-white px-3 py-2">Sign In</a>
+        <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-md shadow-brand-blue/20 transition-all btn-glow">Start a Project</a>
+      </div>
+
+      <button class="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Case Study Header -->
+    <section class="relative pt-16 pb-20 px-6 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-3/5 space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-[#2DD4BF]/15 text-[#2DD4BF] border border-[#2DD4BF]/30">Mobile Application</span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-blue/15 text-brand-blue border border-brand-blue/30">Flutter & Riverpod</span>
+            <span class="px-3 py-1 rounded-full text-xs font-mono text-neutral-400 bg-white/5 border border-white/10">v1.0.0 Production</span>
+          </div>
+
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white leading-tight">
+            Task Planner: <span class="text-gradient-blue">Offline-First Mobile Architecture.</span>
+          </h1>
+
+          <p class="text-neutral-300 text-lg leading-relaxed">
+            A high-performance personal productivity engine engineered by ANVION. Built with Flutter, Riverpod StateNotifier, and indexed local SQLite to deliver instant response times, zero background battery drain, and structured academic & life momentum tracking.
+          </p>
+
+          <!-- Core Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+            <div class="p-4 rounded-xl bg-surface-card border border-white/10">
+              <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Storage Engine</p>
+              <p class="text-lg font-bold text-white mt-1">SQLite B-Tree</p>
+              <p class="text-xs text-[#2DD4BF] mt-0.5">&lt; 1ms query time</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-card border border-white/10">
+              <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">State Pattern</p>
+              <p class="text-lg font-bold text-white mt-1">Riverpod</p>
+              <p class="text-xs text-brand-blue mt-0.5">Feature-based</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-card border border-white/10">
+              <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Battery Impact</p>
+              <p class="text-lg font-bold text-white mt-1">0% Drain</p>
+              <p class="text-xs text-emerald-400 mt-0.5">Zero background daemon</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-card border border-white/10">
+              <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">UI Granularity</p>
+              <p class="text-lg font-bold text-white mt-1">60 FPS</p>
+              <p class="text-xs text-purple-400 mt-0.5">Lazy widget rebuilds</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-brand-blue/30 transition-all btn-glow inline-flex items-center gap-2">
+              <span>Build an App Like This</span>
+              <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
+            <a href="projects.html" class="bg-white/5 hover:bg-white/10 text-white font-semibold text-sm px-6 py-3.5 rounded-xl border border-white/10 transition-all">
+              All Projects
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Preview Mockup -->
+        <div class="lg:w-2/5 flex justify-center relative">
+          <div class="relative w-[280px] sm:w-[310px] rounded-[42px] p-3 bg-neutral-900 border-4 border-neutral-700 shadow-2xl shadow-brand-blue/20">
+            <!-- Notch / Dynamic Island -->
+            <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-20 flex items-center justify-center">
+              <div class="w-2.5 h-2.5 rounded-full bg-neutral-800"></div>
+            </div>
+            <!-- Screen -->
+            <div class="rounded-[32px] overflow-hidden bg-black border border-white/10">
+              <img src="images/projects/task-planner/daily-momentum.jpg" alt="Task Planner Daily Momentum Screen" class="w-full h-auto object-cover"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Screenshots Gallery & Feature Breakdown -->
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto space-y-24">
+      
+      <!-- Feature 1: Daily Momentum & Velocity Engine -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+          <div class="w-[280px] rounded-[38px] p-2.5 bg-neutral-900 border-2 border-neutral-700 shadow-xl overflow-hidden hover:scale-[1.02] transition-transform">
+            <img src="images/projects/task-planner/daily-momentum.jpg" alt="Daily Momentum" class="rounded-[30px] w-full"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7 space-y-4 order-1 lg:order-2">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#2DD4BF] uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-[#2DD4BF]"></span>
+            Core Engine Feature
+          </div>
+          <h2 class="font-display font-bold text-3xl text-white">Daily Momentum & Progress Tracking</h2>
+          <p class="text-neutral-300 text-base leading-relaxed">
+            The app features a custom algorithmic momentum bar (showing <strong class="text-white">77% Done</strong> velocity) that aggregates completed tasks, pending obligations, and overdue flags. With one-touch inline quick task creation, users never lose track of daily deliverables.
+          </p>
+          <ul class="space-y-3 pt-2 text-sm text-neutral-300">
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[#2DD4BF] text-lg">check_circle</span>
+              <span>Dynamic completion percentage with animated status gradients</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[#2DD4BF] text-lg">check_circle</span>
+              <span>Categorized status pills: Completed (Green), Pending (Cyan), Overdue (Red)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[#2DD4BF] text-lg">check_circle</span>
+              <span>Direct keyboard-first quick-add input with instant state persistence</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 2: Task Prioritization & Academic Workflow -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-brand-blue uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+            Task Intelligence
+          </div>
+          <h2 class="font-display font-bold text-3xl text-white">Multi-Tier Priority & Due Date Sorting</h2>
+          <p class="text-neutral-300 text-base leading-relaxed">
+            Engineered to handle dense academic exam schedules (e.g. DTSP, DBMS, VLSI Design Practical & Theory) with granular urgency levels: <span class="text-amber-400 font-bold">High</span>, <span class="text-brand-blue font-bold">Medium</span>, and <span class="text-emerald-400 font-bold">Low</span>, coupled with instant search filtering.
+          </p>
+          <ul class="space-y-3 pt-2 text-sm text-neutral-300">
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-brand-blue text-lg">tune</span>
+              <span>Instant reactive filters: All, Active, Completed, Low, Medium, High</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-brand-blue text-lg">schedule</span>
+              <span>Precise timestamp reminders with 24-hour and 12-hour format support</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-brand-blue text-lg">search</span>
+              <span>Full-text SQLite search query across title and subject notes</span>
+            </li>
+          </ul>
+        </div>
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="w-[280px] rounded-[38px] p-2.5 bg-neutral-900 border-2 border-neutral-700 shadow-xl overflow-hidden hover:scale-[1.02] transition-transform">
+            <img src="images/projects/task-planner/task-list.jpg" alt="Task Prioritization" class="rounded-[30px] w-full"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 3: Categories & Workspaces -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+          <div class="w-[280px] rounded-[38px] p-2.5 bg-neutral-900 border-2 border-neutral-700 shadow-xl overflow-hidden hover:scale-[1.02] transition-transform">
+            <img src="images/projects/task-planner/categories.jpg" alt="Categories and Workspaces" class="rounded-[30px] w-full"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7 space-y-4 order-1 lg:order-2">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-purple-400 uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            Modular Organization
+          </div>
+          <h2 class="font-display font-bold text-3xl text-white">Workspaces & Domain Separation</h2>
+          <p class="text-neutral-300 text-base leading-relaxed">
+            Dedicated workspace cards for <strong class="text-white">College</strong>, <strong class="text-white">Finance</strong>, <strong class="text-white">Health</strong>, <strong class="text-white">Personal</strong>, <strong class="text-white">Projects</strong>, and <strong class="text-white">Work</strong>. Each workspace maintains its own task counter, active indicator, and completion progress bar.
+          </p>
+          <ul class="space-y-3 pt-2 text-sm text-neutral-300">
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-purple-400 text-lg">grid_view</span>
+              <span>Distinct category iconography with color-coded accent borders</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-purple-400 text-lg">donut_large</span>
+              <span>Category completion metrics (e.g. "7 of 7 done")</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-purple-400 text-lg">add_box</span>
+              <span>Floating Action Button (FAB) for seamless category creation</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 4: Calendar Timeline & Settings Architecture -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Engineering Architecture
+            </div>
+            <h2 class="font-display font-bold text-3xl text-white">Production Performance & Specifications</h2>
+            <p class="text-neutral-300 text-base leading-relaxed mt-2">
+              The application settings reveal a robust engineering foundation designed for enterprise scalability and reliability:
+            </p>
+          </div>
+
+          <div class="space-y-3 font-mono text-xs">
+            <div class="p-4 rounded-xl bg-surface border border-white/10 flex items-start gap-3">
+              <span class="material-symbols-outlined text-brand-blue text-xl mt-0.5">schema</span>
+              <div>
+                <p class="text-white font-bold">Architecture Pattern</p>
+                <p class="text-neutral-400 mt-0.5">Feature-based + Repository + Riverpod StateNotifier</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-surface border border-white/10 flex items-start gap-3">
+              <span class="material-symbols-outlined text-emerald-400 text-xl mt-0.5">database</span>
+              <div>
+                <p class="text-white font-bold">Database Engine</p>
+                <p class="text-neutral-400 mt-0.5">Local SQLite with B-tree index on due_date & is_completed</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-surface border border-white/10 flex items-start gap-3">
+              <span class="material-symbols-outlined text-purple-400 text-xl mt-0.5">memory</span>
+              <div>
+                <p class="text-white font-bold">Memory Optimization</p>
+                <p class="text-neutral-400 mt-0.5">Granular lazy widget rebuilds, zero background daemon drain</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-surface border border-white/10 flex items-start gap-3">
+              <span class="material-symbols-outlined text-amber-400 text-xl mt-0.5">notifications_active</span>
+              <div>
+                <p class="text-white font-bold">Notification System</p>
+                <p class="text-neutral-400 mt-0.5">Daily 8:00 AM morning reminders & urgent overdue alert badges</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 flex justify-center gap-4">
+          <div class="w-[200px] sm:w-[240px] rounded-[34px] p-2 bg-neutral-900 border-2 border-neutral-700 shadow-xl overflow-hidden hover:scale-[1.02] transition-transform">
+            <img src="images/projects/task-planner/settings-architecture.jpg" alt="Settings & Architecture" class="rounded-[26px] w-full"/>
+          </div>
+          <div class="w-[200px] sm:w-[240px] rounded-[34px] p-2 bg-neutral-900 border-2 border-neutral-700 shadow-xl overflow-hidden hover:scale-[1.02] transition-transform hidden sm:block">
+            <img src="images/projects/task-planner/schedule-calendar.jpg" alt="Schedule & Calendar" class="rounded-[26px] w-full"/>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-16 px-6 md:px-12 bg-surface-card border-t border-white/10">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <h3 class="font-display font-extrabold text-3xl text-white">Looking to Build a High-Performance Mobile App?</h3>
+        <p class="text-neutral-300 text-base max-w-xl mx-auto">
+          Whether you need a cross-platform Flutter application, enterprise mobile workflows, or offline-first synchronization, ANVION engineers solutions that perform flawlessly.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 pt-4">
+          <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-brand-blue/30 transition-all btn-glow">
+            Start a Project Request
+          </a>
+          <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
+            <span>WhatsApp Discussion</span>
+          </a>
+          <a href="contact.html" class="bg-white/5 border border-white/10 text-white font-semibold text-sm px-8 py-3.5 rounded-xl hover:bg-white/10 transition-all">
+            Contact Technical Team
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-surface-low border-t border-white/10 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-4">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="ANVION" class="h-6 w-6 object-contain"/>
+        <p>© 2026 ANVION IT SERVICES. All rights reserved. • <span class="text-amber-400 font-semibold">MSME Reg: UDYAM-TN-09-0098980</span> • Karungal, Kanniyakumari</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="privacy-policy.html" class="hover:text-white">Privacy Policy</a>
+        <a href="terms-of-service.html" class="hover:text-white">Terms of Service</a>
+        <a href="contact.html" class="hover:text-white">Contact</a>
+        <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Udyam Certificate</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/navbar.js"></script>
+  <!-- Universal ANVION AI Assistant & WhatsApp Suite -->
+  <script src="js/anvion-ai.js"></script>
+</body>
+</html>
