@@ -195,6 +195,13 @@ export async function signupWithEmail(fullName, email, password) {
  * Sign In with Google Provider
  */
 export async function loginWithGoogle() {
+  if (typeof window !== "undefined" && window.location.protocol === "file:") {
+    return {
+      success: false,
+      error: "Google Sign-In requires running through a local web server (http://localhost:3000). Please run start-server.bat or npm start, then visit http://localhost:3000/login"
+    };
+  }
+
   try {
     if (auth && isFirebaseConnected) {
       try {
@@ -229,6 +236,21 @@ export async function loginWithGoogle() {
       } catch (fbError) {
         if (fbError.code === "auth/popup-closed-by-user") {
           return { success: false, error: "Google sign-in popup was closed before finishing." };
+        }
+        if (fbError.code === "auth/unauthorized-domain") {
+          return {
+            success: false,
+            error: "Current domain is not in Firebase Authorized Domains. Add your domain in Firebase Console -> Authentication -> Settings -> Authorized domains."
+          };
+        }
+        if (fbError.code === "auth/api-key-not-valid" || (fbError.message && fbError.message.includes("api-key-not-valid"))) {
+          try {
+            localStorage.removeItem("anvion_custom_firebase_config");
+          } catch (e) {}
+          return {
+            success: false,
+            error: "Browser cache contained an outdated key and has been purged. Please refresh the page (Ctrl + Shift + R) and try again."
+          };
         }
         throw fbError;
       }

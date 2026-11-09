@@ -28,8 +28,10 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Storage key for user-configured credentials (allows easy browser-based key management)
-const FIREBASE_STORAGE_KEY = "anvion_custom_firebase_config";
+// Purge any stale custom config from previous browser sessions
+try {
+  localStorage.removeItem("anvion_custom_firebase_config");
+} catch (e) {}
 
 // Official Firebase Configuration for ANVION IT SERVICES
 export const DEFAULT_FIREBASE_CONFIG = {
@@ -44,32 +46,20 @@ export const DEFAULT_FIREBASE_CONFIG = {
 
 /**
  * Retrieves the active Firebase configuration
- * Checks localStorage first for user-provided configuration, falls back to default.
  */
 export function getActiveFirebaseConfig() {
-  try {
-    const saved = localStorage.getItem(FIREBASE_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed && parsed.apiKey && !parsed.apiKey.includes("DemoCloudKey")) {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.warn("[Firebase] Could not read custom config from localStorage:", e);
-  }
   return DEFAULT_FIREBASE_CONFIG;
 }
 
-/**
- * Saves custom Firebase configuration to localStorage
- */
-export function saveCustomFirebaseConfig(config) {
+export function saveCustomFirebaseConfig() {
+  return true;
+}
+
+export function resetFirebaseConfig() {
   try {
-    localStorage.setItem(FIREBASE_STORAGE_KEY, JSON.stringify(config));
+    localStorage.removeItem("anvion_custom_firebase_config");
     return true;
   } catch (e) {
-    console.error("[Firebase] Error saving custom config:", e);
     return false;
   }
 }

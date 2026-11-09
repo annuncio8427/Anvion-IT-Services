@@ -1,36 +1,45 @@
 @echo off
-title ANVION IT SERVICES - Local Development Server
+title ANVION IT SERVICES - Production & Local Development Server
 color 0B
 
 echo ==========================================================
-echo        ANVION IT SERVICES - Local Server Launcher
+echo        ANVION IT SERVICES - Full-Stack Server Launcher
 echo ==========================================================
 echo.
-echo Starting local HTTP server to prevent browser CORS blocks...
+echo Starting local server with full API and Authentication support...
 echo.
 
-:: Check if Python is installed
+:: Check if Node.js is installed (Preferred: runs full Express server & API endpoints)
+where node >nul 2>nul
+if %errorlevel% equ 0 (
+    echo [OK] Node.js detected. Starting ANVION Full-Stack Server at http://localhost:3000 ...
+    echo Opening browser at http://localhost:3000/login ...
+    start http://localhost:3000/login
+    node server.js
+    goto end
+)
+
+:: Fallback if Python is installed
 where python >nul 2>nul
 if %errorlevel% equ 0 (
-    echo [OK] Python detected. Starting server at http://localhost:8080 ...
+    echo [WARN] Node.js not found. Falling back to Python static server at http://localhost:3000 ...
     echo Opening browser automatically...
-    start http://localhost:8080/index.html
-    python -m http.server 8080
+    start http://localhost:3000/login.html
+    python -m http.server 3000
     goto end
 )
 
-:: Check if npx / node is installed
+:: Fallback if npx is installed
 where npx >nul 2>nul
 if %errorlevel% equ 0 (
-    echo [OK] Node.js/npx detected. Starting server at http://localhost:8080 ...
-    echo Opening browser automatically...
-    start http://localhost:8080/index.html
-    npx -y serve -l 8080 .
+    echo [OK] npx detected. Starting server at http://localhost:3000 ...
+    start http://localhost:3000/login.html
+    npx -y serve -l 3000 .
     goto end
 )
 
-echo [!] Neither Python nor Node.js were found in your PATH.
-echo You can install Python (python.org) or Node.js (nodejs.org) to run a local server.
+echo [!] Neither Node.js nor Python were found in your PATH.
+echo Please install Node.js (https://nodejs.org) to run the ANVION backend and authentication.
 pause
 
 :end
