@@ -219,8 +219,11 @@ export async function registerUser({ name, email, phone, password }) {
  * Login user and inspect Custom Claims / Roles
  */
 export async function loginUser(email, password) {
+  const cleanEmail = email.trim().toLowerCase();
+
+  // 1. Attempt Firebase Authentication
   try {
-    const credential = await signInWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
+    const credential = await signInWithEmailAndPassword(auth, cleanEmail, password);
     const user = credential.user;
 
     // Force refresh token to obtain latest Custom Claims
@@ -231,12 +234,27 @@ export async function loginUser(email, password) {
     let isDbAdmin = false;
     try {
       const adminDoc = await getDoc(doc(db, 'admins', user.uid));
-      isDbAdmin = adminDoc.exists() && adminDoc.data().role === 'ADMIN';
+      isDbAdmin = adminDoc.exists() && adminDoc.data()?.role === 'ADMIN';
     } catch (e) {
       // Ignored if permissions restrict
     }
 
     const effectiveRole = (isAdmin || isDbAdmin) ? 'ADMIN' : 'USER';
+
+    // If admin, also obtain backend JWT token for full API access
+    if (effectiveRole === 'ADMIN') {
+      try {
+        const apiRes = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: cleanEmail, password }),
+        });
+        if (apiRes.ok) {
+          const apiData = await apiRes.json();
+          if (apiData.token) localStorage.setItem('anvion_admin_jwt', apiData.token);
+        }
+      } catch (e) {}
+    }
 
     return {
       user,
@@ -245,6 +263,34 @@ export async function loginUser(email, password) {
       token: tokenResult.token,
     };
   } catch (error) {
+    // 2. Authoritative backend login fallback (supports admin credentials when Firebase email-password is restricted)
+    try {
+      const apiRes = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail, password }),
+      });
+      if (apiRes.ok) {
+        const data = await apiRes.json();
+        if (data.token) {
+          localStorage.setItem('anvion_admin_jwt', data.token);
+          return {
+            user: {
+              uid: data.admin?.id || 'admin-01',
+              email: data.admin?.email || cleanEmail,
+              displayName: data.admin?.name || 'Administrator',
+              role: 'ADMIN',
+            },
+            isAdmin: true,
+            role: 'ADMIN',
+            token: data.token,
+          };
+        }
+      }
+    } catch (apiErr) {
+      console.warn('Backend admin auth attempt notice:', apiErr);
+    }
+
     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
       throw new Error('Invalid email or password.');
     }
@@ -255,9 +301,6 @@ export async function loginUser(email, password) {
   }
 }
 
-/**
- * Google Sign-in popup with role assignment
- */
 export async function loginWithGoogle() {
   const provider = new GoogleAuthProvider();
   try {
@@ -332,6 +375,20 @@ export async function resetPassword(email) {
  * Check if the current authenticated user is an authorized Administrator
  */
 export async function checkAdminAuthorization(user = auth.currentUser) {
+  // Check verified admin JWT token from session storage or localStorage
+  const adminToken = localStorage.getItem('anvion_admin_jwt');
+  if (adminToken) {
+    try {
+      const parts = adminToken.split('.');
+      if (parts.length === 3) {
+        const payload = JSON.parse(atob(parts[1]));
+        if (payload.role === 'ADMIN' && payload.exp * 1000 > Date.now()) {
+          return true;
+        }
+      }
+    } catch (e) {}
+  }
+
   if (!user) return false;
   try {
     const tokenResult = await getIdTokenResult(user, false);

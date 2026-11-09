@@ -219,25 +219,20 @@
           </button>
         </form>
 
-        <!-- Instant Demo / Quick Test Bar -->
+        <!-- Administrator Command Center Link -->
         <div class="mt-8 pt-6 border-t border-white/10">
-          <div class="text-xs text-neutral-400 mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-center sm:text-left">
-            <span class="font-semibold text-neutral-300 flex items-center justify-center sm:justify-start gap-1.5">
-              <span class="material-symbols-outlined text-amber-400 text-base">bolt</span>
-              Fast-Track Testing (One-Click)
-            </span>
-            <span class="text-[11px] text-neutral-500">Zero credentials needed</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button id="btnDemoClient" type="button" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-brand-blue/15 border border-white/10 hover:border-brand-blue/40 text-xs text-neutral-200 hover:text-brand-blue font-semibold transition-all">
-              <span class="material-symbols-outlined text-sm text-brand-blue">domain</span>
-              Demo Client Login
-            </button>
-            <button id="btnDemoAdmin" type="button" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-purple-500/15 border border-white/10 hover:border-purple-400/40 text-xs text-neutral-200 hover:text-purple-400 font-semibold transition-all">
-              <span class="material-symbols-outlined text-sm text-purple-400">admin_panel_settings</span>
-              Demo Director Login
-            </button>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-brand-blue text-lg">admin_panel_settings</span>
+              <div>
+                <p class="text-xs font-semibold text-white">Administrator Command Center</p>
+                <p class="text-[11px] text-neutral-400">Managing ANVION systems &amp; client leads</p>
+              </div>
+            </div>
+            <a href="/admin-login" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-blue/10 hover:bg-brand-blue/20 border border-brand-blue/30 text-xs font-bold text-brand-blue hover:text-white transition-all">
+              <span>Admin Login</span>
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
           </div>
         </div>
 
@@ -343,7 +338,6 @@
       signupWithEmail, 
       loginWithGoogle, 
       resetPassword, 
-      loginDemo,
       getCachedUser, 
       onAuthChange 
     } from "./js/auth.js";
@@ -404,8 +398,6 @@
     const btnForgotPassword = document.getElementById("btnForgotPassword");
 
     const btnGoogleAuth = document.getElementById("btnGoogleAuth");
-    const btnDemoClient = document.getElementById("btnDemoClient");
-    const btnDemoAdmin = document.getElementById("btnDemoAdmin");
 
     // Modal elements
     const configModal = document.getElementById("configModal");
@@ -483,10 +475,17 @@
         }
 
         if (res.success) {
-          showToast(`Welcome back, ${res.user.displayName}! Redirecting...`, "success");
-          setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 800);
+          if (res.isAdmin) {
+            showToast("Welcome Administrator! Launching Command Center...", "success");
+            setTimeout(() => {
+              window.location.href = "admin.html";
+            }, 600);
+          } else {
+            showToast(`Welcome back, ${res.user.displayName}! Redirecting to Client Portal...`, "success");
+            setTimeout(() => {
+              window.location.href = "dashboard.html";
+            }, 600);
+          }
         } else {
           showToast(res.error, "error");
         }
@@ -508,10 +507,17 @@
       try {
         const res = await loginWithGoogle();
         if (res.success) {
-          showToast(`Signed in as ${res.user.displayName}`, "success");
-          setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 800);
+          if (res.isAdmin) {
+            showToast(`Welcome Administrator ${res.user.displayName}!`, "success");
+            setTimeout(() => {
+              window.location.href = "admin.html";
+            }, 600);
+          } else {
+            showToast(`Signed in as ${res.user.displayName}`, "success");
+            setTimeout(() => {
+              window.location.href = "dashboard.html";
+            }, 600);
+          }
         } else {
           showToast(res.error, "error");
         }
@@ -538,23 +544,6 @@
       } else {
         showToast(res.error, "error");
       }
-    });
-
-    // Demo Logins
-    btnDemoClient.addEventListener("click", () => {
-      const res = loginDemo("client");
-      showToast("Signed in as Enterprise Client (Demo)", "success");
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 600);
-    });
-
-    btnDemoAdmin.addEventListener("click", () => {
-      const res = loginDemo("admin");
-      showToast("Signed in as Director / Admin (Demo)", "success");
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 600);
     });
 
     // Firebase Config Modal logic

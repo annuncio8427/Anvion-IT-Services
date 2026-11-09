@@ -1,6 +1,6 @@
 /**
  * ANVION IT SERVICES - Authentication & User State Service
- * Connects with Firebase Auth v10 + Firestore
+ * Connects directly with Firebase Auth v10 + Firestore
  */
 
 import {
@@ -29,29 +29,8 @@ import {
 const LOCAL_USER_KEY = "anvion_active_user";
 const LOCAL_INQUIRIES_KEY = "anvion_user_inquiries";
 
-// Pre-packaged test personas for testing
-export const DEMO_USERS = {
-  client: {
-    uid: "demo-client-001",
-    email: "client@enterprise.com",
-    displayName: "Alexander Vance",
-    role: "Enterprise Client",
-    company: "Vance Digital Logistics",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    phone: "+1 (555) 234-8901",
-    isDemo: true
-  },
-  admin: {
-    uid: "demo-admin-002",
-    email: "admin@anvion.com",
-    displayName: "Dhilip Raj (Director)",
-    role: "Managing Director",
-    company: "ANVION IT SERVICES",
-    avatar: "images/dhilip.png",
-    phone: "+91 98400 12345",
-    isDemo: true
-  }
-};
+// Pre-configured role templates
+export const DEMO_USERS = {};
 
 /**
  * Get cached user from localStorage for zero-flicker UI
@@ -80,13 +59,49 @@ function setCachedUser(user) {
 
 /**
  * Sign In with Email and Password
+ * Connects with Firebase Authentication and authoritative Command Center API
  */
 export async function loginWithEmail(email, password, remember = true) {
+  const cleanEmail = (email || "").trim().toLowerCase();
+
+  // 1. Check for Authoritative Administrator Login
+  if (cleanEmail === "annuncio8427@gmail.com" && password === "Annuncio@08") {
+    try {
+      const apiRes = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail, password })
+      });
+      if (apiRes.ok) {
+        const apiData = await apiRes.json();
+        if (apiData.token) {
+          localStorage.setItem("anvion_admin_jwt", apiData.token);
+        }
+      }
+    } catch (e) {
+      console.warn("[Auth] Backend login sync notice:", e.message);
+    }
+
+    const adminUser = {
+      uid: "admin-annuncio-01",
+      email: cleanEmail,
+      displayName: "Annuncio (Admin)",
+      role: "ADMIN",
+      isAdmin: true,
+      company: "ANVION IT SERVICES",
+      phone: "+91 9150270802",
+      isDemo: false
+    };
+    setCachedUser(adminUser);
+    return { success: true, user: adminUser, isAdmin: true, isDemo: false };
+  }
+
+  // 2. Client Authentication via Firebase Auth
   try {
     if (auth && isFirebaseConnected) {
       try {
         await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
-        const cred = await signInWithEmailAndPassword(auth, email, password);
+        const cred = await signInWithEmailAndPassword(auth, cleanEmail, password);
         const user = formatUserData(cred.user);
         
         // Fetch extra profile from Firestore if available
@@ -103,17 +118,19 @@ export async function loginWithEmail(email, password, remember = true) {
         }
 
         setCachedUser(user);
-        return { success: true, user, isDemo: false };
+        return { success: true, user, isAdmin: user.role === "ADMIN", isDemo: false };
       } catch (fbError) {
-        // If error is invalid API key or network restricted, fallback to local demo auth for seamless UX
-        if (fbError.code === "auth/api-key-not-valid" || fbError.code === "auth/network-request-failed") {
-          console.warn("[Firebase] Falling back to simulated login due to demo/test key:", fbError.message);
-          return fallbackLogin(email, password);
+        // If Firebase email/password provider is disabled on console, inform clearly
+        if (fbError.code === "auth/operation-not-allowed" || (fbError.message && fbError.message.includes("PASSWORD_LOGIN_DISABLED"))) {
+          return {
+            success: false,
+            error: "Email/Password sign-in is disabled in your Firebase console. Please enable Email/Password provider under Authentication -> Sign-in method, or sign in using Google."
+          };
         }
         throw fbError;
       }
     } else {
-      return fallbackLogin(email, password);
+      return { success: false, error: "Firebase authentication service is connecting. Please check your connection." };
     }
   } catch (error) {
     console.error("[Auth] Login error:", error);
@@ -125,10 +142,11 @@ export async function loginWithEmail(email, password, remember = true) {
  * Sign Up with Full Name, Email, and Password
  */
 export async function signupWithEmail(fullName, email, password) {
+  const cleanEmail = (email || "").trim().toLowerCase();
   try {
     if (auth && isFirebaseConnected) {
       try {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const cred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
         
         // Update Firebase profile
         await updateProfile(cred.user, {
@@ -137,32 +155,35 @@ export async function signupWithEmail(fullName, email, password) {
 
         const user = formatUserData(cred.user, fullName);
 
-        // Store user document in Firestore
+        // Store user document in Firestore (/users/{userId})
         try {
           if (db) {
             await setDoc(doc(db, "users", cred.user.uid), {
               uid: cred.user.uid,
+              name: fullName,
               displayName: fullName,
-              email: email,
-              role: "Client",
+              email: cleanEmail,
+              role: "USER",
               createdAt: serverTimestamp()
             });
           }
         } catch (dbErr) {
-          console.warn("[Firestore] Write doc warning:", dbErr.message);
+          console.warn("[Firestore] Write user doc notice:", dbErr.message);
         }
 
         setCachedUser(user);
         return { success: true, user, isDemo: false };
       } catch (fbError) {
-        if (fbError.code === "auth/api-key-not-valid" || fbError.code === "auth/network-request-failed") {
-          console.warn("[Firebase] Simulated account creation:", fbError.message);
-          return fallbackSignup(fullName, email);
+        if (fbError.code === "auth/operation-not-allowed" || (fbError.message && fbError.message.includes("PASSWORD_LOGIN_DISABLED"))) {
+          return {
+            success: false,
+            error: "Email/Password registration is disabled in Firebase console. Please enable Email/Password provider under Authentication -> Sign-in method, or sign in using Google."
+          };
         }
         throw fbError;
       }
     } else {
-      return fallbackSignup(fullName, email);
+      return { success: false, error: "Firebase connection is unavailable. Please check your connection." };
     }
   } catch (error) {
     console.error("[Auth] Signup error:", error);
@@ -190,6 +211,7 @@ export async function loginWithGoogle() {
               displayName: cred.user.displayName,
               email: cred.user.email,
               avatar: cred.user.photoURL,
+              role: cred.user.email?.toLowerCase() === "annuncio8427@gmail.com" ? "ADMIN" : "USER",
               lastLogin: serverTimestamp()
             }, { merge: true });
           }
@@ -197,20 +219,21 @@ export async function loginWithGoogle() {
           // Ignore firestore warnings
         }
 
+        if (cred.user.email?.toLowerCase() === "annuncio8427@gmail.com") {
+          user.role = "ADMIN";
+          user.isAdmin = true;
+        }
+
         setCachedUser(user);
-        return { success: true, user, isDemo: false };
+        return { success: true, user, isAdmin: user.isAdmin || user.role === "ADMIN", isDemo: false };
       } catch (fbError) {
-        if (fbError.code === "auth/api-key-not-valid" || fbError.code === "auth/popup-closed-by-user") {
-          if (fbError.code === "auth/popup-closed-by-user") {
-            return { success: false, error: "Google sign-in popup was cancelled." };
-          }
-          console.warn("[Firebase] Fallback to demo Google persona:", fbError.message);
-          return fallbackGoogleLogin();
+        if (fbError.code === "auth/popup-closed-by-user") {
+          return { success: false, error: "Google sign-in popup was closed before finishing." };
         }
         throw fbError;
       }
     } else {
-      return fallbackGoogleLogin();
+      return { success: false, error: "Firebase service is not initialized." };
     }
   } catch (error) {
     return { success: false, error: formatAuthError(error) };
@@ -223,17 +246,10 @@ export async function loginWithGoogle() {
 export async function resetPassword(email) {
   try {
     if (auth && isFirebaseConnected) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        return { success: true, message: "Password reset link sent! Check your inbox." };
-      } catch (fbError) {
-        if (fbError.code === "auth/api-key-not-valid") {
-          return { success: true, message: "Demo mode: Password reset email simulated for " + email };
-        }
-        throw fbError;
-      }
+      await sendPasswordResetEmail(auth, email.trim().toLowerCase());
+      return { success: true, message: "Password reset link sent! Check your inbox." };
     } else {
-      return { success: true, message: "Demo mode: Password reset email simulated for " + email };
+      return { success: false, error: "Firebase authentication service is not connected." };
     }
   } catch (error) {
     return { success: false, error: formatAuthError(error) };
@@ -241,12 +257,10 @@ export async function resetPassword(email) {
 }
 
 /**
- * Fast One-Click Demo Mode Login
+ * Legacy quick login compatibility
  */
 export function loginDemo(role = "client") {
-  const user = DEMO_USERS[role] || DEMO_USERS.client;
-  setCachedUser(user);
-  return { success: true, user, isDemo: true };
+  return { success: false, error: "Demo logins are disabled in production. Please sign in with real credentials." };
 }
 
 /**
@@ -260,6 +274,7 @@ export async function logoutUser() {
   } catch (e) {
     console.warn("[Auth] Logout notice:", e.message);
   }
+  localStorage.removeItem("anvion_admin_jwt");
   setCachedUser(null);
   return { success: true };
 }
@@ -278,12 +293,15 @@ export function onAuthChange(callback) {
       onAuthStateChanged(auth, (fbUser) => {
         if (fbUser) {
           const user = formatUserData(fbUser);
+          if (fbUser.email?.toLowerCase() === "annuncio8427@gmail.com") {
+            user.role = "ADMIN";
+            user.isAdmin = true;
+          }
           setCachedUser(user);
           callback(user);
         } else {
-          // If cached user is a demo user, don't overwrite with null unless explicit logout
           const current = getCachedUser();
-          if (!current || !current.isDemo) {
+          if (!current || !current.isAdmin) {
             setCachedUser(null);
             callback(null);
           }
@@ -306,7 +324,7 @@ export function onAuthChange(callback) {
 }
 
 /**
- * Submit Project Inquiry to Firestore or LocalStorage
+ * Submit Project Inquiry to Firestore and LocalStorage
  */
 export async function submitProjectInquiry(inquiryData) {
   const activeUser = getCachedUser();
@@ -321,7 +339,7 @@ export async function submitProjectInquiry(inquiryData) {
   try {
     if (db && isFirebaseConnected) {
       try {
-        await addDoc(collection(db, "inquiries"), {
+        await addDoc(collection(db, "projectEnquiries"), {
           ...inquiry,
           createdAt: serverTimestamp()
         });
@@ -347,30 +365,7 @@ export async function submitProjectInquiry(inquiryData) {
 export function getStoredInquiries() {
   try {
     const raw = localStorage.getItem(LOCAL_INQUIRIES_KEY);
-    return raw ? JSON.parse(raw) : [
-      {
-        id: "INQ-2026-904",
-        name: "Alexander Vance",
-        email: "client@enterprise.com",
-        projectType: "Custom Software",
-        serviceCategory: "Cloud Infrastructure",
-        budget: "$50k - $250k",
-        scope: "Global logistics telemetry dashboard with real-time fleet analytics and enterprise SSO integration.",
-        status: "In Progress",
-        submittedAt: "2026-10-24T10:15:00Z"
-      },
-      {
-        id: "INQ-2026-881",
-        name: "Alexander Vance",
-        email: "client@enterprise.com",
-        projectType: "Mobile Application",
-        serviceCategory: "Cybersecurity",
-        budget: "< $50k",
-        scope: "Zero-trust biometric mobile authentication portal for field engineers.",
-        status: "Completed",
-        submittedAt: "2026-09-12T14:30:00Z"
-      }
-    ];
+    return raw ? JSON.parse(raw) : [];
   } catch (e) {
     return [];
   }
@@ -378,59 +373,19 @@ export function getStoredInquiries() {
 
 // Helpers
 function formatUserData(fbUser, overrideName = null) {
+  const cleanEmail = fbUser.email || "";
+  const isAdmin = cleanEmail.toLowerCase() === "annuncio8427@gmail.com";
   return {
     uid: fbUser.uid,
-    email: fbUser.email,
-    displayName: overrideName || fbUser.displayName || fbUser.email.split("@")[0],
+    email: cleanEmail,
+    displayName: overrideName || fbUser.displayName || cleanEmail.split("@")[0],
     avatar: fbUser.photoURL || null,
-    role: "Client",
-    company: "Enterprise Partner",
+    role: isAdmin ? "ADMIN" : "Client",
+    company: isAdmin ? "ANVION IT SERVICES" : "Enterprise Client",
     phone: fbUser.phoneNumber || "",
+    isAdmin: isAdmin,
     isDemo: false
   };
-}
-
-function fallbackLogin(email, password) {
-  const name = email.split("@")[0];
-  const user = {
-    uid: "usr-" + Math.random().toString(36).substr(2, 9),
-    email: email,
-    displayName: name.charAt(0).toUpperCase() + name.slice(1),
-    role: email.includes("admin") ? "Administrator" : "Client",
-    company: "Partner Enterprise",
-    avatar: null,
-    isDemo: true
-  };
-  setCachedUser(user);
-  return { success: true, user, isDemo: true };
-}
-
-function fallbackSignup(fullName, email) {
-  const user = {
-    uid: "usr-" + Math.random().toString(36).substr(2, 9),
-    email: email,
-    displayName: fullName,
-    role: "Client",
-    company: "New Organization",
-    avatar: null,
-    isDemo: true
-  };
-  setCachedUser(user);
-  return { success: true, user, isDemo: true };
-}
-
-function fallbackGoogleLogin() {
-  const user = {
-    uid: "goog-" + Math.random().toString(36).substr(2, 9),
-    email: "alexander.vance@gmail.com",
-    displayName: "Alexander Vance",
-    role: "Client",
-    company: "Google Workspace Enterprise",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    isDemo: true
-  };
-  setCachedUser(user);
-  return { success: true, user, isDemo: true };
 }
 
 function formatAuthError(error) {

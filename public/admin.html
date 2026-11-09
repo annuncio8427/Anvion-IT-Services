@@ -1200,7 +1200,8 @@
       const gateTitle = document.getElementById('gateTitle');
       const gateMessage = document.getElementById('gateMessage');
 
-      if (!user) {
+      const adminToken = localStorage.getItem('anvion_admin_jwt');
+      if (!user && !adminToken) {
         // Not authenticated
         gateTitle.textContent = 'Restricted Administration Portal';
         gateMessage.textContent = 'Redirecting to secure login interface...';
@@ -1220,6 +1221,7 @@
           gateTitle.className = 'text-xl font-bold font-display text-red-500';
           gateMessage.textContent = 'Your user account does not possess authorized administrator clearance. Redirecting to home...';
           await auth.signOut();
+          localStorage.removeItem('anvion_admin_jwt');
           setTimeout(() => {
             window.location.href = '/';
           }, 2500);
@@ -1227,8 +1229,11 @@
         }
 
         // Verified Administrator
-        currentAdmin = user;
-        document.getElementById('adminNameDisplay').textContent = user.displayName || user.email;
+        currentAdmin = user || {
+          displayName: 'Annuncio (Admin)',
+          email: 'annuncio8427@gmail.com'
+        };
+        document.getElementById('adminNameDisplay').textContent = currentAdmin.displayName || currentAdmin.email;
         gateOverlay.classList.add('hidden');
 
         // Load all data

@@ -93,7 +93,7 @@
           <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-64 glass-dropdown rounded-xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
             <div class="px-3 py-2 border-b border-white/10 mb-2">
               <p id="menuUserFullName" class="text-xs font-bold text-white">Client User</p>
-              <p id="menuUserEmail" class="text-[11px] text-neutral-400 truncate">client@enterprise.com</p>
+              <p id="menuUserEmail" class="text-[11px] text-neutral-400 truncate">client@anvion.in</p>
             </div>
             
             <a href="dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-white hover:bg-brand-blue/15 hover:text-brand-blue transition-colors">
@@ -158,7 +158,7 @@
             <span id="userTierBadge" class="text-xs text-neutral-400">Enterprise SLA Tier</span>
           </div>
           <h1 class="font-display font-extrabold text-3xl sm:text-4xl text-white">
-            Welcome back, <span id="welcomeUserName" class="text-gradient-blue">Alexander</span>!
+            Welcome back, <span id="welcomeUserName" class="text-gradient-blue">Client</span>!
           </h1>
           <p class="text-neutral-400 text-sm mt-2 max-w-xl">
             All systems and client pipelines are operational. Track active development sprints and infrastructure health below.
@@ -353,11 +353,11 @@
             <div id="cardProfileAvatar" class="w-20 h-20 rounded-full bg-brand-blue/20 border-2 border-brand-blue/40 mx-auto flex items-center justify-center text-brand-blue text-2xl font-bold uppercase overflow-hidden mb-3 shadow-lg shadow-brand-blue/15">
               <span>U</span>
             </div>
-            <h4 id="cardProfileName" class="font-display font-bold text-lg text-white">Alexander Vance</h4>
-            <p id="cardProfileEmail" class="text-xs text-neutral-400 mt-0.5">client@enterprise.com</p>
+            <h4 id="cardProfileName" class="font-display font-bold text-lg text-white">Client Portal</h4>
+            <p id="cardProfileEmail" class="text-xs text-neutral-400 mt-0.5">client@anvion.in</p>
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-neutral-300 mt-3 font-medium">
               <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
-              <span id="cardProfileCompany">Vance Digital Logistics</span>
+              <span id="cardProfileCompany">Partner Organization</span>
             </div>
           </div>
 
@@ -599,12 +599,23 @@
       // Firebase status
       const cfg = getActiveFirebaseConfig();
       const fbStatus = document.getElementById("firebaseStatusText");
-      if (user.isDemo) {
-        fbStatus.textContent = "Demo Mode (Fast Review)";
-        fbStatus.className = "text-xs font-mono text-amber-400 mt-1";
-      } else {
-        fbStatus.textContent = `Connected (${cfg.projectId || 'Live'})`;
-        fbStatus.className = "text-xs font-mono text-emerald-400 mt-1";
+      fbStatus.textContent = `Connected (${cfg.projectId || 'pure-formula-xxjsq'})`;
+      fbStatus.className = "text-xs font-mono text-emerald-400 mt-1";
+
+      // If Administrator, show quick access to Command Center
+      if (user.isAdmin || user.role === 'ADMIN' || user.email?.toLowerCase() === 'annuncio8427@gmail.com') {
+        const adminBadge = document.getElementById('adminBridgeLink');
+        if (!adminBadge) {
+          const userActionsDiv = document.querySelector('header .flex.items-center.gap-4');
+          if (userActionsDiv) {
+            const bridge = document.createElement('a');
+            bridge.id = 'adminBridgeLink';
+            bridge.href = '/admin.html';
+            bridge.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-brand-blue/30 text-xs font-mono font-bold text-brand-blue hover:bg-brand-blue hover:text-white transition-all';
+            bridge.innerHTML = '<span class="material-symbols-outlined text-sm">shield_person</span><span>Admin Portal</span>';
+            userActionsDiv.insertBefore(bridge, userActionsDiv.firstChild);
+          }
+        }
       }
 
       renderInquiries();

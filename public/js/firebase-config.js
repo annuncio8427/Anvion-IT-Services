@@ -31,15 +31,15 @@ import {
 // Storage key for user-configured credentials (allows easy browser-based key management)
 const FIREBASE_STORAGE_KEY = "anvion_custom_firebase_config";
 
-// Default Firebase Configuration Template
-// Replace with your real Firebase Project credentials from Firebase Console -> Project Settings -> General -> Your apps
+// Official Firebase Configuration for ANVION IT SERVICES
 export const DEFAULT_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyB3AnvionDemoCloudKey_Enterprise2026",
-  authDomain: "anvion-it-services.firebaseapp.com",
-  projectId: "anvion-it-services",
-  storageBucket: "anvion-it-services.appspot.com",
-  messagingSenderId: "948201849102",
-  appId: "1:948201849102:web:48a91c0b3f81e7d92c"
+  projectId: "pure-formula-xxjsq",
+  appId: "1:514186575326:web:b88af124692fd9138c714f",
+  apiKey: "AIzaSyBK1B0W_bTsQ0TGKTJmKknik5IrjjBJcw4",
+  authDomain: "pure-formula-xxjsq.firebaseapp.com",
+  storageBucket: "pure-formula-xxjsq.firebasestorage.app",
+  messagingSenderId: "514186575326",
+  oAuthClientId: "514186575326-gou7sg4ft1b32dg08p4rc9v7f4usphuq.apps.googleusercontent.com"
 };
 
 /**
@@ -51,7 +51,7 @@ export function getActiveFirebaseConfig() {
     const saved = localStorage.getItem(FIREBASE_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed && parsed.apiKey) {
+      if (parsed && parsed.apiKey && !parsed.apiKey.includes("DemoCloudKey")) {
         return parsed;
       }
     }
