@@ -21,6 +21,12 @@ import {
   faqs,
   blogPosts,
   auditLogs,
+  consultations,
+  enquiryNotes,
+  projectMilestones,
+  invoices,
+  supportTickets,
+  servicePricing,
 } from './src/db/schema.ts';
 import { requireAuth, requireAdminAuth } from './src/middleware/auth.js';
 import { adminAuth, adminDb } from './src/lib/firebase-admin.ts';
@@ -276,14 +282,19 @@ app.post('/api/contact', async (req, res) => {
 app.post('/api/project-enquiries', upload.single('attachment'), async (req, res) => {
   try {
     const {
+      enquiryId,
       name,
       email,
       phone,
       company,
+      country,
       projectType,
       servicesNeeded,
       description,
       features,
+      referenceWebsites,
+      pageCount,
+      preferredTech,
       targetUsers,
       timeline,
       budget,
@@ -294,12 +305,22 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
     }
 
     const file = req.file;
+    const genId = enquiryId || ('ANV-ENQ-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(100 + Math.random() * 900));
 
     const parsedServices = Array.isArray(servicesNeeded)
       ? servicesNeeded
       : projectType
       ? [projectType]
       : [];
+
+    // Combine any supplementary fields
+    const supplementary = [];
+    if (country) supplementary.push(`Country: ${country}`);
+    if (pageCount) supplementary.push(`Scope: ${pageCount}`);
+    if (preferredTech) supplementary.push(`Preferred Tech: ${preferredTech}`);
+    if (referenceWebsites) supplementary.push(`References: ${referenceWebsites}`);
+    
+    const combinedFeatures = [features, supplementary.join(' | ')].filter(Boolean).join('\n');
 
     // Optional user token identification
     let userId = null;
@@ -318,8 +339,8 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
       phone: phone ? phone.trim() : 'Not provided',
       company: company ? company.trim() : null,
       servicesNeeded: parsedServices,
-      projectDescription: description.trim(),
-      requiredFeatures: features || null,
+      projectDescription: `[${genId}] ${description.trim()}`,
+      requiredFeatures: combinedFeatures || null,
       targetUsers: targetUsers || null,
       timeline: timeline || null,
       budget: budget || null,
@@ -334,14 +355,16 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
     if (adminDb) {
       try {
         await adminDb.collection('projectEnquiries').add({
+          enquiryId: genId,
           userId: userId || null,
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone ? phone.trim() : '',
           company: company ? company.trim() : '',
+          country: country || 'India',
           service: parsedServices.join(', ') || projectType || 'Custom Solution',
           description: description.trim(),
-          features: features || '',
+          features: combinedFeatures || '',
           targetUsers: targetUsers || '',
           timeline: timeline || '',
           budget: budget || '',
@@ -357,11 +380,374 @@ app.post('/api/project-enquiries', upload.single('attachment'), async (req, res)
 
     res.status(201).json({
       success: true,
+      enquiryId: genId,
       message: 'Project inquiry recorded. An ANVION solutions architect will connect with you within 24-48 hours.',
     });
   } catch (error) {
     console.error('Error storing project enquiry:', error);
     res.status(500).json({ error: 'Failed to submit project inquiry' });
+  }
+});
+
+// ==========================================
+// CONSULTATIONS & BOOKING API
+// ==========================================
+
+// Get booked slots for a given date (to disable double-booking)
+app.get('/api/consultations/availability', async (req, res) => {
+  try {
+    const { date } = req.query;
+    if (!date) {
+      return res.status(400).json({ error: 'Query parameter "date" (YYYY-MM-DD) is required.' });
+    }
+    const booked = await db
+      .select({ timeSlot: consultations.timeSlot })
+      .from(consultations)
+      .where(and(eq(consultations.scheduledDate, String(date)), eq(consultations.status, 'confirmed')));
+
+    res.json({ date, bookedSlots: booked.map((b) => b.timeSlot) });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to check consultation availability' });
+  }
+});
+
+// Book a Consultation Slot
+app.post('/api/consultations', async (req, res) => {
+  try {
+    const { name, email, phone, company, consultationType, date, timeSlot, notes } = req.body;
+    if (!name || !email || !phone || !date || !timeSlot) {
+      return res.status(400).json({ error: 'Name, email, phone, date, and time slot are required.' });
+    }
+
+    // Double-booking check
+    const existing = await db
+      .select()
+      .from(consultations)
+      .where(and(eq(consultations.scheduledDate, date), eq(consultations.timeSlot, timeSlot), eq(consultations.status, 'confirmed')))
+      .limit(1);
+
+    if (existing.length > 0) {
+      return res.status(409).json({ error: 'This time slot is already booked. Please choose another slot.' });
+    }
+
+    const bookingRef = `ANV-CON-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+
+    await db.insert(consultations).values({
+      bookingRef,
+      clientName: name.trim(),
+      clientEmail: email.trim().toLowerCase(),
+      clientPhone: phone.trim(),
+      company: company ? company.trim() : null,
+      consultationType: consultationType || 'Technical Architecture',
+      scheduledDate: date,
+      timeSlot,
+      notes: notes || null,
+      status: 'confirmed',
+      meetingLink: 'https://meet.google.com/anv-tech-desk',
+    });
+
+    if (adminDb) {
+      try {
+        await adminDb.collection('consultations').add({
+          bookingRef,
+          clientName: name.trim(),
+          clientEmail: email.trim().toLowerCase(),
+          clientPhone: phone.trim(),
+          company: company || '',
+          consultationType: consultationType || 'Technical Architecture',
+          scheduledDate: date,
+          timeSlot,
+          status: 'CONFIRMED',
+          createdAt: new Date().toISOString(),
+        });
+      } catch (fe) {}
+    }
+
+    res.status(201).json({
+      success: true,
+      bookingRef,
+      message: 'Consultation successfully scheduled. You will receive a calendar invite shortly.',
+      details: { date, timeSlot, meetingLink: 'https://meet.google.com/anv-tech-desk' }
+    });
+  } catch (error) {
+    console.error('Error booking consultation:', error);
+    res.status(500).json({ error: 'Failed to schedule consultation' });
+  }
+});
+
+// ==========================================
+// COST ESTIMATOR & PRICING RULES API
+// ==========================================
+
+app.get('/api/pricing-rules', async (req, res) => {
+  try {
+    const rules = await db.select().from(servicePricing).where(eq(servicePricing.isActive, true));
+    if (rules.length > 0) {
+      return res.json(rules);
+    }
+    // Default indicative baseline pricing rules
+    res.json([
+      { serviceSlug: 'web-development', serviceName: 'Website & Web App', basePriceInr: 15000, perPageRateInr: 2000, authPriceInr: 8000, paymentPriceInr: 8000, cmsPriceInr: 10000, maintenanceInr: 3000 },
+      { serviceSlug: 'mobile-app', serviceName: 'Cross-Platform Mobile App (Flutter)', basePriceInr: 35000, perPageRateInr: 3500, authPriceInr: 10000, paymentPriceInr: 12000, cmsPriceInr: 15000, maintenanceInr: 5000 },
+      { serviceSlug: 'custom-software', serviceName: 'Custom Desktop & Enterprise Software', basePriceInr: 45000, perPageRateInr: 4000, authPriceInr: 12000, paymentPriceInr: 12000, cmsPriceInr: 15000, maintenanceInr: 6000 },
+      { serviceSlug: 'digital-marketing', serviceName: 'Digital Marketing & Growth Engine', basePriceInr: 18000, perPageRateInr: 0, authPriceInr: 0, paymentPriceInr: 0, cmsPriceInr: 0, maintenanceInr: 15000 },
+      { serviceSlug: 'ai-automation', serviceName: 'AI & Workflow Automation', basePriceInr: 40000, perPageRateInr: 5000, authPriceInr: 12000, paymentPriceInr: 15000, cmsPriceInr: 15000, maintenanceInr: 8000 }
+    ]);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve pricing rules' });
+  }
+});
+
+app.post('/api/cost-estimate', async (req, res) => {
+  try {
+    const { serviceType, pages, complexity, features, maintenanceMonths } = req.body;
+    let base = 15000;
+    let pageCount = Math.max(1, Number(pages) || 5);
+
+    if (serviceType === 'mobile-app') base = 35000;
+    else if (serviceType === 'custom-software') base = 45000;
+    else if (serviceType === 'digital-marketing') base = 18000;
+    else if (serviceType === 'ai-automation') base = 40000;
+
+    let pageCost = (serviceType === 'digital-marketing') ? 0 : (pageCount * 2200);
+
+    let featureCost = 0;
+    const selectedFeatures = Array.isArray(features) ? features : [];
+    if (selectedFeatures.includes('auth')) featureCost += 8000;
+    if (selectedFeatures.includes('payments')) featureCost += 10000;
+    if (selectedFeatures.includes('cms')) featureCost += 12000;
+    if (selectedFeatures.includes('api')) featureCost += 12000;
+    if (selectedFeatures.includes('offline')) featureCost += 15000;
+
+    let complexityMultiplier = 1.0;
+    if (complexity === 'medium') complexityMultiplier = 1.25;
+    else if (complexity === 'enterprise') complexityMultiplier = 1.6;
+
+    let subtotal = Math.round((base + pageCost + featureCost) * complexityMultiplier);
+    let maintenance = (Number(maintenanceMonths) || 0) * 4500;
+    let totalInr = subtotal + maintenance;
+
+    res.json({
+      serviceType,
+      pages: pageCount,
+      complexity: complexity || 'standard',
+      subtotalInr: subtotal,
+      maintenanceTotalInr: maintenance,
+      estimatedTotalInr: totalInr,
+      formattedEstimate: `₹${totalInr.toLocaleString('en-IN')}`,
+      disclaimer: 'This is an indicative estimate. Final pricing depends on project requirements and technical evaluation.'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to calculate estimate' });
+  }
+});
+
+// ==========================================
+// ANVION AI WEBSITE ASSISTANT API
+// ==========================================
+
+// Rate limit map for AI requests (IP -> timestamps)
+const aiRateLimits = new Map();
+
+app.post('/api/ai/chat', async (req, res) => {
+  try {
+    const ip = req.ip || 'anonymous';
+    const now = Date.now();
+    const timestamps = aiRateLimits.get(ip) || [];
+    const recent = timestamps.filter((t) => now - t < 600000); // 10 min window
+    if (recent.length >= 35) {
+      return res.status(429).json({
+        reply: 'Rate limit reached. Please wait a few moments or connect directly via WhatsApp at +91 9150270802.',
+      });
+    }
+    recent.push(now);
+    aiRateLimits.set(ip, recent);
+
+    const { message, history } = req.body;
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ error: 'Message text is required.' });
+    }
+
+    const query = message.trim().toLowerCase();
+
+    // 1. Built-in high-accuracy ANVION knowledge base
+    let reply = '';
+
+    if (query.includes('service') || query.includes('what do you do') || query.includes('offer')) {
+      reply = `ANVION IT SERVICES engineers high-performance digital products across 6 core domains:
+• **Website Development**: Modern responsive portals, e-commerce, and high-speed web apps (React, Vite, Node.js).
+• **Mobile App Engineering**: Cross-platform, offline-first mobile apps built with Flutter & SQLite B-Tree.
+• **Custom Desktop Software**: High-speed Windows validation tools (e.g., EduVerify 35ms parser).
+• **AI & Automation**: Custom LLM workflow agents, data pipelines, and business process automation.
+• **Digital Marketing & SEO**: Proven admissions & growth engines (e.g., St. Joseph College 100K+ reach).
+• **Cloud & Architecture**: Zero cloud lock-in architectures, PostgreSQL, and secure edge CDN hosting.
+
+Would you like an instant cost estimate or would you like to speak directly with an engineer?`;
+    } else if (query.includes('price') || query.includes('cost') || query.includes('quote') || query.includes('budget') || query.includes('rate')) {
+      reply = `Our project pricing is transparent with zero hidden fees:
+• **Starter / MVP Platforms**: Starting from ₹15,000 – ₹35,000 for standard responsive portals.
+• **Growth & Mobile Systems (Flutter)**: ₹35,000 – ₹90,000 depending on features and offline sync.
+• **Custom Enterprise & Desktop Systems**: Custom quote based on milestones (typically ₹50,000 – ₹2,50,000+).
+• **Digital Marketing Campaigns**: Structured 30-day and ongoing performance retainers.
+
+You can use our interactive **Project Cost Estimator** on our Pricing page, or tap **Start a Project** to receive a tailored architectural proposal within 24 hours.`;
+    } else if (query.includes('contact') || query.includes('phone') || query.includes('whatsapp') || query.includes('email') || query.includes('office') || query.includes('location')) {
+      reply = `You can connect directly with our engineering team:
+• **WhatsApp**: [+91 9150270802](https://wa.me/919150270802) (Fastest technical response)
+• **Phone Lines**: +91 9150270802 / +91 8438464047
+• **Email**: anvionitservices@gmail.com
+• **Official Office**: Door No. 7-69D, Maria Rose Franco, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+• **Govt MSME Registration**: UDYAM-TN-09-0098980 (Active Micro Enterprise).`;
+    } else if (query.includes('project') || query.includes('case study') || query.includes('portfolio') || query.includes('homeluxe') || query.includes('eduverify') || query.includes('st. joseph') || query.includes('client')) {
+      reply = `ANVION has engineered verified production systems and campaigns:
+1. **HOMELUXE Luxury Real Estate**: Premier estate portal with AI valuation algorithms and RERA diligence.
+2. **St. Joseph College of Arts & Science**: 30-day admissions campaign in Tenkasi achieving 100K+ reach and 77.8% non-follower discovery.
+3. **Smart Invoice Builder**: Zero-latency field invoicing app generating print-ready A4 PDF invoices with custom GST & UPI QR codes.
+4. **EduVerify**: Native Windows software auditing Excel records with a 35ms coordinate validator and 0% cloud data leakage.
+5. **Task Planner**: Offline-first Flutter mobile application with encrypted SQLite B-Tree caching.
+6. **Virgin Water & Waste Water Solution**: Industrial wastewater engineering & digital brand architecture.
+
+You can inspect the full architecture breakdowns on our **Case Studies** and **Portfolio** pages.`;
+    } else if (query.includes('hire') || query.includes('career') || query.includes('job') || query.includes('internship') || query.includes('intern')) {
+      reply = `ANVION IT SERVICES is actively accepting applications for full-time roles and student internships in Tamil Nadu & remote India:
+• **Full-Stack Web Developers** (React, Node.js, Postgres)
+• **Flutter Mobile App Engineers** (Dart, Riverpod, SQLite)
+• **AI & Automation Engineers** (Python, LangChain, API integrations)
+• **Digital Marketing & Growth Associates**
+
+Check out our **Careers** and **Internships** pages to review requirements and submit your resume directly to our engineering leads.`;
+    } else if (query.includes('tech') || query.includes('stack') || query.includes('flutter') || query.includes('react') || query.includes('python')) {
+      reply = `ANVION's core technology stack prioritizes performance, security, and zero vendor lock-in:
+• **Frontend**: React 18, Vite, Tailwind CSS, Next.js, HTML5/CSS3.
+• **Mobile**: Flutter 3, Dart, Riverpod 2.0, SQLite B-Tree (Local-First).
+• **Backend**: Node.js, Express, Python, Drizzle ORM, PostgreSQL, REST & WebSockets.
+• **Security & Cloud**: Firebase Auth, Vercel Edge CDN, Docker, Air-Gapped Windows Desktop Engines.`;
+    } else {
+      reply = `Thank you for reaching out to ANVION IT SERVICES! I can help you with:
+1. Explaining our services (Web, Mobile, Desktop Software, AI Automation, Digital Marketing).
+2. Guiding you through our development process & technology stack.
+3. Estimating project budgets and scheduling a free consultation.
+4. Directing you to our Smart Project Requirement Builder.
+
+How can we assist your business or project today? You can also message our technical leads directly on WhatsApp at [+91 9150270802](https://wa.me/919150270802).`;
+    }
+
+    res.json({
+      success: true,
+      reply,
+      sender: 'ANVION AI',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('ANVION AI Assistant error:', error);
+    res.status(500).json({ error: 'AI Assistant temporarily unavailable. Please connect on WhatsApp: +91 9150270802.' });
+  }
+});
+
+// ==========================================
+// BLOG POSTS PUBLIC API
+// ==========================================
+
+app.get('/api/blog-posts', async (req, res) => {
+  try {
+    const posts = await db.select().from(blogPosts).where(eq(blogPosts.status, 'published')).orderBy(desc(blogPosts.publishedAt));
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve blog posts' });
+  }
+});
+
+app.get('/api/blog-posts/:slug', async (req, res) => {
+  try {
+    const post = await db.select().from(blogPosts).where(and(eq(blogPosts.slug, req.params.slug), eq(blogPosts.status, 'published'))).limit(1);
+    if (!post || post.length === 0) {
+      return res.status(404).json({ error: 'Article not found' });
+    }
+    res.json(post[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve article' });
+  }
+});
+
+// ==========================================
+// CLIENT PORTAL API (Protected by requireAuth)
+// ==========================================
+
+app.get('/api/portal/overview', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    if (!email) return res.status(403).json({ error: 'Authenticated email required.' });
+
+    const clientEnquiries = await db.select().from(projectEnquiries).where(eq(projectEnquiries.email, email)).orderBy(desc(projectEnquiries.createdAt));
+    const clientMilestones = await db.select().from(projectMilestones).where(eq(projectMilestones.clientEmail, email)).orderBy(projectMilestones.sequenceOrder);
+    const clientInvoices = await db.select().from(invoices).where(eq(invoices.clientEmail, email)).orderBy(desc(invoices.createdAt));
+    const clientTickets = await db.select().from(supportTickets).where(eq(supportTickets.clientEmail, email)).orderBy(desc(supportTickets.createdAt));
+
+    res.json({
+      clientEmail: email,
+      enquiries: clientEnquiries,
+      milestones: clientMilestones,
+      invoices: clientInvoices,
+      tickets: clientTickets
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load portal overview' });
+  }
+});
+
+app.get('/api/portal/invoices', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    if (!email) return res.status(403).json({ error: 'Authenticated email required.' });
+
+    const list = await db.select().from(invoices).where(eq(invoices.clientEmail, email)).orderBy(desc(invoices.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve invoices' });
+  }
+});
+
+app.get('/api/portal/tickets', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    if (!email) return res.status(403).json({ error: 'Authenticated email required.' });
+
+    const list = await db.select().from(supportTickets).where(eq(supportTickets.clientEmail, email)).orderBy(desc(supportTickets.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve support tickets' });
+  }
+});
+
+app.post('/api/portal/tickets', requireAuth, async (req, res) => {
+  try {
+    const email = req.user?.email?.toLowerCase();
+    const name = req.user?.name || req.body.name || 'Client';
+    const { subject, message, priority } = req.body;
+
+    if (!email || !subject || !message) {
+      return res.status(400).json({ error: 'Subject and message are required.' });
+    }
+
+    const ticketRef = `ANV-TCK-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+
+    await db.insert(supportTickets).values({
+      ticketRef,
+      clientEmail: email,
+      clientName: name,
+      subject: subject.trim(),
+      message: message.trim(),
+      priority: priority || 'medium',
+      status: 'open',
+    });
+
+    res.status(201).json({
+      success: true,
+      ticketRef,
+      message: 'Support ticket submitted. An engineer will attend to your request.'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create support ticket' });
   }
 });
 
@@ -719,6 +1105,230 @@ app.post('/api/admin/jobs', requireAdminAuth, async (req, res) => {
   }
 });
 
+// Admin Consultation Management (Protected)
+app.get('/api/admin/consultations', requireAdminAuth, async (req, res) => {
+  try {
+    const list = await db.select().from(consultations).orderBy(desc(consultations.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch consultations' });
+  }
+});
+
+app.patch('/api/admin/consultations/:id/status', requireAdminAuth, async (req, res) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+    const { status } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['confirmed', 'completed', 'cancelled', 'rescheduled'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid consultation ID or status.' });
+    }
+    await db.update(consultations).set({ status, updatedAt: new Date() }).where(eq(consultations.id, id));
+    await logAudit(req.user?.email || 'admin', 'UPDATE_CONSULTATION_STATUS', `ID ${id} -> ${status}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update consultation status' });
+  }
+});
+
+// Admin Lead Notes & Stage Tracking (Protected)
+app.post('/api/admin/enquiries/:id/notes', requireAdminAuth, async (req, res) => {
+  try {
+    const enquiryId = Number.parseInt(req.params.id, 10);
+    const { note, newStatus } = req.body;
+    if (!Number.isInteger(enquiryId) || !note) {
+      return res.status(400).json({ error: 'Enquiry ID and note content required.' });
+    }
+
+    const currentEnquiry = await db.select().from(projectEnquiries).where(eq(projectEnquiries.id, enquiryId)).limit(1);
+    const prevStatus = currentEnquiry[0]?.status || 'new';
+
+    await db.insert(enquiryNotes).values({
+      enquiryId,
+      authorEmail: req.user?.email || 'admin',
+      note: note.trim(),
+      previousStatus: prevStatus,
+      newStatus: newStatus || prevStatus,
+    });
+
+    if (newStatus && newStatus !== prevStatus) {
+      await db.update(projectEnquiries).set({ status: newStatus }).where(eq(projectEnquiries.id, enquiryId));
+    }
+
+    await logAudit(req.user?.email || 'admin', 'ADD_ENQUIRY_NOTE', `Enquiry #${enquiryId}: ${note.slice(0, 30)}...`, req.ip);
+    res.status(201).json({ success: true, message: 'Note recorded successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to record lead note' });
+  }
+});
+
+app.get('/api/admin/enquiries/:id/notes', requireAdminAuth, async (req, res) => {
+  try {
+    const enquiryId = Number.parseInt(req.params.id, 10);
+    const list = await db.select().from(enquiryNotes).where(eq(enquiryNotes.enquiryId, enquiryId)).orderBy(desc(enquiryNotes.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch lead notes' });
+  }
+});
+
+// Admin Export Enquiries to CSV (Protected)
+app.get('/api/admin/export-enquiries', requireAdminAuth, async (req, res) => {
+  try {
+    const list = await db.select().from(projectEnquiries).orderBy(desc(projectEnquiries.createdAt));
+    const headers = ['ID', 'Date', 'Name', 'Email', 'Phone', 'Company', 'Services', 'Budget', 'Timeline', 'Status'];
+    const rows = list.map((item) => [
+      item.id,
+      item.createdAt ? new Date(item.createdAt).toISOString().split('T')[0] : '',
+      `"${(item.name || '').replace(/"/g, '""')}"`,
+      `"${(item.email || '').replace(/"/g, '""')}"`,
+      `"${(item.phone || '').replace(/"/g, '""')}"`,
+      `"${(item.company || '').replace(/"/g, '""')}"`,
+      `"${(Array.isArray(item.servicesNeeded) ? item.servicesNeeded.join('; ') : '').replace(/"/g, '""')}"`,
+      `"${(item.budget || '').replace(/"/g, '""')}"`,
+      `"${(item.timeline || '').replace(/"/g, '""')}"`,
+      item.status || 'new',
+    ]);
+
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename=anvion-enquiries-${new Date().toISOString().split('T')[0]}.csv`);
+    res.send(csvContent);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to export enquiries CSV' });
+  }
+});
+
+// Admin Invoice & Billing Management (Protected)
+app.get('/api/admin/invoices', requireAdminAuth, async (req, res) => {
+  try {
+    const list = await db.select().from(invoices).orderBy(desc(invoices.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch invoices' });
+  }
+});
+
+app.post('/api/admin/invoices', requireAdminAuth, async (req, res) => {
+  try {
+    const { clientEmail, clientName, projectTitle, amountInr, taxInr, dueDate, notes } = req.body;
+    if (!clientEmail || !clientName || !projectTitle || !amountInr || !dueDate) {
+      return res.status(400).json({ error: 'Client email, name, project title, amount, and due date are required.' });
+    }
+
+    const invoiceNumber = `INV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const amt = Number(amountInr);
+    const tax = Number(taxInr) || Math.round(amt * 0.18);
+    const total = amt + tax;
+
+    const inserted = await db.insert(invoices).values({
+      invoiceNumber,
+      clientEmail: clientEmail.trim().toLowerCase(),
+      clientName: clientName.trim(),
+      projectTitle: projectTitle.trim(),
+      amountInr: amt,
+      taxInr: tax,
+      totalInr: total,
+      status: 'unpaid',
+      dueDate,
+      notes: notes || null,
+    }).returning();
+
+    await logAudit(req.user?.email || 'admin', 'CREATE_INVOICE', `Created Invoice ${invoiceNumber} for ${clientEmail}`, req.ip);
+    res.status(201).json(inserted[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create invoice', details: error.message });
+  }
+});
+
+app.patch('/api/admin/invoices/:id/status', requireAdminAuth, async (req, res) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+    const { status, paidDate } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['unpaid', 'paid', 'overdue', 'cancelled'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid invoice ID or status.' });
+    }
+    await db.update(invoices).set({ status, paidDate: paidDate || (status === 'paid' ? new Date().toISOString().split('T')[0] : null) }).where(eq(invoices.id, id));
+    await logAudit(req.user?.email || 'admin', 'UPDATE_INVOICE_STATUS', `Invoice #${id} -> ${status}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update invoice status' });
+  }
+});
+
+// Admin Client Support Tickets (Protected)
+app.get('/api/admin/support-tickets', requireAdminAuth, async (req, res) => {
+  try {
+    const list = await db.select().from(supportTickets).orderBy(desc(supportTickets.createdAt));
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch support tickets' });
+  }
+});
+
+app.patch('/api/admin/support-tickets/:id/status', requireAdminAuth, async (req, res) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+    const { status } = req.body;
+    if (!Number.isInteger(id) || id < 1 || !['open', 'in_progress', 'resolved', 'closed'].includes(status)) {
+      return res.status(400).json({ error: 'Invalid ticket ID or status.' });
+    }
+    await db.update(supportTickets).set({ status, updatedAt: new Date() }).where(eq(supportTickets.id, id));
+    await logAudit(req.user?.email || 'admin', 'UPDATE_TICKET_STATUS', `Ticket #${id} -> ${status}`, req.ip);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update ticket status' });
+  }
+});
+
+// Admin Pricing Rules Configuration (Protected)
+app.get('/api/admin/pricing-rules', requireAdminAuth, async (req, res) => {
+  try {
+    const list = await db.select().from(servicePricing);
+    res.json(list);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch pricing rules' });
+  }
+});
+
+app.post('/api/admin/pricing-rules', requireAdminAuth, async (req, res) => {
+  try {
+    const { serviceSlug, serviceName, basePriceInr, perPageRateInr, authPriceInr, paymentPriceInr, cmsPriceInr, maintenanceInr } = req.body;
+    if (!serviceSlug || !serviceName || !basePriceInr) {
+      return res.status(400).json({ error: 'Slug, name, and base price are required.' });
+    }
+
+    const inserted = await db.insert(servicePricing).values({
+      serviceSlug,
+      serviceName,
+      basePriceInr: Number(basePriceInr),
+      perPageRateInr: Number(perPageRateInr) || 2500,
+      authIntegrationPriceInr: Number(authPriceInr) || 8000,
+      paymentGatewayPriceInr: Number(paymentPriceInr) || 10000,
+      cmsIntegrationPriceInr: Number(cmsPriceInr) || 12000,
+      monthlyMaintenanceInr: Number(maintenanceInr) || 5000,
+      isActive: true,
+      updatedAt: new Date(),
+    }).onConflictDoUpdate({
+      target: servicePricing.serviceSlug,
+      set: {
+        serviceName,
+        basePriceInr: Number(basePriceInr),
+        perPageRateInr: Number(perPageRateInr) || 2500,
+        authIntegrationPriceInr: Number(authPriceInr) || 8000,
+        paymentGatewayPriceInr: Number(paymentPriceInr) || 10000,
+        cmsIntegrationPriceInr: Number(cmsPriceInr) || 12000,
+        monthlyMaintenanceInr: Number(maintenanceInr) || 5000,
+        updatedAt: new Date(),
+      }
+    }).returning();
+
+    await logAudit(req.user?.email || 'admin', 'UPDATE_PRICING_RULE', `Rule for ${serviceSlug}`, req.ip);
+    res.status(201).json(inserted[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to save pricing rule', details: error.message });
+  }
+});
+
 // ==========================================
 // 3. STATIC FILES & FALLBACK
 // ==========================================
@@ -752,13 +1362,18 @@ app.get('/login', servePage('login.html'));
 app.get('/signup', servePage('signup.html'));
 app.get('/forgot-password', servePage('forgot-password.html'));
 app.get('/profile', servePage('profile.html'));
+app.get('/portal', servePage('dashboard.html'));
 app.get('/admin-login', servePage('admin-login.html'));
 app.get('/admin/login', servePage('admin/login.html'));
 app.get('/admin', servePage('admin.html'));
 app.get('/start-a-project', servePage('start-a-project.html'));
 app.get('/contact', servePage('contact.html'));
 app.get('/careers', servePage('careers.html'));
+app.get('/internships', servePage('internships.html'));
 app.get('/case-studies', servePage('case-studies.html'));
+app.get('/pricing', servePage('pricing.html'));
+app.get('/blog', servePage('blog.html'));
+app.get('/404', servePage('404.html'));
 
 // Local fallback only. Vercel's CDN serves public/index.html at / and returns
 // its normal 404 for unknown static paths without invoking this function.

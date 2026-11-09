@@ -1,465 +1,838 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Start a Project - ANVION IT SERVICES</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-highest": "#343539",
-                        "on-secondary-fixed-variant": "#474646",
-                        "inverse-surface": "#e3e2e7",
-                        "tertiary-container": "#000000",
-                        "on-secondary": "#313030",
-                        "on-primary-fixed-variant": "#474747",
-                        "error-container": "#93000a",
-                        "surface-container-lowest": "#0d0e12",
-                        "surface-container-low": "#1a1b1f",
-                        "primary-container": "#000000",
-                        "primary-fixed": "#e2e2e2",
-                        "tertiary": "#c6c6c8",
-                        "on-tertiary-container": "#747577",
-                        "on-primary-container": "#757575",
-                        "secondary-container": "#4a4949",
-                        "secondary": "#c8c6c5",
-                        "on-tertiary-fixed-variant": "#454749",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary-container": "#bab8b7",
-                        "surface": "#121317",
-                        "tertiary-fixed-dim": "#c6c6c8",
-                        "inverse-primary": "#5e5e5e",
-                        "surface-bright": "#38393d",
-                        "primary": "#c6c6c6",
-                        "on-error": "#690005",
-                        "inverse-on-surface": "#2f3034",
-                        "error": "#ffb4ab",
-                        "on-primary-fixed": "#1b1b1b",
-                        "surface-container-high": "#292a2e",
-                        "surface-tint": "#c6c6c6",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "outline": "#988e90",
-                        "on-primary": "#303030",
-                        "on-surface": "#e3e2e7",
-                        "on-tertiary": "#2f3132",
-                        "on-tertiary-fixed": "#1a1c1d",
-                        "secondary-fixed": "#e5e2e1",
-                        "background": "#121317",
-                        "surface-dim": "#121317",
-                        "on-surface-variant": "#cfc4c5",
-                        "on-background": "#e3e2e7",
-                        "primary-fixed-dim": "#c6c6c6",
-                        "tertiary-fixed": "#e2e2e4",
-                        "surface-container": "#1e1f23",
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "outline-variant": "#4c4546",
-                        "surface-variant": "#343539",
-                        "brand-blue": "#007BFF" // Electric Blue Accent
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "stack-xl": "80px",
-                        "gutter": "24px",
-                        "stack-sm": "12px",
-                        "container-max": "1280px",
-                        "margin-mobile": "20px",
-                        "margin-desktop": "64px",
-                        "stack-xs": "4px",
-                        "stack-lg": "48px",
-                        "stack-md": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-lg-mobile": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Inter"],
-                        "label-lg": ["Inter"],
-                        "label-sm": ["Inter"],
-                        "headline-lg": ["Plus Jakarta Sans"],
-                        "body-lg": ["Inter"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "display-sm": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "display-sm": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
-                    }
-                }
-            }
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Start a Project | Smart Requirement Builder - ANVION IT SERVICES</title>
+  <meta name="description" content="Submit your custom software, mobile app, website or AI automation requirements with the ANVION IT Services interactive 6-step project requirement builder."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008ce0",
+            "surface": "#0C0D12",
+            "surface-low": "#07080B",
+            "surface-high": "#15161E",
+            "on-surface": "#E3E2E7",
+            "on-surface-variant": "#94A3B8"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
         }
-    </script>
-<style>
-        body {
-            background-color: #000000;
-            color: #e3e2e7;
-        }
-        .tech-border {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .tech-focus:focus-within {
-            border-color: #007BFF;
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-        }
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        }
-    </style>
-    <link rel="stylesheet" href="css/custom-styles.css"/>
+      }
+    };
+  </script>
+  <style>
+    body { background-color: #060709; color: #E3E2E7; }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .tech-border {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tech-border:hover {
+      border-color: rgba(0, 163, 255, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(0, 163, 255, 0.15);
+    }
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #FFFFFF 20%, #00A3FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .step-indicator.active {
+      background-color: #00A3FF;
+      color: #FFFFFF;
+      border-color: #00A3FF;
+      box-shadow: 0 0 15px rgba(0, 163, 255, 0.4);
+    }
+    .step-indicator.completed {
+      background-color: #10B981;
+      color: #FFFFFF;
+      border-color: #10B981;
+    }
+  </style>
 </head>
-<body class="font-body-md text-body-md antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white">
-<!-- TopNavBar -->
-<header class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 text-primary dark:text-primary docked full-width top-0 sticky border-b border-white/10 flat no shadows z-50">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
-<div class="flex items-center gap-4">
-<a href="index.html" class="flex items-center gap-3 group">
-    <div class="h-10 w-10 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue transition-colors">
-        <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
-    </div>
-</a>
-<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">ANVION IT SERVICES</span>
-</div>
-<nav class="hidden md:flex gap-gutter items-center">
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="index.html">Home</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="services.html">Services</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="solution.html">Solutions</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="projects.html">Projects</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="portfolio.html">Portfolio</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="about.html">About</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
-</nav>
-<div class="hidden md:flex items-center gap-4">
-<button class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">Contact</button>
-<button class="bg-brand-blue text-white font-label-lg text-label-lg px-6 py-2 rounded font-bold hover:brightness-110 transition-all">Start a Project</button>
-</div>
-<button class="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
-<span class="material-symbols-outlined text-2xl">menu</span>
-</button>
-</div>
-</header>
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden min-h-screen flex flex-col">
 
-
-<main>
-<section class="relative px-margin-mobile md:px-margin-desktop py-20 md:py-28 bg-black overflow-hidden">
-  <div class="ambient-orb ambient-orb-blue w-[500px] h-[500px] top-[-100px] left-[20%]"></div>
-  <div class="ambient-orb ambient-orb-purple w-[400px] h-[400px] bottom-0 right-[15%]"></div>
-  <div class="absolute inset-0 bg-grid opacity-60 pointer-events-none"></div>
-  <div class="relative z-10 max-w-container-max mx-auto">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue mb-5">
-      <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
-      <span>Direct Engagement • Fixed Price or Dedicated Retainer</span>
-    </div>
-    <h1 class="text-display-sm md:text-display-lg font-bold text-white leading-tight max-w-4xl tracking-tight">
-      Tell Us What You Want to <span class="text-gradient-blue">Build.</span>
-    </h1>
-    <p class="text-body-lg md:text-xl text-on-surface-variant mt-6 max-w-2xl">
-      Share your idea, business challenge or project requirement. Our team will review it and help you define the right digital solution.
-    </p>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-14 max-w-4xl">
-      <div class="tech-border rounded-lg bg-surface/70 p-5"><span class="material-symbols-outlined text-brand-blue">lightbulb</span><p class="text-label-lg font-bold text-on-surface mt-3">Your Idea</p><p class="text-label-sm text-on-surface-variant mt-1">Start anywhere</p></div>
-      <div class="tech-border rounded-lg bg-surface/70 p-5"><span class="material-symbols-outlined text-brand-blue">architecture</span><p class="text-label-lg font-bold text-on-surface mt-3">Our Plan</p><p class="text-label-sm text-on-surface-variant mt-1">Clear roadmap</p></div>
-      <div class="tech-border rounded-lg bg-surface/70 p-5"><span class="material-symbols-outlined text-brand-blue">code</span><p class="text-label-lg font-bold text-on-surface mt-3">Development</p><p class="text-label-sm text-on-surface-variant mt-1">Built properly</p></div>
-      <div class="tech-border rounded-lg bg-surface/70 p-5"><span class="material-symbols-outlined text-brand-blue">rocket_launch</span><p class="text-label-lg font-bold text-on-surface mt-3">Launch</p><p class="text-label-sm text-on-surface-variant mt-1">Ready to grow</p></div>
-    </div>
+  <!-- Ambient Light Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="hero-glow w-[600px] h-[600px] -top-32 left-[15%] bg-blue-600/15"></div>
+    <div class="hero-glow w-[500px] h-[500px] top-[45%] -right-20 bg-purple-600/10"></div>
   </div>
-</section>
 
-<section class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-surface-container-low">
-<div class="max-w-container-max mx-auto grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-16">
-<div class="tech-border rounded-xl bg-surface p-6 md:p-9">
-<p class="text-label-sm uppercase tracking-widest text-brand-blue">Project Brief</p>
-<h2 class="text-headline-lg md:text-3xl font-bold text-on-surface mt-3">Let's talk about your project</h2>
-<p class="text-body-md text-on-surface-variant mt-3">You don't need to have everything figured out. Give us enough context to understand what you're trying to achieve.</p>
-
-<form id="projectForm" class="space-y-8 mt-9">
-<div>
-<h3 class="text-label-lg uppercase tracking-widest text-on-surface mb-4">01 / Your Details</h3>
-<div class="grid md:grid-cols-2 gap-5">
-<label class="block"><span class="text-label-sm text-on-surface-variant">Full Name *</span><input required name="name" type="text" placeholder="Your name" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue"></label>
-<label class="block"><span class="text-label-sm text-on-surface-variant">Email Address *</span><input required name="email" type="email" placeholder="you@company.com" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue"></label>
-<label class="block"><span class="text-label-sm text-on-surface-variant">Phone Number</span><input name="phone" type="tel" placeholder="+91" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue"></label>
-<label class="block"><span class="text-label-sm text-on-surface-variant">Company / Organization</span><input name="company" type="text" placeholder="Company name" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue"></label>
-</div>
-</div>
-
-<div>
-<h3 class="text-label-lg uppercase tracking-widest text-on-surface mb-4">02 / Project Type</h3>
-<div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-<label><input type="radio" name="projectType" value="Website" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">Website</span></label>
-<label><input type="radio" name="projectType" value="Mobile App" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">Mobile App</span></label>
-<label><input type="radio" name="projectType" value="Custom Software" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">Software</span></label>
-<label><input type="radio" name="projectType" value="UI/UX Design" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">UI/UX</span></label>
-<label><input type="radio" name="projectType" value="AI & Automation" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">AI & Automation</span></label>
-<label><input type="radio" name="projectType" value="IoT" class="peer sr-only"><span class="block rounded border border-white/10 bg-black px-4 py-3 text-label-sm text-on-surface-variant cursor-pointer peer-checked:border-brand-blue peer-checked:text-white peer-checked:bg-brand-blue/10">IoT</span></label>
-</div>
-</div>
-
-<div>
-<h3 class="text-label-lg uppercase tracking-widest text-on-surface mb-4">03 / Requirements</h3>
-<label class="block"><span class="text-label-sm text-on-surface-variant">Tell us about your project *</span><textarea required name="description" rows="7" placeholder="What are you trying to build? What problem should it solve? What features do you need?" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-brand-blue resize-y"></textarea></label>
-</div>
-
-<div>
-<h3 class="text-label-lg uppercase tracking-widest text-on-surface mb-4">04 / Budget & Timeline</h3>
-<div class="grid md:grid-cols-2 gap-5">
-<label class="block"><span class="text-label-sm text-on-surface-variant">Estimated Budget</span><select name="budget" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface outline-none focus:border-brand-blue"><option value="">Select budget range</option><option>Under ₹25,000</option><option>₹25,000 – ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>₹1,00,000 – ₹5,00,000</option><option>₹5,00,000+</option><option>Not sure yet</option></select></label>
-<label class="block"><span class="text-label-sm text-on-surface-variant">Preferred Timeline</span><select name="timeline" class="mt-2 w-full rounded border border-white/10 bg-black px-4 py-3 text-on-surface outline-none focus:border-brand-blue"><option value="">Select timeline</option><option>ASAP</option><option>Within 1 month</option><option>1 – 3 months</option><option>3 – 6 months</option><option>Flexible</option></select></label>
-</div>
-</div>
-
-<label class="flex items-start gap-3 text-label-sm text-on-surface-variant"><input required type="checkbox" class="mt-1"><span>I agree that ANVION IT SERVICES may use the information submitted through this form to respond to my project inquiry.</span></label>
-
-<button type="submit" class="w-full md:w-auto bg-brand-blue text-white font-label-lg px-9 py-3.5 rounded font-bold hover:brightness-110 transition-all inline-flex items-center justify-center gap-2">Submit Project Request <span class="material-symbols-outlined text-base">arrow_forward</span></button>
-
-<div id="formSuccess" class="hidden rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6 animate-in fade-in zoom-in duration-300">
-  <div class="flex items-start gap-4">
-    <span class="material-symbols-outlined text-emerald-400 text-3xl">verified</span>
-    <div>
-      <h3 class="font-bold text-lg text-white">Project Brief Transmitted to Firebase!</h3>
-      <p class="text-sm text-neutral-300 mt-1">
-        Your requirements have been securely registered in the ANVION architect pipeline. Our solution leads will analyze your scope and respond within 1 business day.
-      </p>
-      <div class="mt-4 flex flex-wrap gap-3">
-        <a href="dashboard.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-blue text-white font-bold text-xs shadow-md shadow-brand-blue/30 hover:bg-brand-blue-hover transition-all">
-          <span>View in Client Portal</span>
-          <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </a>
-        <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-neutral-300 text-xs font-semibold hover:text-white transition-all">
-          Return Home
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-</form>
-</div>
-
-<aside class="space-y-5">
-<div class="tech-border rounded-xl bg-surface p-7">
-<p class="text-label-sm uppercase tracking-widest text-brand-blue">What Happens Next</p>
-<div class="mt-6 space-y-6">
-<div class="flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full border border-brand-blue/40 flex items-center justify-center text-label-sm text-brand-blue">01</span><div><h3 class="font-bold text-on-surface">We Review</h3><p class="text-body-md text-on-surface-variant mt-1">We understand your requirements and project goals.</p></div></div>
-<div class="flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full border border-brand-blue/40 flex items-center justify-center text-label-sm text-brand-blue">02</span><div><h3 class="font-bold text-on-surface">We Discuss</h3><p class="text-body-md text-on-surface-variant mt-1">We clarify scope, features, technical needs and expectations.</p></div></div>
-<div class="flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full border border-brand-blue/40 flex items-center justify-center text-label-sm text-brand-blue">03</span><div><h3 class="font-bold text-on-surface">We Plan</h3><p class="text-body-md text-on-surface-variant mt-1">We define a practical direction for scope, technology and delivery.</p></div></div>
-</div>
-</div>
-<div class="tech-border rounded-xl bg-surface p-7">
-<p class="text-label-sm uppercase tracking-widest text-brand-blue">Good To Know</p>
-<ul class="mt-5 space-y-4 text-body-md text-on-surface-variant">
-<li class="flex gap-3"><span class="material-symbols-outlined text-brand-blue text-base">check</span>You don't need a technical specification to contact us.</li>
-<li class="flex gap-3"><span class="material-symbols-outlined text-brand-blue text-base">check</span>Tell us the business problem in your own words.</li>
-<li class="flex gap-3"><span class="material-symbols-outlined text-brand-blue text-base">check</span>We can help shape the requirements with you.</li>
-</ul>
-</div>
-
-<!-- Verified Government Enterprise Badge -->
-<div class="p-6 rounded-xl bg-surface-card border border-brand-blue/30 relative overflow-hidden tech-border-glow">
-  <div class="flex items-center gap-2 mb-2">
-    <span class="material-symbols-outlined text-amber-400 text-lg">verified</span>
-    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Govt. Registered Enterprise</span>
-  </div>
-  <p class="text-[11px] text-neutral-400 uppercase tracking-widest font-mono">Ministry of MSME, Govt. of India</p>
-  <h4 class="text-base font-bold text-white mt-1">ANVION IT SERVICES</h4>
-  <div class="mt-3 p-3 rounded-lg bg-black/60 border border-white/10 font-mono text-xs">
-    <p class="text-neutral-400 text-[10px]">Udyam Registration No.</p>
-    <p class="text-brand-blue font-bold text-sm tracking-wide mt-0.5">UDYAM-TN-09-0098980</p>
-  </div>
-  <div class="mt-3 text-[11px] text-neutral-400 space-y-1">
-    <p><span class="text-neutral-500">Classification:</span> <span class="text-white font-medium">Micro Enterprise (Services)</span></p>
-    <p><span class="text-neutral-500">NIC Code:</span> <span class="text-white font-medium">62011 (Computer Programming)</span></p>
-    <p><span class="text-neutral-500">Registered Office:</span> <span class="text-white font-medium">Karungal, Kanniyakumari, TN</span></p>
-  </div>
-  <a href="docs/anvion-it-services-udyam-certificate.pdf" target="_blank" rel="noopener noreferrer" class="mt-4 w-full py-2 px-3 rounded-lg bg-brand-blue/15 border border-brand-blue/40 text-brand-blue hover:bg-brand-blue hover:text-white transition-all text-xs font-bold inline-flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined text-sm">description</span>
-    <span>View Official Certificate (PDF)</span>
-  </a>
-</div>
-
-<div class="rounded-xl bg-brand-blue p-7"><span class="material-symbols-outlined text-white text-3xl">mail</span><h3 class="text-headline-md font-bold text-white mt-4">Prefer Email?</h3><p class="text-body-md text-white/80 mt-2">Send your project brief directly to our team.</p><a href="mailto:anvionitservices@gmail.com" class="inline-flex items-center gap-2 mt-5 text-label-lg font-bold text-white hover:underline">anvionitservices@gmail.com <span class="material-symbols-outlined text-base">arrow_outward</span></a></div>
-<div class="rounded-xl bg-emerald-600/90 border border-emerald-500/30 p-7">
-  <div class="flex items-center gap-3">
-    <svg class="w-8 h-8 fill-white" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.04-1.077-.077-.282-.086-.632-.23-1.092-.432-1.928-.844-3.177-2.803-3.275-2.933-.095-.128-.778-1.036-.778-1.975 0-.94.492-1.403.666-1.597.174-.194.38-.243.507-.243.127 0 .254.002.366.007.119.006.277-.045.433.329.162.388.552 1.345.602 1.442.049.097.082.212.016.34-.065.13-.098.21-.194.321-.097.112-.204.25-.292.336-.098.096-.2.2-.086.396.114.195.508.839 1.09 1.357.75.669 1.382.876 1.578.973.196.098.312.083.428-.05.116-.134.494-.576.626-.774.133-.198.265-.165.446-.098.181.066 1.149.542 1.347.64.198.099.33.148.379.231.049.083.049.48-.095.885zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.661 1.434 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.167-.47-4.464-1.282l-.32-.2-2.957.776.79-2.883-.21-.334A8.175 8.175 0 013.8 12c0-4.521 3.679-8.2 8.2-8.2 4.521 0 8.2 3.679 8.2 8.2 0 4.521-3.679 8.2-8.2 8.2z"/></svg>
-    <span class="text-xs uppercase tracking-widest text-white/90 font-bold">Fastest Response</span>
-  </div>
-  <h3 class="text-headline-md font-bold text-white mt-4">Need Quick Answers?</h3>
-  <p class="text-body-md text-white/90 mt-2">Chat with our technical team directly on WhatsApp.</p>
-  <a href="https://wa.me/919150270802" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-5 text-label-lg font-bold text-white hover:underline">
-    +91 9150270802 <span class="material-symbols-outlined text-base">arrow_outward</span>
-  </a>
-</div>
-</aside>
-</div>
-</section>
-
-<section class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-black">
-<div class="max-w-4xl mx-auto">
-<div class="text-center mb-12"><p class="text-label-lg uppercase tracking-[0.18em] text-brand-blue mb-4">Before You Start</p><h2 class="text-headline-lg md:text-display-sm font-bold text-on-surface">Common Questions</h2></div>
-<div class="space-y-3">
-<details class="tech-border rounded-lg bg-surface/50 p-5 group"><summary class="cursor-pointer list-none flex items-center justify-between gap-5 font-bold text-on-surface">Do I need a complete idea before contacting ANVION?<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-body-md text-on-surface-variant mt-4">No. You can start with a business problem, rough idea or list of requirements. We can help shape the project scope.</p></details>
-<details class="tech-border rounded-lg bg-surface/50 p-5 group"><summary class="cursor-pointer list-none flex items-center justify-between gap-5 font-bold text-on-surface">Can ANVION work with an existing application?<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-body-md text-on-surface-variant mt-4">Yes. Existing websites, applications, APIs and business systems can be reviewed for improvements, maintenance, redesign or new features.</p></details>
-<details class="tech-border rounded-lg bg-surface/50 p-5 group"><summary class="cursor-pointer list-none flex items-center justify-between gap-5 font-bold text-on-surface">How is the project cost decided?<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span></summary><p class="text-body-md text-on-surface-variant mt-4">Cost depends on scope, features, integrations, technology, complexity and delivery requirements.</p></details>
-</div>
-</div>
-</section>
-</main>
-
-
-<!-- Footer -->
-<footer class="bg-surface-container-lowest text-primary w-full py-stack-xl border-t border-white/10 mt-auto">
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-    <div class="flex flex-col gap-stack-sm">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+  <!-- Header -->
+  <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
           <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
         </div>
-        <span class="font-headline-md text-xl font-bold text-on-surface">ANVION IT SERVICES</span>
-      </div>
-      <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-        Innovative digital solutions, mobile engineering, cloud infrastructure, and IT consultancy.
-      </p>
-      <div class="mt-3 p-3.5 rounded-xl bg-surface-card border border-brand-blue/30 text-xs">
-        <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
-          <span class="material-symbols-outlined text-sm">verified</span>
-          <span>Govt. of India MSME Registered</span>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+            ANVION
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
         </div>
-        <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
-        <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise • Services (NIC 62011)</p>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-neutral-300">
+        <a class="hover:text-brand-blue transition-colors" href="index.html">Home</a>
+        <a class="hover:text-brand-blue transition-colors" href="services.html">Services</a>
+        <a class="hover:text-brand-blue transition-colors" href="solution.html">Solutions</a>
+        <a class="hover:text-brand-blue transition-colors" href="projects.html">Projects</a>
+        <a class="hover:text-brand-blue transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="hover:text-brand-blue transition-colors" href="pricing.html">Pricing</a>
+        <a class="hover:text-brand-blue transition-colors" href="case-studies.html">Case Studies</a>
+        <a class="hover:text-brand-blue transition-colors" href="about.html">About</a>
+        <a class="hover:text-brand-blue transition-colors" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-3.5">
+        <a href="contact.html" class="text-xs font-mono px-3.5 py-2 rounded-lg text-white font-bold bg-white/5 border border-white/10 hover:border-brand-blue/50 text-neutral-300 hover:text-white transition-all">
+          Contact Us
+        </a>
+        <a href="dashboard.html" class="text-xs font-mono px-3.5 py-2 rounded-lg text-white font-bold bg-white/5 border border-white/10 hover:border-brand-blue/50 text-neutral-300 hover:text-white transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm">lock</span>
+          <span>Portal</span>
+        </a>
       </div>
     </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Company</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="about.html">About Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="careers.html">Careers</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="contact.html">Contact Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Expertise</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="services.html">All Services</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="web-development.html">Web Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="mobile-development.html">Mobile Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="ai-machine-learning.html">AI & Machine Learning</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="cybersecurity.html">Cybersecurity</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="projects.html">Featured Projects</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="portfolio.html">Portfolio</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Official Registration</h4>
-      <p class="text-xs text-neutral-300 leading-relaxed">
-        <strong>ANVION IT SERVICES</strong><br/>
-        Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
-      </p>
-      <div class="text-xs text-neutral-400 space-y-1 mt-1">
-        <p><span class="text-neutral-500">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
-        <p><span class="text-neutral-500">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue">anvionitservices@gmail.com</a></p>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Header -->
+    <section class="relative px-6 md:px-12 py-12 md:py-16 border-b border-white/10 bg-grid overflow-hidden">
+      <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue mb-4">
+          <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+          <span>Smart Requirement Builder &bull; Milestone Feasibility Assessment</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight leading-tight">
+          Define Your System <span class="text-gradient-blue">Requirements.</span>
+        </h1>
+        <p class="text-xs sm:text-sm md:text-base text-neutral-300 mt-4 max-w-2xl mx-auto leading-relaxed">
+          Complete our structured 6-step project architect builder. We generate a unique reference token and review your engineering scope within 24 hours.
+        </p>
+
+        <!-- Progress Tracker Bar -->
+        <div class="mt-10 max-w-2xl mx-auto">
+          <div class="flex items-center justify-between relative">
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 bg-white/10 w-full -z-0"></div>
+            <div class="step-indicator active w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10" id="stepIndicator1">1</div>
+            <div class="step-indicator w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10 text-neutral-400" id="stepIndicator2">2</div>
+            <div class="step-indicator w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10 text-neutral-400" id="stepIndicator3">3</div>
+            <div class="step-indicator w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10 text-neutral-400" id="stepIndicator4">4</div>
+            <div class="step-indicator w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10 text-neutral-400" id="stepIndicator5">5</div>
+            <div class="step-indicator w-8 h-8 rounded-full border border-white/20 bg-surface flex items-center justify-center text-xs font-mono font-bold z-10 text-neutral-400" id="stepIndicator6">6</div>
+          </div>
+          <div class="flex justify-between text-[10px] font-mono text-neutral-400 mt-2 px-1">
+            <span>Contact</span>
+            <span>Service</span>
+            <span>Scope</span>
+            <span>Budget</span>
+            <span>Timeline</span>
+            <span>Review</span>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-3 pt-2">
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
-        <span class="text-neutral-600">•</span>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+    </section>
+
+    <!-- Interactive Multi-Step Form Container -->
+    <section class="px-6 md:px-12 py-14 max-w-4xl mx-auto">
+      <div class="tech-border rounded-2xl bg-surface p-6 md:p-10 relative">
+
+        <form id="requirementWizardForm">
+          
+          <!-- STEP 1: Customer Information -->
+          <div class="wizard-step" id="step1">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 01 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Your Contact &amp; Business Profile</h2>
+              <p class="text-xs text-neutral-400 mt-1">Who should our solution architecture lead follow up with?</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Full Name *</label>
+                <input required type="text" id="custName" name="name" placeholder="Sundar Raman" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Business / Company Name</label>
+                <input type="text" id="custCompany" name="company" placeholder="Acme Technologies Pvt Ltd" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Email Address *</label>
+                <input required type="email" id="custEmail" name="email" placeholder="sundar@company.com" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Phone Number / WhatsApp *</label>
+                <input required type="tel" id="custPhone" name="phone" placeholder="+91 9150270802" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Country / Region *</label>
+                <select id="custCountry" name="country" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-brand-blue">
+                  <option value="India" selected>India (Domestic / Tamil Nadu / Pan-India)</option>
+                  <option value="United States">United States / North America</option>
+                  <option value="United Kingdom">United Kingdom / Europe</option>
+                  <option value="United Arab Emirates">United Arab Emirates / Middle East</option>
+                  <option value="Singapore">Singapore / Southeast Asia</option>
+                  <option value="Australia">Australia / Oceania</option>
+                  <option value="Other">Other International</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+              <button type="button" onclick="nextStep(1)" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 inline-flex items-center gap-1.5">
+                <span>Continue to Service Selection</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Service Selection -->
+          <div class="wizard-step hidden" id="step2">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 02 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Select Service Category</h2>
+              <p class="text-xs text-neutral-400 mt-1">What type of digital architecture are you planning to commission?</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="serviceCards">
+              <label class="p-4 rounded-xl border border-brand-blue bg-brand-blue/10 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="Website Development" checked class="sr-only"/>
+                <span class="material-symbols-outlined text-brand-blue text-2xl mb-2">web</span>
+                <span class="text-xs font-bold text-white">Website Development</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Corporate, Landing, Web App</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="Mobile Application" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">smartphone</span>
+                <span class="text-xs font-bold text-white">Mobile Application</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Flutter iOS &amp; Android</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="E-commerce Platform" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">shopping_cart</span>
+                <span class="text-xs font-bold text-white">E-commerce Platform</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Custom Cart &amp; Razorpay</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="Custom Software" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">desktop_windows</span>
+                <span class="text-xs font-bold text-white">Custom Software / ERP</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Bespoke C# / Cloud engines</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="AI & Automation" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">psychology</span>
+                <span class="text-xs font-bold text-white">AI &amp; Automation</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">LLMs, Bots, Workflows</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="UI/UX Design" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">design_services</span>
+                <span class="text-xs font-bold text-white">UI/UX Design</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Figma systems &amp; Wireframes</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="Digital Marketing" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">campaign</span>
+                <span class="text-xs font-bold text-white">Digital Marketing</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Lead gen &amp; Social Ads</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="SEO Services" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">trending_up</span>
+                <span class="text-xs font-bold text-white">SEO Services</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Technical &amp; Local Ranking</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between transition-all service-radio-card">
+                <input type="radio" name="projectType" value="Other Solutions" class="sr-only"/>
+                <span class="material-symbols-outlined text-neutral-400 text-2xl mb-2">build</span>
+                <span class="text-xs font-bold text-white">Other Solutions</span>
+                <span class="text-[10px] text-neutral-400 mt-0.5">Custom IT infrastructure</span>
+              </label>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button type="button" onclick="prevStep(2)" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold">
+                Back
+              </button>
+              <button type="button" onclick="nextStep(2)" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 inline-flex items-center gap-1.5">
+                <span>Continue to Requirements</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Project Requirements -->
+          <div class="wizard-step hidden" id="step3">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 03 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Project Requirements &amp; Scope</h2>
+              <p class="text-xs text-neutral-400 mt-1">Describe the problem to solve and key technical expectations.</p>
+            </div>
+
+            <div class="space-y-5">
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Project Overview &amp; Business Objectives *</label>
+                <textarea required id="reqDesc" name="description" rows="4" placeholder="What are you building? What business problem does it solve? Who are the target users?" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue resize-none"></textarea>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Required Key Features</label>
+                <input type="text" id="reqFeatures" name="features" placeholder="e.g. User login, Payment gateway, Admin dashboard, WhatsApp notifications, SQLite offline mode" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-mono text-neutral-300 mb-1.5">Reference Websites / Apps</label>
+                  <input type="text" id="reqRefs" name="referenceWebsites" placeholder="https://example.com, competitor links" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-neutral-300 mb-1.5">Expected Number of Pages / Screens</label>
+                  <select id="reqPages" name="pageCount" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-brand-blue">
+                    <option value="1-5 Pages (Landing / Showcase)">1 – 5 Screens / Pages (Landing / Showcase)</option>
+                    <option value="6-12 Pages (Standard Business)">6 – 12 Screens / Pages (Standard Business)</option>
+                    <option value="13-25 Pages (Dynamic System)">13 – 25 Screens / Pages (Dynamic System)</option>
+                    <option value="25+ Pages (Enterprise Platform)">25+ Screens / Pages (Enterprise Platform)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-neutral-300 mb-1.5">Preferred Technology (Optional)</label>
+                <input type="text" id="reqTech" name="preferredTech" placeholder="e.g. Flutter, React 18, Node.js, Python, PostgreSQL, SQLite, or 'No preference - advise best stack'" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white placeholder:text-neutral-600 outline-none focus:border-brand-blue"/>
+              </div>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button type="button" onclick="prevStep(3)" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold">
+                Back
+              </button>
+              <button type="button" onclick="nextStep(3)" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 inline-flex items-center gap-1.5">
+                <span>Continue to Budget</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Budget Range -->
+          <div class="wizard-step hidden" id="step4">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 04 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Expected Investment Budget (INR)</h2>
+              <p class="text-xs text-neutral-400 mt-1">Select your indicative allocation to help us calibrate scope and architecture.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="budgetCards">
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="Below ₹10,000" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Below ₹10,000</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Micro sprint / Consultation</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="₹10,000 – ₹25,000" class="sr-only"/>
+                <span class="text-xs font-bold text-white">₹10,000 – ₹25,000</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Starter MVP / Fast landing</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-brand-blue bg-brand-blue/10 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="₹25,000 – ₹50,000" checked class="sr-only"/>
+                <span class="text-xs font-bold text-white">₹25,000 – ₹50,000</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Standard business portal</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="₹50,000 – ₹1,00,000" class="sr-only"/>
+                <span class="text-xs font-bold text-white">₹50,000 – ₹1,00,000</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Full-stack web / Flutter app</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="Above ₹1,00,000" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Above ₹1,00,000</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Multi-tenant ERP / Enterprise</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between budget-radio-card">
+                <input type="radio" name="budget" value="Custom Budget" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Custom / Retainer</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Dedicated team SLA</span>
+              </label>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button type="button" onclick="prevStep(4)" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold">
+                Back
+              </button>
+              <button type="button" onclick="nextStep(4)" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 inline-flex items-center gap-1.5">
+                <span>Continue to Timeline</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 5: Timeline -->
+          <div class="wizard-step hidden" id="step5">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 05 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Target Launch Timeline</h2>
+              <p class="text-xs text-neutral-400 mt-1">When do you need the first release candidate deployed to staging?</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="timelineCards">
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between timeline-radio-card">
+                <input type="radio" name="timeline" value="Immediately" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Immediately</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Immediate sprint kickoff</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between timeline-radio-card">
+                <input type="radio" name="timeline" value="Within 2 weeks" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Within 2 weeks</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Rapid turnaround</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-brand-blue bg-brand-blue/10 cursor-pointer flex flex-col justify-between timeline-radio-card">
+                <input type="radio" name="timeline" value="Within 1 month" checked class="sr-only"/>
+                <span class="text-xs font-bold text-white">Within 1 month</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Standard MVP duration</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between timeline-radio-card">
+                <input type="radio" name="timeline" value="Within 3 months" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Within 3 months</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Phased system rollout</span>
+              </label>
+
+              <label class="p-4 rounded-xl border border-white/10 bg-black/40 hover:border-white/20 cursor-pointer flex flex-col justify-between timeline-radio-card">
+                <input type="radio" name="timeline" value="Flexible" class="sr-only"/>
+                <span class="text-xs font-bold text-white">Flexible</span>
+                <span class="text-[10px] text-neutral-400 mt-1">Milestone quality focus</span>
+              </label>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button type="button" onclick="prevStep(5)" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold">
+                Back
+              </button>
+              <button type="button" onclick="nextStep(5)" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 inline-flex items-center gap-1.5">
+                <span>Review &amp; Submit</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 6: Review and Submit -->
+          <div class="wizard-step hidden" id="step6">
+            <div class="mb-6 pb-4 border-b border-white/10">
+              <span class="text-xs font-mono text-brand-blue uppercase tracking-wider">Step 06 / 06</span>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white mt-1">Review &amp; Confirm Submission</h2>
+              <p class="text-xs text-neutral-400 mt-1">Verify your project specifications before generating your unique Enquiry ID.</p>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="p-5 rounded-xl bg-black/40 border border-white/10 space-y-3 text-xs">
+              <div class="grid grid-cols-2 gap-4 pb-3 border-b border-white/10">
+                <div>
+                  <span class="text-neutral-500 font-mono">Client Name:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumName">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Company / Org:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumCompany">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Email:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumEmail">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Phone / WhatsApp:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumPhone">-</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-3 border-b border-white/10">
+                <div>
+                  <span class="text-neutral-500 font-mono">Service:</span>
+                  <p class="font-bold text-brand-blue mt-0.5" id="sumService">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Pages / Scope:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumPages">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Budget:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumBudget">-</p>
+                </div>
+                <div>
+                  <span class="text-neutral-500 font-mono">Timeline:</span>
+                  <p class="font-bold text-white mt-0.5" id="sumTimeline">-</p>
+                </div>
+              </div>
+
+              <div>
+                <span class="text-neutral-500 font-mono">Project Scope:</span>
+                <p class="text-neutral-300 mt-1 leading-relaxed" id="sumDesc">-</p>
+              </div>
+            </div>
+
+            <!-- Anti-Spam Agreement -->
+            <div class="mt-6 flex items-start gap-3">
+              <input required type="checkbox" id="agreeTerms" class="h-4 w-4 mt-0.5 rounded border-white/20 bg-black text-brand-blue focus:ring-0 cursor-pointer"/>
+              <label for="agreeTerms" class="text-xs text-neutral-400 cursor-pointer leading-relaxed">
+                I agree that ANVION IT SERVICES may evaluate these specifications to prepare a technical proposal. All submissions are protected under non-disclosure confidentiality.
+              </label>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button type="button" onclick="prevStep(6)" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold">
+                Back
+              </button>
+              <button type="submit" id="submitBriefBtn" class="px-8 py-3.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/30 inline-flex items-center gap-2">
+                <span>Submit Requirements</span>
+                <span class="material-symbols-outlined text-base">send</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- Final Confirmation Screen -->
+        <div id="confirmationScreen" class="hidden text-center py-8">
+          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-4">
+            <span class="material-symbols-outlined text-3xl">verified</span>
+          </div>
+          <h2 class="text-2xl font-display font-bold text-white">Project Requirement Registered!</h2>
+          <p class="text-xs text-neutral-400 max-w-md mx-auto mt-2 leading-relaxed">
+            Your unique enquiry ID has been recorded in the ANVION architect pipeline. A solution architect will evaluate your specifications and reach out.
+          </p>
+
+          <div class="my-6 p-4 rounded-xl bg-black/60 border border-brand-blue/30 inline-block text-center">
+            <span class="text-[10px] font-mono uppercase text-neutral-400">Enquiry ID</span>
+            <div class="text-xl font-mono font-extrabold text-brand-blue mt-0.5" id="generatedEnquiryId">ANV-ENQ-2026-X8F</div>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-3 mt-2">
+            <a id="whatsAppFollowupBtn" href="#" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
+              <span>Track on WhatsApp</span>
+              <span class="material-symbols-outlined text-sm">chat</span>
+            </a>
+            <a href="dashboard.html" class="px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all inline-flex items-center gap-1.5 shadow-md shadow-brand-blue/20">
+              <span>View in Client Portal</span>
+              <span class="material-symbols-outlined text-sm">lock</span>
+            </a>
+            <a href="index.html" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold transition-all">
+              Return Home
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Comprehensive Master Footer -->
+  <footer class="bg-[#050608] text-neutral-300 w-full py-16 border-t border-white/10 mt-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+            <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+          </div>
+          <span class="font-display text-lg font-bold text-white">ANVION IT SERVICES</span>
+        </div>
+        <p class="text-xs text-neutral-400 leading-relaxed">
+          Innovative digital solutions, mobile app engineering, cloud infrastructure, desktop software, and IT consultancy.
+        </p>
+        <div class="p-3.5 rounded-xl bg-surface border border-brand-blue/30 text-xs">
+          <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>Govt. of India MSME Registered</span>
+          </div>
+          <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+          <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise &bull; Services (NIC 62011)</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Company</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers (Hiring Status)</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="internships.html">Internship Applications</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="blog.html">Technical Blog &amp; Insights</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="pricing.html">Pricing &amp; Cost Estimator</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors font-bold text-brand-blue" href="start-a-project.html">Start a Project</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Featured Projects</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-homeluxe.html">HOMELUXE Real Estate</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-smart-invoice-builder.html">Smart Invoice Builder</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-eduverify.html">EduVerify Software</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-task-planner.html">Task Planner App</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-st-joseph.html">St. Joseph College Marketing</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="projects.html">All Projects Directory</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Case Studies Portfolio</a>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Official Registration &amp; HQ</h4>
+        <p class="text-neutral-300 leading-relaxed text-xs">
+          <strong class="text-white">ANVION IT SERVICES</strong><br/>
+          Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+        </p>
+        <div class="text-neutral-400 space-y-1">
+          <p><span class="text-neutral-500 font-sans">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
+          <p><span class="text-neutral-500 font-sans">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue font-sans">anvionitservices@gmail.com</a></p>
+        </div>
+        <div class="flex items-center gap-3 pt-2 text-[11px]">
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
+          <span class="text-neutral-600">&bull;</span>
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mt-stack-lg pt-stack-sm border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-2">
-    <p>© 2026 ANVION IT SERVICES. All rights reserved. • Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
-    <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
-  </div>
-</footer>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+    <div class="px-6 md:px-12 max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3">
+      <p>&copy; 2026 ANVION IT SERVICES. All rights reserved. &bull; Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+      <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+    </div>
+  </footer>
 
-  const revealItems = document.querySelectorAll("main section");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("opacity-100", "translate-y-0");
-        entry.target.classList.remove("opacity-0", "translate-y-4");
-      }
-    });
-  }, { threshold: 0.08 });
+  <!-- Universal AI Assistant Widget -->
+  <script src="js/anvion-ai.js"></script>
 
-  revealItems.forEach(section => {
-    section.classList.add("transition-all", "duration-700", "opacity-0", "translate-y-4");
-    observer.observe(section);
-  });
-});
-</script>
+  <!-- Multi-Step Wizard Engine -->
+  <script>
+    let currentStep = 1;
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("projectForm");
-  const success = document.getElementById("formSuccess");
-  const submitBtn = form ? form.querySelector("button[type='submit']") : null;
-
-  if (form && success) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.classList.add("opacity-70");
-        submitBtn.innerHTML = `<span>Saving brief...</span>`;
-      }
-
-      const formData = new FormData(form);
-      const briefData = {
-        name: formData.get("name") || "",
-        email: formData.get("email") || "",
-        phone: formData.get("phone") || "",
-        company: formData.get("company") || "",
-        projectType: formData.get("projectType") || "Custom Software",
-        scope: formData.get("description") || "",
-        budget: formData.get("budget") || "₹50,000 – ₹1,00,000",
-        timeline: formData.get("timeline") || "1 – 3 months"
-      };
-
-      if (window.location.protocol.startsWith("http")) {
-        try {
-          const auth = await import("./js/auth.js");
-          if (auth && auth.submitProjectInquiry) {
-            await auth.submitProjectInquiry(briefData);
-          }
-        } catch (err) {
-          console.warn("[Start a Project] Local fallback used:", err);
+    function updateStepIndicators(step) {
+      for (let i = 1; i <= 6; i++) {
+        const ind = document.getElementById("stepIndicator" + i);
+        if (!ind) continue;
+        ind.classList.remove("active", "completed");
+        if (i === step) {
+          ind.classList.add("active");
+          ind.classList.remove("text-neutral-400");
+        } else if (i < step) {
+          ind.classList.add("completed");
+          ind.classList.remove("text-neutral-400");
+        } else {
+          ind.classList.add("text-neutral-400");
         }
-      } else {
-        try {
-          const raw = localStorage.getItem("anvion_user_inquiries");
-          const list = raw ? JSON.parse(raw) : [];
-          list.unshift({ ...briefData, submittedAt: new Date().toISOString(), status: "Under Review" });
-          localStorage.setItem("anvion_user_inquiries", JSON.stringify(list));
-        } catch (err) {}
+      }
+    }
+
+    function showStep(step) {
+      document.querySelectorAll(".wizard-step").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById("step" + step);
+      if (target) {
+        target.classList.remove("hidden");
+        updateStepIndicators(step);
+        currentStep = step;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function nextStep(step) {
+      // Validate Step 1
+      if (step === 1) {
+        const name = document.getElementById("custName");
+        const email = document.getElementById("custEmail");
+        const phone = document.getElementById("custPhone");
+        if (!name.value.trim()) { alert("Please provide your full name."); name.focus(); return; }
+        if (!email.value.trim() || !email.checkValidity()) { alert("Please provide a valid email address."); email.focus(); return; }
+        if (!phone.value.trim()) { alert("Please provide your phone or WhatsApp number."); phone.focus(); return; }
       }
 
-      form.classList.add("hidden");
-      success.classList.remove("hidden");
-      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Validate Step 3
+      if (step === 3) {
+        const desc = document.getElementById("reqDesc");
+        if (!desc.value.trim()) { alert("Please enter a brief overview of your project requirements."); desc.focus(); return; }
+      }
+
+      // Populate Step 6 Review
+      if (step === 5) {
+        document.getElementById("sumName").textContent = document.getElementById("custName").value;
+        document.getElementById("sumCompany").textContent = document.getElementById("custCompany").value || "Individual / Not specified";
+        document.getElementById("sumEmail").textContent = document.getElementById("custEmail").value;
+        document.getElementById("sumPhone").textContent = document.getElementById("custPhone").value;
+
+        const selService = document.querySelector('input[name="projectType"]:checked');
+        document.getElementById("sumService").textContent = selService ? selService.value : "Website Development";
+
+        document.getElementById("sumPages").textContent = document.getElementById("reqPages").value;
+
+        const selBudget = document.querySelector('input[name="budget"]:checked');
+        document.getElementById("sumBudget").textContent = selBudget ? selBudget.value : "₹25,000 – ₹50,000";
+
+        const selTimeline = document.querySelector('input[name="timeline"]:checked');
+        document.getElementById("sumTimeline").textContent = selTimeline ? selTimeline.value : "Within 1 month";
+
+        document.getElementById("sumDesc").textContent = document.getElementById("reqDesc").value;
+      }
+
+      showStep(step + 1);
+    }
+
+    function prevStep(step) {
+      showStep(step - 1);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Radio Card Styling Listeners
+      function setupRadioCards(containerId, activeBorderClass = "border-brand-blue", activeBgClass = "bg-brand-blue/10") {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const cards = container.querySelectorAll("label");
+        cards.forEach(card => {
+          card.addEventListener("click", () => {
+            cards.forEach(c => {
+              c.classList.remove(activeBorderClass, activeBgClass);
+              c.classList.add("border-white/10", "bg-black/40");
+            });
+            card.classList.add(activeBorderClass, activeBgClass);
+            card.classList.remove("border-white/10", "bg-black/40");
+          });
+        });
+      }
+
+      setupRadioCards("serviceCards");
+      setupRadioCards("budgetCards");
+      setupRadioCards("timelineCards");
+
+      // Parse Query Parameters (e.g. from Pricing Estimator)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("service")) {
+        const sVal = urlParams.get("service");
+        const radios = document.querySelectorAll('input[name="projectType"]');
+        radios.forEach(r => {
+          if (sVal.toLowerCase().includes(r.value.toLowerCase()) || r.value.toLowerCase().includes(sVal.toLowerCase())) {
+            r.checked = true;
+            r.closest("label").click();
+          }
+        });
+      }
+      if (urlParams.has("estimate")) {
+        const est = urlParams.get("estimate");
+        const descField = document.getElementById("reqDesc");
+        if (descField) {
+          descField.value = `[Quotation from Estimator: ${est}]\n`;
+        }
+      }
+
+      // Submission Handler with Duplicate Guard
+      const form = document.getElementById("requirementWizardForm");
+      const confirmScreen = document.getElementById("confirmationScreen");
+      const submitBtn = document.getElementById("submitBriefBtn");
+      let isSubmitting = false;
+
+      if (form && confirmScreen) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (isSubmitting) return;
+
+          const agree = document.getElementById("agreeTerms");
+          if (!agree.checked) {
+            alert("Please acknowledge the confidentiality agreement to proceed.");
+            return;
+          }
+
+          isSubmitting = true;
+          submitBtn.disabled = true;
+          submitBtn.classList.add("opacity-60");
+          submitBtn.innerHTML = `<span>Transmitting Brief...</span>`;
+
+          const formData = new FormData(form);
+          const uniqueEnquiryId = "ANV-ENQ-" + Date.now().toString(36).toUpperCase() + "-" + Math.floor(100 + Math.random() * 900);
+
+          const payload = {
+            enquiryId: uniqueEnquiryId,
+            name: formData.get("name") || "",
+            company: formData.get("company") || "",
+            email: formData.get("email") || "",
+            phone: formData.get("phone") || "",
+            country: formData.get("country") || "India",
+            projectType: formData.get("projectType") || "Website Development",
+            description: formData.get("description") || "",
+            features: formData.get("features") || "",
+            referenceWebsites: formData.get("referenceWebsites") || "",
+            pageCount: formData.get("pageCount") || "",
+            preferredTech: formData.get("preferredTech") || "",
+            budget: formData.get("budget") || "₹25,000 – ₹50,000",
+            timeline: formData.get("timeline") || "Within 1 month",
+            servicesNeeded: [formData.get("projectType") || "Website Development"]
+          };
+
+          // Try POST /api/project-enquiries
+          try {
+            await fetch("/api/project-enquiries", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+          } catch (err) {
+            console.warn("Backend requirement submission fallback:", err);
+          }
+
+          // Local storage fallback for client portal
+          try {
+            const raw = localStorage.getItem("anvion_user_inquiries");
+            const list = raw ? JSON.parse(raw) : [];
+            list.unshift({ ...payload, submittedAt: new Date().toISOString(), status: "New" });
+            localStorage.setItem("anvion_user_inquiries", JSON.stringify(list));
+          } catch (e) {}
+
+          form.classList.add("hidden");
+          confirmScreen.classList.remove("hidden");
+          document.getElementById("generatedEnquiryId").textContent = uniqueEnquiryId;
+
+          const waBtn = document.getElementById("whatsAppFollowupBtn");
+          if (waBtn) {
+            const waText = encodeURIComponent(`Hi ANVION, I just submitted project requirements (Enquiry ID: ${uniqueEnquiryId}) for ${payload.projectType}. Scope: ${payload.description.slice(0, 80)}...`);
+            waBtn.href = `https://wa.me/919150270802?text=${waText}`;
+          }
+
+          confirmScreen.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
     });
-  }
-});
-</script>
-    <script src="js/navbar.js"></script>
-</body></html>
+  </script>
+</body>
+</html>

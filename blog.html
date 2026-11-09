@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Engineering Blog &amp; Insights | ANVION IT SERVICES</title>
+  <meta name="description" content="Technical deep dives, architectural breakdowns, Flutter engineering, sub-50ms desktop software, and cloud systems by ANVION IT Services."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008ce0",
+            "surface": "#0C0D12",
+            "surface-low": "#07080B",
+            "surface-high": "#15161E",
+            "on-surface": "#E3E2E7",
+            "on-surface-variant": "#94A3B8"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { background-color: #060709; color: #E3E2E7; }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .tech-border {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tech-border:hover {
+      border-color: rgba(0, 163, 255, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(0, 163, 255, 0.15);
+    }
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #FFFFFF 20%, #00A3FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden min-h-screen flex flex-col">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="hero-glow w-[600px] h-[600px] -top-32 left-[10%] bg-blue-600/15"></div>
+    <div class="hero-glow w-[500px] h-[500px] top-[40%] -right-20 bg-purple-600/10"></div>
+  </div>
+
+  <!-- Glassmorphic Header -->
+  <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
+          <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+            ANVION
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-neutral-300">
+        <a class="hover:text-brand-blue transition-colors" href="index.html">Home</a>
+        <a class="hover:text-brand-blue transition-colors" href="services.html">Services</a>
+        <a class="hover:text-brand-blue transition-colors" href="solution.html">Solutions</a>
+        <a class="hover:text-brand-blue transition-colors" href="projects.html">Projects</a>
+        <a class="hover:text-brand-blue transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="hover:text-brand-blue transition-colors" href="case-studies.html">Case Studies</a>
+        <a class="hover:text-brand-blue transition-colors" href="pricing.html">Pricing</a>
+        <a class="text-brand-blue font-semibold transition-colors" href="blog.html">Insights</a>
+        <a class="hover:text-brand-blue transition-colors" href="about.html">About</a>
+        <a class="hover:text-brand-blue transition-colors" href="careers.html">Careers</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-3.5">
+        <a href="contact.html" class="text-xs font-mono px-3.5 py-2 rounded-lg text-white font-bold bg-white/5 border border-white/10 hover:border-brand-blue/50 text-neutral-300 hover:text-white transition-all flex items-center gap-1.5 shadow-sm">
+          Contact
+        </a>
+        <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-blue/30 transition-all inline-flex items-center gap-1.5">
+          <span>Start a Project</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Header -->
+    <section class="relative px-6 md:px-12 py-16 md:py-24 border-b border-white/10 bg-grid overflow-hidden">
+      <div class="max-w-6xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+          <span>ANVION Engineering Journal &bull; Production Architecture Notes</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-tight leading-tight">
+          Systems, Code &amp; <span class="text-gradient-blue">Architectural Craft.</span>
+        </h1>
+        <p class="text-base sm:text-lg text-neutral-300 mt-6 max-w-3xl mx-auto leading-relaxed">
+          In-depth technical dispatches on offline-first Flutter engineering, sub-50ms native Windows parsing, multi-tenant databases, and enterprise cyber resilience.
+        </p>
+
+        <!-- Search & Filter Controls -->
+        <div class="mt-10 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-grow">
+            <span class="material-symbols-outlined absolute left-3.5 top-3.5 text-neutral-400 text-lg">search</span>
+            <input type="text" id="blogSearchInput" placeholder="Search architecture, Flutter, C#, database, SEO..." class="w-full rounded-xl border border-white/10 bg-black/60 pl-10 pr-4 py-3 text-xs text-white placeholder:text-neutral-500 outline-none focus:border-brand-blue"/>
+          </div>
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" id="categoryFilterContainer">
+            <button class="category-btn active px-4 py-2.5 rounded-xl border border-brand-blue bg-brand-blue/10 text-white text-xs font-semibold whitespace-nowrap" data-cat="all">All Topics</button>
+            <button class="category-btn px-4 py-2.5 rounded-xl border border-white/10 bg-black/40 text-neutral-300 text-xs font-semibold whitespace-nowrap hover:border-white/20" data-cat="mobile">Mobile &amp; Flutter</button>
+            <button class="category-btn px-4 py-2.5 rounded-xl border border-white/10 bg-black/40 text-neutral-300 text-xs font-semibold whitespace-nowrap hover:border-white/20" data-cat="desktop">Desktop &amp; High-Perf</button>
+            <button class="category-btn px-4 py-2.5 rounded-xl border border-white/10 bg-black/40 text-neutral-300 text-xs font-semibold whitespace-nowrap hover:border-white/20" data-cat="cloud">Cloud &amp; Security</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Editor's Architecture Note -->
+    <section class="px-6 md:px-12 py-12 max-w-7xl mx-auto">
+      <div class="tech-border rounded-2xl bg-surface p-6 md:p-10 relative overflow-hidden group">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 rounded bg-brand-blue/10 border border-brand-blue/30 text-[11px] font-mono text-brand-blue font-bold uppercase tracking-wider">
+                Flagship Case Study
+              </span>
+              <span class="text-xs text-neutral-400 font-mono">11 Min Read &bull; Published Nov 2026</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white group-hover:text-brand-blue transition-colors">
+              Designing Zero-Cloud Dependent Flutter Systems: SQLite Embedded Storage &amp; Conflict-Free Merging
+            </h2>
+            <p class="text-sm text-neutral-300 leading-relaxed">
+              When network connectivity drops in rural Tamil Nadu or transit environments, business tools cannot simply freeze. How we engineered the ANVION Task Planner with 100% offline local SQLite persistence, optimistic UI updates, and atomic bidirectional synchronization.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-400">Flutter 3.x</span>
+              <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-400">SQLite sqflite</span>
+              <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-400">CRDT Concepts</span>
+              <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-400">Zero Cloud Lock-in</span>
+            </div>
+            <div class="pt-4">
+              <button onclick="openArticleModal('flutter-sqlite')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30">
+                <span>Read Full Technical Breakdown</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+          <div class="lg:col-span-5 bg-black/60 rounded-xl border border-white/10 p-5 font-mono text-[11px] text-neutral-300 space-y-2 overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 border-b border-white/10 text-neutral-500">
+              <span>task_repository.dart</span>
+              <span>100% Offline Resilient</span>
+            </div>
+            <pre class="text-emerald-400 leading-relaxed"><code>Future&lt;void&gt; syncLocalToCloud() async {
+  final pending = await _db.query(
+    'tasks',
+    where: 'sync_state = ?',
+    whereArgs: ['DIRTY']
+  );
+  for (final row in pending) {
+    try {
+      await _cloudApi.upsert(row);
+      await _db.update(
+        'tasks',
+        {'sync_state': 'SYNCED'},
+        where: 'id = ?',
+        whereArgs: [row['id']]
+      );
+    } on NetworkException {
+      // Retain atomic local state
+      break;
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="px-6 md:px-12 py-10 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
+        
+        <!-- Article 1: Native Windows C# / EduVerify -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="desktop" data-title="sub 50ms native desktop excel parsing c# .net eduverify">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">Desktop Systems</span>
+              <span>7 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              Sub-50ms Sheet Parsing: Engineering Native Windows Data Validation in C# / .NET
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              How EduVerify streams massive institutional spreadsheets in under 35 milliseconds through OpenXML binary streams without Excel COM dependencies or cloud uploads.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">C# .NET 8</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">OpenXML SAX</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Air-Gapped Privacy</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('native-parsing')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+        <!-- Article 2: Real Estate RERA / HOMELUXE -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="cloud" data-title="real estate marketplace rera verification geospatial homeluxe react">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">Full Stack Cloud</span>
+              <span>9 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              Architecture of a High-Ticket Marketplace: RERA Due Diligence &amp; Sub-Second Edge SSR
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              Inside HOMELUXE: Curating ₹4.5 Cr – ₹48 Cr properties with verified state RERA advisory links, algorithmic appreciation indexes, and 99.8/100 Lighthouse speed scores.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">React 18</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Edge Caching</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Valuation Engine</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('homeluxe-arch')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+        <!-- Article 3: Smart Invoice Builder -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="desktop" data-title="billing offline invoice generator pdf encryption gst tamil nadu">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">Fintech Tools</span>
+              <span>6 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              Building Zero-Leakage Billing Engines: Dynamic PDF Rendering &amp; Encrypted GST Ledgers
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              Ensuring 100% financial privacy for MSME shop owners through local SQLite storage, vector SVG invoice rendering, and client-side tax computation.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Local-First</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">PDFKit</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">GST Compliance</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('invoice-engine')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+        <!-- Article 4: Educational Institution Cloud & Security -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="cloud" data-title="education security college portal st joseph admission workflow">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">Security &amp; Institutional</span>
+              <span>8 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              Institutional Traffic Resilience: Handling 100K+ Admission Surges with Zero Downtime
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              How ANVION transformed digital outreach for St. Joseph College of Arts &amp; Science through geo-targeted multi-channel pipelines and cache-isolated student portals.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Cloudflare Edge</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Lead Scoring</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Multi-Channel</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('institution-resilience')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+        <!-- Article 5: Technical SEO for Modern Web Apps -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="cloud" data-title="technical seo schema json-ld core web vitals search ranking">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">SEO Engineering</span>
+              <span>5 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              The Engineering of Search: Injecting Dynamic Schema &amp; Achieving 100% Indexability
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              Beyond meta tags: automated JSON-LD breadcrumbs, organization schema, edge prerendering, and preventing crawler render timeouts in single-page apps.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Schema.org</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Core Web Vitals</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">INP / LCP Optimization</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('seo-engineering')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+        <!-- Article 6: Water & Environmental Telemetry / Virgin Water -->
+        <article class="tech-border rounded-2xl bg-surface p-6 flex flex-col justify-between article-card" data-category="desktop" data-title="environmental telemetry iot water treatment industrial sensor dashboard">
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-3">
+              <span class="text-brand-blue font-semibold">Industrial IoT &amp; Telemetry</span>
+              <span>8 Min Read</span>
+            </div>
+            <h3 class="text-lg font-display font-bold text-white mb-2 leading-snug">
+              Industrial Telemetry Interfaces: Monitoring Water Treatment Metrics in Real Time
+            </h3>
+            <p class="text-xs text-neutral-400 leading-relaxed mb-4">
+              Engineering clean supervisory dashboards for Virgin Water Solutions: aggregating pH, TDS, and flow rate sensors into an intuitive maintenance warning console.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Sensor Telemetry</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Real-Time Canvas</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-neutral-400">Environmental QA</span>
+            </div>
+          </div>
+          <button onclick="openArticleModal('telemetry-iot')" class="text-xs font-bold text-brand-blue hover:text-white flex items-center gap-1.5 transition-colors">
+            Read Engineering Notes &rarr;
+          </button>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Technical Newsletter Subscription -->
+    <section class="px-6 md:px-12 py-16 bg-surface-low border-t border-white/10">
+      <div class="max-w-4xl mx-auto tech-border rounded-2xl bg-surface p-8 md:p-12 text-center">
+        <span class="material-symbols-outlined text-brand-blue text-4xl mb-3">terminal</span>
+        <h3 class="text-2xl md:text-3xl font-display font-bold text-white">Subscribe to ANVION Architectural Dispatches</h3>
+        <p class="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto mt-2 mb-6">
+          Zero marketing spam. Receive quarterly engineering post-mortems, Flutter architectural patterns, and production system design guides.
+        </p>
+        <form id="newsletterForm" class="max-w-md mx-auto flex flex-col sm:flex-row gap-2">
+          <input required type="email" placeholder="architect@company.com" class="flex-grow rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-xs text-white placeholder:text-neutral-500 outline-none focus:border-brand-blue"/>
+          <button type="submit" class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30 whitespace-nowrap">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletterSuccess" class="hidden text-xs text-emerald-400 font-mono mt-3">Subscribed successfully. Welcome to ANVION Engineering notes.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Article Modal Reader -->
+  <div id="articleModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-surface tech-border rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-6 border-b border-white/10 flex justify-between items-center">
+        <div>
+          <span class="text-[11px] font-mono uppercase text-brand-blue tracking-wider" id="modalTag">Technical Dispatch</span>
+          <h3 class="text-xl font-display font-bold text-white mt-1" id="modalTitle">Article Title</h3>
+        </div>
+        <button id="closeModalBtn" class="text-neutral-400 hover:text-white p-1">
+          <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+      </div>
+      <div class="p-6 md:p-8 overflow-y-auto text-neutral-300 text-xs sm:text-sm space-y-4 leading-relaxed font-sans" id="modalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="p-4 border-t border-white/10 bg-black/40 flex justify-between items-center text-xs">
+        <span class="text-neutral-500 font-mono">ANVION Engineering Knowledge Base</span>
+        <a href="start-a-project.html" class="text-brand-blue font-bold hover:underline">Discuss Similar Architecture &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comprehensive Master Footer -->
+  <footer class="bg-[#050608] text-neutral-300 w-full py-16 border-t border-white/10 mt-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+            <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+          </div>
+          <span class="font-display text-lg font-bold text-white">ANVION IT SERVICES</span>
+        </div>
+        <p class="text-xs text-neutral-400 leading-relaxed">
+          Innovative digital solutions, mobile app engineering, cloud infrastructure, desktop software, and IT consultancy.
+        </p>
+        <div class="p-3.5 rounded-xl bg-surface border border-brand-blue/30 text-xs">
+          <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>Govt. of India MSME Registered</span>
+          </div>
+          <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+          <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise &bull; Services (NIC 62011)</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Company</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers (Hiring Status)</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="internships.html">Internship Applications</a>
+        <a class="text-neutral-400 hover:text-white transition-colors font-bold text-brand-blue" href="blog.html">Technical Blog &amp; Insights</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="pricing.html">Pricing &amp; Cost Estimator</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+      </div>
+
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Featured Projects</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-homeluxe.html">HOMELUXE Real Estate</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-smart-invoice-builder.html">Smart Invoice Builder</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-eduverify.html">EduVerify Software</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-task-planner.html">Task Planner App</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-st-joseph.html">St. Joseph College Marketing</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="projects.html">All Projects Directory</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Case Studies Portfolio</a>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Official Registration &amp; HQ</h4>
+        <p class="text-neutral-300 leading-relaxed text-xs">
+          <strong class="text-white">ANVION IT SERVICES</strong><br/>
+          Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+        </p>
+        <div class="text-neutral-400 space-y-1">
+          <p><span class="text-neutral-500 font-sans">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
+          <p><span class="text-neutral-500 font-sans">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue font-sans">anvionitservices@gmail.com</a></p>
+        </div>
+        <div class="flex items-center gap-3 pt-2 text-[11px]">
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
+          <span class="text-neutral-600">&bull;</span>
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 md:px-12 max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3">
+      <p>&copy; 2026 ANVION IT SERVICES. All rights reserved. &bull; Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+      <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+    </div>
+  </footer>
+
+  <!-- Universal AI Assistant Widget -->
+  <script src="js/anvion-ai.js"></script>
+
+  <!-- Filter & Modal Content Scripts -->
+  <script>
+    const ARTICLE_DETAILS = {
+      "flutter-sqlite": {
+        title: "Designing Zero-Cloud Dependent Flutter Systems: SQLite Embedded Storage & Conflict-Free Merging",
+        tag: "Mobile Architecture &bull; Flutter",
+        content: `
+          <p>Modern mobile applications often assume permanent broadband connectivity. However, enterprise workflows in logistics, field auditing, and rural enterprises frequently encounter intermittent coverage.</p>
+          <h4 class="text-white font-bold text-base mt-4">The Local-First Philosophy</h4>
+          <p>Rather than treating the local device as a mere cache of a remote server, ANVION builds applications where the embedded SQLite database is the primary source of truth. User actions never block on network latency; they write immediately to the local engine and schedule asynchronous sync jobs.</p>
+          <h4 class="text-white font-bold text-base mt-4">Key Architectural Pillars</h4>
+          <ul class="list-disc pl-5 space-y-2 text-neutral-300">
+            <li><strong>State Machine Tags:</strong> Every table maintains <code>created_at</code>, <code>updated_at</code>, and a <code>sync_state</code> (NEW, DIRTY, SYNCED).</li>
+            <li><strong>Optimistic UI:</strong> User interface views immediately reflect the state without spinners or blank screens.</li>
+            <li><strong>Vector Clocks &amp; Timestamps:</strong> When a device reconnects, changes are reconciled deterministically using last-write-wins or domain-specific conflict rules.</li>
+          </ul>
+        `
+      },
+      "native-parsing": {
+        title: "Sub-50ms Sheet Parsing: Engineering Native Windows Data Validation in C# / .NET",
+        tag: "Desktop Systems &bull; C# .NET",
+        content: `
+          <p>Institutional software frequently struggles when processing files with 10,000+ rows. Standard Office Interop libraries spawn full Excel headless instances, consuming hundreds of megabytes of RAM and taking 15 to 30 seconds per file.</p>
+          <h4 class="text-white font-bold text-base mt-4">Streaming Architecture with SAX</h4>
+          <p>For EduVerify, ANVION leveraged pure OpenXML SAX (Simple API for XML) streaming in C# .NET 8. Instead of building the entire DOM tree in memory, the engine streams XML tokens sequentially directly from the compressed ZIP package.</p>
+          <p>This dropped memory overhead to under 18MB and delivered full verification runs in under 35 milliseconds on standard desktop hardware with zero external dependencies.</p>
+        `
+      },
+      "homeluxe-arch": {
+        title: "Architecture of a High-Ticket Marketplace: RERA Due Diligence & Sub-Second Edge SSR",
+        tag: "Full Stack &bull; Real Estate",
+        content: `
+          <p>High-net-worth real estate buyers demand absolute verification and instant performance. HOMELUXE was architected from day one to deliver sub-second response times for multi-crore property portfolios across Mumbai and Goa.</p>
+          <h4 class="text-white font-bold text-base mt-4">Key Technical Integrations</h4>
+          <ul class="list-disc pl-5 space-y-2 text-neutral-300">
+            <li><strong>State RERA Verification:</strong> Direct registry validation links giving buyers immutable due diligence proof.</li>
+            <li><strong>Algorithmic Valuation Engine:</strong> Real-time price per sq.ft. regression tracking historic sub-market appreciation.</li>
+            <li><strong>99.8/100 Lighthouse Web Vitals:</strong> Built with Vite and served via Vercel Edge CDN for global asset distribution.</li>
+          </ul>
+        `
+      },
+      "invoice-engine": {
+        title: "Building Zero-Leakage Billing Engines: Dynamic PDF Rendering & Encrypted GST Ledgers",
+        tag: "Fintech Tools &bull; Local-First",
+        content: `
+          <p>Financial records contain sensitive customer data that small businesses shouldn't have to upload to untrusted third-party clouds. The Smart Invoice Builder operates completely air-gapped on the local machine.</p>
+          <p>Using client-side vector engines, invoices are compiled into pixel-perfect print-ready PDFs in less than 200ms with automated CGST/SGST splitting and sequential invoice number auditing.</p>
+        `
+      },
+      "institution-resilience": {
+        title: "Institutional Traffic Resilience: Handling 100K+ Admission Surges with Zero Downtime",
+        tag: "Cloud Resilience &bull; Education",
+        content: `
+          <p>During admission season, educational portals experience massive traffic spikes that overwhelm traditional WordPress or un-cached backends. For St. Joseph College of Arts & Science, ANVION deployed an edge-cached static distribution layer coupled with serverless form handling.</p>
+          <p>The result: 100K+ prospective student visits handled with 100% uptime and zero dropped admission inquiries.</p>
+        `
+      },
+      "seo-engineering": {
+        title: "The Engineering of Search: Injecting Dynamic Schema & Achieving 100% Indexability",
+        tag: "SEO Architecture &bull; Web Standards",
+        content: `
+          <p>Search engines rank sites based on structural clarity, fast Core Web Vitals, and accurate semantic schemas. We explain our build-time automation scripts that inject custom JSON-LD schemas into every production build, guaranteeing top SERP visibility for regional IT services.</p>
+        `
+      },
+      "telemetry-iot": {
+        title: "Industrial Telemetry Interfaces: Monitoring Water Treatment Metrics in Real Time",
+        tag: "Industrial IoT &bull; Telemetry",
+        content: `
+          <p>Industrial water purification systems require constant oversight of pH, TDS, and pressure. We dive into the responsive supervisory interface created for Virgin Water Solutions, emphasizing high-contrast readability and early anomaly alerts.</p>
+        `
+      }
+    };
+
+    function openArticleModal(key) {
+      const data = ARTICLE_DETAILS[key];
+      if (!data) return;
+      document.getElementById("modalTitle").textContent = data.title;
+      document.getElementById("modalTag").innerHTML = data.tag;
+      document.getElementById("modalContent").innerHTML = data.content;
+      document.getElementById("articleModal").classList.remove("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Modal Close
+      const modal = document.getElementById("articleModal");
+      const closeBtn = document.getElementById("closeModalBtn");
+      if (closeBtn && modal) {
+        closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) modal.classList.add("hidden");
+        });
+      }
+
+      // Category Filters
+      const catBtns = document.querySelectorAll(".category-btn");
+      const cards = document.querySelectorAll(".article-card");
+      catBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          catBtns.forEach(b => {
+            b.classList.remove("active", "border-brand-blue", "bg-brand-blue/10", "text-white");
+            b.classList.add("border-white/10", "bg-black/40", "text-neutral-300");
+          });
+          btn.classList.add("active", "border-brand-blue", "bg-brand-blue/10", "text-white");
+          btn.classList.remove("border-white/10", "bg-black/40", "text-neutral-300");
+
+          const cat = btn.dataset.cat;
+          cards.forEach(card => {
+            if (cat === "all" || card.dataset.category === cat) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        });
+      });
+
+      // Search Filter
+      const searchInput = document.getElementById("blogSearchInput");
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          cards.forEach(card => {
+            const title = (card.dataset.title || "").toLowerCase();
+            const text = card.textContent.toLowerCase();
+            if (!query || title.includes(query) || text.includes(query)) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        });
+      }
+
+      // Newsletter Form
+      const newsletterForm = document.getElementById("newsletterForm");
+      const newsletterSuccess = document.getElementById("newsletterSuccess");
+      if (newsletterForm && newsletterSuccess) {
+        newsletterForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          newsletterForm.classList.add("hidden");
+          newsletterSuccess.classList.remove("hidden");
+        });
+      }
+    });
+  </script>
+</body>
+</html>

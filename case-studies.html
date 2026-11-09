@@ -1,586 +1,740 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>About ANVION IT SERVICES - Our Story & Founders</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-highest": "#343539",
-                        "on-secondary-fixed-variant": "#474646",
-                        "inverse-surface": "#e3e2e7",
-                        "tertiary-container": "#000000",
-                        "on-secondary": "#313030",
-                        "on-primary-fixed-variant": "#474747",
-                        "error-container": "#93000a",
-                        "surface-container-lowest": "#0d0e12",
-                        "surface-container-low": "#1a1b1f",
-                        "primary-container": "#000000",
-                        "primary-fixed": "#e2e2e2",
-                        "tertiary": "#c6c6c8",
-                        "on-tertiary-container": "#747577",
-                        "on-primary-container": "#757575",
-                        "secondary-container": "#4a4949",
-                        "secondary": "#c8c6c5",
-                        "on-tertiary-fixed-variant": "#454749",
-                        "on-error-container": "#ffdad6",
-                        "on-secondary-container": "#bab8b7",
-                        "surface": "#121317",
-                        "tertiary-fixed-dim": "#c6c6c8",
-                        "inverse-primary": "#5e5e5e",
-                        "surface-bright": "#38393d",
-                        "primary": "#c6c6c6",
-                        "on-error": "#690005",
-                        "inverse-on-surface": "#2f3034",
-                        "error": "#ffb4ab",
-                        "on-primary-fixed": "#1b1b1b",
-                        "surface-container-high": "#292a2e",
-                        "surface-tint": "#c6c6c6",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "outline": "#988e90",
-                        "on-primary": "#303030",
-                        "on-surface": "#e3e2e7",
-                        "on-tertiary": "#2f3132",
-                        "on-tertiary-fixed": "#1a1c1d",
-                        "secondary-fixed": "#e5e2e1",
-                        "background": "#121317",
-                        "surface-dim": "#121317",
-                        "on-surface-variant": "#cfc4c5",
-                        "on-background": "#e3e2e7",
-                        "primary-fixed-dim": "#c6c6c6",
-                        "tertiary-fixed": "#e2e2e4",
-                        "surface-container": "#1e1f23",
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "outline-variant": "#4c4546",
-                        "surface-variant": "#343539",
-                        "brand-blue": "#007BFF" // Electric Blue Accent
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "stack-xl": "80px",
-                        "gutter": "24px",
-                        "stack-sm": "12px",
-                        "container-max": "1280px",
-                        "margin-mobile": "20px",
-                        "margin-desktop": "64px",
-                        "stack-xs": "4px",
-                        "stack-lg": "48px",
-                        "stack-md": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-lg-mobile": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Inter"],
-                        "label-lg": ["Inter"],
-                        "label-sm": ["Inter"],
-                        "headline-lg": ["Plus Jakarta Sans"],
-                        "body-lg": ["Inter"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "display-sm": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "display-sm": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        body {
-            background-color: #000000;
-            color: #e3e2e7;
-        }
-        .tech-border {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .tech-focus:focus-within {
-            border-color: #007BFF;
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-        }
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        }
-    </style>
-    <link rel="stylesheet" href="css/custom-styles.css"/>
-</head>
-<body class="font-body-md text-body-md antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white btn-glow">
-<!-- TopNavBar -->
-<header class="bg-surface/80 backdrop-blur-md dark:bg-surface/80 text-primary dark:text-primary docked full-width top-0 sticky border-b border-white/10 flat no shadows z-50">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
-<div class="flex items-center gap-4">
-<a href="index.html" class="flex items-center gap-3 group">
-    <div class="h-10 w-10 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue transition-colors">
-        <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
-    </div>
-</a>
-<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">ANVION IT SERVICES</span>
-</div>
-<nav class="hidden md:flex gap-gutter items-center">
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="index.html">Home</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="services.html">Services</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="solution.html">Solutions</a>
-<a class="text-primary border-b-2 border-primary pb-1 font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="projects.html">Projects</a>
-<a class="text-primary border-b-2 border-primary pb-1 font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="portfolio.html">Portfolio</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="about.html">About</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-lg text-label-lg hover:text-primary transition-all duration-300" href="careers.html">Careers</a>
-</nav>
-<div class="hidden md:flex items-center gap-4">
-<button class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">Contact</button>
-<button class="bg-brand-blue text-white font-label-lg text-label-lg px-6 py-2 rounded font-bold hover:brightness-110 transition-all btn-glow">Start a Project</button>
-</div>
-<button class="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
-<span class="material-symbols-outlined text-2xl">menu</span>
-</button>
-</div>
-</header>
-
-
-
-
-
-<main>
-  <!-- Case Studies Hero -->
-  <section class="relative px-margin-mobile md:px-margin-desktop py-20 md:py-28 bg-black overflow-hidden">
-  <div class="ambient-orb ambient-orb-blue w-[500px] h-[500px] top-[-100px] left-[15%]"></div>
-  <div class="ambient-orb ambient-orb-purple w-[400px] h-[400px] bottom-0 right-[10%]"></div>
-
-    <div class="absolute inset-0 bg-grid opacity-60"></div>
-    <div class="absolute -right-40 -top-40 w-[520px] h-[520px] rounded-full border border-brand-blue/10"></div>
-    <div class="absolute -right-20 -top-20 w-[320px] h-[320px] rounded-full border border-white/5"></div>
-
-    <div class="relative z-10 max-w-container-max mx-auto">
-      <p class="text-label-lg uppercase tracking-[0.2em] text-brand-blue mb-5">Case Studies</p>
-      <h1 class="text-display-sm md:text-display-lg font-bold text-white tracking-tight leading-tight max-w-4xl">
-        Ideas Into Products. Problems Into Solutions.
-      </h1>
-      <p class="text-body-lg md:text-xl text-on-surface-variant mt-6 max-w-3xl">
-        Explore selected project stories showing how ANVION approaches product design,
-        software development, automation and connected technology.
-      </p>
-      <div class="flex flex-wrap gap-4 mt-8">
-        <a href="start-a-project.html" class="bg-brand-blue text-white font-label-lg px-7 py-3 rounded font-bold hover:brightness-110 transition-all btn-glow">Start a Project</a>
-        <a href="#case-studies" class="bg-transparent text-white font-label-lg px-7 py-3 rounded font-bold tech-border hover:bg-white/5 transition-all">Explore Case Studies</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Case Study -->
-  <section id="case-studies" class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-surface-container-low">
-    <div class="max-w-container-max mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
-        <div>
-          <p class="text-label-lg uppercase tracking-[0.18em] text-brand-blue mb-4">Selected Work</p>
-          <h2 class="text-headline-lg md:text-display-sm font-bold text-on-surface">Featured Case Studies</h2>
-        </div>
-        <p class="text-label-sm uppercase tracking-widest text-on-surface-variant">ANVION / PROJECT STORIES</p>
-      </div>
-
-      <!-- Featured Case Study: HOMELUXE Luxury Real Estate -->
-      <article class="tech-border rounded-xl bg-surface overflow-hidden hover:border-amber-400/50 transition-all duration-300">
-        <div class="grid lg:grid-cols-[1.05fr_1fr]">
-          <div class="min-h-[420px] relative overflow-hidden flex items-center justify-center p-0 group">
-            <img src="images/projects/homeluxe/homeluxe-hero.jpg" alt="HOMELUXE Luxury Real Estate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-            <div class="absolute top-5 left-5 flex items-center gap-2">
-              <span class="px-3 py-1 rounded bg-black/80 backdrop-blur-md text-xs font-bold text-amber-400 border border-amber-500/30">MUMBAI &bull; GOA &bull; BENGALURU</span>
-            </div>
-            <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="absolute top-5 right-5 text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5 hover:bg-emerald-900 transition-colors">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live on Vercel
-            </a>
-            <div class="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
-              <div class="flex items-center justify-between text-xs">
-                <span class="text-amber-400 font-bold uppercase tracking-wider font-mono">Curated Portfolio</span>
-                <span class="text-white font-mono font-bold">&#8377; 4.5 Cr &ndash; &#8377; 48 Cr</span>
-              </div>
-              <p class="text-white font-bold text-sm mt-1">Sea-Facing Sky Mansions, Coastal Villas &amp; Golf Estates</p>
-            </div>
-          </div>
-
-          <div class="p-8 md:p-10 lg:p-12 flex flex-col justify-between">
-            <div>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="px-3 py-1 tech-border rounded text-label-sm text-amber-400 bg-amber-500/10">Luxury Real Estate</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm text-on-surface-variant">React 18 &bull; Vite &bull; Tailwind</span>
-              </div>
-              <h3 class="text-headline-lg md:text-3xl font-bold text-on-surface">HOMELUXE Luxury Real Estate</h3>
-              <p class="text-body-lg text-on-surface-variant mt-4">
-                Premier Indian luxury real estate marketplace with verified multi-million INR listings, AI-driven valuation algorithms, and certified state RERA advisory pipelines.
-              </p>
-
-              <div class="grid sm:grid-cols-2 gap-4 mt-6">
-                <div>
-                  <p class="text-label-sm uppercase tracking-widest text-brand-blue">Challenge</p>
-                  <p class="text-body-md text-on-surface-variant mt-1.5">Unverified property listings, fragmented legal titles, and lack of real-time INR valuations in the Indian luxury estate market.</p>
-                </div>
-                <div>
-                  <p class="text-label-sm uppercase tracking-widest text-brand-blue">Approach</p>
-                  <p class="text-body-md text-on-surface-variant mt-1.5">Engineered an interactive single-page app with algorithmic price estimators, verified RERA advisory cards, and edge hosting.</p>
-                </div>
-              </div>
-
-              <div class="mt-6">
-                <p class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-2.5">Technology Stack</p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 tech-border rounded text-label-sm text-amber-400">React 18</span>
-                  <span class="px-3 py-1 tech-border rounded text-label-sm">Vite SPA</span>
-                  <span class="px-3 py-1 tech-border rounded text-label-sm">Tailwind CSS</span>
-                  <span class="px-3 py-1 tech-border rounded text-label-sm">RERA Advisory</span>
-                  <span class="px-3 py-1 tech-border rounded text-label-sm">Vercel Edge</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-4 mt-8 pt-6 border-t border-white/10">
-              <a href="project-homeluxe.html" class="inline-flex items-center gap-2 text-label-lg text-white hover:text-brand-blue font-bold transition-colors">
-                View Full Case Study <span class="material-symbols-outlined text-base">arrow_forward</span>
-              </a>
-              <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-amber-400 font-bold hover:underline px-3 py-2 rounded-lg border border-amber-500/30 bg-amber-500/10">
-                <span>Live Website</span>
-                <span class="material-symbols-outlined text-xs">open_in_new</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Case Study Grid -->
-  <section class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-black">
-    <div class="max-w-container-max mx-auto">
-      <div class="grid md:grid-cols-2 gap-6">
-
-        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden">
-          <div class="h-64 bg-grid relative p-7 flex items-end">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-            <div class="relative">
-              <span class="material-symbols-outlined text-4xl text-brand-blue">build</span>
-            </div>
-          </div>
-          <div class="p-7">
-            <p class="text-label-sm uppercase tracking-widest text-brand-blue">Service Platform</p>
-            <h3 class="text-headline-md font-bold text-on-surface mt-3">On-Demand Service Booking</h3>
-            <p class="text-body-md text-on-surface-variant mt-3">
-              A service marketplace concept connecting customers with technicians through
-              booking, availability, assignment and status workflows.
-            </p>
-            <div class="flex flex-wrap gap-2 mt-5">
-              <span class="px-3 py-1 tech-border rounded text-label-sm">Flutter</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">Firebase</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">GPS</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden hover:border-brand-blue/50 transition-all group flex flex-col justify-between">
-          <div class="h-64 bg-gradient-to-b from-blue-950/40 via-surface-container-low to-black relative p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 bg-grid opacity-30"></div>
-            <div class="relative w-40 h-40 rounded-2xl border border-brand-blue/40 bg-neutral-900/90 p-3 shadow-2xl group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
-              <img src="images/projects/st-joseph/st-joseph-logo.jpg" alt="St. Joseph College Crest" class="w-full h-full object-contain filter drop-shadow-lg" />
-            </div>
-            <div class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-500/40">
-              100K+ Views
-            </div>
-          </div>
-          <div class="p-7 flex flex-col justify-between flex-grow">
-            <div>
-              <p class="text-label-sm uppercase tracking-widest text-brand-blue">Digital Marketing &bull; Higher Education</p>
-              <h3 class="text-headline-md font-bold text-on-surface mt-3">St. Joseph College of Arts &amp; Science</h3>
-              <p class="text-body-md text-on-surface-variant mt-3">
-                Comprehensive 30-day Instagram growth and admissions campaign for Vaikalipatti, Tenkasi. Achieved 77.8% non-follower discovery, 2,649 direct profile visits, and over 5,850 engagements driven by student industrial visit reels.
-              </p>
-              <div class="flex flex-wrap gap-2 mt-5">
-                <span class="px-3 py-1 tech-border rounded text-label-sm text-brand-blue bg-blue-500/10">100K+ Views</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm text-emerald-400 bg-emerald-500/10">77.8% Non-Followers</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm">2.6K+ Profile Visits</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm">Reels Strategy</span>
-              </div>
-            </div>
-            <div class="mt-6 pt-5 border-t border-white/10">
-              <a href="project-st-joseph.html" class="inline-flex items-center gap-2 text-label-lg text-white hover:text-brand-blue font-bold transition-colors">
-                View Detailed Case Study <span class="material-symbols-outlined text-base">arrow_forward</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden hover:border-brand-blue/50 transition-all group flex flex-col justify-between">
-          <div class="h-64 bg-gradient-to-b from-blue-900/30 via-surface-container-low to-black relative p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 bg-grid opacity-30"></div>
-            <div class="relative w-full max-w-sm rounded-lg border border-brand-blue/40 bg-neutral-900 overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-500">
-              <div class="flex items-center justify-between px-2.5 py-1 bg-neutral-950 border-b border-white/10">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span class="text-[9px] font-mono text-neutral-400 ml-1">edu_verify.exe</span>
-                </div>
-                <span class="text-[9px] font-mono text-brand-blue font-bold">v1.0 Native</span>
-              </div>
-              <img src="images/projects/eduverify/dashboard-view.png" alt="EduVerify Dashboard View" class="w-full h-auto object-cover" />
-            </div>
-            <div class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 text-brand-blue border border-brand-blue/40">
-              Desktop Software
-            </div>
-          </div>
-          <div class="p-7 flex flex-col justify-between flex-grow">
-            <div>
-              <p class="text-label-sm uppercase tracking-widest text-brand-blue">Desktop Software &bull; School Systems</p>
-              <h3 class="text-headline-md font-bold text-on-surface mt-3">EduVerify — Excel Validation System</h3>
-              <p class="text-body-md text-on-surface-variant mt-3">
-                A high-speed Windows desktop application engineered for educational institutions. Merges multi-sheet workbooks in 65ms and audits cell coordinates in 35ms, catching empty rows, blank columns, and formula errors with dual reports.
-              </p>
-              <div class="flex flex-wrap gap-2 mt-5">
-                <span class="px-3 py-1 tech-border rounded text-label-sm text-brand-blue bg-blue-500/10">Windows x64</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm">Empty Row Sentinel</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm">Cell-Level Audit</span>
-                <span class="px-3 py-1 tech-border rounded text-label-sm">100% Offline</span>
-              </div>
-            </div>
-            <div class="mt-6 pt-5 border-t border-white/10">
-              <a href="project-eduverify.html" class="inline-flex items-center gap-2 text-label-lg text-white hover:text-brand-blue font-bold transition-colors">
-                View Detailed Case Study <span class="material-symbols-outlined text-base">arrow_forward</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="case-card tech-border rounded-xl bg-surface overflow-hidden">
-          <div class="h-64 bg-grid relative p-7 flex items-end">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-            <div class="relative">
-              <span class="material-symbols-outlined text-4xl text-brand-blue">sensors</span>
-            </div>
-          </div>
-          <div class="p-7">
-            <p class="text-label-sm uppercase tracking-widest text-brand-blue">IoT</p>
-            <h3 class="text-headline-md font-bold text-on-surface mt-3">Connected Monitoring System</h3>
-            <p class="text-body-md text-on-surface-variant mt-3">
-              A connected-device architecture combining sensors, communication, cloud data
-              and a monitoring interface for real-world environments.
-            </p>
-            <div class="flex flex-wrap gap-2 mt-5">
-              <span class="px-3 py-1 tech-border rounded text-label-sm">ESP32</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">MQTT</span>
-              <span class="px-3 py-1 tech-border rounded text-label-sm">Cloud</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Our Approach -->
-  <section class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-surface-container-low">
-    <div class="max-w-container-max mx-auto">
-      <div class="max-w-3xl mb-12">
-        <p class="text-label-lg uppercase tracking-[0.18em] text-brand-blue mb-4">Our Approach</p>
-        <h2 class="text-headline-lg md:text-display-sm font-bold text-on-surface">Every Case Starts With the Problem</h2>
-        <p class="text-body-lg text-on-surface-variant mt-5">
-          We don't start by choosing a technology. We start by understanding the problem,
-          then design the simplest reliable solution that fits the requirement.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="tech-border rounded-lg p-6 bg-surface">
-          <span class="text-brand-blue font-bold">01</span>
-          <h3 class="text-xl font-bold text-on-surface mt-5">Understand</h3>
-          <p class="text-body-md text-on-surface-variant mt-3">Business context, users, constraints and desired outcomes.</p>
-        </div>
-        <div class="tech-border rounded-lg p-6 bg-surface">
-          <span class="text-brand-blue font-bold">02</span>
-          <h3 class="text-xl font-bold text-on-surface mt-5">Architect</h3>
-          <p class="text-body-md text-on-surface-variant mt-3">Choose the right product structure, integrations and technology.</p>
-        </div>
-        <div class="tech-border rounded-lg p-6 bg-surface">
-          <span class="text-brand-blue font-bold">03</span>
-          <h3 class="text-xl font-bold text-on-surface mt-5">Build</h3>
-          <p class="text-body-md text-on-surface-variant mt-3">Develop in focused stages with testing and feedback.</p>
-        </div>
-        <div class="tech-border rounded-lg p-6 bg-surface">
-          <span class="text-brand-blue font-bold">04</span>
-          <h3 class="text-xl font-bold text-on-surface mt-5">Improve</h3>
-          <p class="text-body-md text-on-surface-variant mt-3">Measure, refine and evolve the product after launch.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="px-margin-mobile md:px-margin-desktop py-stack-xl bg-black">
-    <div class="max-w-container-max mx-auto">
-      <div class="relative overflow-hidden rounded-xl tech-border bg-surface-container-low p-8 md:p-16">
-        <div class="absolute -right-24 -top-24 w-72 h-72 rounded-full border border-brand-blue/20"></div>
-        <div class="relative z-10 max-w-3xl">
-          <p class="text-label-lg uppercase tracking-[0.18em] text-brand-blue mb-4">Your Project Could Be Next</p>
-          <h2 class="text-headline-lg md:text-display-sm font-bold text-on-surface">Have a Problem Worth Solving?</h2>
-          <p class="text-body-lg text-on-surface-variant mt-5">
-            Tell us what you're building, what isn't working or where you want to go.
-            We'll help you explore the right technical direction.
-          </p>
-          <div class="flex flex-wrap gap-4 mt-8">
-            <a href="start-a-project.html" class="bg-brand-blue text-white font-label-lg px-8 py-3 rounded font-bold hover:brightness-110 transition-all btn-glow">Start a Project</a>
-            <a href="contact.html" class="bg-transparent text-white font-label-lg px-8 py-3 rounded font-bold tech-border hover:bg-white/5 transition-all">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-
-
-
-
-<!-- Footer -->
-<footer class="bg-surface-container-lowest text-primary w-full py-stack-xl border-t border-white/10 mt-auto">
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-    <div class="flex flex-col gap-stack-sm">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
-          <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
-        </div>
-        <span class="font-headline-md text-xl font-bold text-on-surface">ANVION IT SERVICES</span>
-      </div>
-      <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-        Innovative digital solutions, mobile engineering, cloud infrastructure, and IT consultancy.
-      </p>
-      <div class="mt-3 p-3.5 rounded-xl bg-surface-card border border-brand-blue/30 text-xs">
-        <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
-          <span class="material-symbols-outlined text-sm">verified</span>
-          <span>Govt. of India MSME Registered</span>
-        </div>
-        <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
-        <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise • Services (NIC 62011)</p>
-      </div>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Company</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="about.html">About Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="careers.html">Careers</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="contact.html">Contact Us</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Expertise</h4>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="services.html">All Services</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="web-development.html">Web Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="mobile-development.html">Mobile Development</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="ai-machine-learning.html">AI & Machine Learning</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="cybersecurity.html">Cybersecurity</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="projects.html">Featured Projects</a>
-      <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors" href="portfolio.html">Portfolio</a>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h4 class="font-label-lg text-label-lg text-on-surface mb-2 font-bold">Official Registration</h4>
-      <p class="text-xs text-neutral-300 leading-relaxed">
-        <strong>ANVION IT SERVICES</strong><br/>
-        Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
-      </p>
-      <div class="text-xs text-neutral-400 space-y-1 mt-1">
-        <p><span class="text-neutral-500">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
-        <p><span class="text-neutral-500">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue">anvionitservices@gmail.com</a></p>
-      </div>
-      <div class="flex items-center gap-3 pt-2">
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
-        <span class="text-neutral-600">•</span>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
-      </div>
-    </div>
-  </div>
-  <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mt-stack-lg pt-stack-sm border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-2">
-    <p>© 2026 ANVION IT SERVICES. All rights reserved. • Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
-    <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
-  </div>
-</footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const revealItems = document.querySelectorAll("main section");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("opacity-100", "translate-y-0");
-        entry.target.classList.remove("opacity-0", "translate-y-4");
-      }
-    });
-  }, { threshold: 0.08 });
-
-  revealItems.forEach(section => {
-    section.classList.add("transition-all", "duration-700", "opacity-0", "translate-y-4");
-    observer.observe(section);
-  });
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("projectForm");
-  const success = document.getElementById("formSuccess");
-  if (form && success) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-      success.classList.remove("hidden");
-      success.scrollIntoView({behavior:"smooth", block:"center"});
-    });
-  }
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const roleSelect = document.getElementById("careerRole");
-  const applyButtons = document.querySelectorAll(".apply-role");
-  const form = document.getElementById("careerForm");
-  const success = document.getElementById("careerSuccess");
-
-  applyButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      if (roleSelect) roleSelect.value = button.dataset.role || "";
-    });
-  });
-
-  if (form && success) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      success.classList.remove("hidden");
-      success.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  }
-});
-</script>
-
-    <script src="js/navbar.js"></script>
-</body></html>
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Case Studies &amp; Engineering Stories - ANVION IT SERVICES</title>
+  <meta name="description" content="Explore verified case studies and production systems built by ANVION IT SERVICES across web platforms, Flutter mobile apps, native desktop software, and digital marketing." />
+
+  <!-- Tailwind CSS CDN with plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/custom-styles.css"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#0E1015",
+            "surface-low": "#060709",
+            "surface-card": "#11141C",
+            "surface-border": "rgba(255, 255, 255, 0.08)",
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008BE5",
+            "brand-cyan": "#00F5FF",
+            "brand-purple": "#8B5CF6",
+            "brand-emerald": "#10B981"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+    }
+    body {
+      background-color: #060709;
+      color: #E3E2E7;
+      position: relative;
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+      min-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    header, main, footer, section {
+      width: 100%;
+      max-width: 100%;
+    }
+    .tech-border {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tech-border-glow:hover {
+      border-color: rgba(0, 163, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 163, 255, 0.15);
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 25px rgba(0, 163, 255, 0.45);
+    }
+    .text-gradient-hero {
+      background: linear-gradient(135deg, #FFFFFF 20%, #93C5FD 50%, #00A3FF 80%, #C084FC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      max-width: 100vw;
+    }
+    .bg-grid {
+      background-size: 36px 36px;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden min-h-screen flex flex-col">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="hero-glow w-[600px] h-[600px] -top-40 left-[10%] bg-blue-600/15"></div>
+    <div class="hero-glow w-[500px] h-[500px] top-[30%] -right-20 bg-purple-600/10"></div>
+    <div class="hero-glow w-[450px] h-[450px] bottom-[20%] left-[5%] bg-cyan-500/10"></div>
+  </div>
+
+  <!-- Sticky Glassmorphic Header -->
+  <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50 transition-all duration-300">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
+          <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+            ANVION
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-neutral-300">
+        <a class="hover:text-brand-blue transition-colors" href="index.html">Home</a>
+        <a class="hover:text-brand-blue transition-colors" href="services.html">Services</a>
+        <a class="hover:text-brand-blue transition-colors" href="solution.html">Solutions</a>
+        <a class="hover:text-brand-blue transition-colors" href="projects.html">Projects</a>
+        <a class="hover:text-brand-blue transition-colors" href="portfolio.html">Portfolio</a>
+        <a class="text-white font-bold border-b-2 border-brand-blue pb-1" href="case-studies.html">Case Studies</a>
+        <a class="hover:text-brand-blue transition-colors" href="about.html">About</a>
+        <a class="hover:text-brand-blue transition-colors" href="careers.html">Careers</a>
+      </nav>
+
+      <!-- Trailing Action Buttons -->
+      <div class="hidden md:flex items-center gap-3.5">
+        <a href="contact.html" class="text-xs font-mono px-3.5 py-2 rounded-lg text-neutral-300 hover:text-white border border-white/10 hover:border-brand-blue/40 transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm text-brand-blue">mail</span>
+          Contact
+        </a>
+        <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-blue/30 transition-all btn-glow inline-flex items-center gap-1.5">
+          <span>Start a Project</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-grow w-full relative z-10">
+
+    <!-- Case Studies Hero Section -->
+    <section class="px-6 md:px-12 py-16 md:py-24 bg-gradient-to-b from-[#060709] via-surface-card/40 to-[#060709] border-b border-white/10 relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid opacity-50 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-xs font-semibold text-brand-blue mb-5 backdrop-blur-md">
+          <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+          <span>Verified Production Systems &bull; Empirical Benchmarks</span>
+        </div>
+
+        <h1 class="font-display text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight max-w-4xl">
+          Ideas Engineered Into <span class="text-gradient-hero">Proven Solutions.</span>
+        </h1>
+
+        <p class="text-neutral-300 text-sm sm:text-base md:text-lg mt-5 leading-relaxed max-w-3xl">
+          Detailed technical teardowns and real-world results from ANVION's verified client systems. From offline Flutter engines and native 35ms Windows tools to high-reach institutional growth campaigns.
+        </p>
+
+        <!-- Metric Summary Strip -->
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl">
+          <div class="p-4 rounded-xl bg-surface/70 border border-white/10 tech-border-glow">
+            <p class="text-2xl font-extrabold font-mono text-brand-blue">6 Systems</p>
+            <p class="text-[11px] text-neutral-400 mt-1 uppercase font-mono tracking-wider">Curated Flagships</p>
+          </div>
+          <div class="p-4 rounded-xl bg-surface/70 border border-white/10 tech-border-glow">
+            <p class="text-2xl font-extrabold font-mono text-brand-cyan">100%</p>
+            <p class="text-[11px] text-neutral-400 mt-1 uppercase font-mono tracking-wider">Zero Cloud Lock-In</p>
+          </div>
+          <div class="p-4 rounded-xl bg-surface/70 border border-white/10 tech-border-glow">
+            <p class="text-2xl font-extrabold font-mono text-purple-400">100K+</p>
+            <p class="text-[11px] text-neutral-400 mt-1 uppercase font-mono tracking-wider">Organic Media Views</p>
+          </div>
+          <div class="p-4 rounded-xl bg-surface/70 border border-white/10 tech-border-glow">
+            <p class="text-2xl font-extrabold font-mono text-emerald-400">&lt; 50ms</p>
+            <p class="text-[11px] text-neutral-400 mt-1 uppercase font-mono tracking-wider">Core Parse Latency</p>
+          </div>
+        </div>
+
+        <!-- Filter Tab Bar -->
+        <div class="mt-10 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs font-mono">
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-brand-blue text-white font-bold transition-all shrink-0 cursor-pointer" data-filter="all">
+            All Case Studies (6)
+          </button>
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all shrink-0 border border-white/10 cursor-pointer" data-filter="web">
+            Web Applications (2)
+          </button>
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all shrink-0 border border-white/10 cursor-pointer" data-filter="marketing">
+            Digital Marketing (1)
+          </button>
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all shrink-0 border border-white/10 cursor-pointer" data-filter="desktop">
+            Desktop Software (1)
+          </button>
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all shrink-0 border border-white/10 cursor-pointer" data-filter="mobile">
+            Mobile &amp; Offline (1)
+          </button>
+          <button type="button" class="case-filter-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 font-medium transition-all shrink-0 border border-white/10 cursor-pointer" data-filter="industrial">
+            Industrial Systems (1)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies Main Content -->
+    <section class="px-6 md:px-12 py-16 max-w-7xl mx-auto space-y-12">
+
+      <!-- Case Study 01: HOMELUXE (Featured Spotlight Bento) -->
+      <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-amber-400/50 transition-all duration-300 shadow-2xl relative" data-category="web">
+        <div class="grid lg:grid-cols-12 gap-0 items-stretch">
+          <!-- Mockup Visual -->
+          <div class="lg:col-span-7 min-h-[360px] md:min-h-[460px] relative overflow-hidden group bg-black">
+            <img src="images/projects/homeluxe/homeluxe-hero.jpg" alt="HOMELUXE Luxury Real Estate Platform" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+            
+            <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[11px] font-bold text-amber-400 border border-amber-500/30">
+                MUMBAI &bull; GOA &bull; BENGALURU
+              </span>
+              <span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[11px] font-mono text-neutral-300 border border-white/10">
+                RERA Certified
+              </span>
+            </div>
+
+            <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="absolute top-4 right-4 text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5 hover:bg-emerald-900 transition-colors">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live on Vercel
+            </a>
+
+            <div class="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/85 backdrop-blur-md border border-white/10">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-amber-400 font-mono font-bold uppercase tracking-wider">Curated Luxury Real Estate</span>
+                <span class="text-white font-mono font-bold">&#8377; 4.5 Cr &ndash; &#8377; 48 Cr</span>
+              </div>
+              <p class="text-white font-semibold text-sm mt-1">Sea-Facing Sky Mansions, Coastal Villas &amp; Golf Estates</p>
+            </div>
+          </div>
+
+          <!-- Content Details -->
+          <div class="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between bg-surface/90">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/30">
+                  Case Study 01 &bull; Web Marketplace
+                </span>
+                <span class="text-[11px] font-mono text-neutral-400">Production Live</span>
+              </div>
+
+              <h2 class="font-display font-bold text-2xl sm:text-3xl text-white group-hover:text-amber-400 transition-colors">
+                HOMELUXE Luxury Real Estate
+              </h2>
+
+              <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                A premier luxury property ecosystem featuring verified multi-crore listings, algorithmic price appreciation engines, virtual walkthrough integrations, and RERA compliance diligence.
+              </p>
+
+              <!-- Problem & Solution Mini Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-5 border-t border-white/10 text-xs">
+                <div class="p-3 rounded-lg bg-white/[0.02] border border-white/5">
+                  <p class="font-mono text-amber-400 text-[10px] uppercase font-bold">The Challenge</p>
+                  <p class="text-neutral-400 mt-1">Unverified listings and slow property valuation models across luxury markets.</p>
+                </div>
+                <div class="p-3 rounded-lg bg-white/[0.02] border border-white/5">
+                  <p class="font-mono text-brand-blue text-[10px] uppercase font-bold">Our Solution</p>
+                  <p class="text-neutral-400 mt-1">Single-page algorithmic valuation portal deployed with 99.8/100 performance on Vercel CDN.</p>
+                </div>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="mt-5 flex flex-wrap gap-1.5 text-[11px] font-mono">
+                <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">React 18</span>
+                <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">Vite SPA</span>
+                <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-neutral-300">Tailwind CSS</span>
+                <span class="px-2.5 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 text-amber-300">RERA Advisory</span>
+              </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="mt-8 pt-5 border-t border-white/10 flex items-center justify-between gap-3">
+              <a href="project-homeluxe.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-brand-blue transition-colors group">
+                <span>Read Full Architecture Teardown</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <a href="https://homeluxe-real-estate-umber.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-amber-400 hover:underline inline-flex items-center gap-1">
+                <span>Visit Live App</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2-Column Grid of Curated Case Studies -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="caseStudiesGrid">
+
+        <!-- Case Study 02: St. Joseph College of Arts & Science -->
+        <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-brand-blue/50 transition-all duration-300 flex flex-col justify-between shadow-xl group" data-category="marketing">
+          <div class="h-60 bg-gradient-to-b from-blue-950/40 via-surface to-black relative flex items-center justify-center p-6 overflow-hidden">
+            <div class="absolute inset-0 bg-grid opacity-30"></div>
+            <div class="relative w-32 h-32 rounded-2xl bg-white p-2.5 shadow-2xl group-hover:scale-105 transition-transform duration-500 flex items-center justify-center border border-white/20">
+              <img src="images/clients/st-joseph-college.jpg" alt="St. Joseph College Crest" class="w-full h-full object-contain filter drop-shadow-md" />
+            </div>
+            <div class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-500/40">
+              100K+ Views
+            </div>
+            <div class="absolute top-4 left-4 text-[10px] font-mono px-2.5 py-1 rounded bg-blue-950/90 text-brand-blue border border-brand-blue/40">
+              Tenkasi, Tamil Nadu
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono mb-2">
+                <span class="text-brand-blue font-bold uppercase tracking-wider">Digital Marketing &bull; Higher Ed</span>
+                <span class="text-neutral-400">30-Day Campaign</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-blue transition-colors">
+                St. Joseph College of Arts &amp; Science
+              </h3>
+              <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                Full-funnel admissions growth and social media campaign in Vaikalipatti, Tenkasi. Captured student life and industrial visits via high-retention video reels, driving 77.8% non-follower reach and 2,649 profile visits.
+              </p>
+
+              <div class="mt-4 grid grid-cols-3 gap-2 text-center font-mono">
+                <div class="p-2 rounded bg-white/[0.02] border border-white/5">
+                  <p class="text-sm font-bold text-emerald-400">77.8%</p>
+                  <p class="text-[9px] text-neutral-400">Non-Followers</p>
+                </div>
+                <div class="p-2 rounded bg-white/[0.02] border border-white/5">
+                  <p class="text-sm font-bold text-brand-blue">2,649</p>
+                  <p class="text-[9px] text-neutral-400">Profile Visits</p>
+                </div>
+                <div class="p-2 rounded bg-white/[0.02] border border-white/5">
+                  <p class="text-sm font-bold text-white">5,850+</p>
+                  <p class="text-[9px] text-neutral-400">Interactions</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <a href="project-st-joseph.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-white transition-colors group">
+                <span>View Full Case Study</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <span class="text-[11px] font-mono text-neutral-400">Meta Insights Verified</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 03: Smart Invoice Builder -->
+        <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-brand-cyan/50 transition-all duration-300 flex flex-col justify-between shadow-xl group" data-category="web">
+          <div class="h-60 bg-gradient-to-b from-cyan-950/40 via-surface to-black relative flex items-center justify-center p-6 overflow-hidden">
+            <div class="absolute inset-0 bg-grid opacity-30"></div>
+            <div class="relative w-full max-w-xs rounded-xl overflow-hidden border border-brand-cyan/30 shadow-2xl group-hover:scale-105 transition-transform duration-500 bg-neutral-900">
+              <img src="images/projects/smart-invoice-builder/bill-details-form.jpg" alt="Smart Invoice Builder App" class="w-full h-auto object-cover" />
+            </div>
+            <div class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-cyan-950/90 text-brand-cyan border border-brand-cyan/40">
+              Vector PDF Engine
+            </div>
+            <div class="absolute top-4 left-4 text-[10px] font-mono px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">
+              0ms Latency
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono mb-2">
+                <span class="text-brand-cyan font-bold uppercase tracking-wider">Web Application &bull; FinTech</span>
+                <span class="text-neutral-400">Offline Synthesis</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-brand-cyan transition-colors">
+                Smart Invoice Builder
+              </h3>
+              <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                Zero-latency field invoicing app generating print-ready A4 PDF invoices with custom GST computation, UPI payment QR codes, and 1-tap WhatsApp sharing without server rendering delays.
+              </p>
+
+              <div class="mt-4 flex flex-wrap gap-1.5 text-[10px] font-mono">
+                <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">Client-Side PDF</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">UPI QR Integration</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Auto-GST Matrix</span>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <a href="project-smart-invoice-builder.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white transition-colors group">
+                <span>View Full Case Study</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <span class="text-[11px] font-mono text-emerald-400">100% Client-Side</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 04: EduVerify -->
+        <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-purple-500/50 transition-all duration-300 flex flex-col justify-between shadow-xl group" data-category="desktop">
+          <div class="h-60 bg-gradient-to-b from-purple-950/40 via-surface to-black relative flex items-center justify-center p-6 overflow-hidden">
+            <div class="absolute inset-0 bg-grid opacity-30"></div>
+            <div class="relative w-full max-w-sm rounded-lg border border-purple-500/30 bg-neutral-900 overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-500">
+              <div class="flex items-center justify-between px-2.5 py-1 bg-neutral-950 border-b border-white/10">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span class="text-[9px] font-mono text-neutral-400 ml-1">edu_verify.exe</span>
+                </div>
+                <span class="text-[9px] font-mono text-purple-400 font-bold">35ms Parser</span>
+              </div>
+              <img src="images/projects/eduverify/dashboard-view.png" alt="EduVerify Dashboard" class="w-full h-auto object-cover" />
+            </div>
+            <div class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-purple-950/90 text-purple-300 border border-purple-500/40">
+              Native Windows x64
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono mb-2">
+                <span class="text-purple-400 font-bold uppercase tracking-wider">Desktop Software &bull; Validation</span>
+                <span class="text-neutral-400">Air-Gapped Security</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-purple-400 transition-colors">
+                EduVerify &mdash; Excel Validation System
+              </h3>
+              <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                High-speed Windows desktop utility for schools and colleges. Audits cell coordinates in 35ms, catches corrupted formula rows, and executes multi-workbook merges in 65ms with zero data transmission to cloud.
+              </p>
+
+              <div class="mt-4 flex flex-wrap gap-1.5 text-[10px] font-mono">
+                <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30">Empty Row Sentinel</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Cell Audit Matrix</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">0% Cloud Leak</span>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <a href="project-eduverify.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-400 hover:text-white transition-colors group">
+                <span>View Full Case Study</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <span class="text-[11px] font-mono text-emerald-400">Air-Gapped Validated</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 05: Task Planner -->
+        <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-emerald-500/50 transition-all duration-300 flex flex-col justify-between shadow-xl group" data-category="mobile">
+          <div class="h-60 bg-gradient-to-b from-emerald-950/40 via-surface to-black relative flex items-center justify-center p-6 overflow-hidden">
+            <div class="absolute inset-0 bg-grid opacity-30"></div>
+            <div class="relative w-36 rounded-2xl overflow-hidden border border-emerald-500/30 shadow-2xl group-hover:scale-105 transition-transform duration-500 bg-neutral-900">
+              <img src="images/projects/task-planner/daily-momentum.jpg" alt="Task Planner Mobile App" class="w-full h-auto object-cover" />
+            </div>
+            <div class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-500/40">
+              Flutter Engine
+            </div>
+            <div class="absolute top-4 left-4 text-[10px] font-mono px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">
+              SQLite B-Tree
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-7 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-center justify-between text-xs font-mono mb-2">
+                <span class="text-emerald-400 font-bold uppercase tracking-wider">Mobile App &bull; Local-First</span>
+                <span class="text-neutral-400">Zero Cloud Lock-In</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white group-hover:text-emerald-400 transition-colors">
+                Task Planner &mdash; Momentum Engine
+              </h3>
+              <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                Offline-first mobile productivity application built with Flutter &amp; Riverpod. Utilizes local SQLite B-Tree caching for instantaneous responsiveness without battery drain or cloud dependency.
+              </p>
+
+              <div class="mt-4 flex flex-wrap gap-1.5 text-[10px] font-mono">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">Flutter 3</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Riverpod 2.0</span>
+                <span class="px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10">Persistent State</span>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <a href="project-task-planner.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-white transition-colors group">
+                <span>View Full Case Study</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <span class="text-[11px] font-mono text-emerald-400">100% Offline Ready</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 06: Virgin Water & Waste Water Solution -->
+        <article class="case-item tech-border rounded-2xl bg-surface-card overflow-hidden hover:border-brand-cyan/50 transition-all duration-300 flex flex-col justify-between shadow-xl group md:col-span-2" data-category="industrial">
+          <div class="grid md:grid-cols-12 gap-0 items-center">
+            <div class="md:col-span-4 h-56 md:h-full bg-gradient-to-b from-cyan-950/40 via-surface to-black relative flex items-center justify-center p-6 overflow-hidden">
+              <div class="absolute inset-0 bg-grid opacity-30"></div>
+              <div class="relative w-32 h-32 rounded-2xl bg-white p-2.5 shadow-2xl group-hover:scale-105 transition-transform duration-500 flex items-center justify-center border border-white/20">
+                <img src="images/clients/virgin-water-solution.jpg" alt="Virgin Water Solutions" class="w-full h-full object-contain filter drop-shadow-md" />
+              </div>
+              <div class="absolute top-4 left-4 text-[10px] font-mono px-2.5 py-1 rounded bg-cyan-950/90 text-brand-cyan border border-brand-cyan/40">
+                Industrial Engineering
+              </div>
+            </div>
+
+            <div class="md:col-span-8 p-6 sm:p-8 flex flex-col justify-between bg-surface/90">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono mb-2">
+                  <span class="text-brand-cyan font-bold uppercase tracking-wider">Industrial &amp; Environmental Systems</span>
+                  <span class="text-neutral-400">Corporate Architecture</span>
+                </div>
+                <h3 class="font-display font-bold text-xl sm:text-2xl text-white group-hover:text-brand-cyan transition-colors">
+                  Virgin Water &amp; Waste Water Solution
+                </h3>
+                <p class="text-neutral-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                  Specialized engineering enterprise providing industrial water purification, effluent treatment (ETP), sewage treatment (STP), and reverse osmosis plants. ANVION developed a unified brand architecture, commercial product matrix, and technical enquiry pipeline.
+                </p>
+
+                <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-mono">
+                  <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">ETP / STP / RO Plants</span>
+                  <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Industrial Water Systems</span>
+                  <span class="px-2.5 py-1 rounded bg-white/5 text-neutral-300 border border-white/10">Commercial Architecture</span>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                <a href="solution.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white transition-colors group">
+                  <span>Explore Enterprise Solutions</span>
+                  <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+                <span class="text-[11px] font-mono text-neutral-400">Industrial Client Partner</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- Engineering Methodology / How We Build -->
+    <section class="px-6 md:px-12 py-16 border-t border-white/10 bg-[#080A0F]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <p class="text-xs font-mono font-bold uppercase tracking-widest text-brand-blue mb-2">Lifecycle Execution</p>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">How Every Case Study is Built</h2>
+          <p class="text-neutral-400 text-xs sm:text-sm mt-3">
+            We don't chase trendy bloatware. We diagnose the real business problem, choose the simplest robust stack, and engineer for measurable speed and longevity.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="tech-border rounded-xl p-6 bg-surface/70 hover:bg-surface border border-white/10 hover:border-brand-blue/40 transition-all">
+            <span class="text-xs font-mono font-bold text-brand-blue bg-brand-blue/10 px-2 py-0.5 rounded border border-brand-blue/20">STAGE 01</span>
+            <h3 class="font-display font-bold text-lg text-white mt-4">Discover &amp; Audit</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Unpack constraints, users, and core data models. We map out data integrity, offline requirements, and scale limits before writing a line of code.
+            </p>
+          </div>
+
+          <div class="tech-border rounded-xl p-6 bg-surface/70 hover:bg-surface border border-white/10 hover:border-brand-cyan/40 transition-all">
+            <span class="text-xs font-mono font-bold text-brand-cyan bg-brand-cyan/10 px-2 py-0.5 rounded border border-brand-cyan/20">STAGE 02</span>
+            <h3 class="font-display font-bold text-lg text-white mt-4">Architect &amp; Prototype</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Draft clean system architectures, database schemas, and micro-interfaces. Validate latency and state management patterns early.
+            </p>
+          </div>
+
+          <div class="tech-border rounded-xl p-6 bg-surface/70 hover:bg-surface border border-white/10 hover:border-purple-400/40 transition-all">
+            <span class="text-xs font-mono font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">STAGE 03</span>
+            <h3 class="font-display font-bold text-lg text-white mt-4">Sprint &amp; Test</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Rapid incremental delivery sprints with automated unit tests, strict performance budgets, and continuous stakeholder review.
+            </p>
+          </div>
+
+          <div class="tech-border rounded-xl p-6 bg-surface/70 hover:bg-surface border border-white/10 hover:border-emerald-400/40 transition-all">
+            <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">STAGE 04</span>
+            <h3 class="font-display font-bold text-lg text-white mt-4">Deploy &amp; Scale</h3>
+            <p class="text-xs text-neutral-400 mt-2 leading-relaxed">
+              Zero-downtime deployment to edge CDNs or air-gapped runtimes. Full Git repositories, ownership keys, and documentation handed over.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- High-Impact Conversion Banner -->
+    <section class="px-6 md:px-12 py-16 max-w-7xl mx-auto">
+      <div class="tech-border rounded-2xl bg-gradient-to-r from-blue-950/40 via-surface-card to-purple-950/40 p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-brand-blue/20 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="max-w-xl space-y-3 text-center md:text-left">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full border border-brand-blue/30">
+              Your Project Could Be Next
+            </span>
+            <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+              Have an Engineering Problem Worth Solving?
+            </h2>
+            <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+              Tell us about what you want to build or what's holding your current systems back. Our engineers will review feasibility and outline a clear roadmap.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3.5 shrink-0">
+            <a href="start-a-project.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-blue/40 transition-all btn-glow inline-flex items-center justify-center gap-2">
+              <span>Start a Project</span>
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+            <a href="contact.html" class="bg-white/5 hover:bg-white/10 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/10 transition-all text-center">
+              Talk to an Engineer
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Comprehensive Master Footer -->
+  <footer class="bg-[#050608] text-neutral-300 w-full py-16 border-t border-white/10 mt-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 md:px-12 max-w-7xl mx-auto">
+      <!-- Brand & MSME Info -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-lg bg-surface border border-white/10 flex items-center justify-center p-1.5">
+            <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+          </div>
+          <span class="font-display text-lg font-bold text-white">ANVION IT SERVICES</span>
+        </div>
+        <p class="text-xs text-neutral-400 leading-relaxed">
+          Innovative digital solutions, mobile app engineering, cloud infrastructure, desktop software, and IT consultancy.
+        </p>
+        <div class="p-3.5 rounded-xl bg-surface border border-brand-blue/30 text-xs">
+          <div class="flex items-center gap-1.5 text-amber-400 font-bold text-[11px] mb-1">
+            <span class="material-symbols-outlined text-sm">verified</span>
+            <span>Govt. of India MSME Registered</span>
+          </div>
+          <p class="font-mono text-brand-blue font-bold text-xs">UDYAM-TN-09-0098980</p>
+          <p class="text-[10px] text-neutral-400 mt-1">Micro Enterprise &bull; Services (NIC 62011)</p>
+        </div>
+      </div>
+
+      <!-- Company Links -->
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Company</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="about.html">About Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="careers.html">Careers (Hiring Status)</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="contact.html">Contact Us</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="start-a-project.html">Start a Project</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="dashboard.html">Client Portal</a>
+      </div>
+
+      <!-- Featured Projects -->
+      <div class="flex flex-col gap-2.5 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Featured Projects</h4>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-homeluxe.html">HOMELUXE Real Estate</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-smart-invoice-builder.html">Smart Invoice Builder</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-eduverify.html">EduVerify Software</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-task-planner.html">Task Planner App</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="project-st-joseph.html">St. Joseph College Marketing</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="projects.html">All Projects Directory</a>
+        <a class="text-neutral-400 hover:text-white transition-colors" href="portfolio.html">Case Studies Portfolio</a>
+      </div>
+
+      <!-- Official Office & Registration Details -->
+      <div class="space-y-3 text-xs">
+        <h4 class="text-white font-bold text-sm mb-1">Official Registration &amp; HQ</h4>
+        <p class="text-neutral-300 leading-relaxed text-xs">
+          <strong class="text-white">ANVION IT SERVICES</strong><br/>
+          Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal, Kanniyakumari - 629178, Tamil Nadu, India.
+        </p>
+        <div class="text-neutral-400 space-y-1">
+          <p><span class="text-neutral-500 font-sans">Phone:</span> <a href="tel:+919150270802" class="hover:text-brand-blue">+91 9150270802</a> / <a href="tel:+918438464047" class="hover:text-brand-blue">+91 8438464047</a></p>
+          <p><span class="text-neutral-500 font-sans">Email:</span> <a href="mailto:anvionitservices@gmail.com" class="hover:text-brand-blue font-sans">anvionitservices@gmail.com</a></p>
+        </div>
+        <div class="flex items-center gap-3 pt-2 text-[11px]">
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="privacy-policy.html">Privacy Policy</a>
+          <span class="text-neutral-600">&bull;</span>
+          <a class="text-neutral-400 hover:text-white transition-colors underline" href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub-Footer -->
+    <div class="px-6 md:px-12 max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-neutral-400 gap-3">
+      <p>&copy; 2026 ANVION IT SERVICES. All rights reserved. &bull; Govt. of India MSME Reg: UDYAM-TN-09-0098980</p>
+      <p>DIC: Kanyakumari | MSME-DFO: Chennai | Tamil Nadu, India</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/navbar.js"></script>
+  <script>
+    // Case Studies Category Filter Interaction
+    document.addEventListener("DOMContentLoaded", () => {
+      const filterButtons = document.querySelectorAll(".case-filter-btn");
+      const caseItems = document.querySelectorAll(".case-item");
+
+      filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          const filter = button.getAttribute("data-filter");
+
+          // Update active button state
+          filterButtons.forEach(btn => {
+            btn.classList.remove("bg-brand-blue", "text-white", "font-bold");
+            btn.classList.add("bg-white/5", "text-neutral-300", "font-medium");
+          });
+          button.classList.add("bg-brand-blue", "text-white", "font-bold");
+          button.classList.remove("bg-white/5", "text-neutral-300", "font-medium");
+
+          // Show/Hide case items
+          caseItems.forEach(item => {
+            const cat = item.getAttribute("data-category");
+            if (filter === "all" || cat === filter) {
+              item.style.display = "";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
+    });
+  </script>
+  <!-- Universal ANVION AI Assistant & WhatsApp Suite -->
+  <script src="js/anvion-ai.js"></script>
+</body>
+</html>

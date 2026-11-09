@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>404 - Page Not Found | ANVION IT SERVICES</title>
+  <meta name="description" content="The requested page could not be found on the ANVION IT Services network. Explore our web, mobile, and custom software services."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "brand-blue": "#00A3FF",
+            "brand-blue-hover": "#008ce0",
+            "surface": "#0C0D12",
+            "surface-low": "#07080B",
+            "surface-high": "#15161E",
+            "on-surface": "#E3E2E7",
+            "on-surface-variant": "#94A3B8"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { background-color: #060709; color: #E3E2E7; }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .tech-border {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tech-border:hover {
+      border-color: rgba(0, 163, 255, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(0, 163, 255, 0.15);
+    }
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #FFFFFF 20%, #00A3FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-blue selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="hero-glow w-[500px] h-[500px] top-[20%] left-[20%] bg-blue-600/15"></div>
+    <div class="hero-glow w-[450px] h-[450px] bottom-[20%] right-[20%] bg-purple-600/10"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-full bg-[#060709]/85 backdrop-blur-xl sticky top-0 border-b border-white/10 z-50">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+      <a href="index.html" class="flex items-center gap-3.5 group">
+        <div class="h-10 w-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center p-1.5 group-hover:border-brand-blue group-hover:shadow-[0_0_15px_rgba(0,163,255,0.4)] transition-all">
+          <img alt="ANVION Logo" class="h-full w-full object-contain filter brightness-110" src="images/logo.png"/>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg tracking-tight text-white group-hover:text-brand-blue transition-colors leading-tight">
+            ANVION
+          </span>
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">IT SERVICES</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-xs font-mono text-neutral-300 hover:text-brand-blue transition-colors">Return to Home</a>
+        <a href="contact.html" class="bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow-md shadow-brand-blue/30">
+          Support
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 404 Content -->
+  <main class="flex-grow flex items-center justify-center px-6 py-20 bg-grid">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-xs font-mono text-red-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
+        <span>HTTP STATUS 404 &bull; ROUTE_UNRESOLVED</span>
+      </div>
+
+      <h1 class="text-7xl sm:text-9xl font-display font-extrabold text-white tracking-tight">
+        4<span class="text-brand-blue">0</span>4
+      </h1>
+
+      <h2 class="text-2xl sm:text-3xl font-display font-bold text-white mt-4">
+        System Node Not Found
+      </h2>
+
+      <p class="text-xs sm:text-sm text-neutral-400 max-w-md mx-auto mt-3 leading-relaxed">
+        The requested URL was moved, deleted, or does not exist in the ANVION network registry. Use the verified nodes below to resume your exploration.
+      </p>
+
+      <!-- Quick Navigation Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8 text-left max-w-lg mx-auto">
+        <a href="index.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">home</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Home Page</p>
+          <p class="text-[10px] text-neutral-500">Main overview</p>
+        </a>
+        <a href="services.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">design_services</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Services</p>
+          <p class="text-[10px] text-neutral-500">Web, Mobile, AI</p>
+        </a>
+        <a href="projects.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">terminal</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Projects</p>
+          <p class="text-[10px] text-neutral-500">Live products</p>
+        </a>
+        <a href="pricing.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">payments</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Pricing</p>
+          <p class="text-[10px] text-neutral-500">Cost estimator</p>
+        </a>
+        <a href="case-studies.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">analytics</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Case Studies</p>
+          <p class="text-[10px] text-neutral-500">Proven solutions</p>
+        </a>
+        <a href="contact.html" class="p-3.5 rounded-xl bg-surface tech-border group">
+          <span class="material-symbols-outlined text-brand-blue text-lg">mail</span>
+          <p class="font-bold text-white text-xs mt-1 group-hover:text-brand-blue transition-colors">Contact</p>
+          <p class="text-[10px] text-neutral-500">Direct enquiry</p>
+        </a>
+      </div>
+
+      <div class="mt-8 flex justify-center gap-3">
+        <a href="start-a-project.html" class="px-6 py-2.5 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all shadow-lg shadow-brand-blue/30 inline-flex items-center gap-1.5">
+          <span>Start a Project</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Sub-Footer -->
+  <footer class="bg-[#050608] text-neutral-400 py-6 border-t border-white/5 text-xs text-center">
+    <p>&copy; 2026 ANVION IT SERVICES. All rights reserved. &bull; Govt. MSME Reg: UDYAM-TN-09-0098980</p>
+  </footer>
+
+  <script src="js/anvion-ai.js"></script>
+</body>
+</html>

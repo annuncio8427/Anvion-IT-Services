@@ -103,6 +103,15 @@
         <span id="badgeEnquiries" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-400">0</span>
       </button>
 
+      <!-- Consultation Bookings -->
+      <button data-section="consultations" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-lg">calendar_month</span>
+          <span>Consultations</span>
+        </div>
+        <span id="badgeConsultations" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400">0</span>
+      </button>
+
       <!-- Contact Messages -->
       <button data-section="messages" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/5 transition-all">
         <div class="flex items-center gap-3">
@@ -406,15 +415,60 @@
       <section id="sec-enquiries" class="content-section hidden space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 class="text-lg font-bold font-display text-white">Project Enquiries & Quotations</h2>
-            <p class="text-xs text-on-surface-variant">Multi-step project briefs submitted by prospective commercial clients.</p>
+            <h2 class="text-lg font-bold font-display text-white">Project Enquiries &amp; Lead Pipeline</h2>
+            <p class="text-xs text-on-surface-variant">Multi-step project briefs and pipeline stages: New &rarr; Contacted &rarr; Qualified &rarr; Proposal Sent &rarr; Negotiation &rarr; Won/Lost.</p>
           </div>
           <div class="flex items-center gap-3">
+            <button onclick="exportEnquiriesCSV()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold">
+              <span class="material-symbols-outlined text-sm">download</span>
+              <span>Export CSV</span>
+            </button>
             <select id="filterEnquiryStatus" class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue">
               <option value="ALL">All Statuses</option>
               <option value="NEW">NEW</option>
               <option value="CONTACTED">CONTACTED</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="QUALIFIED">QUALIFIED</option>
+              <option value="PROPOSAL_SENT">PROPOSAL SENT</option>
+              <option value="NEGOTIATION">NEGOTIATION</option>
+              <option value="WON">WON</option>
+              <option value="LOST">LOST</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-surface-card border border-surface-border rounded-xl overflow-x-auto">
+          <table class="w-full text-left text-xs text-on-surface">
+            <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
+              <tr>
+                <th class="p-4">Client</th>
+                <th class="p-4">Service / Type</th>
+                <th class="p-4">Budget &amp; Timeline</th>
+                <th class="p-4">Pipeline Status</th>
+                <th class="p-4">Received</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enquiriesTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading project enquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION: CONSULTATION BOOKINGS            -->
+      <!-- ========================================== -->
+      <section id="sec-consultations" class="content-section hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold font-display text-white">Technical Consultation Bookings</h2>
+            <p class="text-xs text-on-surface-variant">Direct appointment requests from prospective enterprise and SME clients.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <select id="filterConsultationStatus" onchange="renderConsultationsTable()" class="rounded-lg border border-surface-border bg-black/60 px-3 py-2 text-xs text-white outline-none focus:border-brand-blue">
+              <option value="ALL">All Statuses</option>
+              <option value="PENDING">PENDING</option>
+              <option value="CONFIRMED">CONFIRMED</option>
               <option value="COMPLETED">COMPLETED</option>
               <option value="CANCELLED">CANCELLED</option>
             </select>
@@ -426,14 +480,19 @@
             <thead class="bg-black/40 border-b border-surface-border text-[10px] uppercase font-mono text-on-surface-variant">
               <tr>
                 <th class="p-4">Client</th>
-                <th class="p-4">Service / Type</th>
-                <th class="p-4">Budget & Timeline</th>
+                <th class="p-4">Topic / Service</th>
+                <th class="p-4">Date &amp; Time Slot</th>
+                <th class="p-4">Reference</th>
                 <th class="p-4">Status</th>
-                <th class="p-4">Received</th>
                 <th class="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="enquiriesTableBody" class="divide-y divide-surface-border">
+            <tbody id="consultationsTableBody" class="divide-y divide-surface-border">
+              <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading consultation appointments...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
               <tr><td colspan="6" class="p-6 text-center text-on-surface-variant">Loading project enquiries...</td></tr>
             </tbody>
           </table>
@@ -1088,6 +1147,7 @@
         overview: 'System Overview & Metrics',
         users: 'User Directory & RBAC Security',
         enquiries: 'Project Quotation Enquiries',
+        consultations: 'Technical Consultation Bookings',
         messages: 'Corporate Contact Inquiries',
         projects: 'Commercial Case Studies & Projects',
         services: 'Services Catalog',
@@ -1186,6 +1246,7 @@
     async function loadAdminData() {
       await Promise.allSettled([
         loadEnquiries(),
+        loadConsultations(),
         loadMessages(),
         loadUsers(),
         loadProjects(),
@@ -1268,11 +1329,13 @@
           </td>
           <td class="p-4">
             <select onchange="updateEnquiryStatus('${item.id}', this.value)" class="rounded border border-surface-border bg-black/60 px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-brand-blue">
-              <option value="NEW" ${(item.status === 'NEW' || item.status === 'new') ? 'selected' : ''}>NEW</option>
-              <option value="CONTACTED" ${item.status === 'CONTACTED' ? 'selected' : ''}>CONTACTED</option>
-              <option value="IN_PROGRESS" ${item.status === 'IN_PROGRESS' ? 'selected' : ''}>IN_PROGRESS</option>
-              <option value="COMPLETED" ${item.status === 'COMPLETED' ? 'selected' : ''}>COMPLETED</option>
-              <option value="CANCELLED" ${item.status === 'CANCELLED' ? 'selected' : ''}>CANCELLED</option>
+              <option value="NEW" ${String(item.status).toUpperCase() === 'NEW' ? 'selected' : ''}>NEW</option>
+              <option value="CONTACTED" ${String(item.status).toUpperCase() === 'CONTACTED' ? 'selected' : ''}>CONTACTED</option>
+              <option value="QUALIFIED" ${String(item.status).toUpperCase() === 'QUALIFIED' ? 'selected' : ''}>QUALIFIED</option>
+              <option value="PROPOSAL_SENT" ${String(item.status).toUpperCase() === 'PROPOSAL_SENT' ? 'selected' : ''}>PROPOSAL SENT</option>
+              <option value="NEGOTIATION" ${String(item.status).toUpperCase() === 'NEGOTIATION' ? 'selected' : ''}>NEGOTIATION</option>
+              <option value="WON" ${String(item.status).toUpperCase() === 'WON' ? 'selected' : ''}>WON</option>
+              <option value="LOST" ${String(item.status).toUpperCase() === 'LOST' ? 'selected' : ''}>LOST</option>
             </select>
           </td>
           <td class="p-4 text-on-surface-variant font-mono text-[11px]">
@@ -1280,7 +1343,7 @@
           </td>
           <td class="p-4 text-right space-x-2">
             <button onclick="viewEnquiryDetail('${item.id}')" class="px-2.5 py-1 rounded bg-white/5 border border-surface-border text-brand-blue hover:bg-brand-blue hover:text-white transition-all text-xs">
-              View Brief
+              View Brief &amp; Notes
             </button>
             <button onclick="confirmDelete('projectEnquiries', '${item.id}', 'Project Brief from ${item.name || item.email}')" class="p-1 rounded text-on-surface-variant hover:text-red-400">
               <span class="material-symbols-outlined text-sm">delete</span>
@@ -1289,6 +1352,116 @@
         </tr>
       `).join('');
     }
+
+    // Export Enquiries CSV
+    window.exportEnquiriesCSV = async function() {
+      try {
+        const token = localStorage.getItem('anvion_admin_jwt') || '';
+        const res = await fetch('/api/admin/export-enquiries', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('Export request failed: ' + res.status);
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `anvion-enquiries-${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showToast('Export Complete', 'Enquiries CSV downloaded successfully.');
+      } catch (err) {
+        showToast('Export Error', err.message, 'error');
+      }
+    };
+
+    // Consultations State & Handler
+    let cachedConsultations = [];
+
+    async function loadConsultations() {
+      try {
+        const token = localStorage.getItem('anvion_admin_jwt') || '';
+        const res = await fetch('/api/admin/consultations', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          cachedConsultations = await res.json();
+          const badge = document.getElementById('badgeConsultations');
+          if (badge) badge.textContent = cachedConsultations.length;
+          renderConsultationsTable();
+        }
+      } catch (err) {
+        console.warn('Consultations fetch fallback:', err);
+      }
+    }
+
+    window.renderConsultationsTable = function() {
+      const tbody = document.getElementById('consultationsTableBody');
+      if (!tbody) return;
+      const filter = document.getElementById('filterConsultationStatus')?.value || 'ALL';
+      const filtered = filter === 'ALL' ? cachedConsultations : cachedConsultations.filter(c => String(c.status).toUpperCase() === filter);
+
+      if (!filtered || filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No consultation appointments found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="p-4">
+            <p class="font-bold text-white">${item.name || 'Anonymous'}</p>
+            <p class="text-on-surface-variant font-mono text-[11px]">${item.email}</p>
+            <a href="tel:${item.phone}" class="text-[10px] text-brand-blue hover:underline">${item.phone || ''}</a>
+          </td>
+          <td class="p-4">
+            <span class="font-medium text-white">${item.serviceInterest || 'Technical Advisory'}</span>
+            ${item.notes ? `<p class="text-[10px] text-neutral-400 mt-0.5 line-clamp-1 italic">${item.notes}</p>` : ''}
+          </td>
+          <td class="p-4">
+            <p class="text-white font-mono">${item.preferredDate || 'TBD'}</p>
+            <p class="text-emerald-400 text-[11px] font-mono">${item.preferredTime || ''}</p>
+          </td>
+          <td class="p-4">
+            <span class="text-[11px] font-mono text-brand-blue bg-brand-blue/10 px-2 py-0.5 rounded border border-brand-blue/20">
+              ${item.bookingReference || 'ANV-CON'}
+            </span>
+          </td>
+          <td class="p-4">
+            <select onchange="updateConsultationStatus('${item.id}', this.value)" class="rounded border border-surface-border bg-black/60 px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-brand-blue">
+              <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>PENDING</option>
+              <option value="confirmed" ${item.status === 'confirmed' ? 'selected' : ''}>CONFIRMED</option>
+              <option value="completed" ${item.status === 'completed' ? 'selected' : ''}>COMPLETED</option>
+              <option value="cancelled" ${item.status === 'cancelled' ? 'selected' : ''}>CANCELLED</option>
+            </select>
+          </td>
+          <td class="p-4 text-right space-x-2">
+            <a href="https://wa.me/${(item.phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${item.name}, confirming your ANVION technical consultation (${item.bookingReference}) for ${item.preferredDate} at ${item.preferredTime}.`)}" target="_blank" class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold">
+              WhatsApp
+            </a>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    window.updateConsultationStatus = async function(id, newStatus) {
+      try {
+        const token = localStorage.getItem('anvion_admin_jwt') || '';
+        const res = await fetch(`/api/admin/consultations/${id}/status`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+        if (res.ok) {
+          showToast('Consultation Updated', `Status changed to ${newStatus}`);
+          loadConsultations();
+        }
+      } catch (err) {
+        showToast('Update Failed', err.message, 'error');
+      }
+    };
 
     function renderRecentEnquiries(items) {
       const container = document.getElementById('recentEnquiriesList');
@@ -1335,6 +1508,55 @@
       }
     };
 
+    window.loadEnquiryNotes = async function(enquiryId) {
+      const list = document.getElementById('enquiryNotesList');
+      if (!list) return;
+      try {
+        const token = localStorage.getItem('anvion_admin_jwt') || '';
+        const res = await fetch(`/api/admin/enquiries/${enquiryId}/notes`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const notes = await res.json();
+          if (!notes || notes.length === 0) {
+            list.innerHTML = '<p class="text-neutral-500 italic text-[11px]">No internal notes recorded yet.</p>';
+          } else {
+            list.innerHTML = notes.map(n => `
+              <div class="p-2 rounded bg-black/40 border border-surface-border text-xs">
+                <p class="text-neutral-200">${n.note}</p>
+                <p class="text-[10px] text-neutral-500 mt-0.5 font-mono">${n.author || 'Admin'} &bull; ${new Date(n.createdAt).toLocaleString()}</p>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (e) {
+        list.innerHTML = '<p class="text-neutral-500 italic text-[11px]">Local notes buffer active.</p>';
+      }
+    };
+
+    window.submitEnquiryNote = async function(enquiryId) {
+      const input = document.getElementById('newEnquiryNoteText');
+      if (!input || !input.value.trim()) return;
+      try {
+        const token = localStorage.getItem('anvion_admin_jwt') || '';
+        const res = await fetch(`/api/admin/enquiries/${enquiryId}/notes`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ note: input.value.trim() })
+        });
+        if (res.ok) {
+          input.value = '';
+          loadEnquiryNotes(enquiryId);
+          showToast('Note Saved', 'Internal lead note recorded.');
+        }
+      } catch (err) {
+        showToast('Error', err.message, 'error');
+      }
+    };
+
     window.viewEnquiryDetail = function(id) {
       const item = cachedEnquiries.find(e => e.id === id || String(e.id) === String(id));
       if (!item) return;
@@ -1363,7 +1585,7 @@
         <div class="grid grid-cols-3 gap-4 pb-4 border-b border-surface-border">
           <div>
             <span class="text-on-surface-variant font-mono uppercase text-[10px]">Service</span>
-            <p class="text-white font-semibold">${item.service || 'Custom Solution'}</p>
+            <p class="text-white font-semibold">${item.service || item.projectType || 'Custom Solution'}</p>
           </div>
           <div>
             <span class="text-on-surface-variant font-mono uppercase text-[10px]">Budget</span>
@@ -1382,6 +1604,19 @@
           </div>
         </div>
 
+        <div class="pt-4 border-t border-surface-border space-y-3">
+          <span class="text-on-surface-variant font-mono uppercase text-[10px]">Internal Lead Notes & Follow-up Activity</span>
+          <div id="enquiryNotesList" class="space-y-2 max-h-32 overflow-y-auto">
+            <p class="text-neutral-500 italic text-[11px]">Loading notes...</p>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" id="newEnquiryNoteText" placeholder="Add follow-up note (e.g. Call summary, proposal status)..." class="flex-grow rounded-lg border border-surface-border bg-black/60 px-3 py-1.5 text-xs text-white outline-none focus:border-brand-blue"/>
+            <button type="button" onclick="submitEnquiryNote('${item.id}')" class="px-3 py-1.5 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-bold transition-all whitespace-nowrap">
+              Add Note
+            </button>
+          </div>
+        </div>
+
         ${item.attachmentFilename || item.attachmentUrl ? `
           <div class="pt-2">
             <span class="text-on-surface-variant font-mono uppercase text-[10px]">Project Specification Attachment</span>
@@ -1395,6 +1630,7 @@
         ` : ''}
       `;
       openModal('enquiryDetailModal');
+      loadEnquiryNotes(item.id);
     };
 
     // 2. Load Contact Messages
