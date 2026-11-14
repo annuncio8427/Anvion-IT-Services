@@ -246,7 +246,7 @@ function applyNoindex(publicDir, file) {
   fs.writeFileSync(target, html, 'utf8');
 }
 
-export function applySeo(publicDir, siteUrl = process.env.SITE_URL || 'https://anvion-it-services.vercel.app') {
+export function applySeo(publicDir, siteUrl = process.env.SITE_URL || 'https://anvionitservices.in') {
   siteUrl = siteUrl.replace(/\/+$/, '');
   const sitemapUrls = [];
 
