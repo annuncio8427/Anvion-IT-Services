@@ -94,7 +94,7 @@ function injectGoogleTagManager(directory) {
     if (!entry.isFile() || !/\.html?$/i.test(entry.name)) continue;
 
     const relativePath = path.relative(output, target).split(path.sep).join('/');
-    if (PRIVATE_HTML_PAGES.has(relativePath)) continue;
+    if (PRIVATE_HTML_PAGES.has(relativePath) || relativePath.startsWith('admin/')) continue;
 
     let html = fs.readFileSync(target, 'utf8');
     if (html.includes(GTM_ID)) continue;
