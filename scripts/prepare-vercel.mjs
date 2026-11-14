@@ -70,7 +70,7 @@ console.log('Applied shared mobile layout stylesheet to ' + mobileResponsivePage
 
 
 // Install Google Tag Manager on public pages only. Private portal pages are intentionally excluded.
-const GTM_ID = 'GTM-NRKHWLRP';
+const GTM_ID = 'GTM-55CJC5NS';
 const PRIVATE_HTML_PAGES = new Set([
   '404.html',
   'admin.html',
