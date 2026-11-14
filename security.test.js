@@ -160,7 +160,7 @@ test('SEO build marks private account pages noindex and excludes them from sitem
   }
 
   const sitemap = read('./public/sitemap.xml');
-  assert.ok(sitemap.includes('https://anvion-it-services.vercel.app/'));
+  assert.ok(sitemap.includes('https://www.anvionitservices.in/'));
   assert.ok(sitemap.includes('/portfolio.html'));
   assert.ok(sitemap.includes('/contact.html'));
   assert.ok(!sitemap.includes('/admin'));
@@ -170,7 +170,7 @@ test('SEO build marks private account pages noindex and excludes them from sitem
   const robots = read('./public/robots.txt');
   assert.ok(robots.includes('User-agent: *'));
   assert.ok(robots.includes('Disallow: /api/'));
-  assert.ok(robots.includes('Sitemap: https://anvion-it-services.vercel.app/sitemap.xml'));
+  assert.ok(robots.includes('Sitemap: https://www.anvionitservices.in/sitemap.xml'));
 });
 
 test('SEO generator only maps public pages and builds accurate organization/service markup', () => {
