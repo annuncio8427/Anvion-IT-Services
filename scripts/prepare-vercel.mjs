@@ -91,14 +91,14 @@ function injectGoogleTagManager(directory) {
       updated += injectGoogleTagManager(target);
       continue;
     }
-    if (!entry.isFile() || !/\\.html?$/i.test(entry.name)) continue;
+    if (!entry.isFile() || !/\.html?$/i.test(entry.name)) continue;
 
     const relativePath = path.relative(output, target).split(path.sep).join('/');
     if (PRIVATE_HTML_PAGES.has(relativePath)) continue;
 
     let html = fs.readFileSync(target, 'utf8');
     if (html.includes(GTM_ID)) continue;
-    if (!/<\\/head>/i.test(html) || !/<body\\b[^>]*>/i.test(html)) {
+    if (!/<\/head>/i.test(html) || !/<body\b[^>]*>/i.test(html)) {
       throw new Error('Cannot inject Google Tag Manager: missing head or body in ' + relativePath);
     }
 
@@ -115,8 +115,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->`;
 
-    html = html.replace(/<\\/head>/i, headSnippet + '\\n</head>');
-    html = html.replace(/(<body\\b[^>]*>)/i, '$1\\n' + bodySnippet);
+    html = html.replace(/<\/head>/i, headSnippet + '\n</head>');
+    html = html.replace(/(<body\b[^>]*>)/i, '$1\n' + bodySnippet);
     fs.writeFileSync(target, html, 'utf8');
     updated += 1;
   }
