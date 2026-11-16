@@ -156,9 +156,6 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
         name: 'Udyam Registration Number',
         value: 'UDYAM-TN-09-0098980',
       },
-      sameAs: [
-        'https://www.linkedin.com/company/anvion-it-services/',
-      ],
       knowsAbout: [
         'Website development',
         'Mobile application development',
@@ -211,7 +208,9 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
   }
 
   let html = fs.readFileSync(target, 'utf8');
-  // Vercel cleanUrls redirects .html requests to extensionless public URLs.\n  const canonicalPath = file === 'index.html' ? '/' : '/' + file.replace(/\\.html?$/i, '');\n  const canonical = siteUrl + canonicalPath;
+  // Use extensionless canonical URLs because Vercel cleanUrls redirects .html paths.
+  const canonicalPath = file === 'index.html' ? '/' : '/' + file.replace(/\.html?$/i, '');
+  const canonical = siteUrl + canonicalPath;
 
   // Remove prior managed tags so builds remain idempotent.
   const managedTags = [
@@ -233,7 +232,10 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
     '<meta property="og:title" content="' + escapeHtml(metadata.title) + '">',
     '<meta property="og:description" content="' + escapeHtml(metadata.description) + '">',
     '<meta property="og:url" content="' + escapeHtml(canonical) + '">',
-    '<meta property="og:locale" content="en_IN">',\n    '<meta property="og:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',\n    '<meta property="og:image:alt" content="ANVION IT SERVICES logo">',\n    '<meta name="twitter:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
+    '<meta property="og:locale" content="en_IN">',
+    '<meta property="og:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
+    '<meta property="og:image:alt" content="ANVION IT SERVICES logo">',
+    '<meta name="twitter:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
     '<meta name="twitter:card" content="summary">',
     '<meta name="twitter:title" content="' + escapeHtml(metadata.title) + '">',
     '<meta name="twitter:description" content="' + escapeHtml(metadata.description) + '">',
