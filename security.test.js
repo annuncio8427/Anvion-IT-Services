@@ -153,20 +153,23 @@ test('SEO build generates unique titles, descriptions, canonical URLs and social
   }
 });
 
-test('Vercel SEO build publishes the ANVION favicon and web app manifest', () => {
+test('Vercel SEO build publishes the uploaded ANVION logo favicon and web app manifest', () => {
   const homepage = read('./public/index.html');
-  assert.ok(homepage.includes('<link rel="icon" type="image/svg+xml" href="/favicon.svg">'));
+  assert.ok(homepage.includes('<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">'));
+  assert.ok(homepage.includes('<link rel="icon" type="image/x-icon" href="/favicon.ico">'));
   assert.ok(homepage.includes('<link rel="apple-touch-icon" href="/images/logo.png">'));
   assert.ok(homepage.includes('<link rel="manifest" href="/site.webmanifest">'));
 
-  const favicon = read('./public/favicon.svg');
-  assert.ok(favicon.includes('<svg'));
-  assert.ok(favicon.includes('#00A3FF'));
+  assert.ok(existsSync(new URL('./public/favicon.png', import.meta.url)), '48px logo favicon should be copied to public output');
+  assert.ok(existsSync(new URL('./public/favicon.ico', import.meta.url)), 'ICO fallback should be copied to public output');
+  assert.ok(prepareScript.includes("'.ico'") && prepareScript.includes("'.png'"));
 
   const manifest = JSON.parse(read('./public/site.webmanifest'));
   assert.equal(manifest.name, 'ANVION IT SERVICES');
   assert.equal(manifest.short_name, 'ANVION');
-  assert.ok(manifest.icons.some((icon) => icon.src === '/favicon.svg'));
+  assert.ok(manifest.icons.some((icon) => icon.src === '/favicon.png' && icon.sizes === '48x48'));
+  assert.ok(manifest.icons.some((icon) => icon.src === '/favicon.ico'));
+  assert.ok(manifest.icons.some((icon) => icon.src === '/images/logo.png'));
 });
 
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {

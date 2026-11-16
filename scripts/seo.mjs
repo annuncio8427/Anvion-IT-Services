@@ -259,7 +259,8 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
   const tags = [
     '<meta name="description" content="' + escapeHtml(metadata.description) + '">',
     '<meta name="robots" content="index,follow,max-image-preview:large">',
-    '<link rel="icon" type="image/svg+xml" href="/favicon.svg">',
+    '<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">',
+    '<link rel="icon" type="image/x-icon" href="/favicon.ico">',
     '<link rel="apple-touch-icon" href="/images/logo.png">',
     '<link rel="manifest" href="/site.webmanifest">',
     '<link rel="canonical" href="' + escapeHtml(canonical) + '">',

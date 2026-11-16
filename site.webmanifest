@@ -6,13 +6,25 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#060709",
-  "theme_color": "#00A3FF",
+  "background_color": "#FFFFFF",
+  "theme_color": "#060709",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/favicon.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     }
   ]
