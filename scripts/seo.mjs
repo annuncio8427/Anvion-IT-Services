@@ -84,6 +84,26 @@ export const SEO_PAGES = {
     title: 'Start a Project with ANVION IT SERVICES',
     description: 'Tell ANVION about your business or technology challenge. Share your goals, scope, preferred timeline and budget to start a project discussion.',
   },
+  'project-eduverify.html': {
+    title: 'EduVerify School Data Validation Software | ANVION IT SERVICES',
+    description: 'Explore EduVerify by ANVION IT SERVICES, a Windows desktop application for educational institutions to merge Excel files, validate data and identify spreadsheet errors.',
+  },
+  'project-homeluxe.html': {
+    title: 'HOMELUXE Luxury Real Estate Marketplace | ANVION IT SERVICES',
+    description: 'Explore HOMELUXE, a luxury real estate marketplace concept by ANVION IT SERVICES featuring curated properties, AI-assisted valuations and RERA-focused advisory information.',
+  },
+  'project-smart-invoice-builder.html': {
+    title: 'Smart Invoice Builder App Case Study | ANVION IT SERVICES',
+    description: 'Explore Smart Invoice Builder by ANVION IT SERVICES, an invoice-generation application for creating A4 PDF invoices with business branding, payment details and sharing workflows.',
+  },
+  'project-st-joseph.html': {
+    title: 'St. Joseph College Digital Marketing Case Study | ANVION IT SERVICES',
+    description: 'Read the ANVION IT SERVICES case study about digital media and admissions promotion for St. Joseph College of Arts and Science, including campaign reach and audience discovery metrics.',
+  },
+  'project-task-planner.html': {
+    title: 'Task Planner Mobile App Case Study | ANVION IT SERVICES',
+    description: 'Explore Task Planner by ANVION IT SERVICES, an offline-first productivity mobile app concept with categorized tasks, quick search and local data storage.',
+  },
   'privacy-policy.html': {
     title: 'Privacy Policy | ANVION IT SERVICES',
     description: 'Read how ANVION IT SERVICES collects, uses, protects and handles information when you use our website and digital services.',
@@ -137,6 +157,18 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
       url: siteUrl + '/',
       email: 'anvionitservices@gmail.com',
       telephone: '+91-9150270802',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+91-9150270802',
+        email: 'anvionitservices@gmail.com',
+        contactType: 'customer support',
+        areaServed: 'IN',
+        availableLanguage: ['English', 'Tamil'],
+      },
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Tamil Nadu, India' },
+        { '@type': 'Country', name: 'India' },
+      ],
       logo: {
         '@type': 'ImageObject',
         url: siteUrl + '/images/logo.png',
