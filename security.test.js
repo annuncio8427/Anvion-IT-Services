@@ -153,6 +153,22 @@ test('SEO build generates unique titles, descriptions, canonical URLs and social
   }
 });
 
+test('Vercel SEO build publishes the ANVION favicon and web app manifest', () => {
+  const homepage = read('./public/index.html');
+  assert.ok(homepage.includes('<link rel="icon" type="image/svg+xml" href="/favicon.svg">'));
+  assert.ok(homepage.includes('<link rel="apple-touch-icon" href="/images/logo.png">'));
+  assert.ok(homepage.includes('<link rel="manifest" href="/site.webmanifest">'));
+
+  const favicon = read('./public/favicon.svg');
+  assert.ok(favicon.includes('<svg'));
+  assert.ok(favicon.includes('#00A3FF'));
+
+  const manifest = JSON.parse(read('./public/site.webmanifest'));
+  assert.equal(manifest.name, 'ANVION IT SERVICES');
+  assert.equal(manifest.short_name, 'ANVION');
+  assert.ok(manifest.icons.some((icon) => icon.src === '/favicon.svg'));
+});
+
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
   for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
     const html = read('./public/' + file);

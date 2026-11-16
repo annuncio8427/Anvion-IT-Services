@@ -14,7 +14,7 @@ for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
   if (!entry.isFile()) continue;
   const extension = path.extname(entry.name).toLowerCase();
   const isPublicPage = ['.html', '.htm'].includes(extension);
-  const isPublicMetadata = ['metadata.json', 'firebase-applet-config.json'].includes(entry.name);
+  const isPublicMetadata = ['metadata.json', 'firebase-applet-config.json', 'site.webmanifest'].includes(entry.name);
   const isPublicAsset = ['.css', '.svg', '.png', '.jpg', '.jpeg', '.webp', '.gif', '.ico', '.woff', '.woff2'].includes(extension);
   if (isPublicPage || isPublicMetadata || isPublicAsset) {
     fs.copyFileSync(path.join(root, entry.name), path.join(output, entry.name));

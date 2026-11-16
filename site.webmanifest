@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "ANVION IT SERVICES",
+  "short_name": "ANVION",
+  "description": "ANVION IT SERVICES provides website development, mobile app development, custom software and digital solutions.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060709",
+  "theme_color": "#00A3FF",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

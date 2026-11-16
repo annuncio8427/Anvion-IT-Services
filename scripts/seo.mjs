@@ -251,6 +251,7 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
     /<meta\b[^>]*\bproperty=["']og:[^"']+["'][^>]*>/gi,
     /<meta\b[^>]*\bname=["']twitter:[^"']+["'][^>]*>/gi,
     /<link\b[^>]*\brel=["']canonical["'][^>]*>/gi,
+    /<link\b[^>]*\brel=["'](?:icon|apple-touch-icon|manifest)["'][^>]*>/gi,
     /<script\b[^>]*\btype=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
   ];
   for (const pattern of managedTags) html = html.replace(pattern, '');
@@ -258,6 +259,9 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
   const tags = [
     '<meta name="description" content="' + escapeHtml(metadata.description) + '">',
     '<meta name="robots" content="index,follow,max-image-preview:large">',
+    '<link rel="icon" type="image/svg+xml" href="/favicon.svg">',
+    '<link rel="apple-touch-icon" href="/images/logo.png">',
+    '<link rel="manifest" href="/site.webmanifest">',
     '<link rel="canonical" href="' + escapeHtml(canonical) + '">',
     '<meta property="og:type" content="website">',
     '<meta property="og:site_name" content="ANVION IT SERVICES">',
