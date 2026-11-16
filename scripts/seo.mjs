@@ -3,16 +3,16 @@ import path from 'node:path';
 
 export const SEO_PAGES = {
   'index.html': {
-    title: 'ANVION IT Services | Website, App & Digital Solutions',
-    description: 'ANVION IT SERVICES builds business websites, Flutter mobile apps, custom software, AI automation and cloud solutions for businesses in Kanyakumari, Tamil Nadu and beyond.',
+    title: 'ANVION IT SERVICES | Official Website & Digital Solutions',
+    description: 'ANVION IT SERVICES is an India-based digital solutions company providing website development, mobile app development, custom software, digital marketing and IT solutions in Kanyakumari, Tamil Nadu.' ,
     kind: 'home',
   },
   'about.html': {
-    title: 'About ANVION IT Services | Our Story & Team',
+    title: 'About ANVION IT SERVICES | Company, Team & Mission',
     description: 'Meet ANVION IT SERVICES: a technology team turning ideas into practical digital products through web, mobile, software, cloud and emerging technologies.',
   },
   'services.html': {
-    title: 'IT Services | Web, Mobile, Software & AI - ANVION',
+    title: 'IT Services by ANVION IT SERVICES | Web, Apps & Software',
     description: 'Explore ANVION IT SERVICES: web platforms, e-commerce, mobile apps, bespoke software, cloud infrastructure, AI automation, API development and maintenance.',
   },
   'web-development.html': {
@@ -53,7 +53,7 @@ export const SEO_PAGES = {
     description: 'See how ANVION approaches business platforms, service booking, corporate websites, AI workflow automation and connected technology projects.',
   },
   'contact.html': {
-    title: 'Contact ANVION IT Services | Start a Conversation',
+    title: 'Contact ANVION IT SERVICES | Enquiries & Project Consultation',
     description: 'Contact ANVION IT SERVICES about website development, mobile apps, custom software, AI automation or a digital project. Share your requirements with our team.',
   },
   'careers.html': {
@@ -116,6 +116,7 @@ const escapeJsonForHtml = (value) => JSON.stringify(value).replace(/</g, '\\u003
 function buildStructuredData(file, metadata, canonical, siteUrl) {
   const organizationId = siteUrl + '/#organization';
   const websiteId = siteUrl + '/#website';
+  const isHome = file === 'index.html';
   const graph = [{
     '@type': 'WebPage',
     '@id': canonical + '#webpage',
@@ -127,30 +128,54 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
     publisher: { '@id': organizationId },
   }];
 
-  if (file === 'index.html') {
+  if (isHome) {
     graph.push({
       '@type': 'Organization',
       '@id': organizationId,
       name: 'ANVION IT SERVICES',
-      url: siteUrl,
+      legalName: 'ANVION IT SERVICES',
+      url: siteUrl + '/',
       email: 'anvionitservices@gmail.com',
+      telephone: '+91-9150270802',
+      logo: {
+        '@type': 'ImageObject',
+        url: siteUrl + '/images/logo.png',
+      },
+      image: siteUrl + '/images/logo.png',
       description: metadata.description,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal',
+        addressLocality: 'Kanniyakumari',
+        postalCode: '629178',
+        addressRegion: 'Tamil Nadu',
+        addressCountry: 'IN',
+      },
+      identifier: {
+        '@type': 'PropertyValue',
+        name: 'Udyam Registration Number',
+        value: 'UDYAM-TN-09-0098980',
+      },
+      sameAs: [
+        'https://www.linkedin.com/company/anvion-it-services/',
+      ],
       knowsAbout: [
         'Website development',
         'Mobile application development',
         'Custom software development',
+        'Digital marketing',
         'UI and UX design',
         'AI and workflow automation',
         'Cloud and backend development',
         'IoT solutions',
-        'Digital media and marketing',
       ],
     });
     graph.push({
       '@type': 'WebSite',
       '@id': websiteId,
-      url: siteUrl,
+      url: siteUrl + '/',
       name: 'ANVION IT SERVICES',
+      alternateName: 'ANVION',
       publisher: { '@id': organizationId },
       inLanguage: 'en-IN',
     });
@@ -166,7 +191,7 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
     });
   }
 
-  if (file !== 'index.html') {
+  if (!isHome) {
     graph.push({
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -186,7 +211,7 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
   }
 
   let html = fs.readFileSync(target, 'utf8');
-  const canonical = file === 'index.html' ? siteUrl + '/' : siteUrl + '/' + file;
+  // Vercel cleanUrls redirects .html requests to extensionless public URLs.\n  const canonicalPath = file === 'index.html' ? '/' : '/' + file.replace(/\\.html?$/i, '');\n  const canonical = siteUrl + canonicalPath;
 
   // Remove prior managed tags so builds remain idempotent.
   const managedTags = [
@@ -208,7 +233,7 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
     '<meta property="og:title" content="' + escapeHtml(metadata.title) + '">',
     '<meta property="og:description" content="' + escapeHtml(metadata.description) + '">',
     '<meta property="og:url" content="' + escapeHtml(canonical) + '">',
-    '<meta property="og:locale" content="en_IN">',
+    '<meta property="og:locale" content="en_IN">',\n    '<meta property="og:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',\n    '<meta property="og:image:alt" content="ANVION IT SERVICES logo">',\n    '<meta name="twitter:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
     '<meta name="twitter:card" content="summary">',
     '<meta name="twitter:title" content="' + escapeHtml(metadata.title) + '">',
     '<meta name="twitter:description" content="' + escapeHtml(metadata.description) + '">',
