@@ -262,7 +262,7 @@ test('SEO generator only maps public pages and builds accurate organization/serv
   assert.ok(seoScript.includes("'index.html'"));
   assert.ok(seoScript.includes("'portfolio.html'"));
   assert.ok(seoScript.includes("'contact.html'"));
-  assert.ok(seoScript.includes("'@type': 'Organization'"));
+  assert.ok(seoScript.includes("'@type': ['Organization', 'ProfessionalService']"));
   assert.ok(seoScript.includes("'@type': 'WebSite'"));
   assert.ok(seoScript.includes("'@type': 'Service'"));
   assert.ok(seoScript.includes("'@type': 'BreadcrumbList'"));
