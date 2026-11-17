@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applySeo } from './seo.mjs';
+import { applySeo, SEO_PAGES } from './seo.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, 'public');
@@ -125,6 +125,106 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 const googleTagManagerPages = injectGoogleTagManager(output);
 console.log('Installed Google Tag Manager on ' + googleTagManagerPages + ' public HTML pages.');
+
+
+function rewriteInternalLinksToCleanUrls(directory) {
+  const publicPages = new Set(Object.keys(SEO_PAGES));
+  let rewritten = 0;
+
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const target = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      rewritten += rewriteInternalLinksToCleanUrls(target);
+      continue;
+    }
+    if (!entry.isFile() || !/\\.html?$/i.test(entry.name)) continue;
+
+    let html = fs.readFileSync(target, 'utf8');
+    html = html.replace(/(<a\\b[^>]*\\bhref=["'])([^"']+)(["'])/gi, (match, before, href, after) => {
+      if (/^(?:https?:|mailto:|tel:|javascript:|data:|#|\\/\\/)/i.test(href)) return match;
+      const urlMatch = href.match(/^(?:\\.\\/|\\/)?([^?#]+\\.html?)([?#].*)?$/i);
+      if (!urlMatch || !publicPages.has(urlMatch[1])) return match;
+      const canonicalPath = urlMatch[1] === 'index.html' ? '/' : '/' + urlMatch[1].replace(/\\.html?$/i, '');
+      return before + canonicalPath + (urlMatch[2] || '') + after;
+    });
+    fs.writeFileSync(target, html, 'utf8');
+  }
+  return rewritten;
+}
+
+function injectImagePerformanceHints(directory) {
+  let updatedImages = 0;
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const target = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      updatedImages += injectImagePerformanceHints(target);
+      continue;
+    }
+    if (!entry.isFile() || !/\\.html?$/i.test(entry.name)) continue;
+
+    let html = fs.readFileSync(target, 'utf8');
+    let imageIndex = 0;
+    html = html.replace(/<img\\b[^>]*>/gi, (tag) => {
+      imageIndex += 1;
+      let next = tag;
+      if (!/\\bdecoding\\s*=/.test(next)) {
+        next = next.endsWith('/>') ? next.slice(0, -2) + ' decoding="async" />' : next.slice(0, -1) + ' decoding="async">';
+      }
+      if (imageIndex > 2 && !/\\bloading\\s*=/.test(next)) {
+        next = next.endsWith('/>') ? next.slice(0, -2) + ' loading="lazy" />' : next.slice(0, -1) + ' loading="lazy">';
+      }
+      updatedImages += 1;
+      return next;
+    });
+
+    if (!html.includes('rel="preconnect" href="https://fonts.googleapis.com"')) {
+      html = html.replace(/<head\\b[^>]*>/i, (head) => head +
+        '\\n<link rel="preconnect" href="https://fonts.googleapis.com">' +
+        '\\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
+    }
+
+    fs.writeFileSync(target, html, 'utf8');
+  }
+  return updatedImages;
+}
+
+function injectConversionTracking(directory) {
+  const privatePages = new Set([
+    '404.html', 'admin.html', 'admin-login.html', 'admin/login.html',
+    'login.html', 'signup.html', 'forgot-password.html', 'profile.html', 'dashboard.html',
+  ]);
+  let updated = 0;
+
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const target = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      updated += injectConversionTracking(target);
+      continue;
+    }
+    if (!entry.isFile() || !/\\.html?$/i.test(entry.name)) continue;
+
+    const relativePath = path.relative(output, target).split(path.sep).join('/');
+    if (privatePages.has(relativePath) || relativePath.startsWith('admin/')) continue;
+
+    let html = fs.readFileSync(target, 'utf8');
+    if (html.includes('/js/seo-conversions.js')) continue;
+    if (!/<\\/head>/i.test(html)) {
+      throw new Error('Cannot inject conversion tracking: missing </head> in ' + relativePath);
+    }
+    html = html.replace(/<\\/head>/i,
+      '<script src="/js/seo-conversions.js" defer></script>\\n</head>');
+    fs.writeFileSync(target, html, 'utf8');
+    updated += 1;
+  }
+  return updated;
+}
+
+const rewrittenInternalLinks = rewriteInternalLinksToCleanUrls(output);
+const performanceHintImages = injectImagePerformanceHints(output);
+const conversionTrackingPages = injectConversionTracking(output);
+console.log('Rewrote ' + rewrittenInternalLinks + ' HTML files to use canonical clean internal links.');
+console.log('Added asynchronous image decoding and lazy loading hints to ' + performanceHintImages + ' images.');
+console.log('Installed conversion event tracking on ' + conversionTrackingPages + ' public pages.');
 
 const seoSummary = applySeo(output);
 console.log('Prepared public website assets in ./public');

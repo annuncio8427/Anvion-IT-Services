@@ -172,6 +172,43 @@ test('Vercel SEO build publishes the uploaded ANVION logo favicon and web app ma
   assert.ok(manifest.icons.some((icon) => icon.src === '/images/logo.png'));
 });
 
+
+test('SEO build publishes the three new service landing pages with local canonical URLs', () => {
+  for (const file of ['digital-marketing.html', 'branding-ui-ux.html', 'custom-desktop-software.html']) {
+    const html = read('./public/' + file);
+    assert.ok(html.includes('<h1'), file + ' should have a main heading');
+    assert.ok(html.includes('<meta name="description" content="'), file + ' should have a meta description');
+    assert.ok(html.includes('<link rel="canonical" href="https://www.anvionitservices.in/'), file + ' should use the production canonical host');
+    assert.ok(html.includes('<script type="application/ld+json">'), file + ' should include structured data');
+    assert.ok(html.includes('FAQ'), file + ' should show its FAQ section');
+  }
+});
+
+test('SEO structured data includes the business location and service identity without review claims', () => {
+  const homepage = read('./public/index.html');
+  assert.ok(homepage.includes('"ProfessionalService"'));
+  assert.ok(homepage.includes('Karungal'));
+  assert.ok(homepage.includes('629178'));
+  assert.ok(homepage.includes('anvionitservices@gmail.com'));
+  assert.ok(homepage.includes('+91 9150270802'));
+  assert.ok(!homepage.includes('aggregateRating'));
+  assert.ok(!homepage.includes('"@type":"Review"'));
+});
+
+test('Public build uses clean canonical internal links and conversion event wiring', () => {
+  const homepage = read('./public/index.html');
+  assert.ok(homepage.includes('href="/web-development"'));
+  assert.ok(homepage.includes('href="/digital-marketing"'));
+  assert.ok(homepage.includes('href="/branding-ui-ux"'));
+  assert.ok(!homepage.includes('href="web-development.html"'));
+  assert.ok(homepage.includes('/js/seo-conversions.js'));
+
+  const conversions = read('./public/js/seo-conversions.js');
+  assert.ok(conversions.includes('whatsapp_click'));
+  assert.ok(conversions.includes('phone_click'));
+  assert.ok(conversions.includes('generate_lead'));
+});
+
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
   for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
     const html = read('./public/' + file);
