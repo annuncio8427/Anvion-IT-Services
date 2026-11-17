@@ -331,7 +331,7 @@ function applyPageSeo(publicDir, siteUrl, file, metadata) {
     '<meta property="og:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
     '<meta property="og:image:alt" content="ANVION IT SERVICES logo">',
     '<meta name="twitter:image" content="' + escapeHtml(siteUrl + '/images/logo.png') + '">',
-    '<meta name="twitter:card" content="summary">',
+    '<meta name="twitter:card" content="summary_large_image">',
     '<meta name="twitter:title" content="' + escapeHtml(metadata.title) + '">',
     '<meta name="twitter:description" content="' + escapeHtml(metadata.description) + '">',
     '<meta name="theme-color" content="#0d0e12">',
