@@ -207,6 +207,7 @@ test('Public build uses clean canonical internal links and conversion event wiri
   assert.ok(conversions.includes('whatsapp_click'));
   assert.ok(conversions.includes('phone_click'));
   assert.ok(conversions.includes('generate_lead'));
+  assert.ok(conversions.includes('window.anvionTrackLead'));
 });
 
 test('Build helpers rewrite links safely, improve image loading, and inject conversion tracking', () => {
