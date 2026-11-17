@@ -60,12 +60,12 @@ export const SEO_PAGES = {
     description: 'Explore opportunities to learn, collaborate and contribute to web, mobile, software and emerging technology projects at ANVION IT SERVICES.',
   },
   'internships.html': {
-    title: 'Internship Applications | Student Programs - ANVION IT SERVICES',
-    description: 'Apply for hands-on student internships in Full-Stack Web, Flutter Mobile Apps, AI Automation and UI/UX Design at ANVION IT Services. Govt. MSME recognized experience.',
+    title: 'IT Internships in Web & Flutter | ANVION',
+    description: 'Explore student internships at ANVION in web development, Flutter apps, AI automation and UI/UX design. Review current roles and application details.',
   },
   'pricing.html': {
-    title: 'Transparent Pricing & Project Cost Estimator | ANVION IT SERVICES',
-    description: 'Explore transparent milestone pricing and calculate your custom web, mobile, or software project cost in INR with the ANVION IT Services interactive quotation estimator.',
+    title: 'Website & App Development Pricing | ANVION',
+    description: 'Estimate website, Flutter app and custom software costs in INR. Explore ANVION project pricing, milestones and quotation options.',
   },
   'blog.html': {
     title: 'Engineering Blog & Technical Insights | ANVION IT SERVICES',
