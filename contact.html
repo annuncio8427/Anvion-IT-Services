@@ -198,6 +198,8 @@
           </div>
         </div>
 
+        <p id="contactError" class="hidden rounded-lg border border-red-500/30 bg-red-950/30 p-3 text-sm text-red-200" role="alert"></p>
+
         <!-- Form Interface -->
         <form id="contactForm" class="space-y-5">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -631,6 +633,11 @@
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
           const submitBtn = form.querySelector("button[type='submit']") || form.querySelector("button");
+          const errorBox = document.getElementById("contactError");
+          if (errorBox) {
+            errorBox.textContent = "";
+            errorBox.classList.add("hidden");
+          }
           if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.classList.add("opacity-70");
@@ -639,48 +646,58 @@
           const inputs = form.querySelectorAll("input, select, textarea");
           const data = {};
           inputs.forEach(inp => {
-            if (inp.placeholder && inp.placeholder.includes("Jane Doe")) data.name = inp.value;
-            if (inp.type === "email") data.email = inp.value;
-            if (inp.type === "tel") data.phone = inp.value;
-            if (inp.placeholder && inp.placeholder.includes("Acme Enterprise")) data.company = inp.value;
+            if (inp.placeholder && inp.placeholder.includes("Jane Doe")) data.name = inp.value.trim();
+            if (inp.type === "email") data.email = inp.value.trim();
+            if (inp.type === "tel") data.phone = inp.value.trim();
+            if (inp.placeholder && inp.placeholder.includes("Acme Enterprise")) data.company = inp.value.trim();
             if (inp.tagName === "SELECT" && inp.value !== "Select Budget") {
-              if (!data.category) data.category = inp.value;
+              if (!data.service) data.service = inp.value;
               else data.budget = inp.value;
             }
-            if (inp.tagName === "TEXTAREA") data.scope = inp.value;
+            if (inp.tagName === "TEXTAREA") data.message = inp.value.trim();
           });
 
-          const payload = {
-            name: data.name || "Contact Request",
-            email: data.email || "",
-            phone: data.phone || "",
-            company: data.company || "",
-            serviceCategory: data.category || "IT Consulting",
-            budget: data.budget || "Unspecified",
-            scope: data.scope || "General inquiry from upgraded contact interface"
-          };
-
-          if (window.location.protocol.startsWith("http")) {
-            try {
-              const auth = await import("./js/auth.js");
-              if (auth && auth.submitProjectInquiry) {
-                await auth.submitProjectInquiry(payload);
-              }
-            } catch (err) {
-              console.warn("[Contact] Local fallback used:", err);
+          try {
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: data.name || "",
+                email: data.email || "",
+                phone: data.phone || "",
+                company: data.company || "",
+                service: data.service || "General inquiry",
+                budget: data.budget || "Unspecified",
+                message: data.message || ""
+              })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+              throw new Error(result.error || "We could not submit your message. Please try again.");
             }
-          } else {
-            try {
-              const raw = localStorage.getItem("anvion_user_inquiries");
-              const list = raw ? JSON.parse(raw) : [];
-              list.unshift({ ...payload, submittedAt: new Date().toISOString(), status: "Under Review" });
-              localStorage.setItem("anvion_user_inquiries", JSON.stringify(list));
-            } catch (err) {}
-          }
 
-          form.classList.add("hidden");
-          success.classList.remove("hidden");
-          success.scrollIntoView({ behavior: "smooth", block: "center" });
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "generate_lead",
+              form_name: "contact_form",
+              service_type: data.service || "General inquiry"
+            });
+
+            form.classList.add("hidden");
+            success.classList.remove("hidden");
+            success.scrollIntoView({ behavior: "smooth", block: "center" });
+          } catch (err) {
+            if (errorBox) {
+              errorBox.textContent = err.message || "Submission failed. Please try again or contact us on WhatsApp.";
+              errorBox.classList.remove("hidden");
+            } else {
+              alert(err.message || "Submission failed. Please try again.");
+            }
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-70");
+            }
+          }
         });
       }
     });

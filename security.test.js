@@ -209,6 +209,32 @@ test('Public build uses clean canonical internal links and conversion event wiri
   assert.ok(conversions.includes('generate_lead'));
 });
 
+test('Build helpers rewrite links safely, improve image loading, and inject conversion tracking', () => {
+  assert.ok(prepareScript.includes('function rewriteInternalLinksToCleanUrls'));
+  assert.ok(prepareScript.includes('const linkRewriteSummary = rewriteInternalLinksToCleanUrls(output)'));
+  assert.ok(prepareScript.includes('loading="lazy"'));
+  assert.ok(prepareScript.includes('/js/seo-conversions.js'));
+  assert.ok(prepareScript.includes('new RegExp') === false);
+});
+
+test('Homepage uses local project imagery and links to dedicated marketing and design pages', () => {
+  const homepage = read('./public/index.html');
+  assert.ok(!homepage.includes('images.openai.com'));
+  assert.ok(homepage.includes('href="/digital-marketing"'));
+  assert.ok(homepage.includes('href="/branding-ui-ux"'));
+  assert.ok(homepage.includes('Website, Mobile App'));
+});
+
+test('Lead conversion event only follows successful backend form responses', () => {
+  const contactPage = read('./contact.html');
+  const projectPage = read('./start-a-project.html');
+  assert.ok(contactPage.includes('fetch("/api/contact"'));
+  assert.ok(contactPage.includes('if (!response.ok)'));
+  assert.ok(contactPage.includes('event: "generate_lead"'));
+  assert.ok(projectPage.includes('if (!response.ok)'));
+  assert.ok(projectPage.includes('event: "generate_lead"'));
+});
+
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
   for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
     const html = read('./public/' + file);

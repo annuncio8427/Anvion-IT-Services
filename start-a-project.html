@@ -800,16 +800,35 @@
             servicesNeeded: [formData.get("projectType") || "Website Development"]
           };
 
-          // Try POST /api/project-enquiries
+          // Submit the project enquiry to the backend and only confirm after a successful response.
           try {
-            await fetch("/api/project-enquiries", {
+            const response = await fetch("/api/project-enquiries", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload)
             });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+              throw new Error(result.error || "We could not submit your project brief. Please try again.");
+            }
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "generate_lead",
+              form_name: "project_brief",
+              service_type: payload.projectType,
+              enquiry_id: result.enquiryId || uniqueEnquiryId
+            });
           } catch (err) {
-            console.warn("Backend requirement submission fallback:", err);
+            console.error("Project enquiry submission failed:", err);
+            alert(err.message || "Submission failed. Please retry or contact ANVION on WhatsApp.");
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove("opacity-60");
+            submitBtn.innerHTML = '<span>Submit Project Brief</span>';
+            return;
           }
+
 
           // Local storage fallback for client portal
           try {

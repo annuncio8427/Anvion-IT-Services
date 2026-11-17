@@ -3,57 +3,58 @@ import path from 'node:path';
 
 export const SEO_PAGES = {
   'index.html': {
-    title: "Web & App Development in Kanyakumari | ANVION",
-    description: "Build business websites, Flutter apps and custom software with ANVION IT SERVICES in Kanyakumari, Nagercoil and across Tamil Nadu.",
+    title: 'ANVION IT SERVICES | Official Website & Digital Solutions',
+    description: 'ANVION IT SERVICES is an India-based digital solutions company providing website development, mobile app development, custom software, digital marketing and IT solutions in Kanyakumari, Tamil Nadu.' ,
+    kind: 'home',
   },
   'about.html': {
-    title: "About ANVION IT SERVICES | Karungal, Kanyakumari",
-    description: "Meet ANVION IT SERVICES, an MSME-registered digital solutions company based in Karungal, Kanyakumari district, Tamil Nadu.",
+    title: 'About ANVION IT SERVICES | Company, Team & Mission',
+    description: 'Meet ANVION IT SERVICES: a technology team turning ideas into practical digital products through web, mobile, software, cloud and emerging technologies.',
   },
   'services.html': {
-    title: "IT Services in Kanyakumari | ANVION IT SERVICES",
-    description: "Explore web development, Flutter apps, custom software, digital marketing, branding and IT consulting from ANVION in Kanyakumari, Tamil Nadu.",
+    title: 'IT Services by ANVION IT SERVICES | Web, Apps & Software',
+    description: 'Explore ANVION IT SERVICES: web platforms, e-commerce, mobile apps, bespoke software, cloud infrastructure, AI automation, API development and maintenance.',
   },
   'web-development.html': {
-    title: "Website Development in Kanyakumari | ANVION",
-    description: "ANVION builds responsive business websites, e-commerce sites and web apps for organisations in Kanyakumari, Nagercoil and Tamil Nadu.",
-    service: "Website and Web Application Development",
+    title: 'Website Development Services | ANVION IT SERVICES',
+    description: 'ANVION IT SERVICES designs responsive business websites, e-commerce stores and web applications for businesses in Kanyakumari and across Tamil Nadu.',
+    service: 'Website and Web Application Development',
   },
   'mobile-development.html': {
-    title: "Flutter App Development in Nagercoil | ANVION",
-    description: "Flutter mobile apps for Android and iOS, with custom UI, APIs, Firebase and business workflows from ANVION IT SERVICES in Tamil Nadu.",
-    service: "Flutter Mobile Application Development",
+    title: 'Mobile App Development | Flutter Apps - ANVION',
+    description: 'ANVION IT SERVICES builds cross-platform mobile apps with responsive UI, authentication, notifications and backend integration for customer and business workflows.',
+    service: 'Mobile Application Development',
   },
   'ai-machine-learning.html': {
-    title: "AI & Automation Solutions Tamil Nadu | ANVION",
-    description: "Explore AI automation, machine learning and computer vision solutions designed around business workflows by ANVION IT SERVICES.",
-    service: "AI and Machine Learning Solutions",
+    title: 'AI & Machine Learning Solutions | ANVION IT SERVICES',
+    description: 'Explore practical AI assistants, machine learning, computer vision and workflow automation solutions from ANVION IT SERVICES.',
+    service: 'AI and Machine Learning Solutions',
   },
   'cybersecurity.html': {
-    title: "Cybersecurity Services Tamil Nadu | ANVION",
-    description: "Practical website, application and data-security guidance for businesses seeking safer digital systems from ANVION IT SERVICES in Tamil Nadu.",
-    service: "Cybersecurity and Application Security",
+    title: 'Cybersecurity Services | ANVION IT SERVICES',
+    description: 'Improve the security of websites, applications, accounts and data with practical security assessments, access management and secure development guidance from ANVION.',
+    service: 'Cybersecurity and Application Security',
   },
   'it-consulting.html': {
-    title: "IT Consulting in Kanyakumari | ANVION IT Services",
-    description: "Get technology roadmaps, solution architecture and digital transformation guidance for your business from ANVION IT SERVICES in Kanyakumari.",
-    service: "IT Consulting and Solution Architecture",
+    title: 'IT Consulting & Solution Architecture | ANVION',
+    description: 'Plan your digital roadmap with technology strategy, solution architecture, digital transformation and technical advisory from ANVION IT SERVICES.',
+    service: 'IT Consulting and Solution Architecture',
   },
   'projects.html': {
-    title: "Software & App Development Projects | ANVION",
-    description: "View ANVION IT SERVICES project work across web applications, Flutter apps, desktop software and digital marketing campaigns.",
+    title: 'Software & Digital Projects | ANVION IT SERVICES',
+    description: 'Explore selected software, web, mobile, automation and connected technology projects and concepts by ANVION IT SERVICES.',
   },
   'portfolio.html': {
-    title: "ANVION Portfolio | Web, Mobile & Software Projects",
-    description: "Explore ANVION work in web apps, Flutter mobile development, desktop tools, product design and digital campaigns.",
+    title: 'ANVION Client Portfolio | 12 Digital Projects & Capabilities',
+    description: 'Explore ANVION IT SERVICES capabilities, 12 selected projects and concepts, technology stack, product approach and digital experiences across web, mobile, cloud, AI, IoT and media.',
   },
   'case-studies.html': {
-    title: "Client Case Studies | ANVION IT SERVICES",
-    description: "Read project case studies by ANVION IT SERVICES, including HOMELUXE, EduVerify, Smart Invoice Builder and St. Joseph College.",
+    title: 'Digital Product Case Studies | ANVION IT SERVICES',
+    description: 'See how ANVION approaches business platforms, service booking, corporate websites, AI workflow automation and connected technology projects.',
   },
   'contact.html': {
-    title: "Contact ANVION IT SERVICES | Kanyakumari",
-    description: "Contact ANVION IT SERVICES in Karungal, Kanyakumari to discuss website development, mobile apps, custom software or digital marketing.",
+    title: 'Contact ANVION IT SERVICES | Enquiries & Project Consultation',
+    description: 'Contact ANVION IT SERVICES about website development, mobile apps, custom software, AI automation or a digital project. Share your requirements with our team.',
   },
   'careers.html': {
     title: 'Careers at ANVION IT Services | Build With Us',
@@ -80,54 +81,36 @@ export const SEO_PAGES = {
     description: 'Discover ANVION IT SERVICES web development, mobile apps, custom software, UI/UX, AI, cloud, backend and IoT delivery capabilities.',
   },
   'start-a-project.html': {
-    title: "Start a Website or App Project | ANVION",
-    description: "Share your requirements for a website, Flutter app, desktop software or digital marketing project with ANVION IT SERVICES.",
+    title: 'Start a Project with ANVION IT SERVICES',
+    description: 'Tell ANVION about your business or technology challenge. Share your goals, scope, preferred timeline and budget to start a project discussion.',
   },
   'project-eduverify.html': {
-    title: "EduVerify Desktop Software Case Study | ANVION",
-    description: "See how EduVerify helps educational teams merge Excel files, validate spreadsheet data and generate reports in a Windows desktop tool.",
+    title: 'EduVerify School Data Validation Software | ANVION IT SERVICES',
+    description: 'Explore EduVerify by ANVION IT SERVICES, a Windows desktop application for educational institutions to merge Excel files, validate data and identify spreadsheet errors.',
   },
   'project-homeluxe.html': {
-    title: "HOMELUXE Real Estate App Case Study | ANVION",
-    description: "Explore the HOMELUXE real estate web platform case study, including property discovery, listing workflows and interface design by ANVION.",
+    title: 'HOMELUXE Luxury Real Estate Marketplace | ANVION IT SERVICES',
+    description: 'Explore HOMELUXE, a luxury real estate marketplace concept by ANVION IT SERVICES featuring curated properties, AI-assisted valuations and RERA-focused advisory information.',
   },
   'project-smart-invoice-builder.html': {
-    title: "Smart Invoice Builder Case Study | ANVION",
-    description: "Explore Smart Invoice Builder, a mobile invoicing case study with A4 PDF output, payment details and WhatsApp sharing workflows.",
+    title: 'Smart Invoice Builder App Case Study | ANVION IT SERVICES',
+    description: 'Explore Smart Invoice Builder by ANVION IT SERVICES, an invoice-generation application for creating A4 PDF invoices with business branding, payment details and sharing workflows.',
   },
   'project-st-joseph.html': {
-    title: "St. Joseph College Marketing Case Study | ANVION",
-    description: "See the St. Joseph College digital marketing case study, including campaign content, audience reach and admissions communication.",
+    title: 'St. Joseph College Digital Marketing Case Study | ANVION IT SERVICES',
+    description: 'Read the ANVION IT SERVICES case study about digital media and admissions promotion for St. Joseph College of Arts and Science, including campaign reach and audience discovery metrics.',
   },
   'project-task-planner.html': {
-    title: "Task Planner Mobile App Case Study | ANVION",
-    description: "Explore Task Planner, an offline-first mobile productivity app concept by ANVION IT SERVICES.",
-  },
-  'custom-desktop-software.html': {
-    title: "Custom Software Development Tamil Nadu | ANVION",
-    description: "ANVION develops Windows desktop software, Excel automation, data validation and workflow tools for businesses and education teams in Tamil Nadu.",
-    service: "Custom Desktop Software Development and Workflow Automation",
-    faqs: [{"question":"Can ANVION build Windows desktop software?","answer":"Yes. ANVION develops custom Windows desktop tools for data processing, internal workflows and reporting, with scope and requirements agreed before development."},{"question":"Can you automate repetitive Excel work?","answer":"We can assess spreadsheet tasks, file formats and validation rules, then propose a desktop utility or a more suitable web workflow."},{"question":"Can custom software work offline?","answer":"Offline support can be designed where the workflow and data requirements allow it. Local storage, synchronisation, backup and recovery behaviour are agreed during discovery."}],
-  },
-  'digital-marketing.html': {
-    title: "Digital Marketing & SEO in Kanyakumari | ANVION",
-    description: "Improve local visibility and enquiries with SEO, content and digital marketing support from ANVION IT SERVICES in Kanyakumari and Tamil Nadu.",
-    service: "Digital Marketing and Search Engine Optimization",
-    faqs: [{"question":"Do you guarantee first-page Google rankings?","answer":"No responsible SEO provider can guarantee a specific ranking. We work on crawlability, useful service content, local relevance and measurement, then report progress using Search Console and agreed KPIs."},{"question":"Can ANVION support businesses in Nagercoil and Kanyakumari?","answer":"ANVION is based in Karungal and can discuss digital marketing projects for organisations in Kanyakumari district, Nagercoil and the wider Tamil Nadu market."},{"question":"What do you need to begin a digital marketing project?","answer":"We begin with your website, services, target customers and locations, current enquiry channels and access to Search Console or Analytics where available."}],
-  },
-  'branding-ui-ux.html': {
-    title: "Branding & UI/UX Design in Tamil Nadu | ANVION",
-    description: "Create a consistent brand identity and user-friendly digital products with branding, UI design and UX support from ANVION IT SERVICES.",
-    service: "Brand Identity and UI/UX Design",
-    faqs: [{"question":"What is included in brand identity design?","answer":"A project can include logo direction, colour and typography, layout rules, brand assets and practical usage guidance. The exact deliverables are agreed before work begins."},{"question":"Do you design website and mobile app interfaces?","answer":"Yes. We can plan user journeys, wireframes, responsive screen layouts and reusable UI patterns for websites and mobile applications."},{"question":"Can you improve an existing logo or website design?","answer":"Yes. We can review your current identity and interfaces, identify usability or consistency issues and propose a focused refresh around your goals."}],
+    title: 'Task Planner Mobile App Case Study | ANVION IT SERVICES',
+    description: 'Explore Task Planner by ANVION IT SERVICES, an offline-first productivity mobile app concept with categorized tasks, quick search and local data storage.',
   },
   'privacy-policy.html': {
-    title: "Privacy Policy | ANVION IT SERVICES",
-    description: "Read how ANVION IT SERVICES collects, uses and protects information when you browse the website or contact the team.",
+    title: 'Privacy Policy | ANVION IT SERVICES',
+    description: 'Read how ANVION IT SERVICES collects, uses, protects and handles information when you use our website and digital services.',
   },
   'terms-of-service.html': {
-    title: "Terms of Service | ANVION IT SERVICES",
-    description: "Review the terms for using the ANVION IT SERVICES website and engaging its digital and software services.",
+    title: 'Terms of Service | ANVION IT SERVICES',
+    description: 'Review the terms for using the ANVION IT SERVICES website and engaging our technology, software and digital services.',
   },
 };
 
@@ -167,29 +150,24 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
 
   if (isHome) {
     graph.push({
-      '@type': ['Organization', 'ProfessionalService'],
+      '@type': 'Organization',
       '@id': organizationId,
       name: 'ANVION IT SERVICES',
       legalName: 'ANVION IT SERVICES',
       url: siteUrl + '/',
       email: 'anvionitservices@gmail.com',
-      telephone: '+91 9150270802',
-      contactPoint: [
-        {
-          '@type': 'ContactPoint',
-          telephone: '+91 9150270802',
-          email: 'anvionitservices@gmail.com',
-          contactType: 'customer enquiries',
-          areaServed: 'IN',
-          availableLanguage: ['English', 'Tamil'],
-        },
-        {
-          '@type': 'ContactPoint',
-          telephone: '+91 8438464047',
-          contactType: 'customer enquiries',
-          areaServed: 'IN',
-          availableLanguage: ['English', 'Tamil'],
-        },
+      telephone: '+91-9150270802',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+91-9150270802',
+        email: 'anvionitservices@gmail.com',
+        contactType: 'customer support',
+        areaServed: 'IN',
+        availableLanguage: ['English', 'Tamil'],
+      },
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Tamil Nadu, India' },
+        { '@type': 'Country', name: 'India' },
       ],
       logo: {
         '@type': 'ImageObject',
@@ -199,46 +177,26 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
       description: metadata.description,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO',
-        addressLocality: 'Karungal',
-        addressRegion: 'Tamil Nadu',
+        streetAddress: 'Door No. 7-69D, Maria Rose Franco, Mangantruvillai, Mangalakuntu, Vilavancode PO, Karungal',
+        addressLocality: 'Kanniyakumari',
         postalCode: '629178',
+        addressRegion: 'Tamil Nadu',
         addressCountry: 'IN',
       },
-      areaServed: [
-        { '@type': 'AdministrativeArea', name: 'Kanyakumari district' },
-        { '@type': 'City', name: 'Nagercoil' },
-        { '@type': 'AdministrativeArea', name: 'Tirunelveli district' },
-        { '@type': 'AdministrativeArea', name: 'Tenkasi district' },
-        { '@type': 'State', name: 'Tamil Nadu' },
-        { '@type': 'Country', name: 'India' },
-      ],
       identifier: {
         '@type': 'PropertyValue',
         name: 'Udyam Registration Number',
         value: 'UDYAM-TN-09-0098980',
       },
-      hasOfferCatalog: {
-        '@type': 'OfferCatalog',
-        name: 'IT and Digital Services',
-        itemListElement: [
-          { '@type': 'OfferCatalog', name: 'Website and Web Application Development' },
-          { '@type': 'OfferCatalog', name: 'Flutter Mobile App Development' },
-          { '@type': 'OfferCatalog', name: 'Custom Desktop Software Development' },
-          { '@type': 'OfferCatalog', name: 'Digital Marketing and SEO' },
-          { '@type': 'OfferCatalog', name: 'Branding and UI/UX Design' },
-          { '@type': 'OfferCatalog', name: 'IT Consulting and Solution Architecture' },
-        ],
-      },
       knowsAbout: [
         'Website development',
         'Mobile application development',
-        'Custom desktop software',
-        'Digital marketing and search engine optimization',
-        'Brand identity and UI/UX design',
+        'Custom software development',
+        'Digital marketing',
+        'UI and UX design',
         'AI and workflow automation',
         'Cloud and backend development',
-        'IT consulting',
+        'IoT solutions',
       ],
     });
     graph.push({
@@ -258,23 +216,7 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
       name: metadata.service,
       description: metadata.description,
       provider: { '@id': organizationId },
-      areaServed: ['Kanyakumari district', 'Nagercoil', 'Tamil Nadu', 'India'],
       url: canonical,
-    });
-  }
-
-  if (Array.isArray(metadata.faqs) && metadata.faqs.length) {
-    graph.push({
-      '@type': 'FAQPage',
-      '@id': canonical + '#faq',
-      mainEntity: metadata.faqs.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.answer,
-        },
-      })),
     });
   }
 
@@ -290,6 +232,7 @@ function buildStructuredData(file, metadata, canonical, siteUrl) {
 
   return { '@context': 'https://schema.org', '@graph': graph };
 }
+
 function applyPageSeo(publicDir, siteUrl, file, metadata) {
   const target = path.join(publicDir, file);
   if (!fs.existsSync(target)) {
