@@ -140,6 +140,7 @@ const NOINDEX_PAGES = [
   'signup.html',
   'forgot-password.html',
   'profile.html',
+  'dashboard.html',
 ];
 
 const escapeHtml = (value) => String(value)

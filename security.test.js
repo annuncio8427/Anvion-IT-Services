@@ -237,7 +237,7 @@ test('Lead conversion event only follows successful backend form responses', () 
 });
 
 test('SEO build marks private account pages noindex and excludes them from sitemap', () => {
-  for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html']) {
+  for (const file of ['admin.html', 'admin-login.html', 'admin/login.html', 'login.html', 'signup.html', 'forgot-password.html', 'profile.html', 'dashboard.html']) {
     const html = read('./public/' + file);
     assert.ok(html.includes('<meta name="robots" content="noindex,nofollow">'), file + ' should be noindex');
   }
